@@ -1,0 +1,21 @@
+{
+  "_comentario": "IDs sao a parte da URL entre /d/ e /edit. Nao sao segredo (o acesso e' controlado pelo compartilhamento da planilha com a service account) mas troque pelos IDs reais antes de rodar.",
+
+  "visitacao_parques_id": "COLE_AQUI_O_ID_DA_PLANILHA_VISITACAO_PARQUES_2026",
+  "mix_obz_visitacao_id": "COLE_AQUI_O_ID_DA_PLANILHA_MIX_OBZ_E_VISITACAO",
+  "share_ecommerce_id": "COLE_AQUI_O_ID_DA_PLANILHA_SHARE_ECOMMERCE",
+  "investimento_marketing_id": "COLE_AQUI_O_ID_DA_PLANILHA_INVESTIMENTO_MARKETING",
+
+  "meses": ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"],
+  "meses_com_dados": ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO"],
+  "parques": ["AquaRio", "BioParque", "Paineiras", "PNI", "M3F", "AquaFoz", "Três Pescadores", "Vila Velha"],
+  "atrativos": ["GEX", "MDE", "MDC"],
+
+  "sheet_names": {
+    "captacao_cv_3p": "CAPTAÇÃO CV - 3P",
+    "dash_share_gc": "Dash Share GC",
+    "share_ecommerce_2026": "Share_Ecommerce_2026",
+    "acompanhamento_mkt": "acompanhamento mkt",
+    "smorador": "AQF E M3F | SMorador"
+  }
+}
