@@ -88,7 +88,12 @@ def _download_workbook(drive_service, spreadsheet_id):
     if spreadsheet_id in _WORKBOOK_CACHE:
         return _WORKBOOK_CACHE[spreadsheet_id]
 
-    meta = drive_service.files().get(fileId=spreadsheet_id, fields="mimeType, name").execute()
+    # supportsAllDrives=True e' necessario quando o arquivo vive dentro de um Drive
+    # Compartilhado (Shared Drive) da empresa -- sem isso a API responde "File not found"
+    # mesmo quando o arquivo esta compartilhado corretamente com a service account.
+    meta = drive_service.files().get(
+        fileId=spreadsheet_id, fields="mimeType, name", supportsAllDrives=True
+    ).execute()
     is_native_sheet = meta["mimeType"] == "application/vnd.google-apps.spreadsheet"
 
     buf = io.BytesIO()
@@ -100,7 +105,7 @@ def _download_workbook(drive_service, spreadsheet_id):
         )
     else:
         # ja e' um arquivo .xlsx (ou similar): baixa direto
-        request = drive_service.files().get_media(fileId=spreadsheet_id)
+        request = drive_service.files().get_media(fileId=spreadsheet_id, supportsAllDrives=True)
 
     downloader = MediaIoBaseDownload(buf, request)
     done = False
