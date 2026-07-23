@@ -13,18 +13,28 @@ Uso:
     export GOOGLE_APPLICATION_CREDENTIALS=/caminho/para/service-account.json
     python extract_data.py --config config.json --out ../data.json
 
-Requer: google-api-python-client, google-auth (ver requirements.txt)
+Requer: google-api-python-client, google-auth, openpyxl (ver requirements.txt)
+
+NOTA IMPORTANTE: as planilhas do Grupo Cataratas estao guardadas no Drive como arquivos
+.xlsx (Excel de verdade), nao como Google Sheets nativos. A API do Google Sheets nao le
+arquivos .xlsx diretamente ("This operation is not supported for this document. The
+document must not be an Office file."). Por isso este script usa a API do **Google Drive**
+para baixar o arquivo (funciona tanto pra .xlsx quanto pra Google Sheets nativo) e le o
+conteudo com openpyxl -- a mesma biblioteca usada pra validar os dados nesta conversa.
 """
 import argparse
 import calendar
 import datetime
+import io
 import json
 import sys
 
+import openpyxl
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
 
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 
 MONTH_NUMBER = {
     "JANEIRO": 1, "FEVEREIRO": 2, "MARÇO": 3, "ABRIL": 4, "MAIO": 5, "JUNHO": 6,
@@ -38,7 +48,9 @@ SHEETS_EPOCH = datetime.date(1899, 12, 30)
 
 
 def serial_to_date(serial):
-    """Converte o numero serial de data do Google Sheets para datetime.date."""
+    """Converte o numero serial de data (mesmo formato usado pela API do Sheets) para
+    datetime.date. Mantido por compatibilidade -- get_values() ja devolve as datas nesse
+    formato numerico, igual antes."""
     if serial is None:
         return None
     try:
@@ -47,13 +59,13 @@ def serial_to_date(serial):
         return None
 
 
-def get_sheets_service():
+def get_drive_service():
     creds = service_account.Credentials.from_service_account_file(
         _sa_key_path(), scopes=SCOPES
     ) if _sa_key_path() else service_account.Credentials.from_service_account_info(
         json.loads(_sa_key_env()), scopes=SCOPES
     )
-    return build("sheets", "v4", credentials=creds)
+    return build("drive", "v3", credentials=creds)
 
 
 def _sa_key_path():
@@ -67,19 +79,59 @@ def _sa_key_env():
     return os.environ.get("GCP_SERVICE_ACCOUNT_JSON", "{}")
 
 
-def get_values(service, spreadsheet_id, sheet_name, a1_range="A1:CA2000"):
-    """Busca uma aba inteira como lista de listas, com numeros de data como serial."""
-    rng = f"'{sheet_name}'!{a1_range}"
-    resp = service.spreadsheets().values().get(
-        spreadsheetId=spreadsheet_id,
-        range=rng,
-        valueRenderOption="UNFORMATTED_VALUE",
-        dateTimeRenderOption="SERIAL_NUMBER",
-    ).execute()
-    rows = resp.get("values", [])
-    # normaliza todas as linhas para o mesmo comprimento (Sheets API omite celulas vazias no fim)
+_WORKBOOK_CACHE = {}
+
+
+def _download_workbook(drive_service, spreadsheet_id):
+    """Baixa o arquivo (Drive API) e abre com openpyxl. Cacheia por spreadsheet_id pra nao
+    baixar o mesmo arquivo de novo a cada aba lida (ex.: 7 abas de mes na mesma planilha)."""
+    if spreadsheet_id in _WORKBOOK_CACHE:
+        return _WORKBOOK_CACHE[spreadsheet_id]
+
+    meta = drive_service.files().get(fileId=spreadsheet_id, fields="mimeType, name").execute()
+    is_native_sheet = meta["mimeType"] == "application/vnd.google-apps.spreadsheet"
+
+    buf = io.BytesIO()
+    if is_native_sheet:
+        # Google Sheets nativo: exporta como .xlsx antes de baixar
+        request = drive_service.files().export_media(
+            fileId=spreadsheet_id,
+            mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+    else:
+        # ja e' um arquivo .xlsx (ou similar): baixa direto
+        request = drive_service.files().get_media(fileId=spreadsheet_id)
+
+    downloader = MediaIoBaseDownload(buf, request)
+    done = False
+    while not done:
+        _, done = downloader.next_chunk()
+    buf.seek(0)
+
+    wb = openpyxl.load_workbook(buf, data_only=True, read_only=True)
+    _WORKBOOK_CACHE[spreadsheet_id] = wb
+    return wb
+
+
+def get_values(service, spreadsheet_id, sheet_name, a1_range=None):
+    """Busca uma aba inteira como lista de listas. Datas viram numero serial (mesmo
+    formato que a API do Sheets usava), pra nao precisar mudar o resto do codigo que
+    espera esse formato."""
+    wb = _download_workbook(service, spreadsheet_id)
+    ws = wb[sheet_name]
+    rows = [list(r) for r in ws.iter_rows(values_only=True)]
     width = max((len(r) for r in rows), default=0)
-    return [r + [None] * (width - len(r)) for r in rows]
+    out = []
+    for r in rows:
+        r = r + [None] * (width - len(r))
+        r2 = []
+        for v in r:
+            if isinstance(v, datetime.datetime):
+                r2.append(float((v.date() - SHEETS_EPOCH).days))
+            else:
+                r2.append(v)
+        out.append(r2)
+    return out
 
 
 def cell(row, idx):
@@ -530,7 +582,7 @@ def main():
     with open(args.config, encoding="utf-8") as f:
         cfg = json.load(f)
 
-    service = get_sheets_service()
+    service = get_drive_service()
 
     print("Lendo Visitação Parques 2026...", file=sys.stderr)
     visitacao = build_visitacao(service, cfg["visitacao_parques_id"], cfg["meses_com_dados"])
