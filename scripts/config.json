@@ -1,10 +1,10 @@
 {
   "_comentario": "IDs sao a parte da URL entre /d/ e /edit. Nao sao segredo (o acesso e' controlado pelo compartilhamento da planilha com a service account) mas troque pelos IDs reais antes de rodar.",
 
-  "visitacao_parques_id": "COLE_AQUI_O_ID_DA_PLANILHA_VISITACAO_PARQUES_2026",
-  "mix_obz_visitacao_id": "COLE_AQUI_O_ID_DA_PLANILHA_MIX_OBZ_E_VISITACAO",
-  "share_ecommerce_id": "COLE_AQUI_O_ID_DA_PLANILHA_SHARE_ECOMMERCE",
-  "investimento_marketing_id": "COLE_AQUI_O_ID_DA_PLANILHA_INVESTIMENTO_MARKETING",
+  "visitacao_parques_id": "1Ut5PCIe0oMUwfeRGLaM16HoTelGw0qfd",
+  "mix_obz_visitacao_id": "1tvJ4eBvO-iMnr83J30Mzb8-ria5Kc6UJ9YR-54hhRkk",
+  "share_ecommerce_id": "17YNZaRMm9mjHstJzLEp_E32SowCSMcm1iLH-Aw6Rfac",
+  "investimento_marketing_id": "1C0RhQu5HQisnV_bqT8uuo6X2qhGtM8qy601tK8UKgoU",
 
   "meses": ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"],
   "meses_com_dados": ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO"],
