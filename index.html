@@ -1141,7 +1141,11 @@
         <div class="mix-title">Mix de Origem | Parques Rio | Parcial Julho</div>
         <div class="mix-subtitle">atualizado até 20/07 comparado ao mesmo período 2025</div>
       </div>
-      <div class="mix-morador-toggle" id="mixMoradorToggle">
+      <div class="mix-morador-toggle" id="mixPeriodoToggle">
+        <button class="active" data-val="mensal" onclick="setMixPeriodo('mensal')">Mensal</button>
+        <button data-val="acumulado" onclick="setMixPeriodo('acumulado')">Acumulado</button>
+      </div>
+      <div class="mix-morador-toggle" id="mixMoradorToggle" style="margin-left:8px;">
         <button class="active" data-val="com" onclick="setMixMorador('com')">Com Morador</button>
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
       </div>
@@ -2578,6 +2582,7 @@ function renderParkSummary() {
 
 
 let MIX_ORIGEM = {};
+let MIX_ORIGEM_ACUMULADO = {};
 const MIX_PARK_COLORS = {"AquaRio": "#305496", "BioParque": "#C65911", "Paineiras": "#548235", "M3F": "#CC0000", "AquaFoz": "#45818E", "Três Pescadores": "#741B47", "Vila Velha": "#BF9000", "PNI": "#0D5955"};
 const MIX_CAT_COLORS = {
   "Local": "#3b7ddd", "Morador": "#3b7ddd", "Morador/Estado": "#3b7ddd",
@@ -2607,11 +2612,18 @@ function fmtMixDelta(v) {
 }
 
 let mixMoradorState = 'com';
+let mixPeriodoState = 'mensal';
 const MIX_MORADOR_LABEL = { 'M3F':'Morador', 'AquaFoz':'Morador', 'PNI':'Morador/Estado' };
 
 function setMixMorador(val){
   mixMoradorState = val;
   document.querySelectorAll('#mixMoradorToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === val));
+  renderMixOrigem();
+}
+
+function setMixPeriodo(val){
+  mixPeriodoState = val;
+  document.querySelectorAll('#mixPeriodoToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === val));
   renderMixOrigem();
 }
 
@@ -2637,8 +2649,9 @@ function renderMixOrigem() {
   const grid = document.getElementById("mixGrid");
   if (!grid) return;
 
-  grid.innerHTML = Object.keys(MIX_ORIGEM).map(parque => {
-    const d = MIX_ORIGEM[parque];
+  const fonte = mixPeriodoState === 'acumulado' ? MIX_ORIGEM_ACUMULADO : MIX_ORIGEM;
+  grid.innerHTML = Object.keys(fonte).map(parque => {
+    const d = fonte[parque];
     const isFull = d.formato === "full";
     const color = MIX_PARK_COLORS[parque] || "#333";
     const categoriasBase = mixMoradorState === 'sem' ? stripMorador(parque, d.categorias) : d.categorias;
@@ -2825,6 +2838,7 @@ async function carregarDados(){
     INVEST_MKT_DETAIL = data.INVEST_MKT_DETAIL || {};
     INVEST_MKT_RESUMO = data.INVEST_MKT_RESUMO || {};
     MIX_ORIGEM = data.MIX_ORIGEM || {};
+    MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
   } catch(e) {
     console.error('Falha ao carregar data.json -- o painel vai renderizar com os dados vazios/zerados ate isso ser corrigido:', e);
   }
