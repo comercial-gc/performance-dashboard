@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-24T17:19:52.004402Z",
+  "geradoEm": "2026-07-24T17:45:46.511966Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -11565,7 +11565,7 @@
       "formato": "full",
       "categorias": [
         {
-          "label": "Local ",
+          "label": "Local",
           "v2025": 40330,
           "v2026": 32462,
           "delta": -0.1950905033,
@@ -11602,7 +11602,7 @@
       "formato": "full",
       "categorias": [
         {
-          "label": "Local ",
+          "label": "Local",
           "v2025": 25180,
           "v2026": 48675,
           "delta": 0.933081811,
@@ -11639,7 +11639,7 @@
       "formato": "full",
       "categorias": [
         {
-          "label": "Local ",
+          "label": "Local",
           "v2025": 17601,
           "v2026": 23192,
           "delta": 0.3176524061,
@@ -11782,7 +11782,7 @@
       "formato": "somente2026",
       "categorias": [
         {
-          "label": "Local ",
+          "label": "Local",
           "v2025": null,
           "v2026": 373,
           "delta": null,
@@ -11819,7 +11819,7 @@
       "formato": "full",
       "categorias": [
         {
-          "label": "Local ",
+          "label": "Local",
           "v2025": 97,
           "v2026": 323,
           "delta": 2.329896907,
