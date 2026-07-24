@@ -2825,7 +2825,7 @@ function renderMixOrigem() {
 
 async function carregarDados(){
   try {
-    const resp = await fetch('data.json', { cache: 'no-store' });
+    const resp = await fetch('data.json?_=' + Date.now(), { cache: 'no-store' }); // cache-bust: evita que o CDN do GitHub Pages sirva uma copia velha
     if(!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     VISITACAO = data.VISITACAO || {};
