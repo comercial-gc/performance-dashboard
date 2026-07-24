@@ -1909,7 +1909,7 @@ function fmtImtMoney(v) {
 
 function populateImtFilterOptions(items) {
   const setores = [...new Set(items.map(it => it.setor).filter(Boolean))].sort();
-  const midias = [...new Set(items.map(it => it.midia).filter(Boolean))].sort();
+  const midias = [...new Set(items.map(it => it.custo).filter(Boolean))].sort();
   const fornecedores = [...new Set(items.map(it => it.fornecedor).filter(Boolean))].sort();
 
   function fillSelect(id, values, allLabel) {
@@ -1958,7 +1958,7 @@ function renderImtMonthDetail() {
 
   if (parqueFiltroUpper) items = items.filter(it => it.parque === parqueFiltroUpper);
   if (setorFiltro) items = items.filter(it => it.setor === setorFiltro);
-  if (midiaFiltro) items = items.filter(it => it.midia === midiaFiltro);
+  if (midiaFiltro) items = items.filter(it => it.custo === midiaFiltro);
   if (fornecedorFiltro) items = items.filter(it => it.fornecedor === fornecedorFiltro);
 
   if (items.length === 0) {
@@ -1975,12 +1975,12 @@ function renderImtMonthDetail() {
     return `<tr>
       <td>${parkLabel}</td>
       <td>${it.setor || "-"}</td>
-      <td>${it.midia || "-"}</td>
+      <td>${it.custo || "-"}</td>
       <td>${it.fornecedor || "-"}</td>
       <td>${it.descricao || "-"}</td>
       <td>${it.runrun || "-"}</td>
       <td>${fmtImtMoney(it.valor)}</td>
-      <td>${it.obs || "-"}</td>
+      <td>${it.observacao || "-"}</td>
     </tr>`;
   }).join("");
 
@@ -2092,20 +2092,37 @@ function renderParkSummary() {
   const parkUpperKey = Object.keys(PARK_LABEL_MAP).find(k => PARK_LABEL_MAP[k] === parque) || parque.toUpperCase();
   const logoSrc = PARK_LOGOS[parque] || "";
 
-  // Distribuição por área: soma de valor por categoria de mídia, para este parque+mês
+  // Distribuição por área: soma de valor por categoria de custo (coluna "CUSTO": Custo
+  // Fixo/Mídia OFF/Mídia ON/Eventos - só existe a partir de Junho). Em meses sem essa
+  // coluna (Jan-Maio), usa "SETOR" (Performance/Marca & Experiência/...) como fallback,
+  // com cor gerada dinamicamente, em vez de jogar tudo num único bucket "Outros".
+  // BUG EVITADO: antes lia "it.midia", campo que nunca existiu no JSON -- por isso
+  // 100% dos lançamentos caiam sempre no bucket "Outros".
+  const FALLBACK_BUCKET_COLORS = ["#5b7fdb","#16a085","#f39c12","#e8556f","#9b59b6","#2ecc71","#e67e22","#34495e"];
+  const dynamicBucketColors = {};
+  function getBucketFor(it) {
+    const custoKey = it.custo ? String(it.custo).trim() : null;
+    if (custoKey && MIDIA_BUCKET_MAP[custoKey]) return MIDIA_BUCKET_MAP[custoKey];
+    const label = custoKey || (it.setor ? String(it.setor).trim() : null) || "Outros";
+    if (!dynamicBucketColors[label]) {
+      const idx = Object.keys(dynamicBucketColors).length % FALLBACK_BUCKET_COLORS.length;
+      dynamicBucketColors[label] = FALLBACK_BUCKET_COLORS[idx];
+    }
+    return { key: "din_" + label, label, color: dynamicBucketColors[label] };
+  }
+
   const items = (INVEST_MKT_DETAIL[mes] || []).filter(it => it.parque === parkUpperKey);
   const buckets = {};
   let totalItens = 0;
   items.forEach(it => {
-    const b = MIDIA_BUCKET_MAP[it.midia] || MIDIA_BUCKET_MAP[""];
+    const b = getBucketFor(it);
     if (!buckets[b.key]) buckets[b.key] = { label: b.label, color: b.color, total: 0 };
     const v = (typeof it.valor === "number") ? it.valor : 0;
     buckets[b.key].total += v;
     totalItens += v;
   });
 
-  const bucketOrder = ["custoFixo","midiaOOH","midiaON","eventos","outros"];
-  const bucketList = bucketOrder.map(k => buckets[k]).filter(b => b && b.total > 0);
+  const bucketList = Object.values(buckets).filter(b => b.total > 0).sort((a,b) => b.total - a.total);
 
   const kpiHtml = `
     <div class="imt-ps-kpis">
