@@ -654,9 +654,14 @@ def build_invest_mkt_resumo(service, spreadsheet_id, sheet_name):
 # ---------------------------------------------------------------------------
 
 # nomes possiveis de cabecalho -> campo de saida (primeiro que bater, na ordem da linha)
+# BUG EVITADO: "SETOR" (area: Performance/Marca & Experiencia/Conteudo/InHouse) e "CUSTO"
+# (tipo de custo: Custo Fixo/Midia OFF/Midia ON/Eventos) sao DUAS colunas DIFERENTES que
+# coexistem em Junho/Julho -- nao aliases uma da outra. Antes eram tratadas como a mesma
+# coisa e a coluna CUSTO era sempre descartada (SETOR vinha primeiro na linha).
 DETAIL_HEADER_ALIASES = {
     "parque": ["PARQUE"],
-    "setor": ["SETOR", "CUSTO"],
+    "setor": ["SETOR"],
+    "custo": ["CUSTO"],
     "fornecedor": ["FORNECEDOR"],
     "descricao": ["DESCRIÇAO DO SERVIÇO", "DESCRIÇÃO DO SERVIÇO"],
     "runrun": ["RUNRUN IT"],
@@ -694,9 +699,16 @@ def _parse_valor(v):
         return None
 
 
+def _clean_str(v):
+    if v is None:
+        return None
+    s = str(v).strip()
+    return s if s else None
+
+
 def build_invest_mkt_detail(service, spreadsheet_id, meses_com_dados):
     """Le a lista de campanhas de cada aba mensal. Retorna {mes: [ {parque, setor,
-    fornecedor, descricao, valor, observacao}, ... ]}.
+    custo, fornecedor, descricao, valor, observacao}, ... ]}.
     """
     detail = {}
     for mes in meses_com_dados:
@@ -715,7 +727,8 @@ def build_invest_mkt_detail(service, spreadsheet_id, meses_com_dados):
                 continue
             items.append({
                 "parque": str(parque).strip(),
-                "setor": cell(row, cols.get("setor")) if "setor" in cols else None,
+                "setor": _clean_str(cell(row, cols.get("setor"))) if "setor" in cols else None,
+                "custo": _clean_str(cell(row, cols.get("custo"))) if "custo" in cols else None,
                 "fornecedor": cell(row, cols.get("fornecedor")) if "fornecedor" in cols else None,
                 "descricao": cell(row, cols.get("descricao")) if "descricao" in cols else None,
                 "valor": _parse_valor(cell(row, cols.get("valor"))),
