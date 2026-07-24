@@ -369,29 +369,33 @@ def build_captacao_cv_3p(service, spreadsheet_id, sheet_name):
 # Share, R$ em mídia. Uma coluna por mes/ano. E' a fonte de "investimentoMidia.meses".
 # ---------------------------------------------------------------------------
 
-# linha (0-indexed) onde comeca o bloco de cada parque nesta aba
+# linha (0-indexed) onde comeca o bloco de cada parque nesta aba. "3P" (Três Pescadores)
+# e "Vila Velha" ficam num grupo separado, abaixo do titulo "SOUL PARQUES" -- so' tem
+# coluna 2026 preenchida (parques novos, sem historico 2025), mas o layout de linhas
+# (Visitação/Ecommerce/Share/R$ em mídia) e' o mesmo dos outros blocos. As chaves "3P" e
+# "Vila Velha" (em vez de "Três Pescadores") sao de proposito -- e' o nome que o HTML
+# (INVEST_PARKS) ja espera pra esses dois parques nesta tabela especifica.
 SHARE_ECOMMERCE_BLOCKS = {
     "BioParque": 0, "AquaRio": 9, "Paineiras": 17, "M3F": 25, "AquaFoz": 33,
+    "3P": 44, "Vila Velha": 52,
 }
 MESES_PT = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
             "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
 
 def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dados):
-    """Monta SHARE.investimentoMidia.meses para os 5 parques que tem e-commerce
-    (AquaRio, BioParque, Paineiras, M3F, AquaFoz).
+    """Monta SHARE.investimentoMidia.meses para os parques rastreados nesta aba
+    (AquaRio, BioParque, Paineiras, M3F, AquaFoz, e os dois do bloco "SOUL PARQUES":
+    "3P"/Três Pescadores e Vila Velha).
 
     Para meses fechados (todo mes exceto o corrente), tanto o lado 2025 quanto o 2026 sao
     o total do mes inteiro. Para o mes corrente (ainda em andamento), o lado 2026 e'
     parcial (só os dias já lançados na planilha) e o 2025 e' o mes inteiro do ano passado
     -- usado como referencia de "para onde estamos indo", nao como comparação dia-a-dia.
 
-    NOTA / GAP CONHECIDO: os parques "3P" (Três Pescadores) e "Vila Velha" nao tem
-    e-commerce/share rastreados nesta planilha (a coluna "R$ em mídia" deles fica vazia
-    nos meses de 2026). Nao encontrei, em nenhuma das 4 planilhas, uma fonte confiavel
-    para o investimento de midia desses dois parques especificamente -- por isso eles
-    ficam de fora deste dicionario por enquanto. Se voce souber onde esse numero e'
-    controlado (pode ser uma planilha/aba que nao foi anexada), me avise que eu mapeio.
+    "3P" e "Vila Velha" so' tem coluna 2026 (parques novos, sem historico 2025) -- os
+    campos *2025 ficam None/0 automaticamente pra eles, sem precisar de tratamento
+    especial (num() ja devolve None pra celula vazia).
     """
     rows = get_values(service, spreadsheet_id, sheet_name)
     meses = {}
