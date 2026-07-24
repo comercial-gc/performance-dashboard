@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-24T18:15:41.444402Z",
+  "geradoEm": "2026-07-24T19:03:50.010925Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -8222,6 +8222,26 @@
             "share2025": 0,
             "investimento2026": 88468.47,
             "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 14835,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 2876.75,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 7836,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 7350.6,
+            "investimento2025": null
           }
         },
         "Fevereiro": {
@@ -8273,6 +8293,26 @@
             "ecommerce2025": null,
             "share2025": 0,
             "investimento2026": 37731.86,
+            "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 7715,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 1594.41,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 4812,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 7075.15,
             "investimento2025": null
           }
         },
@@ -8326,6 +8366,26 @@
             "share2025": 0,
             "investimento2026": 47767.18,
             "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 8354,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 4134.88,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 3971,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 6878.96,
+            "investimento2025": null
           }
         },
         "Abril": {
@@ -8377,6 +8437,26 @@
             "ecommerce2025": null,
             "share2025": 0,
             "investimento2026": 60474.95,
+            "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 10668,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 6648.45,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 7668,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 6839.36,
             "investimento2025": null
           }
         },
@@ -8430,6 +8510,26 @@
             "share2025": 0,
             "investimento2026": 29125.9,
             "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 13148,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 7031.72,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 4187,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 6834.81,
+            "investimento2025": null
           }
         },
         "Junho": {
@@ -8482,6 +8582,26 @@
             "share2025": 0,
             "investimento2026": 25409.63,
             "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 10603,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 5970.37,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 5166,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 6361.09,
+            "investimento2025": null
           }
         },
         "Julho": {
@@ -8533,6 +8653,26 @@
             "ecommerce2025": null,
             "share2025": 0,
             "investimento2026": 49600.73,
+            "investimento2025": null
+          },
+          "3P": {
+            "visitacao2026": 16576,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 5001.39,
+            "investimento2025": null
+          },
+          "Vila Velha": {
+            "visitacao2026": 7014,
+            "ecommerce2026": 0,
+            "share2026": 0.0,
+            "visitacao2025": null,
+            "ecommerce2025": null,
+            "share2025": 0,
+            "investimento2026": 5314.67,
             "investimento2025": null
           }
         }
@@ -8884,6 +9024,136 @@
             34286,
             35278,
             52647
+          ]
+        },
+        "3P": {
+          "investimento": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2876.75,
+            1594.41,
+            4134.88,
+            6648.45,
+            7031.72,
+            5970.37,
+            5001.39
+          ],
+          "share": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "visitacaoTotal": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            14835,
+            7715,
+            8354,
+            10668,
+            13148,
+            10603,
+            16576
+          ]
+        },
+        "Vila Velha": {
+          "investimento": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            7350.6,
+            7075.15,
+            6878.96,
+            6839.36,
+            6834.81,
+            6361.09,
+            5314.67
+          ],
+          "share": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "visitacaoTotal": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            7836,
+            4812,
+            3971,
+            7668,
+            4187,
+            5166,
+            7014
           ]
         }
       }
