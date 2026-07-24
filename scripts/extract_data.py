@@ -470,6 +470,10 @@ def build_mix_origem(service, spreadsheet_id, sheet_name):
             label = cell(rows[j], 2)
             if not label:
                 break
+            # BUG EVITADO: a planilha tem "Local " com espaco sobrando no final da celula;
+            # sem o strip(), a cor da legenda (que faz lookup por nome exato) nao batia e
+            # a barra/legenda de "Local" caia no cinza padrao.
+            label = label.strip() if isinstance(label, str) else label
             if formato == "full":
                 v2025, v2026 = cell(rows[j], 3), cell(rows[j], 4)
                 delta, share25, share26 = cell(rows[j], 5), cell(rows[j], 6), cell(rows[j], 7)
@@ -549,6 +553,14 @@ def build_invest_mkt_resumo(service, spreadsheet_id, sheet_name):
     for i, row in enumerate(rows):
         for c, val in enumerate(row):
             if val in BLOCK_NAME_MAP:
+                # BUG EVITADO: nome de parque (ex.: "M3F", "PAINEIRAS") pode aparecer em mais
+                # de um lugar na aba (ex.: legenda, celula de referencia). So' tratamos como
+                # o INICIO de um bloco de verdade se a linha logo abaixo tiver o cabecalho
+                # "MES" na mesma coluna -- senao ficamos vulneraveis a sobrescrever um bloco
+                # bom com lixo de uma ocorrencia errada do nome mais abaixo na planilha.
+                header_below = cell(rows[i + 1], c) if i + 1 < len(rows) else None
+                if not (isinstance(header_below, str) and header_below.strip().upper() in ("MÊS", "MES")):
+                    continue
                 park = BLOCK_NAME_MAP[val]
                 resumo[park] = {}
                 r = i + 2
