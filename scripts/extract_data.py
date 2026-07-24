@@ -270,6 +270,63 @@ def build_visitacao(service, spreadsheet_id, meses_com_dados):
 
 
 # ---------------------------------------------------------------------------
+# Visitação Parques 2026.xlsx -> aba "Mapa Clima"
+# Serie diaria (sequencial, ano inteiro) com o codigo de clima do dia, por regiao. O
+# painel so' usa 1 "parque representante" por regiao (CLIMA_REGIOES no HTML): AquaRio
+# representa Parques Rio, PNI representa Parques Foz, Vila Velha e Três Pescadores tem
+# regiao propria. BUG EVITADO: essa aba nunca foi ligada ao pipeline -- por isso a aba
+# Clima do painel sumia (ficava sem nenhum dado) assim que o painel passava a ler o
+# data.json em vez dos numeros fixos.
+# ---------------------------------------------------------------------------
+
+# (coluna da Data, coluna do texto "Clima") por parque-representante, 0-indexed
+CLIMA_REGIAO_COLS = {
+    "AquaRio": (6, 7),
+    "PNI": (15, 16),
+    "Vila Velha": (24, 25),
+    "Três Pescadores": (30, 31),
+}
+
+CLIMA_LABEL_TO_CODE = {
+    "dia de sol": "sun", "nublado": "cloud", "nublado com chuva": "cloud-rain",
+    "chuvoso": "rain", "sol + chuva": "sun-rain", "tempestade": "storm",
+    "calor excessivo": "heat", "frio intenso": "cold", "sol + vento": "wind-sun",
+    "chuva + vento": "wind-rain", "ventoso": "wind", "fechado": "closed", "alerta": "alert",
+}
+
+
+def build_clima_emoji(service, spreadsheet_id, sheet_name, meses_com_dados):
+    rows = get_values(service, spreadsheet_id, sheet_name)
+    result = {mes: {} for mes in meses_com_dados}
+    for mes in meses_com_dados:
+        month_number = MONTH_NUMBER[mes]
+        n_days = calendar.monthrange(2026, month_number)[1]
+        for park in CLIMA_REGIAO_COLS:
+            result[mes][park] = [None] * n_days
+
+    for row in rows:
+        for park, (date_col, clima_col) in CLIMA_REGIAO_COLS.items():
+            date_val = cell(row, date_col)
+            dt = None
+            if isinstance(date_val, datetime.datetime):
+                dt = date_val.date()
+            elif isinstance(date_val, (int, float)):
+                dt = serial_to_date(date_val)
+            if dt is None or dt.year != 2026:
+                continue
+            mes_en = next((m for m in meses_com_dados if MONTH_NUMBER[m] == dt.month), None)
+            if mes_en is None:
+                continue
+            label = cell(row, clima_col)
+            if not isinstance(label, str) or not label.strip():
+                continue
+            code = CLIMA_LABEL_TO_CODE.get(label.strip().lower())
+            if code:
+                result[mes_en][park][dt.day - 1] = code
+    return result
+
+
+# ---------------------------------------------------------------------------
 # CAPTAÇÃO CV - 3P (mesma planilha "Visitação Parques 2026")
 # ---------------------------------------------------------------------------
 
@@ -449,16 +506,20 @@ MIX_ORIGEM_PARK_NAMES = {
 }
 
 
-def build_mix_origem(service, spreadsheet_id, sheet_name):
+def build_mix_origem(service, spreadsheet_id, sheet_name, col_offset=0):
+    """col_offset=0 le' o bloco "MIX PARCIAL" (mes atual); col_offset=11 le' o bloco
+    "MIX ACUMULADO ANO" que fica 11 colunas a direita, mesmas linhas, mesmo layout --
+    usado pelo toggle Mensal/Acumulado do painel."""
+    name_col = 2 + col_offset
     rows = get_values(service, spreadsheet_id, sheet_name)
     result = {}
     for i, row in enumerate(rows):
-        nome_sheet = cell(row, 2)
+        nome_sheet = cell(row, name_col)
         if nome_sheet not in MIX_ORIGEM_PARK_NAMES:
             continue
-        header_d = cell(row, 3)
-        # confirma que e' mesmo a linha de cabecalho do bloco (coluna D = 2025 ou 2026),
-        # nao outra celula qualquer da planilha que por acaso tenha o mesmo nome de parque
+        header_d = cell(row, name_col + 1)
+        # confirma que e' mesmo a linha de cabecalho do bloco (coluna seguinte = 2025 ou
+        # 2026), nao outra celula qualquer da planilha que por acaso tenha o mesmo nome
         if header_d not in (2025, 2026):
             continue
         formato = "full" if header_d == 2025 else "somente2026"
@@ -467,7 +528,7 @@ def build_mix_origem(service, spreadsheet_id, sheet_name):
         categorias = []
         j = i + 1
         while j < len(rows):
-            label = cell(rows[j], 2)
+            label = cell(rows[j], name_col)
             if not label:
                 break
             # BUG EVITADO: a planilha tem "Local " com espaco sobrando no final da celula;
@@ -475,11 +536,12 @@ def build_mix_origem(service, spreadsheet_id, sheet_name):
             # a barra/legenda de "Local" caia no cinza padrao.
             label = label.strip() if isinstance(label, str) else label
             if formato == "full":
-                v2025, v2026 = cell(rows[j], 3), cell(rows[j], 4)
-                delta, share25, share26 = cell(rows[j], 5), cell(rows[j], 6), cell(rows[j], 7)
+                v2025, v2026 = cell(rows[j], name_col + 1), cell(rows[j], name_col + 2)
+                delta = cell(rows[j], name_col + 3)
+                share25, share26 = cell(rows[j], name_col + 4), cell(rows[j], name_col + 5)
             else:
                 v2025, delta, share25 = None, None, None
-                v2026, share26 = cell(rows[j], 3), cell(rows[j], 4)
+                v2026, share26 = cell(rows[j], name_col + 1), cell(rows[j], name_col + 2)
             categorias.append({
                 "label": label, "v2025": v2025, "v2026": v2026, "delta": delta,
                 "share25": share25, "share26": share26,
@@ -677,6 +739,15 @@ def main():
     print("Lendo Visitação Parques 2026...", file=sys.stderr)
     visitacao = build_visitacao(service, cfg["visitacao_parques_id"], cfg["meses_com_dados"])
 
+    print("Lendo Mapa Clima...", file=sys.stderr)
+    clima_emoji = build_clima_emoji(
+        service, cfg["visitacao_parques_id"], cfg["sheet_names"]["mapa_clima"], cfg["meses_com_dados"]
+    )
+    for mes, parques in clima_emoji.items():
+        for park, emoji_arr in parques.items():
+            if park in visitacao[mes]["daily"]:
+                visitacao[mes]["daily"][park]["Emoji"] = emoji_arr
+
     print("Lendo Captação CV - 3P...", file=sys.stderr)
     cv3p_by_month, cv3p_anual = build_captacao_cv_3p(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["captacao_cv_3p"]
@@ -722,6 +793,9 @@ def main():
     mix_origem = build_mix_origem(
         service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["mix_origem"]
     )
+    mix_origem_acumulado = build_mix_origem(
+        service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["mix_origem"], col_offset=11
+    )
 
     output = {
         "geradoEm": datetime.datetime.utcnow().isoformat() + "Z",
@@ -739,6 +813,7 @@ def main():
         "INVEST_MKT_RESUMO": invest_mkt_resumo,
         "INVEST_MKT_DETAIL": invest_mkt_detail,
         "MIX_ORIGEM": mix_origem,
+        "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
