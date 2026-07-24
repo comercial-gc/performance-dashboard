@@ -27,12 +27,19 @@ import calendar
 import datetime
 import io
 import json
+import socket
 import sys
 
 import openpyxl
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
+
+# O runner do GitHub Actions as vezes tem uma conexao mais lenta/instavel com a API do
+# Google, e o timeout padrao do socket (ilimitado, mas o cliente HTTP interno usa um valor
+# curto) estourava no meio do download de planilhas maiores. Aumenta a margem e deixa o
+# retry automático (num_retries em next_chunk, abaixo) lidar com falhas passageiras.
+socket.setdefaulttimeout(300)
 
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 
@@ -107,10 +114,13 @@ def _download_workbook(drive_service, spreadsheet_id):
         # ja e' um arquivo .xlsx (ou similar): baixa direto
         request = drive_service.files().get_media(fileId=spreadsheet_id, supportsAllDrives=True)
 
-    downloader = MediaIoBaseDownload(buf, request)
+    # num_retries>0 faz o proprio googleapiclient re-tentar automaticamente (com backoff)
+    # em caso de erro de rede passageiro (timeout, conexao resetada etc.) -- foi isso que
+    # derrubou uma execucao no GitHub Actions ("TimeoutError: The read operation timed out").
+    downloader = MediaIoBaseDownload(buf, request, chunksize=10 * 1024 * 1024)
     done = False
     while not done:
-        _, done = downloader.next_chunk()
+        _, done = downloader.next_chunk(num_retries=5)
     buf.seek(0)
 
     wb = openpyxl.load_workbook(buf, data_only=True, read_only=True)
@@ -416,6 +426,69 @@ def build_share_meta_grupo_cataratas(investimento_midia_meses, meses_com_dados):
 
 
 # ---------------------------------------------------------------------------
+# [2026] Mix OBZ e visitação.xlsx -> aba "ANÁLISE MIX DE ORIGEM 2026"
+# Bloco "MIX PARCIAL | MES ATUAL": um mini-bloco por parque, com o nome do parque na
+# coluna C e um cabecalho (2025/2026/Delta/Share) na mesma linha, seguido das linhas de
+# categoria (Local/Brasileiros/Estrangeiros/... e "Total Mes" por ultimo). O nome do
+# parque nesta aba as vezes difere do nome usado no resto do painel (ex.: "Aquario" sem
+# acento/maiuscula) -- por isso o mapeamento MIX_ORIGEM_PARK_NAMES abaixo.
+# BUG EVITADO (mesma classe dos outros): antes desta funcao, essa tabela inteira do
+# painel (MIX_ORIGEM) nunca foi ligada ao pipeline -- ficava com numero fixo, travado
+# na data em que foi colado a mao pela ultima vez, mesmo com o resto ja automatizado.
+# ---------------------------------------------------------------------------
+
+MIX_ORIGEM_PARK_NAMES = {
+    "Aquario": "AquaRio",
+    "BioParque": "BioParque",
+    "Paineiras": "Paineiras",
+    "M3F": "M3F",
+    "AquaFoz": "AquaFoz",
+    "Três Pescadores": "Três Pescadores",
+    "Vila Velha": "Vila Velha",
+    "PNI": "PNI",
+}
+
+
+def build_mix_origem(service, spreadsheet_id, sheet_name):
+    rows = get_values(service, spreadsheet_id, sheet_name)
+    result = {}
+    for i, row in enumerate(rows):
+        nome_sheet = cell(row, 2)
+        if nome_sheet not in MIX_ORIGEM_PARK_NAMES:
+            continue
+        header_d = cell(row, 3)
+        # confirma que e' mesmo a linha de cabecalho do bloco (coluna D = 2025 ou 2026),
+        # nao outra celula qualquer da planilha que por acaso tenha o mesmo nome de parque
+        if header_d not in (2025, 2026):
+            continue
+        formato = "full" if header_d == 2025 else "somente2026"
+        park = MIX_ORIGEM_PARK_NAMES[nome_sheet]
+
+        categorias = []
+        j = i + 1
+        while j < len(rows):
+            label = cell(rows[j], 2)
+            if not label:
+                break
+            if formato == "full":
+                v2025, v2026 = cell(rows[j], 3), cell(rows[j], 4)
+                delta, share25, share26 = cell(rows[j], 5), cell(rows[j], 6), cell(rows[j], 7)
+            else:
+                v2025, delta, share25 = None, None, None
+                v2026, share26 = cell(rows[j], 3), cell(rows[j], 4)
+            categorias.append({
+                "label": label, "v2025": v2025, "v2026": v2026, "delta": delta,
+                "share25": share25, "share26": share26,
+            })
+            is_total = isinstance(label, str) and label.strip().startswith("Total")
+            j += 1
+            if is_total:
+                break
+        result[park] = {"formato": formato, "categorias": categorias}
+    return result
+
+
+# ---------------------------------------------------------------------------
 # [2026] Mix OBZ e visitação.xlsx -> aba "AQF E M3F | SMorador"
 # Proporcao "Sem morador" / "Com morador" mais recente, usada para estimar a Captação
 # PNI "sem morador" (ver comentario original no HTML sobre SEMMORADOR_RATIO).
@@ -633,6 +706,11 @@ def main():
         service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["smorador"]
     )
 
+    print("Lendo Mix de Origem...", file=sys.stderr)
+    mix_origem = build_mix_origem(
+        service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["mix_origem"]
+    )
+
     output = {
         "geradoEm": datetime.datetime.utcnow().isoformat() + "Z",
         "VISITACAO": visitacao,
@@ -648,6 +726,7 @@ def main():
         },
         "INVEST_MKT_RESUMO": invest_mkt_resumo,
         "INVEST_MKT_DETAIL": invest_mkt_detail,
+        "MIX_ORIGEM": mix_origem,
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
