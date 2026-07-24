@@ -145,13 +145,13 @@
   .combo-monthly-table th{ background:#f7f7f7; padding:6px 4px; text-align:center; font-weight:700; color:var(--muted); white-space:nowrap; overflow:hidden; }
   .combo-monthly-table td{ padding:6px 4px; text-align:center; white-space:nowrap; overflow:hidden; border-top:1px solid #f2f2f2; }
   .combo-monthly-table td:first-child, .combo-monthly-table th:first-child{ text-align:left; font-weight:700; color:var(--ink); background:#fafafa; padding-left:8px; }
-  .combo-summary-card{ flex:0 0 290px; width:290px; border:1px solid var(--line); border-radius:8px; overflow:hidden; align-self:flex-start; background:#fff; }
+  .combo-summary-card{ flex:0 0 320px; width:320px; border:1px solid var(--line); border-radius:8px; overflow:hidden; align-self:flex-start; background:#fff; }
   .combo-summary-header{ display:flex; align-items:center; justify-content:center; padding:14px; border-bottom:1px solid var(--line); min-height:50px; }
   .combo-summary-header img{ max-height:52px; max-width:170px; object-fit:contain; }
   .combo-summary-table{ width:100%; table-layout:fixed; border-collapse:collapse; font-size:13px; }
-  .combo-summary-table th{ background:var(--park-color,#333); color:#fff; padding:8px 6px; text-align:center; font-weight:700; word-wrap:break-word; }
-  .combo-summary-table td{ padding:10px 6px; text-align:center; border-top:1px solid #f0f0f0; word-wrap:break-word; }
-  .combo-summary-table td:first-child{ text-align:left; color:var(--muted); font-weight:600; }
+  .combo-summary-table th{ background:var(--park-color,#333); color:#fff; padding:8px 4px; text-align:center; font-weight:700; word-break:keep-all; overflow-wrap:normal; hyphens:none; font-size:11.5px; }
+  .combo-summary-table td{ padding:10px 4px; text-align:center; border-top:1px solid #f0f0f0; word-break:keep-all; overflow-wrap:normal; hyphens:none; white-space:nowrap; font-size:12.5px; }
+  .combo-summary-table td:first-child{ text-align:left; color:var(--muted); font-weight:600; white-space:normal; word-break:keep-all; overflow-wrap:normal; }
   .combo-summary-table tr.share-row{ background:#f5f5f5; }
   .combo-summary-table tr.share-row td{ font-weight:800; }
   .combo-summary-table td.up{ color:var(--green); font-weight:700; }
@@ -1211,7 +1211,7 @@ const ATRATIVOS_LABEL = { GEX:'GEX', MDE:'Mar de Espelhos', MDC:'Museu de Cera' 
 
 function fmtInt(v){ if(v===null||v===undefined) return '-'; return Math.round(v).toLocaleString('pt-BR'); }
 function fmtPct(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return (v*100).toFixed(1).replace('.',',')+'%'; }
-function fmtMoney(v){ if(v===null||v===undefined) return '-'; return 'R$ '+Math.round(v).toLocaleString('pt-BR'); }
+function fmtMoney(v){ if(v===null||v===undefined) return '-'; return 'R$ '+Math.round(v).toLocaleString('pt-BR'); }
 function pctClass(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return ''; return v>=0 ? 'up' : 'down'; }
 function pillClass(v){ if(v===null||v===undefined) return 'flat'; return v>=0 ? 'up' : 'down'; }
 
