@@ -368,7 +368,7 @@
   .clima-day .cd-num{ font-size:10px; color:var(--muted); font-weight:700; }
   .clima-day .cd-emoji{ font-size:18px; margin:3px 0; }
   .clima-day.empty{ opacity:.35; }
-  .share-meta-chart-wrap{ margin-top:16px; max-width:640px; }
+  .share-meta-chart-wrap{ margin-top:16px; overflow-x:auto; padding-bottom:4px; }
   .clima-bar-chart{ margin-top:10px; display:flex; flex-direction:column; gap:6px; }
   .clima-bar-row{ display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:8px; font-size:12px; }
   .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; }
@@ -1030,35 +1030,52 @@ let SHARE_META_GRUPO_CATARATAS = {};
 const SHARE_META_PARKS = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz'];
 const SHARE_META_GOAL = 0.25;
 
-function renderShareMetaChart(){
+function renderShareMetaChart(accShare){
   const container = document.getElementById('shareMetaChart');
   if(!container) return;
-  const labelZone = 58; // espaço reservado só para o rótulo "Meta 25%", sem barra nenhuma aí
-  const W = Math.max(420, SHARE_META_MESES.length*70) + labelZone, H = 170, padL = labelZone, padR = 10, padT = 20, padB = 24;
-  const plotW = W - padL - padR, plotH = H - padT - padB;
+  // Mesma geometria de coluna da tabela "Visitação, E-commerce e Share por mês" logo acima
+  // (#shareMonthNums / #shareMonthGrid: rótulo do parque = 100px, cada mês = 126px + 5px de
+  // gap, e mais 10px de margem extra antes da coluna "Acum.") -- assim a barra de cada mês
+  // fica exatamente embaixo da coluna correspondente da tabela. Por isso o SVG usa largura
+  // fixa em px (não width:100%) dentro de um wrapper com scroll horizontal, igual à tabela.
+  const padL = 100, colW = 126, gap = 5, accGap = 15, padR = 10, padT = 20, padB = 24;
   const n = SHARE_META_MESES.length;
-  const slot = plotW / n;
-  const barW = slot * 0.5;
-  const maxShare = Math.max(...SHARE_META_GRUPO_CATARATAS.share, SHARE_META_GOAL) * 1.15;
+  const hasAcc = accShare !== null && accShare !== undefined;
+  const xFor = i => padL + i * (colW + gap);
+  const xAcc = xFor(n - 1) + colW + accGap;
+  const W = (hasAcc ? xAcc + colW : xFor(n - 1) + colW) + padR;
+  const H = 170;
+  const plotH = H - padT - padB;
+  const barW = colW * 0.58; // "engrossar um pouquinho a barra"
+
+  const maxShare = Math.max(...SHARE_META_GRUPO_CATARATAS.share, hasAcc ? accShare : 0, SHARE_META_GOAL) * 1.15;
 
   const goalY = padT + plotH - (SHARE_META_GOAL/maxShare)*plotH;
   const goalLine = `<line x1="0" y1="${goalY.toFixed(1)}" x2="${W-padR}" y2="${goalY.toFixed(1)}" stroke="#b3432b" stroke-width="1.6" stroke-dasharray="5,4"/>
     <text x="4" y="${(goalY-6).toFixed(1)}" font-size="10" text-anchor="start" fill="#b3432b" font-weight="700">Meta 25%</text>`;
 
-  let bars = '';
-  SHARE_META_MESES.forEach((mes,i) => {
-    const share = SHARE_META_GRUPO_CATARATAS.share[i];
-    const x = padL + i*slot + (slot-barW)/2;
+  function drawBar(x, share, label, labelBold){
     const h = (share/maxShare)*plotH;
     const y = padT + plotH - h;
     const color = share >= SHARE_META_GOAL ? '#1f7a4d' : '#b3432b';
-    const tip = `${mes}: Share ${fmtPct(share)}`;
-    bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}" data-tip="${tip}"></rect>
+    const tip = `${label}: Share ${fmtPct(share)}`;
+    return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}" data-tip="${tip}"></rect>
       <text x="${(x+barW/2).toFixed(1)}" y="${(y-5).toFixed(1)}" font-size="10.5" font-weight="700" text-anchor="middle" fill="${color}">${(share*100).toFixed(0)}%</text>
-      <text x="${(x+barW/2).toFixed(1)}" y="${H-6}" font-size="9.5" text-anchor="middle" fill="#8a938d">${mes.slice(0,3)}/26</text>`;
-  });
+      <text x="${(x+barW/2).toFixed(1)}" y="${H-6}" font-size="9.5" font-weight="${labelBold?'700':'400'}" text-anchor="middle" fill="#8a938d">${label}</text>`;
+  }
 
-  container.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${goalLine}${bars}</svg>`;
+  let bars = '';
+  SHARE_META_MESES.forEach((mes,i) => {
+    const share = SHARE_META_GRUPO_CATARATAS.share[i];
+    const x = xFor(i) + (colW-barW)/2;
+    bars += drawBar(x, share, mes.slice(0,3)+'/26', false);
+  });
+  if(hasAcc){
+    const x = xAcc + (colW-barW)/2;
+    bars += drawBar(x, accShare, 'Acum.', true);
+  }
+
+  container.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">${goalLine}${bars}</svg>`;
 }
 
 // BUG EVITADO: a coluna "Acum." usava a aba "Dash Share GC", que tem um recorte e uma
@@ -1153,7 +1170,7 @@ function renderShareMonthRegua(){
   metaRows.push(`<div class="invest-row"><b style="font-weight:800;color:${gcColor}">Grupo Cataratas</b><div class="invest-days">${gcCells}${gcAccCell}</div></div>`);
 
   grid.innerHTML = metaRows.join('');
-  renderShareMetaChart();
+  renderShareMetaChart(gcShareAcum);
 }
 
 const INVEST_MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
