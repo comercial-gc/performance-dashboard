@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-27T13:37:33.525752Z",
+  "geradoEm": "2026-07-27T14:34:19.569707Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -8071,25 +8071,25 @@
       350563,
       314764,
       286231,
-      431901
+      419523
     ],
     "ecommerce": [
-      131236,
-      66714,
-      76975,
-      94092,
-      76609,
-      65057,
-      106620
+      138935.0,
+      70665.0,
+      81402.0,
+      96445.0,
+      81101.0,
+      71243.0,
+      111308.0
     ],
     "share": [
-      0.24944735576603239,
-      0.2035384460492234,
-      0.22396375845955996,
-      0.268402541055388,
-      0.2433855205804984,
-      0.22728844884027236,
-      0.24686212812658456
+      0.26408126103625307,
+      0.21559259360956276,
+      0.23684440228808185,
+      0.2751146013697966,
+      0.25765652997166133,
+      0.24890036369226254,
+      0.26532037576008943
     ]
   },
   "SHARE": {
@@ -8175,8 +8175,8 @@
         "Janeiro": {
           "BioParque": {
             "visitacao2026": 51776,
-            "ecommerce2026": 21157,
-            "share2026": 0.40862561804697156,
+            "ecommerce2026": 23172.0,
+            "share2026": 0.44754326328800986,
             "visitacao2025": 58764,
             "ecommerce2025": 16782,
             "share2025": 0.2855830100061262,
@@ -8185,8 +8185,8 @@
           },
           "AquaRio": {
             "visitacao2026": 140500,
-            "ecommerce2026": 43942,
-            "share2026": 0.3127544483985765,
+            "ecommerce2026": 46573.0,
+            "share2026": 0.33148042704626335,
             "visitacao2025": 127823,
             "ecommerce2025": 28701,
             "share2025": 0.22453705514656985,
@@ -8195,8 +8195,8 @@
           },
           "Paineiras": {
             "visitacao2026": 180282,
-            "ecommerce2026": 35194,
-            "share2026": 0.19521638322184134,
+            "ecommerce2026": 39173.0,
+            "share2026": 0.21728736091234843,
             "visitacao2025": 183774,
             "ecommerce2025": 26269,
             "share2025": 0.14294187425860025,
@@ -8205,41 +8205,41 @@
           },
           "M3F": {
             "visitacao2026": 71564,
-            "ecommerce2026": 11032,
-            "share2026": 0.15415572075345146,
+            "ecommerce2026": 10106.0,
+            "share2026": 0.14121625398244927,
             "visitacao2025": 61517.0,
-            "ecommerce2025": 6912.0,
+            "ecommerce2025": 6912,
             "share2025": 0.11235918526586147,
             "investimento2026": 5100.21,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 81985,
-            "ecommerce2026": 19911,
+            "ecommerce2026": 19911.0,
             "share2026": 0.24286149905470514,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 88468.47,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 14835,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 2876.75,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 7836,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 7350.6,
             "investimento2025": null
           }
@@ -8247,8 +8247,8 @@
         "Fevereiro": {
           "BioParque": {
             "visitacao2026": 23852,
-            "ecommerce2026": 8121,
-            "share2026": 0.3404745933255073,
+            "ecommerce2026": 9353.0,
+            "share2026": 0.39212644641958744,
             "visitacao2025": 22790,
             "ecommerce2025": 6893,
             "share2025": 0.30245721807810444,
@@ -8257,8 +8257,8 @@
           },
           "AquaRio": {
             "visitacao2026": 80525,
-            "ecommerce2026": 18372,
-            "share2026": 0.22815274759391493,
+            "ecommerce2026": 19735.0,
+            "share2026": 0.2450791679602608,
             "visitacao2025": 75172,
             "ecommerce2025": 14009,
             "share2025": 0.18635928271164795,
@@ -8267,8 +8267,8 @@
           },
           "Paineiras": {
             "visitacao2026": 146223,
-            "ecommerce2026": 26943,
-            "share2026": 0.18425965819330747,
+            "ecommerce2026": 29200.0,
+            "share2026": 0.19969498642484423,
             "visitacao2025": 142448,
             "ecommerce2025": 16018,
             "share2025": 0.11244805121869032,
@@ -8277,41 +8277,41 @@
           },
           "M3F": {
             "visitacao2026": 37590,
-            "ecommerce2026": 5736,
-            "share2026": 0.15259377494014364,
+            "ecommerce2026": 4975.0,
+            "share2026": 0.13234902899707368,
             "visitacao2025": 22323.0,
-            "ecommerce2025": 1921.0,
+            "ecommerce2025": 1921,
             "share2025": 0.08605474174618107,
             "investimento2026": 4208.71,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 39581,
-            "ecommerce2026": 7542,
-            "share2026": 0.19054596902554255,
+            "ecommerce2026": 7402.0,
+            "share2026": 0.18700891842045425,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 37731.86,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 7715,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 1594.41,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 4812,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 7075.15,
             "investimento2025": null
           }
@@ -8319,8 +8319,8 @@
         "Março": {
           "BioParque": {
             "visitacao2026": 38488,
-            "ecommerce2026": 18584,
-            "share2026": 0.48285179796300143,
+            "ecommerce2026": 20182.0,
+            "share2026": 0.5243712325919767,
             "visitacao2025": 37866,
             "ecommerce2025": 16622,
             "share2025": 0.438968995933027,
@@ -8329,8 +8329,8 @@
           },
           "AquaRio": {
             "visitacao2026": 86768,
-            "ecommerce2026": 22604,
-            "share2026": 0.26051078738705513,
+            "ecommerce2026": 22722.0,
+            "share2026": 0.2618707357551171,
             "visitacao2025": 67628,
             "ecommerce2025": 17031,
             "share2025": 0.25183356006387886,
@@ -8339,8 +8339,8 @@
           },
           "Paineiras": {
             "visitacao2026": 148916,
-            "ecommerce2026": 25380,
-            "share2026": 0.17043165274382874,
+            "ecommerce2026": 28187.0,
+            "share2026": 0.18928120551183217,
             "visitacao2025": 143770,
             "ecommerce2025": 19755,
             "share2025": 0.1374069694651179,
@@ -8349,41 +8349,41 @@
           },
           "M3F": {
             "visitacao2026": 37789,
-            "ecommerce2026": 4881,
-            "share2026": 0.12916457170075948,
+            "ecommerce2026": 4573.0,
+            "share2026": 0.12101405170816905,
             "visitacao2025": 35872.0,
-            "ecommerce2025": 4119.0,
+            "ecommerce2025": 4119,
             "share2025": 0.11482493309545048,
             "investimento2026": 4591.58,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 31733,
-            "ecommerce2026": 5526,
-            "share2026": 0.1741404846689566,
+            "ecommerce2026": 5738.0,
+            "share2026": 0.1808212271137302,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 47767.18,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 8354,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 4134.88,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 3971,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 6878.96,
             "investimento2025": null
           }
@@ -8391,8 +8391,8 @@
         "Abril": {
           "BioParque": {
             "visitacao2026": 52229,
-            "ecommerce2026": 21750,
-            "share2026": 0.416435313714603,
+            "ecommerce2026": 21795.0,
+            "share2026": 0.4172969040188401,
             "visitacao2025": 32180,
             "ecommerce2025": 10291,
             "share2025": 0.31979490366687385,
@@ -8401,8 +8401,8 @@
           },
           "AquaRio": {
             "visitacao2026": 76670,
-            "ecommerce2026": 23960,
-            "share2026": 0.3125081518194861,
+            "ecommerce2026": 23506.0,
+            "share2026": 0.3065866701447763,
             "visitacao2025": 76590,
             "ecommerce2025": 20314,
             "share2025": 0.2652304478391435,
@@ -8411,8 +8411,8 @@
           },
           "Paineiras": {
             "visitacao2026": 134840,
-            "ecommerce2026": 32460,
-            "share2026": 0.24072975378226047,
+            "ecommerce2026": 35309.0,
+            "share2026": 0.2618584989617324,
             "visitacao2025": 111898,
             "ecommerce2025": 17986,
             "share2025": 0.16073566998516506,
@@ -8421,41 +8421,41 @@
           },
           "M3F": {
             "visitacao2026": 49005,
-            "ecommerce2026": 7516,
-            "share2026": 0.1533721048872564,
+            "ecommerce2026": 7563.0,
+            "share2026": 0.15433119069482706,
             "visitacao2025": 40206.0,
-            "ecommerce2025": 5129.0,
+            "ecommerce2025": 5129,
             "share2025": 0.12756802467293438,
             "investimento2026": 4864.89,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 37819,
-            "ecommerce2026": 8406,
-            "share2026": 0.22226922975224095,
+            "ecommerce2026": 8272.0,
+            "share2026": 0.2187260371770803,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 60474.95,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 10668,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 6648.45,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 7668,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 6839.36,
             "investimento2025": null
           }
@@ -8463,8 +8463,8 @@
         "Maio": {
           "BioParque": {
             "visitacao2026": 42742,
-            "ecommerce2026": 17094,
-            "share2026": 0.39993449066491976,
+            "ecommerce2026": 17441.0,
+            "share2026": 0.4080529689766506,
             "visitacao2025": 59813,
             "ecommerce2025": 33032,
             "share2025": 0.5522545266079281,
@@ -8473,8 +8473,8 @@
           },
           "AquaRio": {
             "visitacao2026": 81111,
-            "ecommerce2026": 20824,
-            "share2026": 0.25673459826657297,
+            "ecommerce2026": 21479.0,
+            "share2026": 0.2648099517944545,
             "visitacao2025": 67690,
             "ecommerce2025": 18604,
             "share2025": 0.2748411877677648,
@@ -8483,8 +8483,8 @@
           },
           "Paineiras": {
             "visitacao2026": 110550,
-            "ecommerce2026": 24292,
-            "share2026": 0.21973767526006333,
+            "ecommerce2026": 26546.0,
+            "share2026": 0.2401266395296246,
             "visitacao2025": 101430,
             "ecommerce2025": 16250,
             "share2025": 0.16020901114068817,
@@ -8493,41 +8493,41 @@
           },
           "M3F": {
             "visitacao2026": 46075,
-            "ecommerce2026": 6968,
-            "share2026": 0.1512316874660879,
+            "ecommerce2026": 6446.0,
+            "share2026": 0.1399023331524688,
             "visitacao2025": 36473.0,
-            "ecommerce2025": 3347.0,
+            "ecommerce2025": 3347,
             "share2025": 0.09176651221451484,
             "investimento2026": 5191.48,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 34286,
-            "ecommerce2026": 7431,
-            "share2026": 0.21673569386921776,
+            "ecommerce2026": 9189.0,
+            "share2026": 0.2680102665811118,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 29125.9,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 13148,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 7031.72,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 4187,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 6834.81,
             "investimento2025": null
           }
@@ -8535,8 +8535,8 @@
         "Junho": {
           "BioParque": {
             "visitacao2026": 36899,
-            "ecommerce2026": 16256,
-            "share2026": 0.44055394455134284,
+            "ecommerce2026": 17077.0,
+            "share2026": 0.46280387002357787,
             "visitacao2025": 57733,
             "ecommerce2025": 29941,
             "share2025": 0.5186115393275943,
@@ -8545,8 +8545,8 @@
           },
           "AquaRio": {
             "visitacao2026": 76521,
-            "ecommerce2026": 17320,
-            "share2026": 0.2263430953594438,
+            "ecommerce2026": 18811.0,
+            "share2026": 0.2458279426562643,
             "visitacao2025": 71077,
             "ecommerce2025": 20465,
             "share2025": 0.28792717756798963,
@@ -8555,8 +8555,8 @@
           },
           "Paineiras": {
             "visitacao2026": 95514,
-            "ecommerce2026": 19001,
-            "share2026": 0.19893418765835374,
+            "ecommerce2026": 20974.0,
+            "share2026": 0.21959084532110476,
             "visitacao2025": 90225,
             "ecommerce2025": 13660,
             "share2025": 0.1513992795788307,
@@ -8565,41 +8565,41 @@
           },
           "M3F": {
             "visitacao2026": 42019,
-            "ecommerce2026": 7150,
-            "share2026": 0.17016111758966182,
+            "ecommerce2026": 5638.0,
+            "share2026": 0.13417739593993194,
             "visitacao2025": 32548.0,
-            "ecommerce2025": 3707.0,
+            "ecommerce2025": 3707,
             "share2025": 0.11389332677891115,
             "investimento2026": 4887,
             "investimento2025": null
           },
           "AquaFoz": {
             "visitacao2026": 35278,
-            "ecommerce2026": 5330,
-            "share2026": 0.15108566245251998,
+            "ecommerce2026": 8743.0,
+            "share2026": 0.2478315097227734,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 25409.63,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 10603,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 5970.37,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 5166,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 6361.09,
             "investimento2025": null
           }
@@ -8610,8 +8610,8 @@
             "ecommerce2026": 31105,
             "share2026": 0.36754974712860994,
             "visitacao2025": 52258,
-            "ecommerce2025": 14236,
-            "share2025": 0.272417620268667,
+            "ecommerce2025": 15486.0,
+            "share2025": 0.29633740288568255,
             "investimento2026": 32157.55,
             "investimento2025": 45578.0
           },
@@ -8620,8 +8620,8 @@
             "ecommerce2026": 31495,
             "share2026": 0.30217118076543,
             "visitacao2025": 136230,
-            "ecommerce2025": 48283,
-            "share2025": 0.35442266754752993,
+            "ecommerce2025": 50817.0,
+            "share2025": 0.37302356309183,
             "investimento2026": 83643.61,
             "investimento2025": 102022.0
           },
@@ -8630,8 +8630,8 @@
             "ecommerce2026": 23087,
             "share2026": 0.20761877355012184,
             "visitacao2025": 121532,
-            "ecommerce2025": 19682,
-            "share2025": 0.16194911628213146,
+            "ecommerce2025": 21604.0,
+            "share2025": 0.1777638811177303,
             "investimento2026": 40132.37,
             "investimento2025": 46267.38
           },
@@ -8646,32 +8646,32 @@
             "investimento2025": 206.0
           },
           "AquaFoz": {
-            "visitacao2026": 62479,
-            "ecommerce2026": 9729,
-            "share2026": 0.15571632068374974,
+            "visitacao2026": 50101,
+            "ecommerce2026": 14417.0,
+            "share2026": 0.2877587273707112,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
-            "investimento2026": 49604.76,
+            "share2025": null,
+            "investimento2026": 46895.37,
             "investimento2025": null
           },
           "3P": {
             "visitacao2026": 19633,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 5001.39,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 8070,
-            "ecommerce2026": 0,
-            "share2026": 0.0,
+            "ecommerce2026": null,
+            "share2026": 0,
             "visitacao2025": null,
             "ecommerce2025": null,
-            "share2025": 0,
+            "share2025": null,
             "investimento2026": 5314.67,
             "investimento2025": null
           }
@@ -8730,18 +8730,18 @@
             0.3197949037,
             0.5522545266,
             0.5186115393,
-            0.2724176203,
-            0.7846639392,
-            0.4137023121,
-            0.5197966874,
-            0.4904100444,
-            0.3078365204,
-            0.408625618,
-            0.3404745933,
-            0.482851798,
-            0.4164353137,
-            0.3999344907,
-            0.4405539446,
+            0.2963374029,
+            0.7836820573,
+            0.4133731933,
+            0.5479449654,
+            0.5173954348,
+            0.3680373287,
+            0.4475432633,
+            0.3921264464,
+            0.5243712326,
+            0.417296904,
+            0.408052969,
+            0.46280387,
             0.3675497471
           ],
           "visitacaoTotal": [
@@ -8795,18 +8795,18 @@
             0.2652304478,
             0.2748411878,
             0.2879271776,
-            0.3544226675,
-            0.2857018167,
-            0.2469214607,
-            0.3888955188,
-            0.3383860534,
-            0.2732896966,
-            0.3127544484,
-            0.2281527476,
-            0.2605107874,
-            0.3125081518,
-            0.2567345983,
-            0.2263430954,
+            0.3730235631,
+            0.3038940635,
+            0.294422724,
+            0.4268751119,
+            0.3614248122,
+            0.2946487526,
+            0.331480427,
+            0.245079168,
+            0.2618707358,
+            0.3065866701,
+            0.2648099518,
+            0.2458279427,
             0.3021711808
           ],
           "visitacaoTotal": [
@@ -8860,18 +8860,18 @@
             0.16073567,
             0.1602090111,
             0.1513992796,
-            0.1619491163,
-            0.1585465788,
-            0.1637202879,
-            0.1512302757,
-            0.16114025,
-            0.1802964598,
-            0.1952163832,
-            0.1842596582,
-            0.1704316527,
-            0.2407297538,
-            0.2197376753,
-            0.1989341877,
+            0.1777638811,
+            0.1814076061,
+            0.1824863086,
+            0.1817692978,
+            0.1760040954,
+            0.2033648953,
+            0.2172873609,
+            0.1996949864,
+            0.1892812055,
+            0.261858499,
+            0.2401266395,
+            0.2195908453,
             0.2076187736
           ],
           "visitacaoTotal": [
@@ -8931,12 +8931,12 @@
             0.1061327545,
             0.1282518641,
             0.1487484395,
-            0.1541557208,
-            0.1525937749,
-            0.1291645717,
-            0.1533721049,
-            0.1512316875,
-            0.1701611176,
+            0.141216254,
+            0.132349029,
+            0.1210140517,
+            0.1543311907,
+            0.1399023332,
+            0.1341773959,
             0.1615200531
           ],
           "visitacaoTotal": [
@@ -8981,7 +8981,7 @@
             60474.95,
             29125.9,
             25409.63,
-            49604.76
+            46895.37
           ],
           "share": [
             null,
@@ -8997,12 +8997,12 @@
             0.2190333606,
             0.2259340382,
             0.2428614991,
-            0.190545969,
-            0.1741404847,
-            0.2222692298,
-            0.2167356939,
-            0.1510856625,
-            0.1557163207
+            0.1870089184,
+            0.1808212271,
+            0.2187260372,
+            0.2680102666,
+            0.2478315097,
+            0.2877587274
           ],
           "visitacaoTotal": [
             null,
@@ -9023,7 +9023,7 @@
             37819,
             34286,
             35278,
-            62479
+            50101
           ]
         },
         "3P": {
@@ -13164,32 +13164,32 @@
         {
           "label": "Local",
           "v2025": 30072,
-          "v2026": 52805,
-          "delta": 0.755952381,
+          "v2026": 72554,
+          "delta": 1.412676244,
           "share25": 0.771789344,
-          "share26": 0.8412860261
+          "share26": 0.8577846612
         },
         {
           "label": "Brasileiros",
           "v2025": 2587,
-          "v2026": 3958,
-          "delta": 0.5299574797,
+          "v2026": 5325,
+          "delta": 1.058368767,
           "share25": 0.06639462068,
-          "share26": 0.0630586136
+          "share26": 0.06295591313
         },
         {
           "label": "Estrangeiros",
           "v2025": 6305,
-          "v2026": 6004,
-          "delta": -0.04773988898,
+          "v2026": 6704,
+          "delta": 0.06328310864,
           "share25": 0.1618160353,
-          "share26": 0.0956553603
+          "share26": 0.07925942565
         },
         {
           "label": "Total Mês",
           "v2025": 38964,
-          "v2026": 62767,
-          "delta": 0.6108972385,
+          "v2026": 84583,
+          "delta": 1.170798686,
           "share25": 1,
           "share26": 1
         }
@@ -13502,32 +13502,32 @@
         {
           "label": "Local",
           "v2025": 262960,
-          "v2026": 254976,
-          "delta": -0.03036203225,
+          "v2026": 274725,
+          "delta": 0.04474064497,
           "share25": 0.8534863567,
-          "share26": 0.8255711547
+          "share26": 0.8308282728
         },
         {
           "label": "Brasileiros",
           "v2025": 18160,
-          "v2026": 17735,
-          "delta": -0.0234030837,
+          "v2026": 19102,
+          "delta": 0.0518722467,
           "share25": 0.05894171067,
-          "share26": 0.05742306895
+          "share26": 0.05776861104
         },
         {
           "label": "Estrangeiros",
           "v2025": 26981,
-          "v2026": 36137,
-          "delta": 0.3393499129,
+          "v2026": 36837,
+          "delta": 0.3652940958,
           "share25": 0.08757193258,
-          "share26": 0.1170057763
+          "share26": 0.1114031162
         },
         {
           "label": "Total acumulado",
           "v2025": 308101,
-          "v2026": 308848,
-          "delta": 0.002424529619,
+          "v2026": 330664,
+          "delta": 0.07323247896,
           "share25": 1,
           "share26": 1
         }
