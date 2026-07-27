@@ -383,6 +383,20 @@ MESES_PT = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
             "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
 
+def _find_labeled_row_idx(rows, r0, label, max_offset=10):
+    """Acha o indice (em `rows`) da linha rotulada `label` na coluna A, procurando a
+    partir de r0+1 ate r0+max_offset. Usado pra achar "Ecommerce (base TI)" cujo
+    deslocamento varia por bloco (BioParque tem uma linha extra "Historico Pareto" que
+    empurra o resto do bloco pra baixo, os outros parques nao tem)."""
+    label_norm = label.strip().lower()
+    limit = min(r0 + max_offset, len(rows) - 1)
+    for idx in range(r0 + 1, limit + 1):
+        val = cell(rows[idx], 0)
+        if isinstance(val, str) and val.strip().lower() == label_norm:
+            return idx
+    return None
+
+
 def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dados):
     """Monta SHARE.investimentoMidia.meses para os parques rastreados nesta aba
     (AquaRio, BioParque, Paineiras, M3F, AquaFoz, e os dois do bloco "SOUL PARQUES":
@@ -406,7 +420,15 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
         idx_2025 = 25 + mes_idx  # coluna do mes/ano em 2025 (Jan/2025 comeca no indice 25)
         meses[mes_pt] = {}
         for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
-            vis_row, ecom_row, share_row, inv_row = rows[r0 + 1], rows[r0 + 2], rows[r0 + 3], rows[r0 + 4]
+            vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
+            # BUG EVITADO: por pedido do usuario, o painel passou a usar "Ecommerce (base
+            # TI)" em vez da linha "Ecommerce" simples -- mas o deslocamento dessa linha
+            # varia por bloco (BioParque tem uma linha extra "Historico Investimento em
+            # midia (Pareto)" que empurra o resto do bloco pra baixo), entao procuramos
+            # pelo rotulo em vez de usar um indice fixo.
+            ecom_ti_idx = _find_labeled_row_idx(rows, r0, "Ecommerce (base TI)")
+            ecom_row = rows[ecom_ti_idx] if ecom_ti_idx is not None else rows[r0 + 2]
+            share_row = rows[ecom_ti_idx + 1] if ecom_ti_idx is not None else rows[r0 + 3]
 
             def num(row, idx):
                 v = cell(row, idx)
@@ -420,7 +442,7 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
                 "share2026": (ecom26 / vis26) if (vis26 and ecom26 is not None) else num(share_row, idx_2026),
                 "visitacao2025": vis25,
                 "ecommerce2025": ecom25,
-                "share2025": (ecom25 / vis25) if vis25 else 0,
+                "share2025": (ecom25 / vis25) if (vis25 and ecom25 is not None) else num(share_row, idx_2025),
                 "investimento2026": num(inv_row, idx_2026),
                 "investimento2025": num(inv_row, idx_2025),
             }
@@ -446,7 +468,11 @@ def build_evolucao_mensal(service, spreadsheet_id, sheet_name, ano_inicio=2025, 
 
     parques = {}
     for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
-        vis_row, share_row, inv_row = rows[r0 + 1], rows[r0 + 3], rows[r0 + 4]
+        vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
+        # mesma logica de build_investimento_midia: usa a Share de "Ecommerce (base TI)",
+        # cujo deslocamento varia por bloco -- procura pelo rotulo em vez de indice fixo.
+        ecom_ti_idx = _find_labeled_row_idx(rows, r0, "Ecommerce (base TI)")
+        share_row = rows[ecom_ti_idx + 1] if ecom_ti_idx is not None else rows[r0 + 3]
 
         def num(row, idx):
             v = cell(row, idx)
