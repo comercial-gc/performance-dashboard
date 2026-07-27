@@ -1061,15 +1061,26 @@ function renderShareMetaChart(){
   container.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${goalLine}${bars}</svg>`;
 }
 
+// BUG EVITADO: a coluna "Acum." usava a aba "Dash Share GC", que tem um recorte e uma
+// metodologia proprios (Ecommerce comum, nao "base TI") -- por isso nao batia com a soma
+// das 7 celulas mensais ao lado (que usam base TI). Agora "Acum." e' sempre a soma dos
+// meses exibidos, pra ficar 100% consistente com o resto da tabela.
+function computeAccum(meses, park){
+  let ecom = 0, vis = 0, temDado = false;
+  INVEST_MONTHS.forEach(mes => {
+    const d = meses[mes] ? meses[mes][park] : null;
+    if(!d) return;
+    if(d.ecommerce2026!==null && d.ecommerce2026!==undefined){ ecom += d.ecommerce2026; temDado = true; }
+    if(d.visitacao2026!==null && d.visitacao2026!==undefined){ vis += d.visitacao2026; temDado = true; }
+  });
+  if(!temDado || vis===0) return null;
+  return { ecommerce2026: ecom, visitacao2026: vis, share2026: ecom/vis };
+}
+
 function renderShareMonthRegua(){
   const meses = SHARE.investimentoMidia.meses; // { Janeiro: {AquaRio:{...}, ...}, ... }
   document.getElementById('shareMonthNums').innerHTML =
     INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m==='Julho' ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
-  const accumByPark = {};
-  (SHARE.dashShareGC.parques||[]).forEach(p => {
-    const key = SHARE_NAME_TO_PARK[p.parque];
-    if(key) accumByPark[key] = p;
-  });
   const grid = document.getElementById('shareMonthGrid');
   const metaRows = SHARE_PARKS.map((park, parkIdx) => {
     const parkColor = PARK_COLORS[park] || '#888';
@@ -1091,7 +1102,7 @@ function renderShareMonthRegua(){
         <div class="sub"><span><b>Meta 25%</b></span><span class="d ${metaDir}">${metaArrow} ${Math.abs(ppDelta)}pp</span></div>
       </div>`;
     }).join('');
-    const acc = accumByPark[park];
+    const acc = computeAccum(meses, park);
     let accCell;
     if(acc){
       const accPpDelta = Math.round(acc.share2026*100) - Math.round(SHARE_META_GOAL*100);
@@ -1318,7 +1329,10 @@ function renderComboCharts(containerId, barField, barFmt){
     const carts = labels.map((l,i) => {
       if(!actionMonths.includes(l)) return '';
       const x = padL + i*slot + slot/2;
-      return `<text x="${x.toFixed(1)}" y="${(padT-10).toFixed(1)}" font-size="13" text-anchor="middle" data-tip="Ação de marketing em ${l}">🛒</text>`;
+      // maxInv tem 28% de folga acima do maior ponto da linha pontilhada (ver maxInv acima),
+      // entao o carrinho pode ficar mais perto do topo do plot (padT) sem nunca encostar
+      // no rótulo do investimento, mesmo no mês com o valor mais alto.
+      return `<text x="${x.toFixed(1)}" y="${(padT-4).toFixed(1)}" font-size="17" text-anchor="middle" data-tip="Ação de marketing em ${l}">🛒</text>`;
     }).join('');
 
     const monthLabels = labels.map((l,i) => `<text x="${(padL+i*slot+slot/2).toFixed(1)}" y="${H-5}" font-size="8" text-anchor="middle" fill="#8a938d">${l}</text>`).join('');
