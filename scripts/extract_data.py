@@ -270,6 +270,115 @@ def build_visitacao(service, spreadsheet_id, meses_com_dados):
 
 
 # ---------------------------------------------------------------------------
+# Visitação Diária Ponderada - 2026 - Final.xlsx -> aba "Visitação diária GC V2"
+# Tabela dinamica "Soma de Nova2026" (projecao diaria ponderada por parque, baseada no
+# padrao de dias da semana de anos anteriores) -- usada como "Meta" nos meses que ainda
+# nao tem resultado real (Agosto em diante). Por pedido do usuario, a Meta e' colocada no
+# MESMO campo "OBZ 2026" que a regua diaria ja mostra (nao criamos um campo novo) -- assim
+# a celula do dia mantem exatamente o layout de sempre (numero grande + "vs 25" + "OBZ"),
+# só que com o numero grande e "vs 25" vazios ("-") e o "OBZ" preenchido com a meta.
+# ---------------------------------------------------------------------------
+
+VISITACAO_META_PARK_NAMES = {
+    "Marco": "M3F", "3P": "Três Pescadores", "VV": "Vila Velha",
+    "AquaFoz": "AquaFoz", "AquaRio": "AquaRio", "BioParque": "BioParque",
+    "Paineiras": "Paineiras", "PNI": "PNI",
+}
+
+# BUG EVITADO: os "Rótulos de Coluna" dessa tabela dinamica NAO sao celulas de data de
+# verdade (isinstance datetime) -- sao TEXTO no formato "01/mar", "02/mar" etc. (o Excel
+# converte assim quando agrupa datas numa tabela dinamica). Por isso o parser abaixo le
+# esse texto em vez de checar isinstance(..., datetime.datetime).
+MES_ABREV_PT = {
+    "jan": 1, "fev": 2, "mar": 3, "abr": 4, "mai": 5, "jun": 6,
+    "jul": 7, "ago": 8, "set": 9, "out": 10, "nov": 11, "dez": 12,
+}
+
+
+def _parse_dd_mon(label, ano=2026):
+    if not isinstance(label, str) or "/" not in label:
+        return None
+    dia_str, _, mes_str = label.strip().partition("/")
+    mes_num = MES_ABREV_PT.get(mes_str.strip().lower())
+    if mes_num is None or not dia_str.strip().isdigit():
+        return None
+    try:
+        return datetime.date(ano, mes_num, int(dia_str))
+    except ValueError:
+        return None
+
+
+# BUG EVITADO / TEMPORARIO: por pedido do usuario, os dados da planilha "Visitação
+# Diária Ponderada - 2026" ainda NAO sao lidos ao vivo do Drive (a planilha ainda nao foi
+# compartilhada com a service account) -- por enquanto, ficam "amarrados" aqui como dado
+# ESTATICO, extraido uma unica vez da copia que o usuario enviou (Agosto a Dezembro/2026,
+# projecao "Nova2026" por parque/dia). Quando a planilha for conectada ao Drive, trocar o
+# uso de VISITACAO_META_ESTATICO em main() pela chamada a build_visitacao_meta() (a funcao
+# ja esta pronta logo abaixo, so' nao esta sendo chamada por enquanto).
+VISITACAO_META_ESTATICO = json.loads('''{"AGOSTO": {"Três Pescadores": [1019, 1019, 357, 0, 357, 357, 357, 1019, 1019, 357, 0, 357, 357, 357, 1019, 1019, 357, 0, 357, 357, 357, 1019, 1019, 357, 0, 357, 357, 357, 1019, 1019, 357], "M3F": [2462, 2462, 0, 862, 862, 862, 862, 2462, 2462, 0, 862, 862, 862, 862, 2462, 2462, 0, 862, 862, 862, 862, 2462, 2462, 0, 862, 862, 862, 862, 2462, 2462, 0], "AquaFoz": [2315, 2315, 810, 810, 810, 810, 810, 2315, 2315, 810, 810, 810, 810, 810, 2315, 2315, 810, 810, 810, 810, 810, 2315, 2315, 810, 810, 810, 810, 810, 2315, 2315, 810], "BioParque": [3816, 3816, 0, 0, 1335, 1335, 1335, 3816, 3816, 0, 0, 1335, 1335, 1335, 3816, 3816, 0, 0, 1335, 1335, 1335, 3816, 3816, 0, 0, 1335, 1335, 1335, 3816, 3816, 0], "AquaRio": [4678, 3236, 1951, 2355, 1970, 1884, 2474, 4678, 3236, 1951, 2355, 1970, 1884, 2474, 4678, 3236, 1951, 2355, 1970, 1884, 2474, 4678, 3236, 1951, 2355, 1970, 1884, 2474, 4678, 3236, 1951], "Vila Velha": [336, 336, 118, 0, 118, 118, 118, 336, 336, 118, 0, 118, 118, 118, 336, 336, 118, 0, 118, 118, 118, 336, 336, 118, 0, 118, 118, 118, 336, 336, 118], "PNI": [6816, 6544, 3308, 4438, 4544, 4625, 5721, 6816, 6544, 3308, 4438, 4544, 4625, 5721, 6816, 6544, 3308, 4438, 4544, 4625, 5721, 6816, 6544, 3308, 4438, 4544, 4625, 5721, 6816, 6544, 3308], "Paineiras": [3751, 4112, 3561, 2665, 3717, 3660, 3828, 3751, 4112, 3561, 2665, 3717, 3660, 3828, 3751, 4112, 3561, 2665, 3717, 3660, 3828, 3751, 4112, 3561, 2665, 3717, 3660, 3828, 3751, 4112, 3561]}, "SETEMBRO": {"Três Pescadores": [0, 376, 376, 376, 1074, 1074, 1074, 0, 376, 376, 376, 1074, 1074, 376, 0, 376, 376, 376, 1074, 1074, 376, 0, 376, 376, 376, 1074, 1074, 376, 0, 376], "M3F": [1102, 1102, 1102, 1102, 2561, 2561, 0, 1268, 1102, 1102, 1102, 2561, 2561, 0, 1102, 1102, 1102, 1102, 2561, 2561, 0, 1102, 1102, 1102, 1102, 2561, 2561, 0, 1102, 1102], "AquaFoz": [1021, 1021, 1021, 1021, 2219, 2219, 2423, 1021, 1021, 1021, 1021, 2219, 2219, 1021, 1021, 1021, 1021, 1021, 2219, 2219, 1021, 1021, 1021, 1021, 1021, 2219, 2219, 1021, 1021, 1021], "BioParque": [0, 1249, 1249, 1249, 3568, 3568, 0, 0, 1249, 1249, 1249, 3568, 3568, 0, 0, 1249, 1249, 1249, 3568, 3568, 0, 0, 1249, 1249, 1249, 3568, 3568, 0, 0, 1249], "AquaRio": [2101, 1993, 2422, 2473, 4021, 3574, 4127, 2101, 1993, 2422, 2473, 4021, 3574, 2127, 2101, 1993, 2422, 2473, 4021, 3574, 2127, 2101, 1993, 2422, 2473, 3021, 2574, 2127, 2101, 1993], "Vila Velha": [0, 147, 147, 147, 420, 420, 420, 0, 147, 147, 147, 420, 420, 147, 0, 147, 147, 147, 420, 420, 147, 0, 147, 147, 147, 420, 420, 147, 0, 147], "PNI": [4509, 5233, 5135, 5159, 7572, 7692, 6880, 4509, 5233, 5135, 5159, 7572, 7692, 3880, 4509, 5233, 5135, 5159, 7572, 7692, 3880, 4509, 4233, 4135, 5159, 7572, 7692, 3880, 4509, 4233], "Paineiras": [2892, 3301, 3120, 4542, 5000, 3360, 3998, 2892, 3301, 3120, 4542, 5000, 3360, 3998, 2892, 3301, 3120, 4542, 5000, 3360, 3998, 2892, 3301, 3120, 4542, 5000, 3360, 3998, 2892, 3301]}, "OUTUBRO": {"Três Pescadores": [322, 322, 920, 920, 322, 0, 322, 322, 322, 920, 920, 920, 0, 322, 322, 322, 920, 920, 322, 0, 322, 322, 322, 920, 920, 322, 0, 322, 322, 322, 920], "M3F": [1104, 1169, 2199, 2199, 0, 1104, 1104, 1104, 1104, 2199, 2199, 2199, 1104, 1104, 1104, 1104, 2199, 2199, 0, 1104, 1104, 1104, 1104, 2199, 2199, 0, 1104, 1104, 1104, 1104, 2199], "AquaFoz": [1115, 1115, 2493, 2493, 1115, 1115, 1115, 1115, 1115, 2493, 2493, 2493, 1115, 1115, 1115, 1115, 2493, 2493, 1115, 1115, 1115, 1115, 1115, 2493, 2493, 1115, 1115, 1115, 1115, 1115, 2484], "BioParque": [1501, 1501, 4729, 4729, 0, 0, 1501, 1501, 1501, 4729, 4729, 8000, 0, 1501, 1501, 1501, 4729, 4729, 0, 0, 1501, 1501, 1501, 4729, 4729, 0, 0, 1501, 1501, 1501, 4729], "AquaRio": [2431, 2742, 4725, 5569, 2503, 2600, 3349, 2431, 2742, 4725, 5569, 4503, 2600, 3349, 2431, 2742, 4725, 5569, 2503, 2600, 3349, 2431, 2742, 3725, 4569, 2503, 2600, 3349, 2431, 2742, 4725], "Vila Velha": [124, 124, 355, 355, 124, 0, 124, 124, 124, 355, 355, 355, 0, 124, 124, 124, 355, 355, 124, 0, 124, 124, 124, 355, 355, 124, 0, 124, 124, 124, 355], "PNI": [5108, 5838, 8611, 7465, 5486, 6140, 4799, 5108, 5838, 8611, 7465, 5486, 6140, 4799, 5108, 5838, 8611, 7465, 5486, 6140, 4799, 5108, 5838, 8611, 7465, 5486, 6140, 4799, 5108, 5838, 8611], "Paineiras": [3121, 3623, 4304, 4389, 4577, 3131, 2398, 3121, 3623, 4304, 4389, 4577, 3131, 2398, 3121, 3623, 4304, 4389, 4577, 3131, 2398, 3121, 3623, 4304, 4389, 4577, 3131, 2398, 3121, 3623, 4304]}, "NOVEMBRO": {"Três Pescadores": [1069, 1069, 0, 374, 374, 374, 1069, 1069, 374, 0, 374, 374, 374, 1069, 1069, 374, 0, 374, 1230, 1069, 1069, 1069, 374, 0, 374, 374, 374, 1069, 1069, 374], "M3F": [2444, 2443, 1254, 1254, 1254, 1254, 2443, 2443, 0, 1254, 1254, 1254, 1254, 2443, 2443, 0, 1254, 1254, 1254, 1254, 2443, 2443, 0, 1254, 1254, 1254, 1254, 2443, 2443, 0], "AquaFoz": [2665, 2665, 1101, 1101, 1101, 1101, 2665, 2665, 1101, 1101, 1101, 1101, 1101, 2665, 2665, 1101, 1101, 1101, 2271, 2665, 2665, 2665, 1101, 1101, 1101, 1101, 1101, 2665, 2665, 999], "BioParque": [2627, 2627, 0, 920, 920, 920, 2627, 2627, 0, 0, 920, 920, 920, 2627, 2627, 0, 0, 920, 3021, 2627, 2627, 2627, 0, 0, 920, 920, 920, 2627, 2627, 0], "AquaRio": [3402, 3548, 1998, 1755, 2046, 2732, 3126, 3002, 2648, 1998, 1755, 2046, 2732, 3126, 3002, 2648, 1998, 1755, 2046, 4232, 3126, 3002, 2648, 1998, 1755, 2046, 2732, 3126, 3002, 2648], "Vila Velha": [456, 456, 0, 160, 160, 160, 456, 456, 160, 0, 160, 160, 160, 456, 456, 160, 0, 160, 456, 524, 456, 456, 160, 0, 160, 160, 160, 456, 456, 160], "PNI": [9084, 5112, 5934, 5232, 6384, 7437, 8572, 9084, 5112, 5934, 5232, 6384, 7437, 8572, 9084, 5112, 5934, 5232, 6384, 7437, 8572, 9084, 5112, 5934, 5232, 6384, 7437, 8572, 9084, 5112], "Paineiras": [3391, 3695, 3327, 4177, 4074, 5648, 5323, 3391, 3695, 3327, 4177, 4074, 5648, 5323, 3391, 3695, 3327, 4177, 4074, 5648, 5323, 3391, 3695, 3327, 4177, 4074, 5648, 5323, 3391, 3695]}, "DEZEMBRO": {"Três Pescadores": [0, 393, 393, 393, 852, 852, 393, 0, 393, 393, 393, 852, 852, 393, 0, 393, 393, 393, 1124, 1124, 420, 420, 420, 1293, 1124, 1124, 1124, 470, 470, 435, 420], "M3F": [1121, 1121, 1121, 1121, 1950, 1950, 0, 1121, 1121, 1121, 1121, 1950, 1950, 0, 1121, 1121, 1121, 1121, 2010, 2010, 2010, 2010, 2010, 0, 2745, 2745, 2745, 2010, 2069, 2500, 0], "AquaFoz": [1042, 1042, 1042, 1042, 2521, 2521, 1042, 1042, 1042, 1042, 1042, 2521, 2521, 1042, 1042, 1042, 1042, 1042, 2977, 2977, 1042, 1042, 1042, 1042, 2000, 2977, 2977, 2400, 2400, 2400, 2151], "BioParque": [0, 1101, 1101, 1101, 2625, 2625, 0, 0, 1101, 1101, 1101, 2625, 2510, 0, 0, 1101, 1101, 1101, 2525, 2525, 1300, 1300, 1300, 0, 1900, 2625, 2625, 1650, 1650, 1650, 0], "AquaRio": [1852, 1862, 1905, 1943, 2621, 2281, 1852, 1862, 1905, 1943, 1943, 3140, 2281, 1943, 1852, 1862, 1905, 1943, 3251, 3096, 1852, 1862, 1905, 1351, 2251, 3685, 3950, 3482, 3485, 3489, 2051], "Vila Velha": [0, 148, 148, 148, 423, 423, 148, 0, 148, 148, 148, 423, 423, 148, 0, 148, 148, 148, 423, 423, 148, 0, 148, 148, 246, 423, 423, 240, 240, 240, 240], "PNI": [5661, 6053, 5842, 5776, 7084, 7008, 5601, 5661, 6053, 5842, 5776, 7984, 7908, 5601, 5661, 6053, 5842, 5776, 8984, 8908, 5661, 6053, 5842, 7893, 8280, 8280, 8084, 7680, 7540, 6852, 7152], "Paineiras": [3004, 3483, 3471, 4076, 3625, 3690, 3203, 3004, 3983, 4471, 4476, 3625, 3690, 3203, 3504, 3983, 4471, 4476, 3625, 3690, 3803, 3404, 3983, 2671, 4476, 3425, 3490, 4203, 4504, 4983, 4471]}}''')
+
+
+def build_visitacao_meta(service, spreadsheet_id, sheet_name, meses_meta):
+    """Le a tabela dinamica 'Soma de Nova2026' (uma coluna por dia do ano, uma linha por
+    parque) e devolve {mes: {parque: [valor_dia1, valor_dia2, ...]}} só para os meses
+    informados (tipicamente os que ainda nao tem resultado real)."""
+    if not meses_meta:
+        return {}
+    rows = get_values(service, spreadsheet_id, sheet_name)
+
+    # Acha a tabela dinamica de verdade: a aba tem MAIS DE UMA celula solta chamada
+    # "Soma de Nova2026" (ex.: uma mini-tabela de referencia perto do topo, com "Rótulos
+    # de Linha" tambem na linha seguinte, mas SEM colunas de data -- so' nomes de parque).
+    # Por isso nao paramos no primeiro match: só aceitamos o candidato cuja linha de
+    # cabecalho realmente tem rótulos de data (formato "01/mar") nas colunas seguintes.
+    col_to_date = {}
+    header_row_idx, label_col = None, None
+    for i, row in enumerate(rows):
+        for j, val in enumerate(row):
+            if val != "Soma de Nova2026":
+                continue
+            next_row = rows[i + 1] if i + 1 < len(rows) else []
+            if cell(next_row, j) != "Rótulos de Linha":
+                continue
+            candidato = {}
+            for c in range(j + 1, len(next_row)):
+                dt = _parse_dd_mon(cell(next_row, c))
+                if dt is not None:
+                    candidato[c] = dt
+            if candidato:
+                header_row_idx, label_col, col_to_date = i + 1, j, candidato
+                break
+        if header_row_idx is not None:
+            break
+    if header_row_idx is None:
+        return {}
+
+    result = {mes: {} for mes in meses_meta}
+    for mes in meses_meta:
+        n_days = calendar.monthrange(2026, MONTH_NUMBER[mes])[1]
+        for park in set(VISITACAO_META_PARK_NAMES.values()):
+            result[mes][park] = [None] * n_days
+
+    for r in range(header_row_idx + 1, len(rows)):
+        label = cell(rows[r], label_col)
+        if not isinstance(label, str):
+            continue
+        if label.strip().lower().startswith("total"):
+            break
+        park = VISITACAO_META_PARK_NAMES.get(label)
+        if park is None:
+            continue
+        for c, dt in col_to_date.items():
+            mes_en = next((m for m in meses_meta if MONTH_NUMBER[m] == dt.month), None)
+            if mes_en is None:
+                continue
+            v = cell(rows[r], c)
+            if isinstance(v, (int, float)):
+                result[mes_en][park][dt.day - 1] = v
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Visitação Parques 2026.xlsx -> aba "Mapa Clima"
 # Serie diaria (sequencial, ano inteiro) com o codigo de clima do dia, por regiao. O
 # painel so' usa 1 "parque representante" por regiao (CLIMA_REGIOES no HTML): AquaRio
@@ -781,6 +890,35 @@ def main():
 
     print("Lendo Visitação Parques 2026...", file=sys.stderr)
     visitacao = build_visitacao(service, cfg["visitacao_parques_id"], cfg["meses_com_dados"])
+
+    # Meses sem resultado real ainda (Agosto em diante, tipicamente): entram no VISITACAO
+    # só com a Meta (projecao "Nova2026") no lugar do OBZ -- Realizado fica None/vazio.
+    # TEMPORARIO: usa o dado estatico (VISITACAO_META_ESTATICO) em vez de ler ao vivo do
+    # Drive, ate a planilha "Visitação Diária Ponderada" ser compartilhada com a service
+    # account. Pra trocar pra leitura ao vivo depois, troque a linha abaixo por:
+    #   visitacao_meta = build_visitacao_meta(service, cfg["visitacao_diaria_ponderada_id"], cfg["sheet_names"]["visitacao_diaria_gc_v2"], meses_meta)
+    meses_meta = [m for m in cfg["meses"] if m not in cfg["meses_com_dados"]]
+    if meses_meta:
+        print("Usando Meta estática (Ago-Dez) — planilha ainda não conectada ao Drive...", file=sys.stderr)
+        visitacao_meta = VISITACAO_META_ESTATICO
+        for mes in meses_meta:
+            month_number = MONTH_NUMBER[mes]
+            n_days = calendar.monthrange(2026, month_number)[1]
+            daily = {}
+            for park in cfg["parques"]:
+                meta_arr = visitacao_meta.get(mes, {}).get(park)
+                daily[park] = {
+                    "Realizado 2026": [None] * n_days,
+                    "Realizado 2025": [None] * n_days,
+                    "OBZ 2026": meta_arr if meta_arr is not None else [None] * n_days,
+                }
+            visitacao[mes] = {
+                "monthNumber": month_number,
+                "nDays": n_days,
+                "summary": {},
+                "daily": daily,
+                "atrativos": {"daily": {}, "accum": {}},
+            }
 
     print("Lendo Mapa Clima...", file=sys.stderr)
     clima_emoji = build_clima_emoji(
