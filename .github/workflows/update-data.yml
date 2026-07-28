@@ -1,10 +1,6 @@
 name: Atualizar data.json do painel
 
 on:
-  schedule:
-    - cron: "30 11 * * *"   # 08:30 Brasília
-    - cron: "0 17 * * *"    # 14:00 Brasília
-    - cron: "0 22 * * *"    # 19:00 Brasília
   workflow_dispatch: {}  # permite rodar manualmente pelo botão "Run workflow" no GitHub
 
 permissions:
