@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-28T07:49:10.173187Z",
+  "geradoEm": "2026-07-28T13:29:34.471336Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -6836,14 +6836,14 @@
           "MDE": {
             "realizado2026": 70150,
             "pctAq2026": 0.1294053625,
-            "realizado2025": 91561,
-            "pctAq2025": 0.1883986699
+            "realizado2025": 91929,
+            "pctAq2025": 0.1891558778
           },
           "MDC": {
             "realizado2026": 78112,
             "pctAq2026": 0.1440928251,
-            "realizado2025": 109457,
-            "pctAq2025": 0.2252220183
+            "realizado2025": 109931,
+            "pctAq2025": 0.226197335
           }
         }
       }
@@ -6853,100 +6853,100 @@
       "nDays": 31,
       "summary": {
         "AquaRio": {
-          "realizado": 104229,
-          "obz": 117656,
-          "pctObz": -0.1141208268,
-          "y2025": 108725,
-          "pct2025": -0.04135203495,
-          "acumRealizado": 646324,
-          "acumObzParcial": 627773,
-          "acumPctObz": 0.02955049038,
-          "acum2025": 594721,
-          "acumPct2025": 0.08676841746
+          "realizado": 107518,
+          "obz": 122796,
+          "pctObz": -0.1244177335,
+          "y2025": 115085,
+          "pct2025": -0.06575140114,
+          "acumRealizado": 649613,
+          "acumObzParcial": 632913,
+          "acumPctObz": 0.02638593298,
+          "acum2025": 601081,
+          "acumPct2025": 0.08074119794
         },
         "BioParque": {
-          "realizado": 84628,
-          "obz": 125722,
-          "pctObz": -0.3268640333,
-          "y2025": 42784,
-          "pct2025": 0.9780291698,
-          "acumRealizado": 330614,
-          "acumObzParcial": 433826.01,
-          "acumPctObz": -0.2379110695,
-          "acum2025": 311929,
-          "acumPct2025": 0.05990145193
+          "realizado": 88039,
+          "obz": 128799,
+          "pctObz": -0.3164620843,
+          "y2025": 47774,
+          "pct2025": 0.8428224557,
+          "acumRealizado": 334025,
+          "acumObzParcial": 436903.01,
+          "acumPctObz": -0.2354710488,
+          "acum2025": 316919,
+          "acumPct2025": 0.05397593707
         },
         "Paineiras": {
-          "realizado": 111199,
-          "obz": 108608,
-          "pctObz": 0.02385643783,
-          "y2025": 102260,
-          "pct2025": 0.0874144338,
-          "acumRealizado": 927524,
-          "acumObzParcial": 920214.364,
-          "acumPctObz": 0.007943405674,
-          "acum2025": 876239,
-          "acumPct2025": 0.05852855214
+          "realizado": 118907,
+          "obz": 113602,
+          "pctObz": 0.04669812151,
+          "y2025": 108243,
+          "pct2025": 0.09851907283,
+          "acumRealizado": 935232,
+          "acumObzParcial": 925208.364,
+          "acumPctObz": 0.01083392281,
+          "acum2025": 882222,
+          "acumPct2025": 0.0600869169
         },
         "PNI": {
-          "realizado": 222315,
-          "obz": 192278,
-          "pctObz": 0.1562165198,
-          "y2025": 186816,
-          "pct2025": 0.1900211973,
-          "acumRealizado": 1285918,
-          "acumObzParcial": 1184399,
-          "acumPctObz": 0.08571351377,
-          "acum2025": 1141076,
-          "acumPct2025": 0.1269345775
+          "realizado": 232312,
+          "obz": 199043,
+          "pctObz": 0.1671447878,
+          "y2025": 192745,
+          "pct2025": 0.2052815897,
+          "acumRealizado": 1295915,
+          "acumObzParcial": 1191164,
+          "acumPctObz": 0.08794003177,
+          "acum2025": 1147005,
+          "acumPct2025": 0.1298250662
         },
         "M3F": {
-          "realizado": 69366,
-          "obz": 56956,
-          "pctObz": 0.2178874921,
-          "y2025": 53865,
-          "pct2025": 0.287774993,
-          "acumRealizado": 353408,
-          "acumObzParcial": 295465,
-          "acumPctObz": 0.19610783,
-          "acum2025": 282804,
-          "acumPct2025": 0.2496570063
+          "realizado": 71247,
+          "obz": 58350,
+          "pctObz": 0.2210282776,
+          "y2025": 54365,
+          "pct2025": 0.3105306723,
+          "acumRealizado": 355289,
+          "acumObzParcial": 296859,
+          "acumPctObz": 0.1968274501,
+          "acum2025": 283304,
+          "acumPct2025": 0.2540910118
         },
         "AquaFoz": {
-          "realizado": 62479,
-          "obz": 51038.534,
-          "pctObz": 0.2241534994,
+          "realizado": 64360,
+          "obz": 52287.729,
+          "pctObz": 0.2308815325,
           "y2025": 0.0,
           "pct2025": "-%",
-          "acumRealizado": 323161,
-          "acumObzParcial": 299076.334,
-          "acumPctObz": 0.08053016325,
+          "acumRealizado": 325042,
+          "acumObzParcial": 300325.529,
+          "acumPctObz": 0.08229893437,
           "acum2025": 0,
           "acumPct2025": "-%"
         },
         "Três Pescadores": {
-          "realizado": 19633,
-          "obz": 21308.52,
-          "pctObz": -0.07863145821,
-          "y2025": 18658,
-          "pct2025": 0.05225640476,
-          "acumRealizado": 84956,
-          "acumObzParcial": 100463.372,
-          "acumPctObz": -0.1543584661,
-          "acum2025": 90517,
-          "acumPct2025": -0.06143597335
+          "realizado": 20049,
+          "obz": 21830.06,
+          "pctObz": -0.08158749907,
+          "y2025": 19593,
+          "pct2025": 0.02327361813,
+          "acumRealizado": 85372,
+          "acumObzParcial": 100984.912,
+          "acumPctObz": -0.1546063832,
+          "acum2025": 91452,
+          "acumPct2025": -0.06648296374
         },
         "Vila Velha": {
-          "realizado": 8070,
-          "obz": 7674.79,
-          "pctObz": 0.05149456858,
-          "y2025": 7172,
-          "pct2025": 0.1252091467,
-          "acumRealizado": 41710,
-          "acumObzParcial": 42292.802,
-          "acumPctObz": -0.01378016997,
-          "acum2025": 38879,
-          "acumPct2025": 0.07281565884
+          "realizado": 8273,
+          "obz": 7877.52,
+          "pctObz": 0.05020361738,
+          "y2025": 7500,
+          "pct2025": 0.1030666667,
+          "acumRealizado": 41913,
+          "acumObzParcial": 42495.532,
+          "acumPctObz": -0.01370807642,
+          "acum2025": 39207,
+          "acumPct2025": 0.06901828755
         }
       },
       "daily": {
@@ -7073,12 +7073,12 @@
             "sun",
             "sun",
             "sun",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            "sun",
+            "rain",
+            "sun",
+            "cloud",
+            "sun",
+            "sun",
             null,
             null,
             null
@@ -7406,14 +7406,14 @@
             "sun",
             "sun",
             "sun",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            "cloud-rain",
+            "cloud-rain",
+            "rain",
+            "cloud",
+            "cloud-rain",
+            "cloud",
+            "sun",
+            "sun",
             null,
             null,
             null,
@@ -7448,7 +7448,7 @@
             2154.0,
             3742.0,
             3850.0,
-            null,
+            1881.0,
             null,
             null,
             null,
@@ -7650,7 +7650,7 @@
             507.0,
             1560.0,
             990.0,
-            null,
+            416.0,
             null,
             null,
             null,
@@ -7742,14 +7742,14 @@
             "sun",
             "sun",
             "sun",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            "sun",
+            "sun",
+            "sun",
+            "sun",
+            "rain",
+            "cloud-rain",
+            "cloud",
+            "cloud",
             null,
             null,
             null,
@@ -7784,7 +7784,7 @@
             172.0,
             470.0,
             414.0,
-            null,
+            203.0,
             null,
             null,
             null,
@@ -7859,7 +7859,7 @@
           "Emoji": [
             "sun",
             "sun",
-            "sun",
+            "cloud",
             "sun",
             "sun",
             "cloud",
@@ -7876,14 +7876,14 @@
             "sun",
             "sun",
             "sun",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            "cloud",
+            "cloud",
+            "rain",
+            "cloud",
+            "cloud",
+            "cloud",
+            "sun",
+            "sun",
             null,
             null,
             null,
@@ -7920,7 +7920,7 @@
             518.0,
             373.0,
             196.0,
-            197.0,
+            208.0,
             null,
             null,
             null,
@@ -7953,7 +7953,7 @@
             1072.0,
             799.0,
             403.0,
-            413.0,
+            416.0,
             null,
             null,
             null,
@@ -7986,7 +7986,7 @@
             1357.0,
             980.0,
             521.0,
-            413.0,
+            435.0,
             null,
             null,
             null,
@@ -7995,22 +7995,22 @@
         },
         "accum": {
           "GEX": {
-            "realizado2026": 44266,
-            "pctAq2026": 0.06848886936,
+            "realizado2026": 44277,
+            "pctAq2026": 0.06815904238,
             "realizado2025": null,
             "pctAq2025": null
           },
           "MDE": {
-            "realizado2026": 82254,
-            "pctAq2026": 0.1272643442,
-            "realizado2025": 91561,
-            "pctAq2025": 0.1539562249
+            "realizado2026": 82257,
+            "pctAq2026": 0.1266246211,
+            "realizado2025": 91929,
+            "pctAq2025": 0.1529394541
           },
           "MDC": {
-            "realizado2026": 94319,
-            "pctAq2026": 0.1459314523,
-            "realizado2025": 109457,
-            "pctAq2025": 0.1840476459
+            "realizado2026": 94341,
+            "pctAq2026": 0.1452264656,
+            "realizado2025": 109931,
+            "pctAq2025": 0.1828888286
           }
         }
       }
@@ -12089,13 +12089,13 @@
       "cv": 50390
     },
     "JULHO": {
-      "visitacao": 19633,
-      "cv": 85794
+      "visitacao": 20049,
+      "cv": 87730
     }
   },
   "CAPTACAO_CV_3P_ANUAL": {
-    "visitacao": 83250,
-    "cv": 386120
+    "visitacao": 83666,
+    "cv": 388056
   },
   "SEMMORADOR_RATIO": {
     "M3F": 0.9497363334637672,
@@ -12669,7 +12669,7 @@
             "visitacao2025": 136230,
             "ecommerce2025": 50817.0,
             "share2025": 0.37302356309183,
-            "investimento2026": 100568.66,
+            "investimento2026": 100573.55,
             "investimento2025": 102022.0
           },
           "Paineiras": {
@@ -12679,7 +12679,7 @@
             "visitacao2025": 121532,
             "ecommerce2025": 21604.0,
             "share2025": 0.1777638811177303,
-            "investimento2026": 46789.88,
+            "investimento2026": 46945.2,
             "investimento2025": 46267.38
           },
           "M3F": {
@@ -12833,7 +12833,7 @@
             72111.52,
             57951.58,
             34726.44,
-            100568.66
+            100573.55
           ],
           "share": [
             0.2245370551,
@@ -12898,7 +12898,7 @@
             30134.01,
             40765.67,
             31278.29,
-            46789.88
+            46945.2
           ],
           "share": [
             0.1429418743,
