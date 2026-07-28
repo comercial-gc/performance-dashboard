@@ -284,6 +284,14 @@
   .imt-detail-empty{ padding:20px; text-align:center; color:var(--muted); font-size:13px; }
   .imt-note{ font-size:11px; color:var(--muted); margin-top:16px; font-style:italic; }
 
+  /* ── Aba Eventos ── */
+  .eventos-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .eventos-table th{ background:#f5f5f5; padding:7px 10px; text-align:left; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); }
+  .eventos-table td{ padding:7px 10px; text-align:left; border-bottom:1px solid #f0f0f0; vertical-align:top; }
+  .eventos-table td:first-child{ white-space:nowrap; font-weight:700; }
+  .eventos-table td:nth-child(2){ white-space:nowrap; }
+  .eventos-table tbody tr:hover{ background:#fafcf9; }
+
 
   /* ── Resumo executivo por parque (estilo relatório) ── */
   .imt-park-summary{ margin-top:20px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px 28px; }
@@ -470,6 +478,7 @@
     <button data-tab="share">Share E-commerce</button>
     <button data-tab="invest-mkt">Investimento Marketing</button>
     <button data-tab="mix-origem">Mix de Origem</button>
+    <button data-tab="eventos">Eventos</button>
   </nav>
 </header>
 
@@ -777,6 +786,29 @@
         <div id="climaForecastBody" class="weather-body">Carregando previsão...</div>
       </div>
     </section>
+  </div>
+</section>
+
+<section id="tab-eventos" style="display:none;">
+  <div class="mix-container">
+    <div class="mix-title-row">
+      <div class="mix-title-bar"></div>
+      <div>
+        <div class="mix-title">Eventos</div>
+        <div class="mix-subtitle">Calendário de ocorrências que podem impactar a visitação (aba "Eventos")</div>
+      </div>
+    </div>
+    <div class="imt-filter-row">
+      <div class="imt-select-wrap">
+        <label>Mês</label>
+        <select id="eventosMesSelect" onchange="renderEventosTab()"></select>
+      </div>
+      <div class="imt-select-wrap">
+        <label>Parque</label>
+        <select id="eventosParqueSelect" onchange="renderEventosTab()"></select>
+      </div>
+    </div>
+    <div id="eventosTableWrap"></div>
   </div>
 </section>
 
@@ -1924,6 +1956,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn => {
     document.getElementById('tab-mix-origem').style.display = tab==='mix-origem' ? '' : 'none';
     document.getElementById('tab-clima').style.display = tab==='clima' ? '' : 'none';
     if(tab==='clima'){ renderClimaTab(); if(!climaForecastLoaded){ climaForecastLoaded = true; loadClimaForecast(); } }
+    document.getElementById('tab-eventos').style.display = tab==='eventos' ? '' : 'none';
     document.getElementById('toolbar-visitacao').style.display = tab==='visitacao' ? '' : 'none';
   });
 });
@@ -2302,6 +2335,57 @@ function renderParkSummary() {
 
 let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
+let EVENTOS = [];
+
+function populateEventosSelects(){
+  const mesSel = document.getElementById('eventosMesSelect');
+  const parqueSel = document.getElementById('eventosParqueSelect');
+  if(!mesSel || !parqueSel) return;
+
+  const mesKeys = []; // { key:'2025-04', label:'Abril/2025' }
+  const seen = new Set();
+  EVENTOS.forEach(e => {
+    const key = e.data.slice(0,7); // 'YYYY-MM'
+    if(!seen.has(key)){
+      seen.add(key);
+      mesKeys.push({ key, label: `${e.mes}/${e.ano}` });
+    }
+  });
+  mesKeys.sort((a,b) => a.key.localeCompare(b.key));
+
+  mesSel.innerHTML = '<option value="">Todos os meses</option>' +
+    mesKeys.map(m => `<option value="${m.key}">${m.label}</option>`).join('');
+
+  const parques = [...new Set(EVENTOS.map(e => e.parque).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'pt-BR'));
+  parqueSel.innerHTML = '<option value="">Todos os parques</option>' +
+    parques.map(p => `<option value="${p}">${p}</option>`).join('');
+}
+
+function renderEventosTab(){
+  const wrap = document.getElementById('eventosTableWrap');
+  if(!wrap) return;
+  const mesFiltro = document.getElementById('eventosMesSelect') ? document.getElementById('eventosMesSelect').value : '';
+  const parqueFiltro = document.getElementById('eventosParqueSelect') ? document.getElementById('eventosParqueSelect').value : '';
+
+  let lista = EVENTOS;
+  if(mesFiltro) lista = lista.filter(e => e.data.slice(0,7) === mesFiltro);
+  if(parqueFiltro) lista = lista.filter(e => e.parque === parqueFiltro);
+
+  if(!lista.length){
+    wrap.innerHTML = '<div class="imt-detail-empty">Nenhum evento encontrado para o filtro selecionado.</div>';
+    return;
+  }
+
+  const rows = lista.map(e => {
+    const [y,m,d] = e.data.split('-');
+    return `<tr><td>${d}/${m}/${y}</td><td>${e.parque || '-'}</td><td>${e.evento}</td></tr>`;
+  }).join('');
+
+  wrap.innerHTML = `<table class="eventos-table">
+    <thead><tr><th>Data</th><th>Parque</th><th>Evento</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
 const MIX_PARK_COLORS = {"AquaRio": "#305496", "BioParque": "#C65911", "Paineiras": "#548235", "M3F": "#CC0000", "AquaFoz": "#45818E", "Três Pescadores": "#741B47", "Vila Velha": "#BF9000", "PNI": "#0D5955"};
 const MIX_CAT_COLORS = {
   "Local": "#3b7ddd", "Morador": "#3b7ddd", "Morador/Estado": "#3b7ddd",
@@ -2560,6 +2644,7 @@ async function carregarDados(){
     INVEST_MKT_RESUMO = data.INVEST_MKT_RESUMO || {};
     MIX_ORIGEM = data.MIX_ORIGEM || {};
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
+    EVENTOS = data.EVENTOS || [];
   } catch(e) {
     console.error('Falha ao carregar data.json -- o painel vai renderizar com os dados vazios/zerados ate isso ser corrigido:', e);
   }
@@ -2575,6 +2660,8 @@ async function carregarDados(){
   renderShareMonthRegua();
   renderMixOrigem();
   renderComboCharts('comboGrid','investimento', v=>fmtMoney(v));
+  populateEventosSelects();
+  renderEventosTab();
 }
 
 carregarDados();
