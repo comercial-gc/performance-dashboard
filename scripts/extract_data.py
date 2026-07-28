@@ -873,6 +873,35 @@ def build_invest_mkt_detail(service, spreadsheet_id, meses_com_dados):
     return detail
 
 
+def build_eventos(service, spreadsheet_id, sheet_name):
+    """Aba 'Eventos' de Visitação Parques 2026: calendário simples (uma linha por evento) com
+    3 colunas -- Data | Parque | Evento -- cobrindo Abril/2025 em diante (sem separação por
+    aba/mês como as outras abas dessa planilha). Retorna lista ordenada por data, com ano/mês
+    (PT) já calculados pra facilitar o filtro no front-end. O campo "parque" é mantido como
+    veio da planilha (ex.: "Aquario", "Parques Rio", "Todos os Parques") -- os nomes lá não
+    seguem exatamente a lista canônica de parques do painel, então não tentamos remapear.
+    """
+    rows = get_values(service, spreadsheet_id, sheet_name)
+    eventos = []
+    for row in rows[1:]:  # linha 0 = cabeçalho (Data / Parque / Evento)
+        serial = cell(row, 0)
+        evento = _clean_str(cell(row, 2))
+        if serial is None or not evento:
+            continue
+        d = serial_to_date(serial)
+        if d is None:
+            continue
+        eventos.append({
+            "data": d.isoformat(),
+            "ano": d.year,
+            "mes": MESES_PT[d.month - 1],
+            "parque": _clean_str(cell(row, 1)) or "",
+            "evento": evento,
+        })
+    eventos.sort(key=lambda e: e["data"])
+    return eventos
+
+
 # ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
@@ -978,6 +1007,11 @@ def main():
         service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["mix_origem"], col_offset=11
     )
 
+    print("Lendo Eventos...", file=sys.stderr)
+    eventos = build_eventos(
+        service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
+    )
+
     output = {
         "geradoEm": datetime.datetime.utcnow().isoformat() + "Z",
         "VISITACAO": visitacao,
@@ -995,6 +1029,7 @@ def main():
         "INVEST_MKT_DETAIL": invest_mkt_detail,
         "MIX_ORIGEM": mix_origem,
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
+        "EVENTOS": eventos,
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
