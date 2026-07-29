@@ -1132,6 +1132,21 @@ let SHARE_META_GRUPO_CATARATAS = {};
 const SHARE_META_PARKS = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz'];
 const SHARE_META_GOAL = 0.25;
 
+// Regra de arredondamento usada só para decidir se uma Share bateu a Meta 25% (cor do
+// gráfico e faixa lateral do card) -- acima de X,5 arredonda pra cima (ex.: 24,9% conta como
+// 25%, bate a meta); exatamente em X,5 fica "quebrado" (não bate); X,4 pra baixo arredonda
+// pra baixo (não bate). O número exibido (%, pp) continua com o arredondamento padrão -- só
+// a decisão de cor/faixa usa essa regra, pra elas ficarem sempre coerentes com o valor
+// arredondado que aparece na tela.
+function roundPctForMetaColor(pctWhole){
+  const floor = Math.floor(pctWhole);
+  const frac = pctWhole - floor;
+  return frac > 0.5 ? Math.ceil(pctWhole) : floor;
+}
+function shareMeetsGoal(shareFraction){
+  return roundPctForMetaColor(shareFraction * 100) >= Math.round(SHARE_META_GOAL * 100);
+}
+
 function renderShareMetaChart(accShare){
   const container = document.getElementById('shareMetaChart');
   if(!container) return;
@@ -1159,7 +1174,7 @@ function renderShareMetaChart(accShare){
   function drawBar(x, share, label, labelBold){
     const h = (share/maxShare)*plotH;
     const y = padT + plotH - h;
-    const color = share >= SHARE_META_GOAL ? '#1f7a4d' : '#b3432b';
+    const color = shareMeetsGoal(share) ? '#1f7a4d' : '#b3432b';
     const tip = `${label}: Share ${fmtPct(share)}`;
     return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}" data-tip="${tip}"></rect>
       <text x="${(x+barW/2).toFixed(1)}" y="${(y-5).toFixed(1)}" font-size="10.5" font-weight="700" text-anchor="middle" fill="${color}">${(share*100).toFixed(0)}%</text>
@@ -1209,8 +1224,8 @@ function renderShareMonthRegua(){
       const pctShare = (d.share2025!==null && d.share2025!==undefined && d.share2025!==0) ? (d.share2026-d.share2025) : null;
       const pctVisit = (d.visitacao2025!==null && d.visitacao2025!==undefined && d.visitacao2025!==0) ? (d.visitacao2026-d.visitacao2025)/d.visitacao2025 : null;
       const pctEco = (d.ecommerce2025!==null && d.ecommerce2025!==undefined && d.ecommerce2025!==0) ? (d.ecommerce2026-d.ecommerce2025)/d.ecommerce2025 : null;
-      const ppDelta = Math.round(d.share2026*100) - Math.round(SHARE_META_GOAL*100);
-      const metaDir = ppDelta >= 0 ? 'up' : 'down';
+      const ppDelta = roundPctForMetaColor(d.share2026*100) - Math.round(SHARE_META_GOAL*100);
+      const metaDir = shareMeetsGoal(d.share2026) ? 'up' : 'down';
       const dirClass = metaDir;
       const metaArrow = ppDelta >= 0 ? '▲' : '▼';
       const tip = mes+': Share '+fmtPct(d.share2026)+' | Visitação '+fmtInt(d.visitacao2026)+' | Ecommerce '+fmtInt(d.ecommerce2026)+' | meta 25% ('+(ppDelta>=0?'+':'')+ppDelta+'pp)';
@@ -1224,8 +1239,8 @@ function renderShareMonthRegua(){
     const acc = computeAccum(meses, park);
     let accCell;
     if(acc){
-      const accPpDelta = Math.round(acc.share2026*100) - Math.round(SHARE_META_GOAL*100);
-      const accMetaDir = accPpDelta >= 0 ? 'up' : 'down';
+      const accPpDelta = roundPctForMetaColor(acc.share2026*100) - Math.round(SHARE_META_GOAL*100);
+      const accMetaDir = shareMeetsGoal(acc.share2026) ? 'up' : 'down';
       const accDir = accMetaDir;
       const accMetaArrow = accPpDelta >= 0 ? '▲' : '▼';
       const accTip = 'Acumulado no ano: Share '+fmtPct(acc.share2026)+' | Visitação '+fmtInt(acc.visitacao2026)+' | Ecommerce '+fmtInt(acc.ecommerce2026)+' | meta 25% ('+(accPpDelta>=0?'+':'')+accPpDelta+'pp)';
@@ -1245,8 +1260,8 @@ function renderShareMonthRegua(){
   const gcColor = '#0f3d2e';
   const gcCells = SHARE_META_MESES.map((mes,i) => {
     const share = SHARE_META_GRUPO_CATARATAS.share[i];
-    const ppDelta = Math.round(share*100) - Math.round(SHARE_META_GOAL*100);
-    const dirClass = ppDelta >= 0 ? 'up' : 'down';
+    const ppDelta = roundPctForMetaColor(share*100) - Math.round(SHARE_META_GOAL*100);
+    const dirClass = shareMeetsGoal(share) ? 'up' : 'down';
     const arrow = ppDelta >= 0 ? '▲' : '▼';
     const tip = `Grupo Cataratas - ${mes}: Share ${fmtPct(share)} | meta 25% (${ppDelta>=0?'+':''}${ppDelta}pp)`;
     return `<div class="invest-cell ${dirClass}" data-tip="${tip}" style="background:${gcColor}14">
@@ -1259,8 +1274,8 @@ function renderShareMonthRegua(){
   const gcVisitAcum = SHARE_META_GRUPO_CATARATAS.visitacao.reduce((a,b)=>a+b,0);
   const gcEcomAcum = SHARE_META_GRUPO_CATARATAS.ecommerce.reduce((a,b)=>a+b,0);
   const gcShareAcum = gcEcomAcum / gcVisitAcum;
-  const gcPpAcum = Math.round(gcShareAcum*100) - Math.round(SHARE_META_GOAL*100);
-  const gcAccDir = gcPpAcum >= 0 ? 'up' : 'down';
+  const gcPpAcum = roundPctForMetaColor(gcShareAcum*100) - Math.round(SHARE_META_GOAL*100);
+  const gcAccDir = shareMeetsGoal(gcShareAcum) ? 'up' : 'down';
   const gcAccArrow = gcPpAcum >= 0 ? '▲' : '▼';
   const gcAccTip = `Grupo Cataratas - Acumulado: Share ${fmtPct(gcShareAcum)} | meta 25% (${gcPpAcum>=0?'+':''}${gcPpAcum}pp)`;
   const gcAccCell = `<div class="invest-cell ${gcAccDir}" data-tip="${gcAccTip}" style="background:${gcColor}14;border-left-width:4px;margin-left:10px;">
