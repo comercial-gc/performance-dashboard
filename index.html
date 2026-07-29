@@ -736,8 +736,8 @@
     <div class="mix-title-row">
       <div class="mix-title-bar"></div>
       <div>
-        <div class="mix-title">Mix de Origem | Parques Rio | Parcial Julho</div>
-        <div class="mix-subtitle">atualizado até 20/07 comparado ao mesmo período 2025</div>
+        <div class="mix-title" id="mixTitle">Mix de Origem | Parques Rio</div>
+        <div class="mix-subtitle" id="mixSubtitle"></div>
       </div>
       <div class="mix-morador-toggle" id="mixPeriodoToggle">
         <button class="active" data-val="mensal" onclick="setMixPeriodo('mensal')">Mensal</button>
@@ -1449,6 +1449,42 @@ function renderComboCharts(containerId, barField, barFmt){
 }
 
 const OPEN_MONTH = MONTHS.find(m => !CLOSED_MONTHS.includes(m));
+const MES_CAP = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', ABRIL:'Abril', MAIO:'Maio', JUNHO:'Junho', JULHO:'Julho', AGOSTO:'Agosto', SETEMBRO:'Setembro', OUTUBRO:'Outubro', NOVEMBRO:'Novembro', DEZEMBRO:'Dezembro'};
+
+// Calcula, a partir dos dados reais de VISITACAO (não mais texto fixo), até que dia do
+// mês atual (OPEN_MONTH) já existe "Realizado 2026" preenchido -- usado no cabeçalho da
+// aba Mix de Origem, que antes ficava com a data travada na última vez que foi editada
+// a mão (ex.: "20/07" meses depois de julho já ter passado).
+function updateMixOrigemHeader(){
+  const titleEl = document.getElementById('mixTitle');
+  const subEl = document.getElementById('mixSubtitle');
+  if(!titleEl || !subEl) return;
+
+  const mesData = VISITACAO[OPEN_MONTH];
+  let lastDay = null;
+  if(mesData && mesData.daily){
+    Object.values(mesData.daily).forEach(parkData => {
+      const arr = parkData ? parkData['Realizado 2026'] : null;
+      if(!arr) return;
+      for(let i = arr.length - 1; i >= 0; i--){
+        if(arr[i] !== null && arr[i] !== undefined){
+          if(lastDay === null || (i + 1) > lastDay) lastDay = i + 1;
+          break;
+        }
+      }
+    });
+  }
+
+  const mesNome = MES_CAP[OPEN_MONTH] || OPEN_MONTH;
+  titleEl.textContent = `Mix de Origem | Parques Rio | Parcial ${mesNome}`;
+  if(lastDay && mesData){
+    const dd = String(lastDay).padStart(2, '0');
+    const mm = String(mesData.monthNumber).padStart(2, '0');
+    subEl.textContent = `atualizado até ${dd}/${mm} comparado ao mesmo período 2025`;
+  } else {
+    subEl.textContent = `comparado ao mesmo período 2025`;
+  }
+}
 let weatherLoaded = false;
 
 function wmoEmoji(code){
@@ -2453,6 +2489,8 @@ function stripMorador(parque, categorias) {
 function renderMixOrigem() {
   const grid = document.getElementById("mixGrid");
   if (!grid) return;
+
+  updateMixOrigemHeader();
 
   const fonte = mixPeriodoState === 'acumulado' ? MIX_ORIGEM_ACUMULADO : MIX_ORIGEM;
   grid.innerHTML = Object.keys(fonte).map(parque => {
