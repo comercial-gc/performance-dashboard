@@ -292,6 +292,24 @@
   .eventos-table td:nth-child(2){ white-space:nowrap; }
   .eventos-table tbody tr:hover{ background:#fafcf9; }
 
+  /* ── Aba Histórico ── */
+  .hist-chart-card{ border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:16px 0 20px; background:#fff; }
+  .hist-legend{ display:flex; gap:18px; margin-bottom:10px; flex-wrap:wrap; }
+  .hist-legend-item{ display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; user-select:none; }
+  .hist-legend-item.off{ opacity:.35; }
+  .hist-legend-item .dot{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .hist-legend-item .dash{ width:18px; height:0; border-top:2px dashed currentColor; display:inline-block; }
+  .hist-empty{ padding:30px; text-align:center; color:var(--muted); font-size:13px; }
+  .hist-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .hist-table th{ background:#f5f5f5; padding:7px 10px; text-align:right; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); white-space:nowrap; }
+  .hist-table th:first-child{ text-align:left; }
+  .hist-table td{ padding:7px 10px; text-align:right; border-bottom:1px solid #f0f0f0; }
+  .hist-table td:first-child{ text-align:left; font-weight:700; }
+  .hist-table tr.total-row td{ font-weight:700; background:#fafafa; border-top:2px solid var(--line); }
+  .hist-table td.up{ color:var(--green); }
+  .hist-table td.down{ color:var(--red); }
+  .hist-table tbody tr:hover{ background:#fafcf9; }
+
 
   /* ── Resumo executivo por parque (estilo relatório) ── */
   .imt-park-summary{ margin-top:20px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px 28px; }
@@ -479,6 +497,7 @@
     <button data-tab="invest-mkt">Investimento Marketing</button>
     <button data-tab="mix-origem">Mix de Origem</button>
     <button data-tab="eventos">Eventos</button>
+    <button data-tab="historico">Histórico</button>
   </nav>
 </header>
 
@@ -809,6 +828,44 @@
       </div>
     </div>
     <div id="eventosTableWrap"></div>
+  </div>
+</section>
+
+<section id="tab-historico" style="display:none;">
+  <div class="mix-container">
+    <div class="mix-title-row">
+      <div class="mix-title-bar"></div>
+      <div>
+        <div class="mix-title">Histórico</div>
+        <div class="mix-subtitle" id="histSubtitle">Série histórica por parque ou consolidada, com comparativo entre 2 anos</div>
+      </div>
+      <div class="mix-morador-toggle" id="histModoToggle">
+        <button class="active" data-val="visitacao" onclick="setHistModo('visitacao')">Visitação</button>
+        <button data-val="share" onclick="setHistModo('share')">Share</button>
+      </div>
+    </div>
+
+    <div class="imt-filter-row">
+      <div class="imt-select-wrap">
+        <label>Parque</label>
+        <select id="histParqueSelect" onchange="onHistParqueChange()"></select>
+      </div>
+      <div class="imt-select-wrap">
+        <label>Mês</label>
+        <select id="histMesSelect" onchange="renderHistorico()"></select>
+      </div>
+      <div class="imt-select-wrap">
+        <label>Ano A</label>
+        <select id="histAnoASelect" onchange="renderHistorico()"></select>
+      </div>
+      <div class="imt-select-wrap">
+        <label>Ano B</label>
+        <select id="histAnoBSelect" onchange="renderHistorico()"></select>
+      </div>
+    </div>
+
+    <div id="histChartWrap"></div>
+    <div id="histTableWrap"></div>
   </div>
 </section>
 
@@ -1993,6 +2050,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn => {
     document.getElementById('tab-clima').style.display = tab==='clima' ? '' : 'none';
     if(tab==='clima'){ renderClimaTab(); if(!climaForecastLoaded){ climaForecastLoaded = true; loadClimaForecast(); } }
     document.getElementById('tab-eventos').style.display = tab==='eventos' ? '' : 'none';
+    document.getElementById('tab-historico').style.display = tab==='historico' ? '' : 'none';
     document.getElementById('toolbar-visitacao').style.display = tab==='visitacao' ? '' : 'none';
   });
 });
@@ -2372,6 +2430,10 @@ function renderParkSummary() {
 let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
 let EVENTOS = [];
+let HISTORICO = { parques: {}, parquesComShare: [] };
+let histModoState = 'visitacao'; // 'visitacao' | 'share'
+let histHiddenSeries = new Set(); // legenda clicável: 'A' e/ou 'B' escondidos
+const MES_LABELS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 function populateEventosSelects(){
   const mesSel = document.getElementById('eventosMesSelect');
@@ -2420,6 +2482,215 @@ function renderEventosTab(){
   wrap.innerHTML = `<table class="eventos-table">
     <thead><tr><th>Data</th><th>Parque</th><th>Evento</th></tr></thead>
     <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Aba Histórico ────────────────────────────────────────────────────────
+
+function getHistParqueData(parque){
+  const d = HISTORICO.parques[parque];
+  if(!d) return null;
+  return histModoState === 'share' ? d.anosShare : d.anos;
+}
+
+function populateHistoricoSelects(preserve){
+  const parqueSel = document.getElementById('histParqueSelect');
+  const mesSel = document.getElementById('histMesSelect');
+  const anoASel = document.getElementById('histAnoASelect');
+  const anoBSel = document.getElementById('histAnoBSelect');
+  if(!parqueSel) return;
+
+  const parquesDisponiveis = histModoState === 'share'
+    ? (HISTORICO.parquesComShare || [])
+    : Object.keys(HISTORICO.parques || {});
+
+  const nomeExibicao = p => p === 'Consolidado' ? 'Consolidado (Grupo Cataratas)' : p;
+
+  const parqueAtual = (preserve && parquesDisponiveis.includes(parqueSel.value)) ? parqueSel.value : parquesDisponiveis[0];
+  parqueSel.innerHTML = parquesDisponiveis.map(p => `<option value="${p}">${nomeExibicao(p)}</option>`).join('');
+  parqueSel.value = parqueAtual || '';
+
+  if(!mesSel.options.length){
+    mesSel.innerHTML = '<option value="">Ano completo</option>' +
+      MES_LABELS.map((m,i) => `<option value="${i}">${m}</option>`).join('');
+  }
+
+  const anosDados = getHistParqueData(parqueSel.value) || {};
+  const anos = Object.keys(anosDados).sort((a,b) => Number(a) - Number(b));
+  const anoAAtual = (preserve && anos.includes(anoASel.value)) ? anoASel.value : (anos[anos.length - 2] || anos[0] || '');
+  const anoBAtual = (preserve && anos.includes(anoBSel.value)) ? anoBSel.value : (anos[anos.length - 1] || '');
+  anoASel.innerHTML = anos.map(a => `<option value="${a}">${a}</option>`).join('');
+  anoBSel.innerHTML = anos.map(a => `<option value="${a}">${a}</option>`).join('');
+  anoASel.value = anoAAtual;
+  anoBSel.value = anoBAtual;
+}
+
+function setHistModo(modo){
+  histModoState = modo;
+  document.querySelectorAll('#histModoToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === modo));
+  populateHistoricoSelects(true);
+  renderHistorico();
+}
+
+function onHistParqueChange(){
+  populateHistoricoSelects(true);
+  renderHistorico();
+}
+
+function toggleHistSerie(serie){
+  if(histHiddenSeries.has(serie)) histHiddenSeries.delete(serie); else histHiddenSeries.add(serie);
+  renderHistorico();
+}
+
+function fmtHistValor(v, isPercent){
+  if(v === null || v === undefined) return '-';
+  return isPercent ? (v*100).toFixed(1).replace('.', ',') + '%' : Math.round(v).toLocaleString('pt-BR');
+}
+
+function fmtHistDelta(vA, vB, isPercent){
+  if(vA === null || vA === undefined || vB === null || vB === undefined) return {txt:'-', cls:''};
+  if(isPercent){
+    const pp = (vB - vA) * 100;
+    const sign = pp >= 0 ? '+' : '';
+    return { txt: sign + pp.toFixed(1).replace('.', ',') + ' p.p.', cls: pp >= 0 ? 'up' : 'down' };
+  }
+  if(!vA){ return {txt:'-', cls:''}; }
+  const pct = (vB - vA) / vA * 100;
+  const sign = pct >= 0 ? '+' : '';
+  return { txt: sign + pct.toFixed(1).replace('.', ',') + '%', cls: pct >= 0 ? 'up' : 'down' };
+}
+
+function renderHistoricoChart(parque, valsA, valsB, anoA, anoB, isPercent){
+  const wrap = document.getElementById('histChartWrap');
+  if(!wrap) return;
+  const color = parque === 'Consolidado' ? '#0f3d2e' : (PARK_COLORS[parque] || '#333');
+  const grayColor = '#9aa39d';
+
+  const W = 900, H = 260, padL = 50, padR = 20, padT = 20, padB = 30;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const n = 12;
+  const slot = plotW / (n - 1);
+
+  const showA = !histHiddenSeries.has('A');
+  const showB = !histHiddenSeries.has('B');
+
+  const allVals = [];
+  if(showA) valsA.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
+  if(showB) valsB.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
+  const maxV = allVals.length ? Math.max(...allVals) * 1.15 : 1;
+
+  function xAt(i){ return padL + i * slot; }
+  function yAt(v){ return padT + plotH - (v / maxV) * plotH; }
+
+  function buildPath(vals){
+    let d = '';
+    let started = false;
+    vals.forEach((v,i) => {
+      if(v === null || v === undefined) { started = false; return; }
+      const x = xAt(i), y = yAt(v);
+      d += (started ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+      started = true;
+    });
+    return d.trim();
+  }
+
+  function buildArea(vals){
+    const pathD = buildPath(vals);
+    if(!pathD) return '';
+    const idxValidos = vals.map((v,i) => v!==null&&v!==undefined ? i : null).filter(i => i!==null);
+    if(!idxValidos.length) return '';
+    const first = idxValidos[0], last = idxValidos[idxValidos.length-1];
+    return `${pathD} L${xAt(last).toFixed(1)},${(padT+plotH).toFixed(1)} L${xAt(first).toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
+  }
+
+  let gridLines = '';
+  for(let i=0;i<=4;i++){
+    const v = maxV * i / 4;
+    const y = yAt(v);
+    gridLines += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}" stroke="#eee" stroke-width="1"></line>`;
+    gridLines += `<text x="${padL-8}" y="${(y+4).toFixed(1)}" font-size="10.5" fill="var(--muted)" text-anchor="end">${fmtHistValor(v, isPercent)}</text>`;
+  }
+
+  let xLabels = '';
+  MES_LABELS.forEach((m,i) => {
+    xLabels += `<text x="${xAt(i).toFixed(1)}" y="${H-8}" font-size="11" fill="var(--muted)" text-anchor="middle">${m}</text>`;
+  });
+
+  const areaB = showB ? `<path d="${buildArea(valsB)}" fill="${color}" fill-opacity="0.14" stroke="none"></path>` : '';
+  const lineB = showB ? `<path d="${buildPath(valsB)}" fill="none" stroke="${color}" stroke-width="2.6"></path>` : '';
+  const dotsB = showB ? valsB.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3.5" fill="${color}"></circle>` : '').join('') : '';
+
+  const lineA = showA ? `<path d="${buildPath(valsA)}" fill="none" stroke="${grayColor}" stroke-width="1.8" stroke-dasharray="5,4"></path>` : '';
+  const dotsA = showA ? valsA.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3" fill="${grayColor}"></circle>` : '').join('') : '';
+
+  const legend = `<div class="hist-legend">
+    <span class="hist-legend-item ${showA?'':'off'}" style="color:${grayColor}" onclick="toggleHistSerie('A')"><span class="dash"></span>${anoA || '-'}</span>
+    <span class="hist-legend-item ${showB?'':'off'}" style="color:${color}" onclick="toggleHistSerie('B')"><span class="dot" style="background:${color}"></span>${anoB || '-'}</span>
+  </div>`;
+
+  wrap.innerHTML = `<div class="hist-chart-card">
+    ${legend}
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">
+      ${gridLines}
+      ${areaB}${lineA}${dotsA}${lineB}${dotsB}
+      ${xLabels}
+    </svg>
+  </div>`;
+}
+
+function renderHistorico(){
+  const parqueSel = document.getElementById('histParqueSelect');
+  const mesSel = document.getElementById('histMesSelect');
+  const anoASel = document.getElementById('histAnoASelect');
+  const anoBSel = document.getElementById('histAnoBSelect');
+  const tableWrap = document.getElementById('histTableWrap');
+  const chartWrap = document.getElementById('histChartWrap');
+  if(!parqueSel) return;
+
+  if(!parqueSel.value){
+    if(tableWrap) tableWrap.innerHTML = '<div class="hist-empty">Sem dados de Histórico disponíveis ainda -- planilha não conectada.</div>';
+    if(chartWrap) chartWrap.innerHTML = '';
+    return;
+  }
+
+  const parque = parqueSel.value;
+  const mes = mesSel.value;
+  const anoA = anoASel.value;
+  const anoB = anoBSel.value;
+  const isPercent = histModoState === 'share';
+
+  const anosDados = getHistParqueData(parque) || {};
+  const valsA = anosDados[anoA] || Array(12).fill(null);
+  const valsB = anosDados[anoB] || Array(12).fill(null);
+
+  renderHistoricoChart(parque, valsA, valsB, anoA, anoB, isPercent);
+
+  const mesesParaTabela = mes === '' ? MES_LABELS.map((m,i) => i) : [Number(mes)];
+
+  const rows = mesesParaTabela.map(i => {
+    const vA = valsA[i], vB = valsB[i];
+    const delta = fmtHistDelta(vA, vB, isPercent);
+    return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vA, isPercent)}</td><td>${fmtHistValor(vB, isPercent)}</td><td class="${delta.cls}">${delta.txt}</td></tr>`;
+  }).join('');
+
+  let totalRow = '';
+  if(mes === '' && !isPercent){
+    const validosA = valsA.filter(v => v!==null && v!==undefined);
+    const validosB = valsB.filter(v => v!==null && v!==undefined);
+    const totalA = validosA.length ? validosA.reduce((a,b) => a+b, 0) : null;
+    const totalB = validosB.length ? validosB.reduce((a,b) => a+b, 0) : null;
+    const deltaTotal = fmtHistDelta(totalA, totalB, isPercent);
+    totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalA, isPercent)}</td><td>${fmtHistValor(totalB, isPercent)}</td><td class="${deltaTotal.cls}">${deltaTotal.txt}</td></tr>`;
+  }
+
+  if(!rows && !totalRow){
+    tableWrap.innerHTML = '<div class="hist-empty">Sem dados para essa combinação de filtros.</div>';
+    return;
+  }
+
+  tableWrap.innerHTML = `<table class="hist-table">
+    <thead><tr><th>Mês</th><th>${anoA || '-'}</th><th>${anoB || '-'}</th><th>Δ</th></tr></thead>
+    <tbody>${rows}${totalRow}</tbody>
   </table>`;
 }
 const MIX_PARK_COLORS = {"AquaRio": "#305496", "BioParque": "#C65911", "Paineiras": "#548235", "M3F": "#CC0000", "AquaFoz": "#45818E", "Três Pescadores": "#741B47", "Vila Velha": "#BF9000", "PNI": "#0D5955"};
@@ -2683,6 +2954,7 @@ async function carregarDados(){
     MIX_ORIGEM = data.MIX_ORIGEM || {};
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
     EVENTOS = data.EVENTOS || [];
+    HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
   } catch(e) {
     console.error('Falha ao carregar data.json -- o painel vai renderizar com os dados vazios/zerados ate isso ser corrigido:', e);
   }
@@ -2700,6 +2972,8 @@ async function carregarDados(){
   renderComboCharts('comboGrid','investimento', v=>fmtMoney(v));
   populateEventosSelects();
   renderEventosTab();
+  populateHistoricoSelects(false);
+  renderHistorico();
 }
 
 carregarDados();
