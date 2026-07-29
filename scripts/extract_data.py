@@ -903,6 +903,109 @@ def build_eventos(service, spreadsheet_id, sheet_name):
 
 
 # ---------------------------------------------------------------------------
+# Visitação Parques HISTORICO_Grupo Cataratas.xlsx (uma aba por parque: AquaRio,
+# BioParque, Paineiras, PNI, M3F, AquaFoz). Cada aba tem até 3 blocos empilhados na coluna
+# B: o nome do parque (Visitação, ano a ano), "Share " (share %, só em AquaRio/BioParque/
+# Paineiras) e "Visão semestral" (2 colunas: Jan-Jun / Jul-Dez). "Consolidado" (soma dos 6
+# parques) é calculado aqui, não existe pronto na planilha.
+# ---------------------------------------------------------------------------
+
+HISTORICO_PARKS = ["AquaRio", "BioParque", "Paineiras", "PNI", "M3F", "AquaFoz"]
+HISTORICO_PARKS_COM_SHARE = ["AquaRio", "BioParque", "Paineiras"]
+
+
+def _historico_find_row(rows, label):
+    """Acha a linha cujo rótulo (coluna B) bate com `label` (ex.: nome do parque, "Share ",
+    "Visão semestral") -- ignora espaços sobrando, que a planilha tem em alguns rótulos."""
+    target = label.strip().lower()
+    for i, row in enumerate(rows):
+        v = cell(row, 1)
+        if isinstance(v, str) and v.strip().lower() == target:
+            return i
+    return None
+
+
+def _historico_parse_block(rows, start_row, ncols):
+    """A partir da linha de rótulo do bloco (`start_row`), lê as linhas seguintes no formato
+    Ano | valor x ncols (coluna B = ano, colunas seguintes = Jan..Dez ou Sem1/Sem2), até achar
+    uma linha sem ano válido na coluna B. Tolera UMA linha de sub-cabeçalho logo no início
+    (ex.: "Jan-Jun"/"Jul-Dez" antes dos anos, no bloco Visão Semestral de Paineiras)."""
+    anos = {}
+    if start_row is None:
+        return anos
+    r = start_row + 1
+    permitiu_subcabecalho = False
+    while r < len(rows):
+        row = rows[r]
+        ano_raw = cell(row, 1)
+        if ano_raw is None or ano_raw == "":
+            if not anos and not permitiu_subcabecalho and any(
+                isinstance(cell(row, 2 + i), str) for i in range(ncols)
+            ):
+                permitiu_subcabecalho = True
+                r += 1
+                continue
+            break
+        try:
+            ano = int(float(ano_raw))
+        except (TypeError, ValueError):
+            break
+        valores = [
+            cell(row, 2 + i) if isinstance(cell(row, 2 + i), (int, float)) else None
+            for i in range(ncols)
+        ]
+        anos[str(ano)] = valores
+        r += 1
+    return anos
+
+
+def build_historico(service, spreadsheet_id):
+    parques = {}
+    for park in HISTORICO_PARKS:
+        rows = get_values(service, spreadsheet_id, park)
+        idx_park = _historico_find_row(rows, park)
+        anos_visitacao = _historico_parse_block(rows, idx_park, 12)
+
+        idx_share = _historico_find_row(rows, "Share") if park in HISTORICO_PARKS_COM_SHARE else None
+        anos_share = _historico_parse_block(rows, idx_share, 12) if idx_share is not None else {}
+
+        idx_sem = _historico_find_row(rows, "Visão semestral")
+        anos_semestral = _historico_parse_block(rows, idx_sem, 2) if idx_sem is not None else {}
+
+        parques[park] = {
+            "anos": anos_visitacao,
+            "anosShare": anos_share,
+            "anosSemestral": anos_semestral,
+        }
+
+    # "Consolidado": soma mês a mês dos 6 parques por ano -- trata parque sem dado naquele
+    # mês como 0 na soma (mesma convenção da aba "Grupo Cataratas" da planilha: um parque
+    # que ainda não existia naquele ano simplesmente não entra na soma), mas o mês fica
+    # None se NENHUM dos 6 parques tiver dado.
+    def _consolida(campo, ncols):
+        todos_anos = set()
+        for p in HISTORICO_PARKS:
+            todos_anos.update(parques[p][campo].keys())
+        out = {}
+        for ano in todos_anos:
+            soma = []
+            for m in range(ncols):
+                valores_mes = [parques[p][campo].get(ano, [None] * ncols)[m] for p in HISTORICO_PARKS]
+                validos = [v for v in valores_mes if v is not None]
+                soma.append(sum(validos) if validos else None)
+            out[ano] = soma
+        return out
+
+    parques["Consolidado"] = {
+        "anos": _consolida("anos", 12),
+        "anosShare": {},  # share é sempre por parque -- não faz sentido "somar" percentuais
+        "anosSemestral": _consolida("anosSemestral", 2),
+    }
+
+    return {"parques": parques, "parquesComShare": HISTORICO_PARKS_COM_SHARE}
+
+
+# ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
 
@@ -1012,6 +1115,25 @@ def main():
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
     )
 
+    print("Lendo Histórico...", file=sys.stderr)
+    historico_id = cfg.get("visitacao_historico_id", "")
+    if historico_id and not historico_id.startswith("COLE_AQUI"):
+        try:
+            historico = build_historico(service, historico_id)
+        except Exception as e:
+            # NUNCA deixa a aba Histórico derrubar o resto do pipeline -- se der erro (id
+            # errado, aba renomeada, planilha ainda não compartilhada etc.), essa aba fica
+            # vazia neste ciclo e o resto do data.json sai normal.
+            print(f"AVISO: falha ao ler Histórico ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
+            historico = {"parques": {}, "parquesComShare": []}
+    else:
+        print(
+            "Histórico: visitacao_historico_id ainda não configurado (placeholder) "
+            "-- aba fica vazia até o ID real ser colado no config.json.",
+            file=sys.stderr,
+        )
+        historico = {"parques": {}, "parquesComShare": []}
+
     output = {
         "geradoEm": datetime.datetime.utcnow().isoformat() + "Z",
         "VISITACAO": visitacao,
@@ -1030,6 +1152,7 @@ def main():
         "MIX_ORIGEM": mix_origem,
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
         "EVENTOS": eventos,
+        "HISTORICO": historico,
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
