@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-28T17:30:57.300045Z",
+  "geradoEm": "2026-07-29T12:43:44.460992Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -6836,14 +6836,14 @@
           "MDE": {
             "realizado2026": 70150,
             "pctAq2026": 0.1294053625,
-            "realizado2025": 91929,
-            "pctAq2025": 0.1891558778
+            "realizado2025": 92259,
+            "pctAq2025": 0.1898348958
           },
           "MDC": {
             "realizado2026": 78112,
             "pctAq2026": 0.1440928251,
-            "realizado2025": 109931,
-            "pctAq2025": 0.226197335
+            "realizado2025": 110510,
+            "pctAq2025": 0.2273887028
           }
         }
       }
@@ -6853,100 +6853,100 @@
       "nDays": 31,
       "summary": {
         "AquaRio": {
-          "realizado": 107518,
-          "obz": 122796,
-          "pctObz": -0.1244177335,
-          "y2025": 115085,
-          "pct2025": -0.06575140114,
-          "acumRealizado": 649613,
-          "acumObzParcial": 632913,
-          "acumPctObz": 0.02638593298,
-          "acum2025": 601081,
-          "acumPct2025": 0.08074119794
+          "realizado": 111493,
+          "obz": 128232,
+          "pctObz": -0.1305368395,
+          "y2025": 119270,
+          "pct2025": -0.06520499707,
+          "acumRealizado": 653588,
+          "acumObzParcial": 638349,
+          "acumPctObz": 0.02387252114,
+          "acum2025": 605266,
+          "acumPct2025": 0.07983597294
         },
         "BioParque": {
-          "realizado": 88039,
-          "obz": 128799,
-          "pctObz": -0.3164620843,
-          "y2025": 47774,
-          "pct2025": 0.8428224557,
-          "acumRealizado": 334025,
-          "acumObzParcial": 436903.01,
-          "acumPctObz": -0.2354710488,
-          "acum2025": 316919,
-          "acumPct2025": 0.05397593707
+          "realizado": 92160,
+          "obz": 131876,
+          "pctObz": -0.3011616974,
+          "y2025": 49499,
+          "pct2025": 0.8618557951,
+          "acumRealizado": 338146,
+          "acumObzParcial": 439980.01,
+          "acumPctObz": -0.2314514471,
+          "acum2025": 318644,
+          "acumPct2025": 0.06120309813
         },
         "Paineiras": {
-          "realizado": 118907,
-          "obz": 113602,
-          "pctObz": 0.04669812151,
-          "y2025": 108243,
-          "pct2025": 0.09851907283,
-          "acumRealizado": 935232,
-          "acumObzParcial": 925208.364,
-          "acumPctObz": 0.01083392281,
-          "acum2025": 882222,
-          "acumPct2025": 0.0600869169
+          "realizado": 124027,
+          "obz": 116964,
+          "pctObz": 0.06038610171,
+          "y2025": 112549,
+          "pct2025": 0.1019822477,
+          "acumRealizado": 940352,
+          "acumObzParcial": 928570.364,
+          "acumPctObz": 0.01268793024,
+          "acum2025": 886528,
+          "acumPct2025": 0.0607132544
         },
         "PNI": {
-          "realizado": 232312,
-          "obz": 199043,
-          "pctObz": 0.1671447878,
-          "y2025": 192745,
-          "pct2025": 0.2052815897,
-          "acumRealizado": 1295915,
-          "acumObzParcial": 1191164,
-          "acumPctObz": 0.08794003177,
-          "acum2025": 1147005,
-          "acumPct2025": 0.1298250662
+          "realizado": 242697,
+          "obz": 207004,
+          "pctObz": 0.1724266198,
+          "y2025": 198001,
+          "pct2025": 0.2257362337,
+          "acumRealizado": 1306300,
+          "acumObzParcial": 1199125,
+          "acumPctObz": 0.08937767122,
+          "acum2025": 1152261,
+          "acumPct2025": 0.1336841219
         },
         "M3F": {
-          "realizado": 71247,
-          "obz": 58350,
-          "pctObz": 0.2210282776,
-          "y2025": 54365,
-          "pct2025": 0.3105306723,
-          "acumRealizado": 355289,
-          "acumObzParcial": 296859,
-          "acumPctObz": 0.1968274501,
-          "acum2025": 283304,
-          "acumPct2025": 0.2540910118
+          "realizado": 73885,
+          "obz": 59744,
+          "pctObz": 0.2366932244,
+          "y2025": 55804,
+          "pct2025": 0.3240090316,
+          "acumRealizado": 357927,
+          "acumObzParcial": 298253,
+          "acumPctObz": 0.2000784569,
+          "acum2025": 284743,
+          "acumPct2025": 0.2570177318
         },
         "AquaFoz": {
-          "realizado": 64360,
-          "obz": 52287.729,
-          "pctObz": 0.2308815325,
+          "realizado": 66413,
+          "obz": 53536.924,
+          "pctObz": 0.2405083266,
           "y2025": 0.0,
           "pct2025": "-%",
-          "acumRealizado": 325042,
-          "acumObzParcial": 300325.529,
-          "acumPctObz": 0.08229893437,
+          "acumRealizado": 327095,
+          "acumObzParcial": 301574.724,
+          "acumPctObz": 0.08462339171,
           "acum2025": 0,
           "acumPct2025": "-%"
         },
         "Três Pescadores": {
-          "realizado": 20049,
-          "obz": 21830.06,
-          "pctObz": -0.08158749907,
-          "y2025": 19593,
-          "pct2025": 0.02327361813,
-          "acumRealizado": 85372,
-          "acumObzParcial": 100984.912,
-          "acumPctObz": -0.1546063832,
-          "acum2025": 91452,
-          "acumPct2025": -0.06648296374
+          "realizado": 20541,
+          "obz": 22351.6,
+          "pctObz": -0.08100538664,
+          "y2025": 19899,
+          "pct2025": 0.03226292779,
+          "acumRealizado": 85864,
+          "acumObzParcial": 101506.452,
+          "acumPctObz": -0.1541030318,
+          "acum2025": 91758,
+          "acumPct2025": -0.06423418122
         },
         "Vila Velha": {
-          "realizado": 8273,
+          "realizado": 8451,
           "obz": 7877.52,
-          "pctObz": 0.05020361738,
-          "y2025": 7500,
-          "pct2025": 0.1030666667,
-          "acumRealizado": 41913,
+          "pctObz": 0.07279956128,
+          "y2025": 7587,
+          "pct2025": 0.1138790036,
+          "acumRealizado": 42091,
           "acumObzParcial": 42495.532,
-          "acumPctObz": -0.01370807642,
-          "acum2025": 39207,
-          "acumPct2025": 0.06901828755
+          "acumPctObz": -0.009519400769,
+          "acum2025": 39294,
+          "acumPct2025": 0.07118135084
         }
       },
       "daily": {
@@ -6979,7 +6979,7 @@
             7829.0,
             5008.0,
             3289.0,
-            null,
+            3975.0,
             null,
             null,
             null
@@ -7079,7 +7079,7 @@
             "cloud",
             "sun",
             "sun",
-            null,
+            "sun",
             null,
             null
           ]
@@ -7113,7 +7113,7 @@
             5547.0,
             9182.0,
             3411.0,
-            null,
+            4121.0,
             null,
             null,
             null
@@ -7214,7 +7214,7 @@
             3529.0,
             7282.0,
             7708.0,
-            null,
+            5120.0,
             null,
             null,
             null
@@ -7315,7 +7315,7 @@
             11974.0,
             11406.0,
             9997.0,
-            null,
+            10385.0,
             null,
             null,
             null
@@ -7414,7 +7414,7 @@
             "cloud",
             "sun",
             "sun",
-            null,
+            "sun",
             null,
             null,
             null
@@ -7449,7 +7449,7 @@
             3742.0,
             3850.0,
             1881.0,
-            null,
+            2638.0,
             null,
             null,
             null
@@ -7550,7 +7550,7 @@
             3364.0,
             3517.0,
             1881.0,
-            null,
+            2053.0,
             null,
             null,
             null
@@ -7651,7 +7651,7 @@
             1560.0,
             990.0,
             416.0,
-            null,
+            492.0,
             null,
             null,
             null
@@ -7750,7 +7750,7 @@
             "cloud-rain",
             "cloud",
             "cloud",
-            null,
+            "sun",
             null,
             null,
             null
@@ -7785,7 +7785,7 @@
             470.0,
             414.0,
             203.0,
-            null,
+            178.0,
             null,
             null,
             null
@@ -7884,7 +7884,7 @@
             "cloud",
             "sun",
             "sun",
-            null,
+            "sun",
             null,
             null,
             null
@@ -7921,7 +7921,7 @@
             373.0,
             196.0,
             208.0,
-            null,
+            179.0,
             null,
             null,
             null
@@ -7954,7 +7954,7 @@
             799.0,
             403.0,
             416.0,
-            null,
+            488.0,
             null,
             null,
             null
@@ -7987,7 +7987,7 @@
             980.0,
             521.0,
             435.0,
-            null,
+            529.0,
             null,
             null,
             null
@@ -7995,22 +7995,22 @@
         },
         "accum": {
           "GEX": {
-            "realizado2026": 44277,
-            "pctAq2026": 0.06815904238,
+            "realizado2026": 44456,
+            "pctAq2026": 0.06801838467,
             "realizado2025": null,
             "pctAq2025": null
           },
           "MDE": {
-            "realizado2026": 82257,
-            "pctAq2026": 0.1266246211,
-            "realizado2025": 91929,
-            "pctAq2025": 0.1529394541
+            "realizado2026": 82745,
+            "pctAq2026": 0.1266011616,
+            "realizado2025": 92259,
+            "pctAq2025": 0.1524271973
           },
           "MDC": {
-            "realizado2026": 94341,
-            "pctAq2026": 0.1452264656,
-            "realizado2025": 109931,
-            "pctAq2025": 0.1828888286
+            "realizado2026": 94870,
+            "pctAq2026": 0.1451526038,
+            "realizado2025": 110510,
+            "pctAq2025": 0.1825808818
           }
         }
       }
@@ -12089,13 +12089,13 @@
       "cv": 50390
     },
     "JULHO": {
-      "visitacao": 20049,
-      "cv": 87730
+      "visitacao": 20541,
+      "cv": 89832
     }
   },
   "CAPTACAO_CV_3P_ANUAL": {
-    "visitacao": 83666,
-    "cv": 388056
+    "visitacao": 84158,
+    "cv": 390158
   },
   "SEMMORADOR_RATIO": {
     "M3F": 0.9497363334637672,
@@ -12141,7 +12141,7 @@
   },
   "SHARE": {
     "dashShareGC": {
-      "periodo": "YTD: 01/01/2026 a 27/07/2026 | D-1: mesmo período de 2025",
+      "periodo": "YTD: 01/01/2026 a 28/07/2026 | D-1: mesmo período de 2025",
       "parques": [
         {
           "parque": "Aquario",
@@ -12161,10 +12161,10 @@
           "ecommerce2026": 134962,
           "visitacao2026": 334025,
           "share2026": 0.4040476012,
-          "ecommerce2025": 126500,
-          "visitacao2025": 316920,
-          "share2025": 0.3991543607,
-          "deltaPP": 0.004893240506,
+          "ecommerce2025": 127053,
+          "visitacao2025": 318645,
+          "share2025": 0.3987289931,
+          "deltaPP": 0.005318608147,
           "gapMeta": 0.1540476012
         },
         {
@@ -12173,10 +12173,10 @@
           "ecommerce2026": 188863,
           "visitacao2026": 935232,
           "share2026": 0.2019424057,
-          "ecommerce2025": 127630,
-          "visitacao2025": 881788,
-          "share2025": 0.1447400055,
-          "deltaPP": 0.0572024002,
+          "ecommerce2025": 128367,
+          "visitacao2025": 886094,
+          "share2025": 0.1448683774,
+          "deltaPP": 0.05707402834,
           "gapMeta": -0.04805759427
         },
         {
@@ -12185,10 +12185,10 @@
           "ecommerce2026": 54864,
           "visitacao2026": 355289,
           "share2026": 0.1544207673,
-          "ecommerce2025": 30419,
-          "visitacao2025": 283304,
-          "share2025": 0.1073722927,
-          "deltaPP": 0.04704847466,
+          "ecommerce2025": 30572,
+          "visitacao2025": 284743,
+          "share2025": 0.1073669941,
+          "deltaPP": 0.04705377322,
           "gapMeta": -0.09557923268
         },
         {
@@ -12209,10 +12209,10 @@
           "ecommerce2026": 378689,
           "visitacao2026": 1624546,
           "share2026": 0.2331045104,
-          "ecommerce2025": 284549,
-          "visitacao2025": 1482012,
-          "share2025": 0.1920018191,
-          "deltaPP": 0.04110269128,
+          "ecommerce2025": 285992,
+          "visitacao2025": 1489482,
+          "share2025": 0.1920076913,
+          "deltaPP": 0.04109681916,
           "gapMeta": -0.01689548957
         }
       ]
@@ -12669,7 +12669,7 @@
             "visitacao2025": 136230,
             "ecommerce2025": 50817.0,
             "share2025": 0.37302356309183,
-            "investimento2026": 106439.06,
+            "investimento2026": 106442.68,
             "investimento2025": 102022.0
           },
           "Paineiras": {
@@ -12679,7 +12679,7 @@
             "visitacao2025": 121532,
             "ecommerce2025": 21604.0,
             "share2025": 0.1777638811177303,
-            "investimento2026": 48973.1,
+            "investimento2026": 48974.72,
             "investimento2025": 46267.38
           },
           "M3F": {
@@ -12699,7 +12699,7 @@
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
-            "investimento2026": 63320.31,
+            "investimento2026": 63332.39,
             "investimento2025": null
           },
           "3P": {
@@ -12833,7 +12833,7 @@
             72111.52,
             57951.58,
             34726.44,
-            106439.06
+            106442.68
           ],
           "share": [
             0.2245370551,
@@ -12898,7 +12898,7 @@
             30134.01,
             40765.67,
             31278.29,
-            48973.1
+            48974.72
           ],
           "share": [
             0.1429418743,
@@ -13028,7 +13028,7 @@
             60474.95,
             29125.9,
             25409.63,
-            63320.31
+            63332.39
           ],
           "share": [
             null,
@@ -17210,33 +17210,33 @@
       "categorias": [
         {
           "label": "Local",
-          "v2025": 33822,
+          "v2025": 35060,
           "v2026": 72554,
-          "delta": 1.145171782,
-          "share25": 0.7713288787,
+          "delta": 1.069423845,
+          "share25": 0.7698388301,
           "share26": 0.8577846612
         },
         {
           "label": "Brasileiros",
-          "v2025": 2752,
+          "v2025": 2850,
           "v2026": 5325,
-          "delta": 0.9349563953,
-          "share25": 0.06276083833,
+          "delta": 0.8684210526,
+          "share25": 0.06257959686,
           "share26": 0.06295591313
         },
         {
           "label": "Estrangeiros",
-          "v2025": 7275,
+          "v2025": 7632,
           "v2026": 6704,
-          "delta": -0.07848797251,
-          "share25": 0.165910283,
+          "delta": -0.1215932914,
+          "share25": 0.1675815731,
           "share26": 0.07925942565
         },
         {
           "label": "Total Mês",
-          "v2025": 43849,
+          "v2025": 45542,
           "v2026": 84583,
-          "delta": 0.9289607517,
+          "delta": 0.8572526459,
           "share25": 1,
           "share26": 1
         }
@@ -17247,33 +17247,33 @@
       "categorias": [
         {
           "label": "Local",
-          "v2025": 21159,
+          "v2025": 22083,
           "v2026": 27278,
-          "delta": 0.2891913607,
-          "share25": 0.2009535297,
+          "delta": 0.2352488339,
+          "share25": 0.2016749164,
           "share26": 0.249723069
         },
         {
           "label": "Brasileiros",
-          "v2025": 45731,
+          "v2025": 47437,
           "v2026": 52966,
-          "delta": 0.1582077803,
-          "share25": 0.4343213699,
+          "delta": 0.1165545882,
+          "share25": 0.4332225246,
           "share26": 0.4848900973
         },
         {
           "label": "Estrangeiros",
-          "v2025": 38403,
+          "v2025": 39978,
           "v2026": 28989,
-          "delta": -0.2451370987,
-          "share25": 0.3647251004,
+          "delta": -0.2748761819,
+          "share25": 0.365102559,
           "share26": 0.2653868336
         },
         {
           "label": "Total Mês",
-          "v2025": 105293,
+          "v2025": 109498,
           "v2026": 109233,
-          "delta": 0.0374193916,
+          "delta": -0.002420135528,
           "share25": 1,
           "share26": 1
         }
@@ -17284,49 +17284,49 @@
       "categorias": [
         {
           "label": "Morador",
-          "v2025": 3684,
+          "v2025": 3752,
           "v2026": 3460,
-          "delta": -0.06080347448,
-          "share25": 0.0661590403,
+          "delta": -0.07782515991,
+          "share25": 0.06566328316,
           "share26": 0.05026366634
         },
         {
           "label": "Estado",
-          "v2025": 14015,
+          "v2025": 14420,
           "v2026": 12728,
-          "delta": -0.09183018195,
-          "share25": 0.2516880971,
+          "delta": -0.1173370319,
+          "share25": 0.2523626181,
           "share26": 0.1849005622
         },
         {
           "label": "Brasileiros",
-          "v2025": 32966,
+          "v2025": 33766,
           "v2026": 48964,
-          "delta": 0.4852878724,
-          "share25": 0.5920192515,
+          "delta": 0.4500977314,
+          "share25": 0.5909345467,
           "share26": 0.7113035141
         },
         {
           "label": "Mercosul",
-          "v2025": 1774,
+          "v2025": 1894,
           "v2026": 693,
-          "delta": -0.6093573844,
-          "share25": 0.03185834351,
+          "delta": -0.6341077086,
+          "share25": 0.03314665733,
           "share26": 0.01006726034
         },
         {
           "label": "Estrangeiros",
-          "v2025": 3245,
+          "v2025": 3308,
           "v2026": 2992,
-          "delta": -0.07796610169,
-          "share25": 0.05827526758,
+          "delta": -0.09552599758,
+          "share25": 0.05789289464,
           "share26": 0.04346499702
         },
         {
           "label": "Total Mês",
-          "v2025": 55684,
+          "v2025": 57140,
           "v2026": 68837,
-          "delta": 0.2362078874,
+          "delta": 0.2047077354,
           "share25": 1,
           "share26": 1
         }
@@ -17430,15 +17430,15 @@
           "v2025": 714,
           "v2026": 870,
           "delta": 0.218487395,
-          "share25": 0.0949594361,
+          "share25": 0.09387325795,
           "share26": 0.1065915217
         },
         {
           "label": "Brasileiros",
-          "v2025": 6741,
+          "v2025": 6828,
           "v2026": 7213,
-          "delta": 0.07001928497,
-          "share25": 0.8965287937,
+          "delta": 0.05638547159,
+          "share25": 0.8977123324,
           "share26": 0.8837294781
         },
         {
@@ -17446,14 +17446,14 @@
           "v2025": 64,
           "v2026": 79,
           "delta": 0.234375,
-          "share25": 0.008511770182,
+          "share25": 0.008414409677,
           "share26": 0.009679000245
         },
         {
           "label": "Total Mês",
-          "v2025": 7519,
+          "v2025": 7606,
           "v2026": 8162,
-          "delta": 0.08551669105,
+          "delta": 0.07310018407,
           "share25": 1,
           "share26": 1
         }
@@ -17464,41 +17464,41 @@
       "categorias": [
         {
           "label": "Morador/Estado",
-          "v2025": 7525,
+          "v2025": 7627,
           "v2026": 6639,
-          "delta": -0.1177408638,
-          "share25": 0.03924728659,
+          "delta": -0.1295397928,
+          "share25": 0.03873244801,
           "share26": 0.02986303218
         },
         {
           "label": "Brasileiros",
-          "v2025": 104696,
+          "v2025": 106452,
           "v2026": 142542,
-          "delta": 0.3614846795,
-          "share25": 0.5460510189,
+          "delta": 0.3390260399,
+          "share25": 0.5405987355,
           "share26": 0.641171311
         },
         {
           "label": "Mercosul",
-          "v2025": 57305,
+          "v2025": 59667,
           "v2026": 46728,
-          "delta": -0.1845737719,
-          "share25": 0.2988791705,
+          "delta": -0.2168535371,
+          "share25": 0.3030089125,
           "share26": 0.2101882464
         },
         {
           "label": "Estrangeiros",
-          "v2025": 22207,
+          "v2025": 23169,
           "v2026": 26406,
-          "delta": 0.1890845229,
-          "share25": 0.115822524,
+          "delta": 0.1397125469,
+          "share25": 0.117659904,
           "share26": 0.1187774104
         },
         {
           "label": "Total Mês",
-          "v2025": 191733,
+          "v2025": 196915,
           "v2026": 222315,
-          "delta": 0.1595030589,
+          "delta": 0.1289896656,
           "share25": 1,
           "share26": 1
         }
@@ -17548,33 +17548,33 @@
       "categorias": [
         {
           "label": "Local",
-          "v2025": 266710,
+          "v2025": 267948,
           "v2026": 274725,
-          "delta": 0.03005136665,
-          "share25": 0.8521467414,
+          "delta": 0.02529222088,
+          "share25": 0.8514962867,
           "share26": 0.8308282728
         },
         {
           "label": "Brasileiros",
-          "v2025": 18325,
+          "v2025": 18423,
           "v2026": 19102,
-          "delta": 0.04240109141,
-          "share25": 0.05854894468,
+          "delta": 0.03685610378,
+          "share25": 0.05854537481,
           "share26": 0.05776861104
         },
         {
           "label": "Estrangeiros",
-          "v2025": 27951,
+          "v2025": 28308,
           "v2026": 36837,
-          "delta": 0.3179134915,
-          "share25": 0.08930431393,
+          "delta": 0.3012929207,
+          "share25": 0.0899583385,
           "share26": 0.1114031162
         },
         {
           "label": "Total acumulado",
-          "v2025": 312986,
+          "v2025": 314679,
           "v2026": 330664,
-          "delta": 0.05648175957,
+          "delta": 0.05079779712,
           "share25": 1,
           "share26": 1
         }
@@ -17585,33 +17585,33 @@
       "categorias": [
         {
           "label": "Local",
-          "v2025": 157264,
+          "v2025": 158188,
           "v2026": 213554,
-          "delta": 0.357933157,
-          "share25": 0.1788586818,
+          "delta": 0.3500012643,
+          "share25": 0.1790532548,
           "share26": 0.2306325726
         },
         {
           "label": "Brasileiros",
-          "v2025": 446884,
+          "v2025": 448590,
           "v2026": 371667,
-          "delta": -0.1683143724,
-          "share25": 0.5082478073,
+          "delta": -0.1714772955,
+          "share25": 0.5077597516,
           "share26": 0.4013903574
         },
         {
           "label": "Estrangeiros",
-          "v2025": 275116,
+          "v2025": 276691,
           "v2026": 340728,
-          "delta": 0.2384884921,
-          "share25": 0.3128935109,
+          "delta": 0.2314386807,
+          "share25": 0.3131869935,
           "share26": 0.36797707
         },
         {
           "label": "Total acumulado",
-          "v2025": 879264,
+          "v2025": 883469,
           "v2026": 925949,
-          "delta": 0.05309554355,
+          "delta": 0.04808318119,
           "share25": 1,
           "share26": 1
         }
@@ -17622,49 +17622,49 @@
       "categorias": [
         {
           "label": "Morador",
-          "v2025": 19381,
+          "v2025": 19449,
           "v2026": 17364,
-          "delta": -0.1040709974,
-          "share25": 0.06730799285,
+          "delta": -0.1072034552,
+          "share25": 0.06720432894,
           "share26": 0.04901332596
         },
         {
           "label": "Estado",
-          "v2025": 98448,
+          "v2025": 98853,
           "v2026": 90195,
-          "delta": -0.08383105802,
-          "share25": 0.3418986265,
+          "delta": -0.08758459531,
+          "share25": 0.3415779489,
           "share26": 0.2545932351
         },
         {
           "label": "Brasileiros",
-          "v2025": 140232,
+          "v2025": 141032,
           "v2026": 209151,
-          "delta": 0.4914641451,
-          "share25": 0.487009672,
+          "delta": 0.4830038573,
+          "share25": 0.4873238171,
           "share26": 0.5903700839
         },
         {
           "label": "Mercosul",
-          "v2025": 6043,
+          "v2025": 6163,
           "v2026": 4930,
-          "delta": -0.184180043,
-          "share25": 0.02098664676,
+          "delta": -0.2000649035,
+          "share25": 0.0212957108,
           "share26": 0.01391590054
         },
         {
           "label": "Estrangeiros",
-          "v2025": 23841,
+          "v2025": 23904,
           "v2026": 32631,
-          "delta": 0.3686925884,
-          "share25": 0.08279706194,
+          "delta": 0.3650853414,
+          "share25": 0.0825981942,
           "share26": 0.09210745446
         },
         {
           "label": "Total acumulado",
-          "v2025": 287945,
+          "v2025": 289401,
           "v2026": 354271,
-          "delta": 0.2303426001,
+          "delta": 0.2241526463,
           "share25": 1,
           "share26": 1
         }
@@ -17802,45 +17802,1517 @@
       "categorias": [
         {
           "label": "Morador/Estado",
-          "v2025": 45918,
+          "v2025": 46020,
           "v2026": 48265,
-          "delta": 0.05111285335,
-          "share25": 0.04034438313,
+          "delta": 0.04878313777,
+          "share25": 0.0402507406,
           "share26": 0.03750010683
         },
         {
           "label": "Brasileiros",
-          "v2025": 559443,
+          "v2025": 561199,
           "v2026": 739000,
-          "delta": 0.3209567373,
-          "share25": 0.4915367117,
+          "delta": 0.3168234441,
+          "share25": 0.4908447495,
           "share26": 0.5741754677
         },
         {
           "label": "Mercosul",
-          "v2025": 287467,
+          "v2025": 289829,
           "v2026": 237474,
-          "delta": -0.1739086573,
-          "share25": 0.2525736919,
+          "delta": -0.1806409987,
+          "share25": 0.2534948261,
           "share26": 0.1845084506
         },
         {
           "label": "Estrangeiros",
-          "v2025": 245323,
+          "v2025": 246285,
           "v2026": 262324,
-          "delta": 0.06930047325,
-          "share25": 0.2155452132,
+          "delta": 0.06512373876,
+          "share25": 0.2154096838,
           "share26": 0.2038159748
         },
         {
           "label": "Total Mês",
-          "v2025": 1138151,
+          "v2025": 1143333,
           "v2026": 1287063,
-          "delta": 0.1308367695,
+          "delta": 0.1257114069,
           "share25": 1,
           "share26": 1
         }
       ]
     }
-  }
+  },
+  "EVENTOS": [
+    {
+      "data": "2025-04-08",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Operação suspensa pelo ICMBIO devido ao elevador inoperante às 14h e retornou 16:32"
+    },
+    {
+      "data": "2025-04-08",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "DNA (Dia da Alegria)  - Entrada gratuita (visita social)"
+    },
+    {
+      "data": "2025-04-10",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "DNA (Dia da Alegria)  - Entrada gratuita (visita social) - Foram 1.264 pessoas recebidas no Bio nos dois dias de evento"
+    },
+    {
+      "data": "2025-04-11",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Bioparque",
+      "evento": "DNA (Dia da Alegria)  - Entrada gratuita (visita social) - Foram 740 pessoas recebidas no Bio"
+    },
+    {
+      "data": "2025-04-13",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "Sessão Azul"
+    },
+    {
+      "data": "2025-04-18",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "Feriado (18/04 até 24/04)"
+    },
+    {
+      "data": "2025-04-18",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Feriado (18/04 até 24/04)"
+    },
+    {
+      "data": "2025-04-18",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Bioparque",
+      "evento": "Feriado (18/04 até 24/04)"
+    },
+    {
+      "data": "2025-04-28",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Configuração da bilheteria local de trade em Paineiras para preenchimento de estado."
+    },
+    {
+      "data": "2025-04-29",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Contrato AquaFoz assinado - Sinnapse (Novo site integrado)"
+    },
+    {
+      "data": "2025-04-30",
+      "ano": 2025,
+      "mes": "Abril",
+      "parque": "Parques Rio",
+      "evento": "GTM Atualizado com o email do Parques Rio como conta principal (3 parques)"
+    },
+    {
+      "data": "2025-05-01",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Feriado - alto fluxo de visitação"
+    },
+    {
+      "data": "2025-05-05",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Após a reunião, ficou decidido — conforme comunicado pela Camila — que o espaço do axolote será inaugurado no BioParque. A previsão de abertura é em aproximadamente 45 dias."
+    },
+    {
+      "data": "2025-05-08",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Transição Time de Mídia - Pareto > AKM (Google e TikTok)"
+    },
+    {
+      "data": "2025-05-10",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Paineiras",
+      "evento": "Trajeto de acesso ao Centro de Visitantes está passando por obras desde início de Maio. Impactando a jornada dos clientes que sobem de Van. Previsão de conclusão está para Agosto/Setembro"
+    },
+    {
+      "data": "2025-05-12",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Aquario",
+      "evento": "Integração Carrinho abandonado voltou a funcionar na RD Station"
+    },
+    {
+      "data": "2025-05-13",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Parques Rio",
+      "evento": "Instalação do Plug in da HandTalk nos e-commerces dos Parques do RJ"
+    },
+    {
+      "data": "2025-05-13",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Alinhamos em não colocar mais saldo no Meta até passar o acesso para AKM (Meta)"
+    },
+    {
+      "data": "2025-05-14",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "AKM entrou em contato com o Meta e abriram chamado interno para tentar resolver a questão dos acessos"
+    },
+    {
+      "data": "2025-05-15",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Aquario",
+      "evento": "Reunião com a Ecan pedindo suporte no reembolso do saldo parado na conta antiga do Meta"
+    },
+    {
+      "data": "2025-05-15",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Outros Parques",
+      "evento": "Envio do passo a passo da instalação do plug in da HandTalk nos E-commerces do M3F e EcoNoronha"
+    },
+    {
+      "data": "2025-05-15",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Implementado Cupom VISIT10 BIOPARQUE (10%)"
+    },
+    {
+      "data": "2025-05-15",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Aquario",
+      "evento": "Implementado Cupom VISIT10 AQUARIO (10%)"
+    },
+    {
+      "data": "2025-05-16",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Paineiras",
+      "evento": "Contrato AKM - Iniciado o fluxo de assinaturas dos contratos."
+    },
+    {
+      "data": "2025-05-17",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Aquario",
+      "evento": "Show gratuito da cantora Iza - Praça Mauá"
+    },
+    {
+      "data": "2025-05-21",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Parques Rio",
+      "evento": "Configuração dos domínios do BioParque e Paineiras realizado na RD Station, bases dos parques incluídas na plataforma."
+    },
+    {
+      "data": "2025-05-23",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Aquario",
+      "evento": "Tempo fechado com possibilidade de chuva"
+    },
+    {
+      "data": "2025-05-24",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Parques Rio",
+      "evento": "O Pix ficou com erro desde 24/05 depois das 17h, nos Sites dos 3 parques e no Portal do Agente. Foi aberto um chamado 25/04 e foi corrigido o erro logo depois às 08h33."
+    },
+    {
+      "data": "2025-05-31",
+      "ano": 2025,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Arraiá da Quinta da Boa Vista (11h às 20h) (31/05/2025 e 01/06/2025)"
+    },
+    {
+      "data": "2025-06-06",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Bioparque",
+      "evento": "Estamos com problema para pagamento em cartao, ja esta sendo acompanhado pelo Ti pois é em todo parque (1ª notificação 09h42)"
+    },
+    {
+      "data": "2025-06-07",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Tivemos uma alteração na promoção de Namorados no AquaRio, porque os clientes não estavam entendendo a dinâmica. Foi criado um novo bilhete no valor de R$148,50 correspondendo a 1 ngresos promocional RJ (R$99) + 01 Ingressos com 50% de desconto da Promoção de Namorados (R$49,50)"
+    },
+    {
+      "data": "2025-06-13",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Saldo do Tiktok disponível para a conta principal em 13/06/2025"
+    },
+    {
+      "data": "2025-06-13",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Parques Rio",
+      "evento": "Bienal do Rio (13 a 22/06)"
+    },
+    {
+      "data": "2025-06-15",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Paineiras",
+      "evento": "Instabilidade no Banco do Brasil afetou pagamento por PIX no e-commerce de Paineiras. Período: 8h às 13:55."
+    },
+    {
+      "data": "2025-06-16",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Ação prorrogada de Dia dos Namorados (só trocamos o nome do bilhete para O Amor está no mar). Campanha ativada às"
+    },
+    {
+      "data": "2025-06-17",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Bioparque",
+      "evento": "Ação prorrogada de Dia dos Namorados (só trocamos o nome do bilhete para Diversão em dobro). Foi aprovado dia 16/06 às 16:30 por isso só ativamos no dia seguinte."
+    },
+    {
+      "data": "2025-06-18",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Parques Rio",
+      "evento": "Maratona do Rio (18 a 22)"
+    },
+    {
+      "data": "2025-06-19",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Bioparque",
+      "evento": "\"Junina da Quinta\", uma festa junina gratuita que acontecerá de 19 a 22 de junho, das 11h às 20h (FERIADO PROLONGADO)"
+    },
+    {
+      "data": "2025-06-19",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "INTERDIÇÕES PARA CONCENTRAÇÃO E DESLOCAMENTO DA PROCISSÃO em ruas do Centro a partir das 14:30 até 17h"
+    },
+    {
+      "data": "2025-06-20",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Paineiras",
+      "evento": "20/07 (domingo): Evento com término previsto às 10h. Início da operação a partir das 11h.\n⮕ Neste dia, já estaremos em alta temporada de julho e a bilheteria encerrará às 18h."
+    },
+    {
+      "data": "2025-06-21",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Maratona do Rio (21 a 22) - Interdição das vias em torno do Parque poderão afetar o fluxo até o AquaRio."
+    },
+    {
+      "data": "2025-06-23",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Paineiras",
+      "evento": "Em razão das obras, o tempo de subida foi de 1h40 para as 10 vans que realizaram o percurso."
+    },
+    {
+      "data": "2025-06-24",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Parques Rio",
+      "evento": "No dia 24/07 foi feriado no Município de Niterói"
+    },
+    {
+      "data": "2025-06-24",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Paineiras",
+      "evento": "Devido ao clima nublado e à baixa visibilidade no Cristo, a visitação registrou fluxo reduzido."
+    },
+    {
+      "data": "2025-06-26",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Bioparque",
+      "evento": "Festa Junina da Narcisa no Bio Parque para as crianças [Fechada]"
+    },
+    {
+      "data": "2025-06-28",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Bioparque",
+      "evento": "Festa Junina do Bio Parque (28 e 29/06)"
+    },
+    {
+      "data": "2025-06-29",
+      "ano": 2025,
+      "mes": "Junho",
+      "parque": "Paineiras",
+      "evento": "29/06 (domingo): Evento com término previsto às 07h30. Início da operação a partir das 08h.\n⮕ Neste dia, a bilheteria será encerrada às 17h (conforme padrão atual)."
+    },
+    {
+      "data": "2025-07-02",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "O ecommerce virou para o novo layout."
+    },
+    {
+      "data": "2025-07-04",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Parques Rio",
+      "evento": "No dia 04/07 será ponto facultativo na cidade do Rio de Janeiro, porém não iremos aderir. (Brics)"
+    },
+    {
+      "data": "2025-07-04",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "No dia 04, 05 e 06/07 Festa Junina na Yup Star"
+    },
+    {
+      "data": "2025-07-05",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "Evento Sescoop (+4k passaporte)"
+    },
+    {
+      "data": "2025-07-07",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Parques Rio",
+      "evento": "No dia 07/07 será ponto facultativo na cidade do Rio de Janeiro, porém não iremos aderir. (Brics)"
+    },
+    {
+      "data": "2025-07-10",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Tivemos perda no parâmetro de mídia; no GA 67% do receita do dia estava sendo atribuida a \"not set\""
+    },
+    {
+      "data": "2025-07-11",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Parques Rio",
+      "evento": "Início ao horário da alta temporada no dia 11/07 com data prevista de término 03/08. Último horário de entrada do parque será às 17h e encerramento às 18h."
+    },
+    {
+      "data": "2025-07-14",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "Pausa na obra para Paineiras"
+    },
+    {
+      "data": "2025-07-15",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "Acontecerá no Parque Nacional da Tijuca a corrida UpHill 2025. Horário de funcionamento das bilheterias e operação iniciará às 11h. Centro de Visitantes Paineiras: das 11h às 18h; e Bilheterias Copacabana e Largo do Machado: das 11h às 16h30."
+    },
+    {
+      "data": "2025-07-16",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "O ecommerce virou para o novo layout."
+    },
+    {
+      "data": "2025-07-16",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "O ecommerce virou para o novo layout."
+    },
+    {
+      "data": "2025-07-16",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Bilhetes GEX ativados no ecommerce                                                                                                                                                                                                              - GEX (Globo Experience)\n- Combo AquaRio + GEX (Globo Experience)\n- Experiência Completa + GEX (Globo Experience)"
+    },
+    {
+      "data": "2025-07-18",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "Parque Interditado Temporariamente (Comunicado feito na noite anterior)"
+    },
+    {
+      "data": "2025-07-18",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "BioParque ficou fechado a partir de 18/07 por gripe aviária. Retornou funcionamento em 24/07."
+    },
+    {
+      "data": "2025-07-19",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Criado bilhete de 50% no Aqua para quem comprou BioParque e não pode ir por conta da interdição."
+    },
+    {
+      "data": "2025-07-22",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Parques Rio",
+      "evento": "Lentidão no site institucional"
+    },
+    {
+      "data": "2025-07-23",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Foi finalizado o upgrade no servidor do AquaRio às 23:10. Tivemos um volume alto de sessões no site, tivemos que alterar o servidor do site junto a RioMarca"
+    },
+    {
+      "data": "2025-07-23",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Tivemos que pedir para o TI encerrar a compra do dia 24/07 no e-com às 15:15 por lotação (acima de 7k ingressos vendidos)"
+    },
+    {
+      "data": "2025-07-25",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Velório de Preta Gil será aberto ao público no Theatro Municipal do Rio (Podendo influenciar indiretamente no fluxo do trânsito)"
+    },
+    {
+      "data": "2025-07-25",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "[report rcv - 15:10] Não tivemos compra aprovada em cartão de crédito dos últimos 57 links gerados no link de pagamento, somente do AquaRio, com 27 erros na tentativa, a última compra aprovada via crédito ocorreu às 11:14"
+    },
+    {
+      "data": "2025-07-25",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "[report rcv - 15:16] No link de pagamento do BioParque sem aprovação em crédito das últimas 12 tentativas com 8 erros"
+    },
+    {
+      "data": "2025-07-25",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "[report rcv - 15:16] o link de pagamento de Paineiras 4 erros nos ultimos 6 links gerados"
+    },
+    {
+      "data": "2025-07-26",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "Alto Corcovado ficou sem energia, afetando funcionamento dos acessos pelo elevador e escada rolante às 13h e normalizou às 15h; Tiveram notícias negativas sobre o Trem."
+    },
+    {
+      "data": "2025-07-31",
+      "ano": 2025,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "[BIOPARQUE]_Desde o dia 31/07/2025 o BIOPARQUE retornou a ficar fechado para o público devido ao falecimento da ave (Gripe aviária)"
+    },
+    {
+      "data": "2025-08-06",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Campanha 'Pai Paga Meia' – Experiência Completa + GEX (Compras até 15/08, utilização até 31/08)"
+    },
+    {
+      "data": "2025-08-12",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Evento Rio Innovation Week acontecendo na zona portuaria, entre os dias 12/08 a 15/08"
+    },
+    {
+      "data": "2025-08-20",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Fluxo Carrinho Abandonado Bio e Paineiras  ativos"
+    },
+    {
+      "data": "2025-08-21",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Bioparque",
+      "evento": "[BIO] Campanha de reabertura: 'Criança não paga' (até 12 anos) — válido para compras e utilização até 31/08"
+    },
+    {
+      "data": "2025-08-22",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Paineiras",
+      "evento": "Volta das obras em estrada para Paineiras"
+    },
+    {
+      "data": "2025-08-23",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Outros Parques",
+      "evento": "[Parques Foz] M3F teve baixa visitação no final de semana após fortes chuvas (23 e 24/08)"
+    },
+    {
+      "data": "2025-08-25",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Identificado site fake do AquaRio (https://www.aquac-rio.info ). TI acionado."
+    },
+    {
+      "data": "2025-08-28",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Identificado novo site fake do AquaRio (https://www.venda-aquario.info ). TI acionado."
+    },
+    {
+      "data": "2025-08-29",
+      "ano": 2025,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "Identificado novo site fake do AquaRio (https://www.venda-aquario.info ). TI acionado."
+    },
+    {
+      "data": "2025-09-15",
+      "ano": 2025,
+      "mes": "Setembro",
+      "parque": "Parques Rio",
+      "evento": "Hoje (15/09/25) entrou um saldo extra de R$ 6.300,00 (referente ao pagamento realizado na última janela de agosto).\nO valor provisionado para setembro tem previsão de cair no dia 18/09 (quarta-feira), o que impactará diretamente as atividades de mídia das contas de Paineiras e BioParque"
+    },
+    {
+      "data": "2025-10-07",
+      "ano": 2025,
+      "mes": "Outubro",
+      "parque": "Aquario",
+      "evento": "Problema na compra online, após o preenchimento dos dados o sistema não libera para prosseguir a compra."
+    },
+    {
+      "data": "2025-10-15",
+      "ano": 2025,
+      "mes": "Outubro",
+      "parque": "Aquario",
+      "evento": "Criado cupom FISK20 para o Trade (Tarifa trade20) no e-commerce"
+    },
+    {
+      "data": "2025-10-15",
+      "ano": 2025,
+      "mes": "Outubro",
+      "parque": "Bioparque",
+      "evento": "Criado cupom FISK20 para o Trade (Tarifa trade20) no e-commerce"
+    },
+    {
+      "data": "2025-10-16",
+      "ano": 2025,
+      "mes": "Outubro",
+      "parque": "Bioparque",
+      "evento": "Prorrogada camapanha de Dia das Crinaças do BioParque"
+    },
+    {
+      "data": "2025-10-28",
+      "ano": 2025,
+      "mes": "Outubro",
+      "parque": "Parques Rio",
+      "evento": "MegaOperação policial no Rio De Janeiro - Vias interditadas/ tiroteio que afetou o fluxo em toda cidade e regiões próximas"
+    },
+    {
+      "data": "2025-11-06",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Parques Rio",
+      "evento": "Hoje às 10h começou uma instabilidade bancária nacional no PIX - Não impactou nas vendas, mas não emitiu o bilhete de quem fez as transações. Está sendo liberado cortesia como tratativa."
+    },
+    {
+      "data": "2025-11-10",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "AquaFoz",
+      "evento": "Fluxo de familiares de funcionários e teste de bilheteria em Aquafoz. (Inauguração prevista somente para 13/11 e aberto ao público 14/11)"
+    },
+    {
+      "data": "2025-11-11",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "AquaFoz",
+      "evento": "Fluxo de Escola Pública e Trade. (Inauguração prevista somente para 13/11 e aberto ao público 14/11)"
+    },
+    {
+      "data": "2025-11-18",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Parques Rio",
+      "evento": "TI relatou problemas no CloudFire, com isso ecommerce passou parte da manhã fora do ar e com instabilidade."
+    },
+    {
+      "data": "2025-11-19",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Parques Rio",
+      "evento": "TI relatou problemas no CloudFire, com isso ecommerce passou parte da manhã fora do ar e com instabilidade."
+    },
+    {
+      "data": "2025-11-22",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Parques Rio",
+      "evento": "Show Dua Lipa RJ"
+    },
+    {
+      "data": "2025-11-22",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Aquario",
+      "evento": "Identificado Site Fake do AquaRio - Tivemos reclamações na Operação do Parque. O site caiu"
+    },
+    {
+      "data": "2025-11-23",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Parques Rio",
+      "evento": "Parada LGBTQIA+ em Copacabana"
+    },
+    {
+      "data": "2025-11-26",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Aquario",
+      "evento": "Tela de verificação de identidade do cloudflare no site e ecom do AquaRio afetando o fluxo e campanhas de google. Tivemos todas as campanhas recusadas pela plataforma até a retirada da tela."
+    },
+    {
+      "data": "2025-11-27",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Bioparque",
+      "evento": "Tela de verificação de identidade do cloudflare no site e ecom do BioParque afetando o fluxo e campanhas de google. Tivemos todas as campanhas recusadas pela plataforma até a retirada da tela. Normalizado por volta de 16h."
+    },
+    {
+      "data": "2025-11-28",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Aquario",
+      "evento": "Instabilidade no Santander afetou pagamento por PIX no e-commerce do AquaRio. Período: 9:23h às 10:29."
+    },
+    {
+      "data": "2025-11-28",
+      "ano": 2025,
+      "mes": "Novembro",
+      "parque": "Bioparque",
+      "evento": "Instabilidade no Santander afetou pagamento por PIX no e-commerce do AquaRio. Período: 9:27h às 10:29."
+    },
+    {
+      "data": "2025-12-26",
+      "ano": 2025,
+      "mes": "Dezembro",
+      "parque": "Parques Rio",
+      "evento": "Ecommerce AquaRio, BioParque e Paineiras fora do ar na parte da manhã"
+    },
+    {
+      "data": "2025-12-29",
+      "ano": 2025,
+      "mes": "Dezembro",
+      "parque": "Parques Rio",
+      "evento": "Erro 481 (Antifraude) pagamento por cartão nos E-commerces (Parques Rio e Foz)"
+    },
+    {
+      "data": "2025-12-30",
+      "ano": 2025,
+      "mes": "Dezembro",
+      "parque": "Parques Rio",
+      "evento": "Erro 481 (Antifraude) pagamento por cartão nos E-commerces (Parques Rio e Foz)"
+    },
+    {
+      "data": "2026-01-01",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Parques Rio",
+      "evento": "O Meta começou a descontar em torno de 12% de imposto sobre o valor investido na plataforma para TODOS os parques."
+    },
+    {
+      "data": "2026-01-15",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Bioparque",
+      "evento": "Venda antecipada 1 dia com desconto de 10% somente para ingresso inteira no Bio."
+    },
+    {
+      "data": "2026-01-20",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "AquaFoz",
+      "evento": "Horário Parque estendido: Ultimo acesso 18h e Encerramento 19h | MDE, MDC e GEX: Ultimo acesso 19h e Encerramento 20h"
+    },
+    {
+      "data": "2026-01-22",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "AquaFoz",
+      "evento": "Horário Parque estendido: Ultimo acesso 18h e Encerramento 19h | MDE, MDC e GEX: Ultimo acesso 19h e Encerramento 20h"
+    },
+    {
+      "data": "2026-01-23",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Aquario",
+      "evento": "Bilheteria encerrada às 17h devido às condições climáticas"
+    },
+    {
+      "data": "2026-01-24",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Aquario",
+      "evento": "AquaRio - último acesso 17h30 e encerramento 18h30. MDE MDC e GEX - último acesso 18h30 e encerramento 19h30"
+    },
+    {
+      "data": "2026-01-26",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Outros Parques",
+      "evento": "Institucional do M3F caiu às 15:52 ; apenas e-commerce funcionou. Voltou ao normal às 16:20"
+    },
+    {
+      "data": "2026-01-27",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Bioparque",
+      "evento": "Mudança na OBZ do Bio"
+    },
+    {
+      "data": "2026-01-28",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Paineiras",
+      "evento": "Atualização no ERP da Limber que deixará o E-commerce fora do ar das 21h até as 1h do dia 29/01"
+    },
+    {
+      "data": "2026-01-30",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "Paineiras",
+      "evento": "Instablidade no PIX no e-commerce (sáb e domingo) - 30/01 e 01/02"
+    },
+    {
+      "data": "2026-01-31",
+      "ano": 2026,
+      "mes": "Janeiro",
+      "parque": "AquaFoz",
+      "evento": "Evacuação no Aquafoz de 14h às 15:30 por conta de problema de energia impactando um transformador. Impacto na visitação. Após isso a situação foi controlada e a visitação normalizada."
+    },
+    {
+      "data": "2026-02-10",
+      "ano": 2026,
+      "mes": "Fevereiro",
+      "parque": "Aquario",
+      "evento": "Identificado site fake do AquaRio. TI acionado"
+    },
+    {
+      "data": "2026-02-25",
+      "ano": 2026,
+      "mes": "Fevereiro",
+      "parque": "Vila Velha",
+      "evento": "MON Sem Paredes - Exposição ao ar livre no Parque Vila Velha"
+    },
+    {
+      "data": "2026-02-27",
+      "ano": 2026,
+      "mes": "Fevereiro",
+      "parque": "Aquario",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
+    },
+    {
+      "data": "2026-03-03",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "AquaFoz",
+      "evento": "Obras na Av. Cataratas chegaram na frente do AquaFoz, podemos ter impacto na visitação"
+    },
+    {
+      "data": "2026-03-03",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "AquaFoz",
+      "evento": "[INTERNET] Rompimento da fibra na entrada do Parque; Estão rodando com a Starlink por contingência. POS e ECOM indisponíveis. Instabilidade começou a noite e a equipe técnica atuará na manhã de 04/03."
+    },
+    {
+      "data": "2026-03-09",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "Aquario",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
+    },
+    {
+      "data": "2026-03-11",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "Aquario",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
+    },
+    {
+      "data": "2026-03-12",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "Paineiras",
+      "evento": "Interditado o acesso ao Mirante Dona Marta, seja por veículo ou a pé/bicicleta."
+    },
+    {
+      "data": "2026-03-16",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "AquaFoz",
+      "evento": "Problemas no AquaFoz; e-commerce fora do ar"
+    },
+    {
+      "data": "2026-03-20",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "Aquario",
+      "evento": "O site do Aquário passará a oferecer aos nossos clientes a opção de contribuir com o Fundo Rio de Janeiro, uma iniciativa dedicada a promover o Rio de Janeiro como destino turístico"
+    },
+    {
+      "data": "2026-03-23",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina, para fins turísticos. A cidade fronteiriça de Puerto Iguazú está entre os destinos mais procurados para o período."
+    },
+    {
+      "data": "2026-03-24",
+      "ano": 2026,
+      "mes": "Março",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina. Dia Nacional da Memória pela Verdade e a Justiça; a cidade fronteiriça de Puerto Iguazú está entre os destinos mais procurados para o período."
+    },
+    {
+      "data": "2026-04-01",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Site institucional do AquaFoz fora do ar. Normalizado às 14h"
+    },
+    {
+      "data": "2026-04-02",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina. Dia do Veterano da Guerra das Malvinas e Quinta-Feira Santa"
+    },
+    {
+      "data": "2026-04-03",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Sexta-Feira Santa"
+    },
+    {
+      "data": "2026-04-03",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
+    },
+    {
+      "data": "2026-04-03",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "[oportunidade de mercado] Na sexta feira santa o comércio do Paraguai fecha e com isso o fluxo para Foz aumenta."
+    },
+    {
+      "data": "2026-04-04",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
+    },
+    {
+      "data": "2026-04-05",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
+    },
+    {
+      "data": "2026-04-06",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "GEX - Três televisões não estão funcionando desde sábado (04/04), o que pode afetar na experiência do cliente"
+    },
+    {
+      "data": "2026-04-06",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "M3F",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
+    },
+    {
+      "data": "2026-04-06",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Vila Velha",
+      "evento": "Rádio Jovem Pan"
+    },
+    {
+      "data": "2026-04-07",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
+    },
+    {
+      "data": "2026-04-07",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Vila Velha",
+      "evento": "Eletromidia Mub de Rua"
+    },
+    {
+      "data": "2026-04-10",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Aquario",
+      "evento": "A partir de hoje será necessário incluir Nome e CPF do acompanhante nas compras do e-commerce e RCV."
+    },
+    {
+      "data": "2026-04-11",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Desde 11/04 capacidade reduzida em dias de grande fluxo e estamos ganhado de lavada no share"
+    },
+    {
+      "data": "2026-04-13",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Bioparque",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
+    },
+    {
+      "data": "2026-04-14",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
+    },
+    {
+      "data": "2026-04-15",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Vila Velha",
+      "evento": "Eletromidia Edificios"
+    },
+    {
+      "data": "2026-04-16",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "M3F",
+      "evento": "Saldo de Google Ads zerado (pago pelo financeiro no dia 22/04)"
+    },
+    {
+      "data": "2026-04-17",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Vila Velha",
+      "evento": "Rodovia Midialand"
+    },
+    {
+      "data": "2026-04-18",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido até 18h devido ao feriadão"
+    },
+    {
+      "data": "2026-04-18",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Vila Velha",
+      "evento": "NEOOH portas do Aeroporto"
+    },
+    {
+      "data": "2026-04-19",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido até 18h devido ao feriadão"
+    },
+    {
+      "data": "2026-04-20",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido até 18h devido ao feriadão"
+    },
+    {
+      "data": "2026-04-21",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "AquaFoz",
+      "evento": "Horário estendido até 18h devido ao feriadão"
+    },
+    {
+      "data": "2026-04-27",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Parques Foz",
+      "evento": "Greve dos ônibus; muitos turistas usam a linha que vai para o PNI"
+    },
+    {
+      "data": "2026-04-27",
+      "ano": 2026,
+      "mes": "Abril",
+      "parque": "Paineiras",
+      "evento": "Investimento extra de R$ 4.000,00 (dinheiro do investimento de maio; em breve ira repor)"
+    },
+    {
+      "data": "2026-05-01",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "AquaFoz",
+      "evento": "Dia do Trabalhador"
+    },
+    {
+      "data": "2026-05-01",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "AquaFoz",
+      "evento": "Dia do trabalhador; comércio fechado no Paraguai Oportunidade para tentar atrair o público para o AquaFoz"
+    },
+    {
+      "data": "2026-05-01",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Parques Foz",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
+    },
+    {
+      "data": "2026-05-02",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Parques Foz",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
+    },
+    {
+      "data": "2026-05-03",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Parques Foz",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
+    },
+    {
+      "data": "2026-05-05",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Parques Foz",
+      "evento": "[AQUAFOZ][M3F] Alteração do valor de AquaFoz para R$109 no Combo AquaFoz + M3F para os dois parques. Padronização do valor de M3F (R$48 no e-com e R$53 no físico). Tarifa inteira final no Combo: Bilheteria e demais canais físicos R$ 162; E-commerces: R$ 157"
+    },
+    {
+      "data": "2026-05-06",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Todos os Parques",
+      "evento": "Meta comecou a desativar contas inativas. Os parques perderam seguidores no Instagram."
+    },
+    {
+      "data": "2026-05-07",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "AquaFoz",
+      "evento": "Crazy Week no Paraguai (uma adaptaçãp da Black Friday). Oportunidade para atrair público"
+    },
+    {
+      "data": "2026-05-08",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Todos os Parques",
+      "evento": "Devido a um problema na nuvem da Amazon estamos sendo impactados com instabilidade no atendimento via Wpp."
+    },
+    {
+      "data": "2026-05-08",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Ecommerce BioParque com instabilidade"
+    },
+    {
+      "data": "2026-05-10",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "AquaFoz",
+      "evento": "Crazy Week no Paraguai (uma adaptaçãp da Black Friday). Oportunidade para atrair público"
+    },
+    {
+      "data": "2026-05-13",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Bioparque",
+      "evento": "Começamos a rodar a conta de anúncios nova do BioParque com campanhas de topo de funil."
+    },
+    {
+      "data": "2026-05-18",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Parques Foz",
+      "evento": "Parque das Aves passará a abrir 8:30 e encerrar as atividades às 18h30 . A atualização acompanha a redução da luminosidade natural ao longo do dia durante os meses de outono e inverno e busca proporcionar uma experiência mais confortável e organizada ao público."
+    },
+    {
+      "data": "2026-05-19",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "Soul Parques",
+      "evento": "[VILA VELHA]"
+    },
+    {
+      "data": "2026-05-25",
+      "ano": 2026,
+      "mes": "Maio",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina. Revolução de Maio de 1810"
+    },
+    {
+      "data": "2026-06-04",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Todos os Parques",
+      "evento": "Feriado Nacional (Corpus Chisti)"
+    },
+    {
+      "data": "2026-06-10",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "AquaFoz",
+      "evento": "10/06 a 14/06 - cidade com fluxo do festival de turismo"
+    },
+    {
+      "data": "2026-06-10",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Parques Foz",
+      "evento": "FERIADO - ANIVERSÁRIO FOZ DO IGUAÇU (baixo fluxo de visitação)"
+    },
+    {
+      "data": "2026-06-11",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Horário estendido em meia hora para acesso ao AquaRio e demais atrativos."
+    },
+    {
+      "data": "2026-06-15",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina. General Güemes (herói nacional)"
+    },
+    {
+      "data": "2026-06-19",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Falta de Luz na parte da tarde."
+    },
+    {
+      "data": "2026-06-20",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "AquaFoz",
+      "evento": "Feriado na Argentina. General Belgrano (herói nacional) e Dia da Bandeira"
+    },
+    {
+      "data": "2026-06-24",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Parques Foz",
+      "evento": "Feriado municipal em foz"
+    },
+    {
+      "data": "2026-06-24",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "M3F",
+      "evento": "Jogo da copa no Marco (Tarde e Noite)"
+    },
+    {
+      "data": "2026-06-25",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "M3F",
+      "evento": "tarifário M3F - 25/06 (novo preço ativo)"
+    },
+    {
+      "data": "2026-06-25",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Aquario",
+      "evento": "Horário estendido em 30min, até 17:30."
+    },
+    {
+      "data": "2026-06-26",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Vila Velha",
+      "evento": "Hello Kitty Parade em Vila Velha. Estará aberto ao público a partir do dia 26/06 e ficará até 03/08."
+    },
+    {
+      "data": "2026-06-29",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "3 Pescadores",
+      "evento": "Fechou em uma segunda, excepcionalmente por conta do jogo do Brasil."
+    },
+    {
+      "data": "2026-06-29",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Parques Rio",
+      "evento": "Greve dos rodoviários no Rio de Janeiro. se estendeu até..."
+    },
+    {
+      "data": "2026-06-30",
+      "ano": 2026,
+      "mes": "Junho",
+      "parque": "Parques Foz",
+      "evento": "30/06 e 01/07 (terça e quarta-feira) o acesso ao parque passará por obras. O transporte público nesses dois dias não vai conseguir acessar o ponto interno do parque. Nesses dias, o desembarque será realizado no ponto do Parque das Aves."
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "Caravana do Silvinho - de 01/07 a 31/07"
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "AquaFoz",
+      "evento": "Vai voltar ao valor de 150 no site e 135 antecipado"
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "3 Pescadores",
+      "evento": "Em Julho irá abrir todos os dias"
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "3 Pescadores",
+      "evento": "Todos os dias irá trabalhar com balsa"
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "AquaFoz",
+      "evento": "Novo site de Aquafoz foi virado."
+    },
+    {
+      "data": "2026-07-01",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "Bioparque abrirá todos os dias de Julho."
+    },
+    {
+      "data": "2026-07-03",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Ecommerce Aquario está com problemas ao criar cupom."
+    },
+    {
+      "data": "2026-07-05",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "devido ao jogo da Seleção Brasileira na Copa do Mundo no próximo domingo, dia 05/07, trabalharemos em horário de baixa temporada. Abertura 9h | Último acesso 16h |Encerramento 17h"
+    },
+    {
+      "data": "2026-07-05",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Soul Parques",
+      "evento": "devido ao jogo da Seleção Brasileira na Copa do Mundo no próximo domingo, dia 05/07, Soul parques fechará às 16h."
+    },
+    {
+      "data": "2026-07-05",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "M3F",
+      "evento": "pagode das 14:30 às 16:30 | Transmissão do jogo às 17:00 |apresentações culturais 19:00 às 20:30"
+    },
+    {
+      "data": "2026-07-06",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Vila Velha",
+      "evento": "A partir do dia 06/07, ativaremos a Campanha do Agasalho do SESC. A mecânica será a mesma da anterior: 10% de desconto no ingresso para quem realizar a doação, benefício válido apenas para compras via e-commerce."
+    },
+    {
+      "data": "2026-07-06",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "M3F",
+      "evento": "Com a saída do Brasil da Copa, a programação prevista até o dia 19/07 no Marco das 3 Fronteiras foi cancelado."
+    },
+    {
+      "data": "2026-07-06",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "M3F",
+      "evento": "No M3F, aba antifraude no site está afetando as mídias ativas e pode estar influenciando no fluxo de compra no e-commerce. ficamos no período de 06/07 a 08/07 sem rodar as campanhas, se normalizando às 17h"
+    },
+    {
+      "data": "2026-07-07",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "AquaFoz",
+      "evento": "12:20 tivemos um problema com a internet no aquafoz e nosso site está, temporariamente, com o fluxo de compra afetado. Às 14h foi normalizado."
+    },
+    {
+      "data": "2026-07-08",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
+    },
+    {
+      "data": "2026-07-08",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "M3F",
+      "evento": "Site estava sem a opção de parcelamento e foi normalizado hoje. Time de RCV que identificou o problema."
+    },
+    {
+      "data": "2026-07-09",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "3 Pescadores",
+      "evento": "Feriadão no estado, iniciando dia 09 (Quinta-feira). Período 09/07 a 12/06."
+    },
+    {
+      "data": "2026-07-13",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "ALTA TEMPORADA NO AQUARIO. Alta iniciará no dia 13/7 a 2/8. Horário estendido todos os dias"
+    },
+    {
+      "data": "2026-07-15",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Vila Velha",
+      "evento": "Favretto Rodovia"
+    },
+    {
+      "data": "2026-07-16",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Todos os Parques",
+      "evento": "Limber informou que os serviços da Fiserv ficaram instáveis, impactando pagamentos com cartão em todos os parques. Foi orientado usar o POS e realizar o pagamento manual nos PDVs como POS Manual."
+    },
+    {
+      "data": "2026-07-16",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Vila Velha",
+      "evento": "Midialand Submarino Pedágio"
+    },
+    {
+      "data": "2026-07-21",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Soul Parques",
+      "evento": "Início de aviso prévio de encerramento de contrato Torus."
+    },
+    {
+      "data": "2026-07-24",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "Movimento muito bom impulsionado pela alta e pelo dia chuvoso. Horário estendido em 30 min. último acesso Aqua 17:30 / Encerramento 18:30. Atrativos último acesso 18:30 / Encerramento 19:30."
+    },
+    {
+      "data": "2026-07-24",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Bioparque",
+      "evento": "Movimentação de verba restante do google de Bioparque (5k) para reforço do AquaRio. Campanhas de Bioparque serão pausadas."
+    },
+    {
+      "data": "2026-07-24",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Aquario",
+      "evento": "AquaRio teve a maior visitação histórica, atingindo 9095 pax."
+    },
+    {
+      "data": "2026-07-28",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "PNI",
+      "evento": "[INFLUÊNCIA EXTERNA] Acidente com o barco do Macuco Safari, nas Cataratas, com noticiário divulgando 1 morto mais 8 desaparecidos. Concessão diferente da nossa, não tem a ver com a gente, só o espaço é nosso."
+    },
+    {
+      "data": "2026-07-28",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Paineiras",
+      "evento": "10 anos de Paineiras."
+    },
+    {
+      "data": "2026-07-28",
+      "ano": 2026,
+      "mes": "Julho",
+      "parque": "Vila Velha",
+      "evento": "Ação um dia no parque vila velha por 20,00 reais."
+    },
+    {
+      "data": "2026-08-03",
+      "ano": 2026,
+      "mes": "Agosto",
+      "parque": "Paineiras",
+      "evento": "Escada rolante de paineiras será reformada pós alta temporada, e terá início em 03/08 e acabará em Maio/2026. Até um certo ponto, terá apenas elevador para ajudar a subir. Depois, será apenas escada."
+    },
+    {
+      "data": "2026-08-11",
+      "ano": 2026,
+      "mes": "Agosto",
+      "parque": "Parques Foz",
+      "evento": "Parque das Aves abrirá  apenas de manhã, das 8h30 às 12h."
+    }
+  ]
 }
