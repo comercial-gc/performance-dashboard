@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-30T13:15:57.130639Z",
+  "geradoEm": "2026-07-30T14:10:02.998122Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -12127,7 +12127,7 @@
       96445.0,
       81101.0,
       71243.0,
-      125181.0
+      130425.0
     ],
     "share": [
       0.26408126103625307,
@@ -12136,7 +12136,7 @@
       0.2751146013697966,
       0.25765652997166133,
       0.24890036369226254,
-      0.2587255625344899
+      0.2695639233874218
     ]
   },
   "SHARE": {
@@ -12694,8 +12694,8 @@
           },
           "AquaFoz": {
             "visitacao2026": 68307,
-            "ecommerce2026": 14417.0,
-            "share2026": 0.21106182382479102,
+            "ecommerce2026": 19661.0,
+            "share2026": 0.28783287218001086,
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
@@ -13049,7 +13049,7 @@
             0.2187260372,
             0.2680102666,
             0.2478315097,
-            0.2110618238
+            0.2878328722
           ],
           "visitacaoTotal": [
             null,
@@ -17174,6 +17174,1942 @@
         "valor": 2970.0,
         "observacao": "-"
       }
+    ],
+    "AGOSTO": [
+      {
+        "parque": "AQUARIO",
+        "setor": "InHouse",
+        "custo": "Custo Fixo",
+        "fornecedor": "MONDAY",
+        "descricao": "Plataforma de gestão de projetos",
+        "valor": 2050.0,
+        "observacao": "5 parcela de 12 "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11028.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 8500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "G&S IMAGES",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 459.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PG INOVAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PLANET COMUNICAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 26062.5,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RD STATION",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 13959.8,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 17757.52,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "YURI (V4 COMPANY)",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 9021.9,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 755.55,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10415.72,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "ANCORA COMUNICAÇÃO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "C3DWEB AGENCIA",
+        "descricao": "Mensalidade Agência - CUSTO FIXO",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz - CUSTO FIXO",
+        "valor": 1000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 28600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 11575.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "GDIA JORNAIS E INFORMAÇÕES EIRELI",
+        "descricao": "Anúncio No Jornal Local - CUSTO FIXO",
+        "valor": 1500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "NOVO TEMPO FALLS DE COMUNICACAO LTDA",
+        "descricao": "Anúncio Em Jornal Voltado Ao Público Evangélico, Faz Parte Das Mídias Que Seguramos Referente A Mudança Da Assessoria De Imprensa. - CUSTO FIXO",
+        "valor": 800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P 2 MIDIA DIGITAL LTDA = ME",
+        "descricao": "Midia Nos Elevadores - CUSTO FIXO",
+        "valor": 1300.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "QUEST TECNOLOGIA LTDA",
+        "descricao": "Tracksale - CUSTO FIXO",
+        "valor": 2837.41,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RÁDIO CULTURA DE FOZ DO IGUAÇU",
+        "descricao": "Rádio - CUSTO FIXO",
+        "valor": 1200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIOMARCA SOLUÇÕES EM INTERNET LTDA",
+        "descricao": "Desenvolvedora Do Site - CUSTO FIXO",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP DO BRASIL COMUNICAÇÕES LTDA",
+        "descricao": "Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 3329.48,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SCHAEFER IDEIAS E COMUNICAÇÃO",
+        "descricao": "Almanaque Futuro - CUSTO FIXO",
+        "valor": 600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P2 MIDIA",
+        "descricao": "Midia Elevador",
+        "valor": 1500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SINNAPSE",
+        "descricao": "Site Ecommerce",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EXACTA",
+        "descricao": "Lona Publicitária",
+        "valor": 7050.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "MOTIVA",
+        "descricao": "Aluguel Aeroporto",
+        "valor": 10400.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV",
+        "descricao": "Lona Publicitária",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA",
+        "descricao": "Rede Outdoor",
+        "valor": 20287.5,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Eventos",
+        "fornecedor": "Nathalie Ferreira",
+        "descricao": "Shiatsu - 10 anos Paineiras",
+        "valor": 900.0,
+        "observacao": null
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Eventos",
+        "fornecedor": "Rede Massa ",
+        "descricao": "Rede Massa ",
+        "valor": 2625.0,
+        "observacao": "Festival Gastronomico 1/2"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Eventos",
+        "fornecedor": "Rede Massa ",
+        "descricao": "produção de vídeo",
+        "valor": 700.0,
+        "observacao": "pagamento único"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Mídia On",
+        "descricao": "Google + Facebook",
+        "valor": 5000.0,
+        "observacao": "-"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "GG",
+        "descricao": "EMPENA GG",
+        "valor": 100000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "ELETROMÍDIA",
+        "descricao": "GALEÃO",
+        "valor": 96542.79,
+        "observacao": null
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Google",
+        "descricao": "Google Ads",
+        "valor": 5000.0,
+        "observacao": null
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Facebook",
+        "descricao": "Meta Ads",
+        "valor": 5000.0,
+        "observacao": null
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "TikTok",
+        "descricao": "TikTok",
+        "valor": 1500.0,
+        "observacao": null
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Google",
+        "descricao": "Google Ads",
+        "valor": 21450.0,
+        "observacao": null
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Facebook",
+        "descricao": "Meta Ads",
+        "valor": 11550.0,
+        "observacao": null
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "TikTok",
+        "descricao": "TikTok",
+        "valor": 1500.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Google",
+        "descricao": "Google Ads",
+        "valor": 21000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Facebook",
+        "descricao": "Facebook Ads",
+        "valor": 9000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "NEOOH ",
+        "descricao": "Estático",
+        "valor": 42000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "NEOOH ",
+        "descricao": "Digital + Painéis",
+        "valor": 20000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "kick-off.",
+        "descricao": "kick-off.",
+        "valor": 15423.7,
+        "observacao": null
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz",
+        "valor": 1000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Google",
+        "descricao": "google ads",
+        "valor": 21000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Facebook",
+        "descricao": "meta ads",
+        "valor": 9000.0,
+        "observacao": null
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mída ON",
+        "fornecedor": "Tik Tok",
+        "descricao": "Tik Tok",
+        "valor": 1500.0,
+        "observacao": null
+      }
+    ],
+    "SETEMBRO": [
+      {
+        "parque": "AQUARIO",
+        "setor": "InHouse",
+        "custo": "Custo Fixo",
+        "fornecedor": "MONDAY",
+        "descricao": "Plataforma de gestão de projetos",
+        "valor": 2050.0,
+        "observacao": "6 parcela de 12 "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11028.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 8500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "G&S IMAGES",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 459.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PG INOVAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PLANET COMUNICAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 25000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RD STATION",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10093.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 17757.52,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "YURI (V4 COMPANY)",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 9021.9,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 755.55,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10415.72,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "ANCORA COMUNICAÇÃO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "C3DWEB AGENCIA",
+        "descricao": "Mensalidade Agência - CUSTO FIXO",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz - CUSTO FIXO",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 28600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 11575.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "GDIA JORNAIS E INFORMAÇÕES EIRELI",
+        "descricao": "Anúncio No Jornal Local - CUSTO FIXO",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "HORA DO ARAÚJO",
+        "descricao": "Anúncio Em Programa De Rádio, Faz Parte Das Mídias Que Seguramos Por Conta Da Troca Da Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 700.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV COMUNICACAO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 2500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "NOVO TEMPO FALLS DE COMUNICACAO LTDA",
+        "descricao": "Anúncio Em Jornal Voltado Ao Público Evangélico, Faz Parte Das Mídias Que Seguramos Referente A Mudança Da Assessoria De Imprensa. - CUSTO FIXO",
+        "valor": 800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P 2 MIDIA DIGITAL LTDA = ME",
+        "descricao": "Midia Nos Elevadores - CUSTO FIXO",
+        "valor": 1300.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "QUEST TECNOLOGIA LTDA",
+        "descricao": "Tracksale - CUSTO FIXO",
+        "valor": 2837.41,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RÁDIO CULTURA DE FOZ DO IGUAÇU",
+        "descricao": "Rádio - CUSTO FIXO",
+        "valor": 1200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIOMARCA SOLUÇÕES EM INTERNET LTDA",
+        "descricao": "Desenvolvedora Do Site - CUSTO FIXO",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP DO BRASIL COMUNICAÇÕES LTDA",
+        "descricao": "Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 3329.48,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SCHAEFER IDEIAS E COMUNICAÇÃO",
+        "descricao": "Almanaque Futuro - CUSTO FIXO",
+        "valor": 600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SISTEMA CATARATAS DE COMUNICACAO LTDA",
+        "descricao": "Propaganda Autorizada Na Antena 1 Foz - CUSTO FIXO",
+        "valor": 2800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "V4",
+        "descricao": "Mensalidade Agencia",
+        "valor": 6022.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P2 MIDIA",
+        "descricao": "Midia Elevador",
+        "valor": 1800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SINNAPSE",
+        "descricao": "Site Ecommerce",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EXACTA",
+        "descricao": "Lona Publicitária",
+        "valor": 7050.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "MOTIVA",
+        "descricao": "Aluguel Aeroporto",
+        "valor": 10400.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV",
+        "descricao": "Lona Publicitária",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA",
+        "descricao": "Rede Outdoor",
+        "valor": 20287.5,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Eventos",
+        "fornecedor": "Rede Massa ",
+        "descricao": "Rede Massa ",
+        "valor": 2625.0,
+        "observacao": "Festival Gastronomico 2/2"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "kick-off.",
+        "descricao": "kick-off.",
+        "valor": 15423.7,
+        "observacao": "-"
+      }
+    ],
+    "OUTUBRO": [
+      {
+        "parque": "AQUARIO",
+        "setor": "InHouse",
+        "custo": "Custo Fixo",
+        "fornecedor": "MONDAY",
+        "descricao": "Plataforma de gestão de projetos",
+        "valor": 2050.0,
+        "observacao": "7 parcela de 12 "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11028.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 8500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "G&S IMAGES",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 459.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PG INOVAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PLANET COMUNICAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 25000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RD STATION",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10093.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 17757.52,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "YURI (V4 COMPANY)",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 9021.9,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 755.55,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10415.72,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "ANCORA COMUNICAÇÃO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "C3DWEB AGENCIA",
+        "descricao": "Mensalidade Agência - CUSTO FIXO",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz - CUSTO FIXO",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 28600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 11575.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "GDIA JORNAIS E INFORMAÇÕES EIRELI",
+        "descricao": "Anúncio No Jornal Local - CUSTO FIXO",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "HORA DO ARAÚJO",
+        "descricao": "Anúncio Em Programa De Rádio, Faz Parte Das Mídias Que Seguramos Por Conta Da Troca Da Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 700.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "NOVO TEMPO FALLS DE COMUNICACAO LTDA",
+        "descricao": "Anúncio Em Jornal Voltado Ao Público Evangélico, Faz Parte Das Mídias Que Seguramos Referente A Mudança Da Assessoria De Imprensa. - CUSTO FIXO",
+        "valor": 800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P 2 MIDIA DIGITAL LTDA = ME",
+        "descricao": "Midia Nos Elevadores - CUSTO FIXO",
+        "valor": 1300.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "QUEST TECNOLOGIA LTDA",
+        "descricao": "Tracksale - CUSTO FIXO",
+        "valor": 2837.41,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RÁDIO CULTURA DE FOZ DO IGUAÇU",
+        "descricao": "Rádio - CUSTO FIXO",
+        "valor": 1200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIOMARCA SOLUÇÕES EM INTERNET LTDA",
+        "descricao": "Desenvolvedora Do Site - CUSTO FIXO",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP DO BRASIL COMUNICAÇÕES LTDA",
+        "descricao": "Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 3329.48,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SCHAEFER IDEIAS E COMUNICAÇÃO",
+        "descricao": "Almanaque Futuro - CUSTO FIXO",
+        "valor": 600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SISTEMA CATARATAS DE COMUNICACAO LTDA",
+        "descricao": "Propaganda Autorizada Na Antena 1 Foz - CUSTO FIXO",
+        "valor": 2800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "V4",
+        "descricao": "Mensalidade Agencia",
+        "valor": 6022.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P2 MIDIA",
+        "descricao": "Midia Elevador",
+        "valor": 1800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SINNAPSE",
+        "descricao": "Site Ecommerce",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EXACTA",
+        "descricao": "Lona Publicitária",
+        "valor": 7050.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "MOTIVA",
+        "descricao": "Aluguel Aeroporto",
+        "valor": 10400.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV",
+        "descricao": "Lona Publicitária",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA",
+        "descricao": "Rede Outdoor",
+        "valor": 20287.5,
+        "observacao": "CUSTOS FIXOS"
+      }
+    ],
+    "NOVEMBRO": [
+      {
+        "parque": "AQUARIO",
+        "setor": "InHouse",
+        "custo": "Custo Fixo",
+        "fornecedor": "MONDAY",
+        "descricao": "Plataforma de gestão de projetos",
+        "valor": 2050.0,
+        "observacao": "8 parcela de 12 "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11028.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 8500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "G&S IMAGES",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 459.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PG INOVAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PLANET COMUNICAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 25000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RD STATION",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10093.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 17757.52,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "YURI (V4 COMPANY)",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 9021.9,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 755.55,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10415.72,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "ANCORA COMUNICAÇÃO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "C3DWEB AGENCIA",
+        "descricao": "Mensalidade Agência - CUSTO FIXO",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz - CUSTO FIXO",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 28600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 11575.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "GDIA JORNAIS E INFORMAÇÕES EIRELI",
+        "descricao": "Anúncio No Jornal Local - CUSTO FIXO",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "HORA DO ARAÚJO",
+        "descricao": "Anúncio Em Programa De Rádio, Faz Parte Das Mídias Que Seguramos Por Conta Da Troca Da Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 700.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV COMUNICACAO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 2500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "NOVO TEMPO FALLS DE COMUNICACAO LTDA",
+        "descricao": "Anúncio Em Jornal Voltado Ao Público Evangélico, Faz Parte Das Mídias Que Seguramos Referente A Mudança Da Assessoria De Imprensa. - CUSTO FIXO",
+        "valor": 800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P 2 MIDIA DIGITAL LTDA = ME",
+        "descricao": "Midia Nos Elevadores - CUSTO FIXO",
+        "valor": 1300.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "QUEST TECNOLOGIA LTDA",
+        "descricao": "Tracksale - CUSTO FIXO",
+        "valor": 2837.41,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RÁDIO CULTURA DE FOZ DO IGUAÇU",
+        "descricao": "Rádio - CUSTO FIXO",
+        "valor": 1200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIOMARCA SOLUÇÕES EM INTERNET LTDA",
+        "descricao": "Desenvolvedora Do Site - CUSTO FIXO",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP DO BRASIL COMUNICAÇÕES LTDA",
+        "descricao": "Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 3329.48,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SCHAEFER IDEIAS E COMUNICAÇÃO",
+        "descricao": "Almanaque Futuro - CUSTO FIXO",
+        "valor": 600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SISTEMA CATARATAS DE COMUNICACAO LTDA",
+        "descricao": "Propaganda Autorizada Na Antena 1 Foz - CUSTO FIXO",
+        "valor": 2800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "V4",
+        "descricao": "Mensalidade Agencia",
+        "valor": 6022.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P2 MIDIA",
+        "descricao": "Midia Elevador",
+        "valor": 1800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SINNAPSE",
+        "descricao": "Site Ecommerce",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EXACTA",
+        "descricao": "Lona Publicitária",
+        "valor": 7050.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "MOTIVA",
+        "descricao": "Aluguel Aeroporto",
+        "valor": 10400.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV",
+        "descricao": "Lona Publicitária",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA",
+        "descricao": "Rede Outdoor",
+        "valor": 20287.5,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "ELETROMÍDIA",
+        "descricao": "GIG",
+        "valor": 92237.31,
+        "observacao": null
+      }
+    ],
+    "DEZEMBRO": [
+      {
+        "parque": "AQUARIO",
+        "setor": "InHouse",
+        "custo": "Custo Fixo",
+        "fornecedor": "MONDAY",
+        "descricao": "Plataforma de gestão de projetos",
+        "valor": 2050.0,
+        "observacao": "9 parcela de 12 "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS "
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11028.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "BIOPARQUE",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 8500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "G&S IMAGES",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 459.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PG INOVAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 11200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "PLANET COMUNICAÇÃO",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 25000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RD STATION",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10093.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO SOUL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 17757.52,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUARIO",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "YURI (V4 COMPANY)",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 9021.9,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "AKM",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIO MARCA",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 755.55,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "PAINEIRAS",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP BRASIL",
+        "descricao": "CUSTOS FIXOS",
+        "valor": 10415.72,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "ANCORA COMUNICAÇÃO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 12000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "C3DWEB AGENCIA",
+        "descricao": "Mensalidade Agência - CUSTO FIXO",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EDITORA GRAMPO LTDA",
+        "descricao": "Portal H2Foz - CUSTO FIXO",
+        "valor": 2000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 28600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA OUTDOOR LTDA",
+        "descricao": "Rede Outdoor - CUSTO FIXO",
+        "valor": 11575.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "GDIA JORNAIS E INFORMAÇÕES EIRELI",
+        "descricao": "Anúncio No Jornal Local - CUSTO FIXO",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "HORA DO ARAÚJO",
+        "descricao": "Anúncio Em Programa De Rádio, Faz Parte Das Mídias Que Seguramos Por Conta Da Troca Da Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 700.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV COMUNICACAO VISUAL LTDA",
+        "descricao": "Lona Para Painel Publicitário - CUSTO FIXO",
+        "valor": 2500.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "NOVO TEMPO FALLS DE COMUNICACAO LTDA",
+        "descricao": "Anúncio Em Jornal Voltado Ao Público Evangélico, Faz Parte Das Mídias Que Seguramos Referente A Mudança Da Assessoria De Imprensa. - CUSTO FIXO",
+        "valor": 800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P 2 MIDIA DIGITAL LTDA = ME",
+        "descricao": "Midia Nos Elevadores - CUSTO FIXO",
+        "valor": 1300.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "QUEST TECNOLOGIA LTDA",
+        "descricao": "Tracksale - CUSTO FIXO",
+        "valor": 2837.41,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RÁDIO CULTURA DE FOZ DO IGUAÇU",
+        "descricao": "Rádio - CUSTO FIXO",
+        "valor": 1200.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RIOMARCA SOLUÇÕES EM INTERNET LTDA",
+        "descricao": "Desenvolvedora Do Site - CUSTO FIXO",
+        "valor": 1511.1,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "RP DO BRASIL COMUNICAÇÕES LTDA",
+        "descricao": "Assessoria De Imprensa - CUSTO FIXO",
+        "valor": 3329.48,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SCHAEFER IDEIAS E COMUNICAÇÃO",
+        "descricao": "Almanaque Futuro - CUSTO FIXO",
+        "valor": 600.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "M3F",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SISTEMA CATARATAS DE COMUNICACAO LTDA",
+        "descricao": "Propaganda Autorizada Na Antena 1 Foz - CUSTO FIXO",
+        "valor": 2800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "V4",
+        "descricao": "Mensalidade Agencia",
+        "valor": 6022.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "P2 MIDIA",
+        "descricao": "Midia Elevador",
+        "valor": 1800.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "SINNAPSE",
+        "descricao": "Site Ecommerce",
+        "valor": 5000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "EXACTA",
+        "descricao": "Lona Publicitária",
+        "valor": 7050.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "MOTIVA",
+        "descricao": "Aluguel Aeroporto",
+        "valor": 10400.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "JCV",
+        "descricao": "Lona Publicitária",
+        "valor": 3000.0,
+        "observacao": "CUSTOS FIXOS"
+      },
+      {
+        "parque": "AQUAFOZ",
+        "setor": "Performance",
+        "custo": "Custo Fixo",
+        "fornecedor": "FRONTEIRA",
+        "descricao": "Rede Outdoor",
+        "valor": 20287.5,
+        "observacao": "CUSTOS FIXOS"
+      }
     ]
   },
   "MIX_ORIGEM": {
@@ -20491,76 +22427,6 @@
       },
       "Consolidado": {
         "anos": {
-          "2020": [
-            319895.0,
-            178103.0,
-            77834.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            26514.0,
-            84167.0,
-            84969.0,
-            90379.0,
-            79635.0
-          ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
-          ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
-          ],
-          "2025": [
-            666687.0,
-            398191.0,
-            451956.0,
-            421569.0,
-            402290.0,
-            363784.0,
-            590652.0,
-            422967.0,
-            413960.0,
-            491692.0,
-            500148.0,
-            520889.0
-          ],
           "2021": [
             121830.0,
             84328.0,
@@ -20574,76 +22440,6 @@
             218738.0,
             206960.0,
             198703.0
-          ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
-          ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            389570.0,
-            422910.0,
-            710621.0,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
           ],
           "2015": [
             189451.0,
@@ -20659,19 +22455,19 @@
             84938.0,
             122376.0
           ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            389570.0,
+            422910.0,
+            710621.0,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "2018": [
             321385.0,
@@ -20687,6 +22483,118 @@
             162033.0,
             182819.0
           ],
+          "2025": [
+            666687.0,
+            398191.0,
+            451956.0,
+            421569.0,
+            402290.0,
+            363784.0,
+            590652.0,
+            422967.0,
+            413960.0,
+            491692.0,
+            500148.0,
+            520889.0
+          ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
+          ],
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
+          ],
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
+          ],
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
           "2017": [
             389929.0,
             200085.0,
@@ -20700,61 +22608,89 @@
             173907.0,
             163417.0,
             189763.0
+          ],
+          "2020": [
+            319895.0,
+            178103.0,
+            77834.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            26514.0,
+            84167.0,
+            84969.0,
+            90379.0,
+            79635.0
+          ],
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2020": [
-            575832,
-            365664
-          ],
-          "2023": [
-            1486747,
-            1503931
-          ],
-          "2024": [
-            2410556,
-            2803391
-          ],
-          "2014": [
-            717316,
-            673740
-          ],
-          "2025": [
-            2704477,
-            2940308
-          ],
           "2021": [
             726490,
             1392943
-          ],
-          "2019": [
-            1015073,
-            1044424
-          ],
-          "2016": [
-            635485,
-            584255
-          ],
-          "2026": [
-            3132773,
-            710621
           ],
           "2015": [
             711060,
             646056
           ],
-          "2022": [
-            1195615,
-            1502267
+          "2026": [
+            3132773,
+            710621
           ],
           "2018": [
             992762,
             968837
           ],
+          "2025": [
+            2704477,
+            2940308
+          ],
+          "2024": [
+            2410556,
+            2803391
+          ],
+          "2016": [
+            635485,
+            584255
+          ],
+          "2019": [
+            1015073,
+            1044424
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2022": [
+            1195615,
+            1502267
+          ],
+          "2014": [
+            717316,
+            673740
+          ],
           "2017": [
             1300881,
             1170345
+          ],
+          "2020": [
+            575832,
+            365664
           ]
         }
       }
