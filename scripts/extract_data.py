@@ -841,13 +841,25 @@ def _clean_str(v):
     return s if s else None
 
 
-def build_invest_mkt_detail(service, spreadsheet_id, meses_com_dados):
+def build_invest_mkt_detail(service, spreadsheet_id, meses):
     """Le a lista de campanhas de cada aba mensal. Retorna {mes: [ {parque, setor,
     custo, fornecedor, descricao, valor, observacao}, ... ]}.
+
+    Lê TODOS os meses passados (não só os "meses_com_dados") -- a aba mensal de
+    Investimento Marketing já recebe lançamentos de custo fixo com antecedência (ex.:
+    Agosto já tinha linhas preenchidas em Julho), então mesmo mês "futuro" pode ter
+    detalhe real pra mostrar, mesmo que o resumo geral daquele mês ainda esteja incompleto.
+    Cada mês é lido isoladamente (try/except) -- se uma aba não existir ou vier vazia,
+    esse mês fica com lista vazia, sem derrubar os outros meses nem o resto do pipeline.
     """
     detail = {}
-    for mes in meses_com_dados:
-        rows = get_values(service, spreadsheet_id, mes)
+    for mes in meses:
+        try:
+            rows = get_values(service, spreadsheet_id, mes)
+        except Exception as e:
+            print(f"AVISO: falha ao ler detalhe de Investimento Marketing de {mes} ({e}) -- mês fica vazio.", file=sys.stderr)
+            detail[mes] = []
+            continue
         if not rows:
             detail[mes] = []
             continue
@@ -1083,8 +1095,10 @@ def main():
     )
 
     print("Lendo detalhe de campanhas (Investimento Marketing, mes a mes)...", file=sys.stderr)
+    # Le TODOS os meses (nao so' meses_com_dados) -- meses futuros ja podem ter lancamentos
+    # de custo fixo cadastrados com antecedencia na planilha (ver comentario na funcao).
     invest_mkt_detail = build_invest_mkt_detail(
-        service, cfg["investimento_marketing_id"], cfg["meses_com_dados"]
+        service, cfg["investimento_marketing_id"], cfg["meses"]
     )
 
     print("Lendo evolução mensal (série histórica)...", file=sys.stderr)
