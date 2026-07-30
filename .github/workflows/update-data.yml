@@ -1,7 +1,18 @@
 name: Atualizar data.json do painel
 
 on:
+  schedule:
+    # 10:00 UTC = 07:00 no horário de Brasília (sem horário de verão desde 2019)
+    - cron: "0 10 * * *"
   workflow_dispatch: {}  # permite rodar manualmente pelo botão "Run workflow" no GitHub
+
+# Impede que dois runs (ex.: o agendado das 10:00 UTC + um manual disparado perto do mesmo
+# horário) rodem em paralelo e briguem pelo git push. Com isso, se um segundo run for
+# disparado enquanto o primeiro ainda está rodando, ele fica na fila e só começa depois
+# que o primeiro terminar -- resolve a causa raiz do "rejected (fetch first)".
+concurrency:
+  group: atualizar-data-json
+  cancel-in-progress: false
 
 permissions:
   contents: write  # necessário para o Action poder commitar o data.json de volta no repo
@@ -31,10 +42,26 @@ jobs:
         run: |
           git config user.name "cataratas-dashboard-bot"
           git config user.email "actions@github.com"
-          git add data.json
-          if git diff --cached --quiet; then
-            echo "Nada mudou nos dados hoje."
-          else
+          cp data.json /tmp/data.json.novo
+
+          # Tenta algumas vezes: se dois runs (agendado + manual, por exemplo) rodarem perto
+          # um do outro, o push pode ser rejeitado porque o remoto avançou entre o checkout
+          # e o push deste job. Em vez de falhar, busca o main mais novo e reaplica o
+          # data.json recém-gerado por cima antes de tentar de novo.
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/data.json.novo data.json
+            git add data.json
+            if git diff --cached --quiet; then
+              echo "Nada mudou nos dados hoje."
+              break
+            fi
             git commit -m "chore: atualizar data.json ($(date -u +%Y-%m-%dT%H:%MZ))"
-            git push
-          fi
+            if git push; then
+              echo "Push ok."
+              break
+            fi
+            echo "Push rejeitado (corrida com outro run) -- tentativa $i, tentando de novo..."
+            sleep 5
+          done
