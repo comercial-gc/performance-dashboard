@@ -29,6 +29,7 @@ import io
 import json
 import socket
 import sys
+import unicodedata
 
 import openpyxl
 from google.oauth2 import service_account
@@ -506,7 +507,138 @@ def _find_labeled_row_idx(rows, r0, label, max_offset=10):
     return None
 
 
-def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dados):
+def _norm_txt(s):
+    if not isinstance(s, str):
+        return ""
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
+    return s.strip().upper()
+
+
+EVOLUCAO_PPT_PARK_ALIASES = {
+    "AQUARIO": "AquaRio",
+    "BIOPARQUE": "BioParque",
+    "PAINEIRAS": "Paineiras",
+    "AQUAFOZ": "AquaFoz",
+}
+
+
+def build_evolucao_ppt_parcial(service, spreadsheet_id, mes_atual_pt_upper, ano_2025=2025, cutoff_day=None):
+    """Comparativo "Vs 2025" proporcional (D-1) pro mês vigente.
+
+    A linha "Ecommerce (base TI)" (usada pros meses já fechados) só tem o total do mês
+    inteiro -- não dá pra comparar "mesmo período" com ela enquanto o mês em curso (2026)
+    ainda não terminou. Por pedido do usuário, pro mês vigente a gente usa em vez disso a
+    aba "EVOLUÇÃO<MÊS> (PPT)" (criada manualmente todo mês, mesmo padrão de nome -- ex.:
+    "EVOLUÇÃOAGOSTO (PPT)" a partir de 01/08/2026), que tem o detalhe DIÁRIO de 2025, e soma
+    Visitação/Ecommerce de 2025 do dia 1 até D-1 (o mesmo período que o 2026 parcial já
+    cobre). Só é usado pro mês vigente -- os meses fechados continuam com a Ecommerce (base
+    TI) mensal cheia, sem mudança.
+
+    O layout da aba tem um bloco de 4 colunas por parque (DIA | VISITAÇÃO 2025 |
+    E-COMMERCE 2025 | SHARE), procurado dinamicamente pelo cabeçalho "DIA" -- o rótulo do
+    parque (uma linha acima) varia de nome por parque (ex.: o bloco do M3F aparece rotulado
+    "MARCO DAS TRÊS FRONTEIRAS"), por isso o match é por trecho de texto, não código exato.
+    "3P"/"Vila Velha" não tem esse bloco (parques novos, sem 2025) -- ficam de fora, sem erro.
+    """
+    if cutoff_day is None:
+        hoje_brt = (datetime.datetime.utcnow() - datetime.timedelta(hours=3)).date()
+        cutoff_day = hoje_brt.day - 1
+    if cutoff_day < 1:
+        return {}
+
+    mes_num = MONTH_NUMBER.get(mes_atual_pt_upper)
+    if mes_num is None:
+        return {}
+
+    sheet_name = f"EVOLUÇÃO{mes_atual_pt_upper} (PPT)"
+    rows = get_values(service, spreadsheet_id, sheet_name)
+    if not rows:
+        return {}
+
+    header_row = None
+    for r, row in enumerate(rows):
+        if any(_norm_txt(cell(row, c)) == "DIA" for c in range(len(row))):
+            header_row = r
+            break
+    if header_row is None:
+        return {}
+
+    header = rows[header_row]
+    titulo_row = rows[header_row - 1] if header_row > 0 else []
+    blocos = {}
+    for c, v in enumerate(header):
+        if _norm_txt(v) != "DIA":
+            continue
+        v1 = _norm_txt(cell(header, c + 1))
+        v2 = _norm_txt(cell(header, c + 2)).replace("-", "")
+        if "VISITA" not in v1 or "ECOMMERCE" not in v2:
+            continue
+        titulo = _norm_txt(cell(titulo_row, c))
+        park = None
+        for alias, canon in EVOLUCAO_PPT_PARK_ALIASES.items():
+            if alias in titulo:
+                park = canon
+                break
+        if park is None and "MARCO" in titulo and "FRONTEIRA" in titulo:
+            park = "M3F"
+        if park:
+            blocos[park] = c
+
+    # Retorna os totais BRUTOS (parcial D-1 e mês inteiro) direto da aba Evolução, sem
+    # nenhuma correção de escala ainda -- essa aba é uma fonte separada da "Ecommerce (base
+    # TI)" e pode não fechar exatamente no mesmo total do mês (metodologias diferentes).
+    # Quem usa isso (build_investimento_midia / build_evolucao_mensal) escala o parcial pela
+    # razão entre o total oficial (Ecommerce base TI, que é o número que o resto do painel já
+    # trata como correto) e esse total bruto do mês inteiro aqui -- ver _escala_proporcional.
+    resultado = {}
+    for park, dia_col in blocos.items():
+        total_ecom_parcial, total_vis_parcial = 0.0, 0.0
+        total_ecom_total, total_vis_total = 0.0, 0.0
+        achou = False
+        for r in range(header_row + 1, len(rows)):
+            serial = cell(rows[r], dia_col)
+            if not isinstance(serial, (int, float)):
+                continue
+            d = serial_to_date(serial)
+            if d is None or d.year != ano_2025 or d.month != mes_num:
+                continue
+            ecv = cell(rows[r], dia_col + 2)
+            visv = cell(rows[r], dia_col + 1)
+            if isinstance(ecv, (int, float)):
+                total_ecom_total += ecv
+                if d.day <= cutoff_day:
+                    total_ecom_parcial += ecv
+                achou = True
+            if isinstance(visv, (int, float)):
+                total_vis_total += visv
+                if d.day <= cutoff_day:
+                    total_vis_parcial += visv
+        if achou and total_vis_total > 0:
+            resultado[park] = {
+                "visitacao2025_parcial": total_vis_parcial,
+                "ecommerce2025_parcial": total_ecom_parcial,
+                "visitacao2025_total": total_vis_total,
+                "ecommerce2025_total": total_ecom_total,
+            }
+    return resultado
+
+
+def _escala_proporcional(parcial, bruto_total_evolucao, oficial_base_ti):
+    """Regra de 3 (pedido do usuário): corrige o parcial D-1 da aba Evolução pela razão entre
+    o total "oficial" (Ecommerce base TI, mês fechado) e o total bruto do mês inteiro
+    conforme a própria aba Evolução -- evita que o comparativo do mês vigente divirja do
+    número que o resto do painel já usa como correto pra esse mesmo mês quando ele fechar.
+    Sem essa correção, um parque com metodologias diferentes entre as duas abas mostraria
+    Jul/25 subindo dia a dia até um valor, e depois "pulando" pro número oficial quando o
+    mês fecha de verdade -- com a correção, os dois já ficam na mesma escala desde já.
+    Sem ancora (base TI vazio) ou sem total bruto (mês sem dado na aba Evolução), devolve o
+    parcial puro, sem inventar número."""
+    if not bruto_total_evolucao or oficial_base_ti is None:
+        return parcial
+    return parcial * (oficial_base_ti / bruto_total_evolucao)
+
+
+def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dados, ppt_parcial=None):
     """Monta SHARE.investimentoMidia.meses para os parques rastreados nesta aba
     (AquaRio, BioParque, Paineiras, M3F, AquaFoz, e os dois do bloco "SOUL PARQUES":
     "3P"/Três Pescadores e Vila Velha).
@@ -555,14 +687,28 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
                 "investimento2026": num(inv_row, idx_2026),
                 "investimento2025": num(inv_row, idx_2025),
             }
+            # Mês vigente: troca o lado 2025 pelo comparativo proporcional (D-1) da aba
+            # "EVOLUÇÃO<MÊS> (PPT)", já escalado (regra de 3) pro mesmo total oficial de
+            # Ecommerce (base TI) -- ver build_evolucao_ppt_parcial / _escala_proporcional.
+            if mes_en == meses_com_dados[-1] and ppt_parcial and park in ppt_parcial:
+                p = ppt_parcial[park]
+                vis25_corrigido = _escala_proporcional(p["visitacao2025_parcial"], p["visitacao2025_total"], vis25)
+                ecom25_corrigido = _escala_proporcional(p["ecommerce2025_parcial"], p["ecommerce2025_total"], ecom25)
+                meses[mes_pt][park]["visitacao2025"] = vis25_corrigido
+                meses[mes_pt][park]["ecommerce2025"] = ecom25_corrigido
+                meses[mes_pt][park]["share2025"] = (ecom25_corrigido / vis25_corrigido) if vis25_corrigido else None
     return meses
 
 
-def build_evolucao_mensal(service, spreadsheet_id, sheet_name, ano_inicio=2025, mes_inicio=1, ano_fim=2026, mes_fim=7):
+def build_evolucao_mensal(service, spreadsheet_id, sheet_name, meses_com_dados, ppt_parcial=None, ano_inicio=2025, mes_inicio=1, ano_fim=2026):
     """Serie historica mes a mes (investimento, share, visitacaoTotal) de Jan/2025 ate o
     mes/ano atual, mesma aba "Share_Ecommerce_2026" — e' o mesmo dado de
     build_investimento_midia, só que olhando pra tras (nao comparando 2026 vs 2025 lado a
-    lado, e sim uma linha do tempo unica)."""
+    lado, e sim uma linha do tempo unica).
+
+    mes_fim agora vem de meses_com_dados (mês vigente) em vez de fixo -- antes ficava
+    hardcoded como "7" (Julho) e precisava ser editado a mão todo mês."""
+    mes_fim = MONTH_NUMBER[meses_com_dados[-1]] if meses_com_dados else 7
     rows = get_values(service, spreadsheet_id, sheet_name)
     labels = []
     idx_por_label = []
@@ -575,23 +721,41 @@ def build_evolucao_mensal(service, spreadsheet_id, sheet_name, ano_inicio=2025, 
             m = 1
             y += 1
 
+    label_alvo = f"{mes_fim:02d}/{ano_inicio % 100:02d}"
+    idx_alvo = labels.index(label_alvo) if label_alvo in labels else None
+
+    def num(row, idx):
+        v = cell(row, idx)
+        return v if isinstance(v, (int, float)) else None
+
     parques = {}
     for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
         vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
         # mesma logica de build_investimento_midia: usa a Share de "Ecommerce (base TI)",
         # cujo deslocamento varia por bloco -- procura pelo rotulo em vez de indice fixo.
         ecom_ti_idx = _find_labeled_row_idx(rows, r0, "Ecommerce (base TI)")
+        ecom_row = rows[ecom_ti_idx] if ecom_ti_idx is not None else rows[r0 + 2]
         share_row = rows[ecom_ti_idx + 1] if ecom_ti_idx is not None else rows[r0 + 3]
-
-        def num(row, idx):
-            v = cell(row, idx)
-            return v if isinstance(v, (int, float)) else None
 
         parques[park] = {
             "investimento": [num(inv_row, i) for i in idx_por_label],
             "share": [num(share_row, i) for i in idx_por_label],
             "visitacaoTotal": [num(vis_row, i) for i in idx_por_label],
         }
+
+        # Mesmo ajuste de build_investimento_midia: no mês vigente, troca a entrada do
+        # "mesmo mês do ano passado" (ex.: Julho/25) pelo comparativo proporcional D-1,
+        # escalado (regra de 3) pro mesmo total oficial de Ecommerce (base TI).
+        if ppt_parcial and park in ppt_parcial and idx_alvo is not None:
+            p = ppt_parcial[park]
+            col_alvo = idx_por_label[idx_alvo]
+            vis_base_ti = num(vis_row, col_alvo)
+            ecom_base_ti = num(ecom_row, col_alvo)
+            vis25_corrigido = _escala_proporcional(p["visitacao2025_parcial"], p["visitacao2025_total"], vis_base_ti)
+            ecom25_corrigido = _escala_proporcional(p["ecommerce2025_parcial"], p["ecommerce2025_total"], ecom_base_ti)
+            parques[park]["visitacaoTotal"][idx_alvo] = vis25_corrigido
+            parques[park]["share"][idx_alvo] = (ecom25_corrigido / vis25_corrigido) if vis25_corrigido else None
+
     return {"labels": labels, "parques": parques}
 
 
@@ -1083,10 +1247,28 @@ def main():
         service, cfg["share_ecommerce_id"], cfg["sheet_names"]["dash_share_gc"]
     )
 
+    print("Lendo comparativo proporcional (D-1) do mês vigente...", file=sys.stderr)
+    ppt_parcial = {}
+    if cfg["meses_com_dados"]:
+        try:
+            ppt_parcial = build_evolucao_ppt_parcial(
+                service, cfg["share_ecommerce_id"], cfg["meses_com_dados"][-1]
+            )
+        except Exception as e:
+            # Não quebra o pipeline se a aba "EVOLUÇÃO<MÊS> (PPT)" ainda não existir ou tiver
+            # sido criada com outro nome/layout -- só mantém o comparativo com o mês inteiro
+            # de 2025 (comportamento anterior) pra esse mês.
+            print(
+                f"AVISO: falha ao ler comparativo D-1 do mês vigente ({e}) -- "
+                "mantém comparativo com o mês inteiro de 2025.",
+                file=sys.stderr,
+            )
+            ppt_parcial = {}
+
     print("Lendo Share_Ecommerce_2026 (investimentoMidia)...", file=sys.stderr)
     investimento_midia = build_investimento_midia(
         service, cfg["share_ecommerce_id"], cfg["sheet_names"]["share_ecommerce_2026"],
-        cfg["meses_com_dados"]
+        cfg["meses_com_dados"], ppt_parcial
     )
 
     print("Lendo acompanhamento mkt...", file=sys.stderr)
@@ -1103,7 +1285,8 @@ def main():
 
     print("Lendo evolução mensal (série histórica)...", file=sys.stderr)
     evolucao_mensal = build_evolucao_mensal(
-        service, cfg["share_ecommerce_id"], cfg["sheet_names"]["share_ecommerce_2026"]
+        service, cfg["share_ecommerce_id"], cfg["sheet_names"]["share_ecommerce_2026"],
+        cfg["meses_com_dados"], ppt_parcial
     )
 
     print("Calculando Share Meta Grupo Cataratas...", file=sys.stderr)
