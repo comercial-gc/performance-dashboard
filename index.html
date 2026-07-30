@@ -145,6 +145,8 @@
   .combo-monthly-table th{ background:#f7f7f7; padding:6px 4px; text-align:center; font-weight:700; color:var(--muted); white-space:nowrap; overflow:hidden; }
   .combo-monthly-table td{ padding:6px 4px; text-align:center; white-space:nowrap; overflow:hidden; border-top:1px solid #f2f2f2; }
   .combo-monthly-table td:first-child, .combo-monthly-table th:first-child{ text-align:left; font-weight:700; color:var(--ink); background:#fafafa; padding-left:8px; }
+  .combo-monthly-table th.hl-month{ color:var(--ink); font-weight:800; }
+  .combo-monthly-table td.hl-month{ font-weight:800; color:var(--ink); }
   .combo-summary-card{ flex:0 0 320px; width:320px; border:1px solid var(--line); border-radius:8px; overflow:hidden; align-self:flex-start; background:#fff; }
   .combo-summary-header{ display:flex; align-items:center; justify-content:center; padding:14px; border-bottom:1px solid var(--line); min-height:50px; }
   .combo-summary-header img{ max-height:52px; max-width:170px; object-fit:contain; }
@@ -1478,9 +1480,15 @@ function renderComboCharts(containerId, barField, barFmt){
     const monthLabels = labels.map((l,i) => `<text x="${(padL+i*slot+slot/2).toFixed(1)}" y="${H-5}" font-size="8" text-anchor="middle" fill="#8a938d">${l}</text>`).join('');
 
     // ── Tabela mensal (Visitação total / Ecommerce) - colgroup com as MESMAS larguras do gráfico ──
-    const tableHeaderCells = labels.map(l => `<th>${l}</th>`).join('');
-    const visitCells = visitVals.map(v => `<td>${v!==null&&v!==undefined ? fmtInt(v) : '-'}</td>`).join('');
-    const ecomCells = ecomVals.map(v => `<td>${v!==null&&v!==undefined ? fmtInt(v) : '-'}</td>`).join('');
+    // Destaque em negrito no mês vigente (última coluna, 2026) e no mesmo mês do ano passado
+    // (12 colunas antes, já que "labels" é uma série mensal contínua) para saltar aos olhos
+    // em relação aos demais meses da régua.
+    const curIdx = n - 1;
+    const lastYearIdx = curIdx - 12;
+    const hlClass = i => (i === curIdx || i === lastYearIdx) ? ' class="hl-month"' : '';
+    const tableHeaderCells = labels.map((l,i) => `<th${hlClass(i)}>${l}</th>`).join('');
+    const visitCells = visitVals.map((v,i) => `<td${hlClass(i)}>${v!==null&&v!==undefined ? fmtInt(v) : '-'}</td>`).join('');
+    const ecomCells = ecomVals.map((v,i) => `<td${hlClass(i)}>${v!==null&&v!==undefined ? fmtInt(v) : '-'}</td>`).join('');
     const monthlyTable = `<table class="combo-monthly-table" style="width:${W}px">
       <colgroup><col style="width:${FIRSTCOL+padR}px">${labels.map(()=>`<col style="width:${COLW}px">`).join('')}</colgroup>
       <thead><tr><th></th>${tableHeaderCells}</tr></thead>
