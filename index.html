@@ -293,17 +293,23 @@
   .eventos-table tbody tr:hover{ background:#fafcf9; }
 
   /* ── Aba Histórico ── */
-  .hist-chart-card{ border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:16px 0 20px; background:#fff; }
-  .hist-legend{ display:flex; gap:18px; margin-bottom:10px; flex-wrap:wrap; }
+  .hist-vs-wrap label{ display:flex; align-items:center; gap:6px; }
+  .hist-vs-tag{ font-size:9.5px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:#fff; background:var(--muted); border-radius:8px; padding:2px 6px; }
+  .hist-chart-card{ border:1px solid var(--line); border-radius:10px; padding:16px 20px; margin:16px 0 20px; background:#fff; max-width:820px; }
+  .hist-chart-card svg{ width:100%; height:auto; display:block; }
+  .hist-chart-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin:16px 0 20px; }
+  .hist-chart-grid .hist-chart-card{ max-width:none; margin:0; padding:12px 14px; }
+  .hist-chart-grid .hist-park-title{ font-size:13px; font-weight:800; margin-bottom:6px; }
+  .hist-legend{ display:flex; gap:18px; margin-bottom:8px; flex-wrap:wrap; }
   .hist-legend-item{ display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; user-select:none; }
   .hist-legend-item.off{ opacity:.35; }
   .hist-legend-item .dot{ width:11px; height:11px; border-radius:50%; display:inline-block; }
   .hist-legend-item .dash{ width:18px; height:0; border-top:2px dashed currentColor; display:inline-block; }
   .hist-empty{ padding:30px; text-align:center; color:var(--muted); font-size:13px; }
-  .hist-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
-  .hist-table th{ background:#f5f5f5; padding:7px 10px; text-align:right; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); white-space:nowrap; }
+  .hist-table{ width:100%; border-collapse:collapse; font-size:14px; }
+  .hist-table th{ background:#f5f5f5; padding:9px 12px; text-align:right; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); white-space:nowrap; }
   .hist-table th:first-child{ text-align:left; }
-  .hist-table td{ padding:7px 10px; text-align:right; border-bottom:1px solid #f0f0f0; }
+  .hist-table td{ padding:9px 12px; text-align:right; border-bottom:1px solid #f0f0f0; }
   .hist-table td:first-child{ text-align:left; font-weight:700; }
   .hist-table tr.total-row td{ font-weight:700; background:#fafafa; border-top:2px solid var(--line); }
   .hist-table td.up{ color:var(--green); }
@@ -837,7 +843,7 @@
       <div class="mix-title-bar"></div>
       <div>
         <div class="mix-title">Histórico</div>
-        <div class="mix-subtitle" id="histSubtitle">Série histórica por parque ou consolidada, com comparativo entre 2 anos</div>
+        <div class="mix-subtitle" id="histSubtitle">Série histórica por parque ou consolidada, com comparativo opcional entre anos</div>
       </div>
       <div class="mix-morador-toggle" id="histModoToggle">
         <button class="active" data-val="visitacao" onclick="setHistModo('visitacao')">Visitação</button>
@@ -850,17 +856,17 @@
         <label>Parque</label>
         <select id="histParqueSelect" onchange="onHistParqueChange()"></select>
       </div>
-      <div class="imt-select-wrap">
+      <div class="imt-select-wrap" id="histMesWrap">
         <label>Mês</label>
         <select id="histMesSelect" onchange="renderHistorico()"></select>
       </div>
       <div class="imt-select-wrap">
-        <label>Ano A</label>
-        <select id="histAnoASelect" onchange="renderHistorico()"></select>
+        <label>Ano</label>
+        <select id="histAnoSelect" onchange="renderHistorico()"></select>
       </div>
-      <div class="imt-select-wrap">
-        <label>Ano B</label>
-        <select id="histAnoBSelect" onchange="renderHistorico()"></select>
+      <div class="imt-select-wrap hist-vs-wrap">
+        <label>Vs <span class="hist-vs-tag">opcional</span></label>
+        <select id="histVsSelect" onchange="renderHistorico()"></select>
       </div>
     </div>
 
@@ -2508,17 +2514,24 @@ function getHistParqueData(parque){
   return histModoState === 'share' ? d.anosShare : d.anos;
 }
 
+// "Todos os Parques" é uma visão (grid de mini-gráficos, um por parque), não uma chave de
+// dado -- por isso entra na frente da lista, sem existir dentro de HISTORICO.parques.
+function histParquesDisponiveis(){
+  const reais = histModoState === 'share'
+    ? (HISTORICO.parquesComShare || [])
+    : Object.keys(HISTORICO.parques || {});
+  return reais.length ? ['Todos os Parques', ...reais] : [];
+}
+
 function populateHistoricoSelects(preserve){
   const parqueSel = document.getElementById('histParqueSelect');
   const mesSel = document.getElementById('histMesSelect');
-  const anoASel = document.getElementById('histAnoASelect');
-  const anoBSel = document.getElementById('histAnoBSelect');
+  const anoSel = document.getElementById('histAnoSelect');
+  const vsSel = document.getElementById('histVsSelect');
+  const mesWrap = document.getElementById('histMesWrap');
   if(!parqueSel) return;
 
-  const parquesDisponiveis = histModoState === 'share'
-    ? (HISTORICO.parquesComShare || [])
-    : Object.keys(HISTORICO.parques || {});
-
+  const parquesDisponiveis = histParquesDisponiveis();
   const nomeExibicao = p => p === 'Consolidado' ? 'Consolidado (Grupo Cataratas)' : p;
 
   const parqueAtual = (preserve && parquesDisponiveis.includes(parqueSel.value)) ? parqueSel.value : parquesDisponiveis[0];
@@ -2529,15 +2542,22 @@ function populateHistoricoSelects(preserve){
     mesSel.innerHTML = '<option value="">Ano completo</option>' +
       MES_LABELS.map((m,i) => `<option value="${i}">${m}</option>`).join('');
   }
+  if(mesWrap) mesWrap.style.display = parqueAtual === 'Todos os Parques' ? 'none' : '';
 
-  const anosDados = getHistParqueData(parqueSel.value) || {};
+  // Lista de anos: usa o primeiro parque "real" como referência (dentro do mesmo modo,
+  // todos os parques cobrem essencialmente a mesma janela de anos mais recentes).
+  const parqueParaAnos = parqueAtual === 'Todos os Parques' ? parquesDisponiveis[1] : parqueAtual;
+  const anosDados = getHistParqueData(parqueParaAnos) || {};
   const anos = Object.keys(anosDados).sort((a,b) => Number(a) - Number(b));
-  const anoAAtual = (preserve && anos.includes(anoASel.value)) ? anoASel.value : (anos[anos.length - 2] || anos[0] || '');
-  const anoBAtual = (preserve && anos.includes(anoBSel.value)) ? anoBSel.value : (anos[anos.length - 1] || '');
-  anoASel.innerHTML = anos.map(a => `<option value="${a}">${a}</option>`).join('');
-  anoBSel.innerHTML = anos.map(a => `<option value="${a}">${a}</option>`).join('');
-  anoASel.value = anoAAtual;
-  anoBSel.value = anoBAtual;
+
+  const anoAtual = (preserve && anos.includes(anoSel.value)) ? anoSel.value : (anos[anos.length - 1] || '');
+  anoSel.innerHTML = anos.map(a => `<option value="${a}">${a}</option>`).join('');
+  anoSel.value = anoAtual;
+
+  // "Vs" é sempre opcional -- começa (e pode voltar a ficar) em "Nenhum", nunca é forçado.
+  const vsAtual = (preserve && (vsSel.value === '' || anos.includes(vsSel.value))) ? vsSel.value : '';
+  vsSel.innerHTML = '<option value="">Nenhum</option>' + anos.map(a => `<option value="${a}">${a}</option>`).join('');
+  vsSel.value = vsAtual;
 }
 
 function setHistModo(modo){
@@ -2562,102 +2582,152 @@ function fmtHistValor(v, isPercent){
   return isPercent ? (v*100).toFixed(1).replace('.', ',') + '%' : Math.round(v).toLocaleString('pt-BR');
 }
 
-function fmtHistDelta(vA, vB, isPercent){
-  if(vA === null || vA === undefined || vB === null || vB === undefined) return {txt:'-', cls:''};
+// fmtHistDelta(base, atual): variação do valor "atual" em relação ao "base".
+function fmtHistDelta(vBase, vAtual, isPercent){
+  if(vBase === null || vBase === undefined || vAtual === null || vAtual === undefined) return {txt:'-', cls:''};
   if(isPercent){
-    const pp = (vB - vA) * 100;
+    const pp = (vAtual - vBase) * 100;
     const sign = pp >= 0 ? '+' : '';
     return { txt: sign + pp.toFixed(1).replace('.', ',') + ' p.p.', cls: pp >= 0 ? 'up' : 'down' };
   }
-  if(!vA){ return {txt:'-', cls:''}; }
-  const pct = (vB - vA) / vA * 100;
+  if(!vBase){ return {txt:'-', cls:''}; }
+  const pct = (vAtual - vBase) / vBase * 100;
   const sign = pct >= 0 ? '+' : '';
   return { txt: sign + pct.toFixed(1).replace('.', ',') + '%', cls: pct >= 0 ? 'up' : 'down' };
 }
 
-function renderHistoricoChart(parque, valsA, valsB, anoA, anoB, isPercent){
-  const wrap = document.getElementById('histChartWrap');
-  if(!wrap) return;
+// Quebra a série em segmentos contínuos (sem mês nulo no meio) -- cada segmento desenha e
+// fecha sua própria área, separadamente. Isso evita o bug de a área "remendar" por cima de
+// um mês sem dado, criando cunhas/triângulos que não existem nos dados reais.
+function histSegments(vals, xAt, yAt){
+  const segments = [];
+  let atual = [];
+  vals.forEach((v,i) => {
+    if(v === null || v === undefined){
+      if(atual.length) segments.push(atual);
+      atual = [];
+      return;
+    }
+    atual.push({ x: xAt(i), y: yAt(v) });
+  });
+  if(atual.length) segments.push(atual);
+  return segments;
+}
+
+// Curva suave (Catmull-Rom convertido pra Bézier cúbica) -- dá o efeito de "ondas" contínuas
+// em vez de uma linha poligonal picotada ponto a ponto.
+function smoothPath(points){
+  if(!points.length) return '';
+  if(points.length === 1) return `M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
+  let d = `M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)} `;
+  for(let i=0; i<points.length-1; i++){
+    const p0 = points[i-1] || points[i];
+    const p1 = points[i];
+    const p2 = points[i+1];
+    const p3 = points[i+2] || p2;
+    const cp1x = p1.x + (p2.x - p0.x)/6, cp1y = p1.y + (p2.y - p0.y)/6;
+    const cp2x = p2.x - (p3.x - p1.x)/6, cp2y = p2.y - (p3.y - p1.y)/6;
+    d += `C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)} `;
+  }
+  return d.trim();
+}
+
+function buildLinePaths(segments){
+  return segments.map(seg => smoothPath(seg)).join(' ');
+}
+
+function buildAreaPaths(segments, baseline){
+  return segments.map(seg => {
+    if(seg.length < 2) return ''; // ponto isolado: sem área (evita triângulo sem sentido)
+    const path = smoothPath(seg);
+    const last = seg[seg.length-1], first = seg[0];
+    return `${path} L${last.x.toFixed(1)},${baseline.toFixed(1)} L${first.x.toFixed(1)},${baseline.toFixed(1)} Z`;
+  }).filter(Boolean).join(' ');
+}
+
+function buildChartCardHtml(parque, valsPrincipal, valsVs, anoPrincipal, anoVs, isPercent, compact){
   const color = parque === 'Consolidado' ? '#0f3d2e' : (PARK_COLORS[parque] || '#333');
   const grayColor = '#9aa39d';
+  const temVs = !!anoVs;
 
-  const W = 900, H = 260, padL = 50, padR = 20, padT = 20, padB = 30;
+  const W = compact ? 380 : 720, H = compact ? 190 : 280;
+  const padL = compact ? 42 : 54, padR = compact ? 10 : 16, padT = compact ? 16 : 20, padB = compact ? 22 : 28;
   const plotW = W - padL - padR, plotH = H - padT - padB;
-  const n = 12;
-  const slot = plotW / (n - 1);
+  const slot = plotW / 11;
 
-  const showA = !histHiddenSeries.has('A');
-  const showB = !histHiddenSeries.has('B');
+  const showPrincipal = !histHiddenSeries.has('principal');
+  const showVs = temVs && !histHiddenSeries.has('vs');
 
   const allVals = [];
-  if(showA) valsA.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
-  if(showB) valsB.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
+  if(showPrincipal) valsPrincipal.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
+  if(showVs) valsVs.forEach(v => { if(v!==null && v!==undefined) allVals.push(v); });
   const maxV = allVals.length ? Math.max(...allVals) * 1.15 : 1;
 
-  function xAt(i){ return padL + i * slot; }
-  function yAt(v){ return padT + plotH - (v / maxV) * plotH; }
+  const xAt = i => padL + i * slot;
+  const yAt = v => padT + plotH - (v / maxV) * plotH;
+  const baseline = padT + plotH;
 
-  function buildPath(vals){
-    let d = '';
-    let started = false;
-    vals.forEach((v,i) => {
-      if(v === null || v === undefined) { started = false; return; }
-      const x = xAt(i), y = yAt(v);
-      d += (started ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
-      started = true;
-    });
-    return d.trim();
-  }
-
-  function buildArea(vals){
-    const pathD = buildPath(vals);
-    if(!pathD) return '';
-    const idxValidos = vals.map((v,i) => v!==null&&v!==undefined ? i : null).filter(i => i!==null);
-    if(!idxValidos.length) return '';
-    const first = idxValidos[0], last = idxValidos[idxValidos.length-1];
-    return `${pathD} L${xAt(last).toFixed(1)},${(padT+plotH).toFixed(1)} L${xAt(first).toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
-  }
+  const segsPrincipal = histSegments(valsPrincipal, xAt, yAt);
+  const segsVs = temVs ? histSegments(valsVs, xAt, yAt) : [];
 
   let gridLines = '';
-  for(let i=0;i<=4;i++){
-    const v = maxV * i / 4;
+  const nGrid = compact ? 3 : 4;
+  for(let i=0;i<=nGrid;i++){
+    const v = maxV * i / nGrid;
     const y = yAt(v);
     gridLines += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}" stroke="#eee" stroke-width="1"></line>`;
-    gridLines += `<text x="${padL-8}" y="${(y+4).toFixed(1)}" font-size="10.5" fill="var(--muted)" text-anchor="end">${fmtHistValor(v, isPercent)}</text>`;
+    if(!compact) gridLines += `<text x="${padL-8}" y="${(y+4).toFixed(1)}" font-size="10.5" fill="var(--muted)" text-anchor="end">${fmtHistValor(v, isPercent)}</text>`;
   }
 
   let xLabels = '';
   MES_LABELS.forEach((m,i) => {
-    xLabels += `<text x="${xAt(i).toFixed(1)}" y="${H-8}" font-size="11" fill="var(--muted)" text-anchor="middle">${m}</text>`;
+    xLabels += `<text x="${xAt(i).toFixed(1)}" y="${H-6}" font-size="${compact?9:11}" fill="var(--muted)" text-anchor="middle">${m}</text>`;
   });
 
-  const areaB = showB ? `<path d="${buildArea(valsB)}" fill="${color}" fill-opacity="0.14" stroke="none"></path>` : '';
-  const lineB = showB ? `<path d="${buildPath(valsB)}" fill="none" stroke="${color}" stroke-width="2.6"></path>` : '';
-  const dotsB = showB ? valsB.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3.5" fill="${color}"></circle>` : '').join('') : '';
+  const areaPrincipal = showPrincipal ? `<path d="${buildAreaPaths(segsPrincipal, baseline)}" fill="${color}" fill-opacity="0.16" stroke="none"></path>` : '';
+  const linePrincipal = showPrincipal ? `<path d="${buildLinePaths(segsPrincipal)}" fill="none" stroke="${color}" stroke-width="${compact?2:2.6}"></path>` : '';
+  const dotsPrincipal = showPrincipal ? valsPrincipal.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="${compact?2.5:3.5}" fill="${color}"></circle>` : '').join('') : '';
 
-  const lineA = showA ? `<path d="${buildPath(valsA)}" fill="none" stroke="${grayColor}" stroke-width="1.8" stroke-dasharray="5,4"></path>` : '';
-  const dotsA = showA ? valsA.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3" fill="${grayColor}"></circle>` : '').join('') : '';
+  const lineVs = showVs ? `<path d="${buildLinePaths(segsVs)}" fill="none" stroke="${grayColor}" stroke-width="${compact?1.4:1.8}" stroke-dasharray="5,4"></path>` : '';
+  const dotsVs = showVs ? valsVs.map((v,i) => (v!==null&&v!==undefined) ? `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="${compact?2:3}" fill="${grayColor}"></circle>` : '').join('') : '';
 
-  const legend = `<div class="hist-legend">
-    <span class="hist-legend-item ${showA?'':'off'}" style="color:${grayColor}" onclick="toggleHistSerie('A')"><span class="dash"></span>${anoA || '-'}</span>
-    <span class="hist-legend-item ${showB?'':'off'}" style="color:${color}" onclick="toggleHistSerie('B')"><span class="dot" style="background:${color}"></span>${anoB || '-'}</span>
-  </div>`;
+  const legend = temVs
+    ? `<div class="hist-legend">
+        <span class="hist-legend-item ${showPrincipal?'':'off'}" style="color:${color}" onclick="toggleHistSerie('principal')"><span class="dot" style="background:${color}"></span>${anoPrincipal}</span>
+        <span class="hist-legend-item ${showVs?'':'off'}" style="color:${grayColor}" onclick="toggleHistSerie('vs')"><span class="dash"></span>Vs ${anoVs}</span>
+      </div>`
+    : `<div class="hist-legend"><span class="hist-legend-item" style="color:${color}"><span class="dot" style="background:${color}"></span>${anoPrincipal}</span></div>`;
 
-  wrap.innerHTML = `<div class="hist-chart-card">
+  const titulo = compact ? `<div class="hist-park-title" style="color:${color}">${parque}</div>` : '';
+
+  return `<div class="hist-chart-card">
+    ${titulo}
     ${legend}
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">
+    <svg viewBox="0 0 ${W} ${H}">
       ${gridLines}
-      ${areaB}${lineA}${dotsA}${lineB}${dotsB}
+      ${areaPrincipal}${lineVs}${dotsVs}${linePrincipal}${dotsPrincipal}
       ${xLabels}
     </svg>
   </div>`;
 }
 
+function renderHistoricoGrid(parques, anoPrincipal, anoVs, isPercent){
+  const wrap = document.getElementById('histChartWrap');
+  if(!wrap) return;
+  const cards = parques.map(p => {
+    const anosDados = getHistParqueData(p) || {};
+    const valsPrincipal = anosDados[anoPrincipal] || Array(12).fill(null);
+    const valsVs = anoVs ? (anosDados[anoVs] || Array(12).fill(null)) : null;
+    return buildChartCardHtml(p, valsPrincipal, valsVs, anoPrincipal, anoVs, isPercent, true);
+  }).join('');
+  wrap.innerHTML = `<div class="hist-chart-grid">${cards}</div>`;
+}
+
 function renderHistorico(){
   const parqueSel = document.getElementById('histParqueSelect');
   const mesSel = document.getElementById('histMesSelect');
-  const anoASel = document.getElementById('histAnoASelect');
-  const anoBSel = document.getElementById('histAnoBSelect');
+  const anoSel = document.getElementById('histAnoSelect');
+  const vsSel = document.getElementById('histVsSelect');
   const tableWrap = document.getElementById('histTableWrap');
   const chartWrap = document.getElementById('histChartWrap');
   if(!parqueSel) return;
@@ -2669,33 +2739,49 @@ function renderHistorico(){
   }
 
   const parque = parqueSel.value;
-  const mes = mesSel.value;
-  const anoA = anoASel.value;
-  const anoB = anoBSel.value;
+  const anoPrincipal = anoSel.value;
+  const anoVs = vsSel.value; // '' = sem comparação (opcional)
   const isPercent = histModoState === 'share';
 
+  if(parque === 'Todos os Parques'){
+    const parquesReais = histParquesDisponiveis().filter(p => p !== 'Todos os Parques');
+    renderHistoricoGrid(parquesReais, anoPrincipal, anoVs, isPercent);
+    if(tableWrap) tableWrap.innerHTML = '';
+    return;
+  }
+
   const anosDados = getHistParqueData(parque) || {};
-  const valsA = anosDados[anoA] || Array(12).fill(null);
-  const valsB = anosDados[anoB] || Array(12).fill(null);
+  const valsPrincipal = anosDados[anoPrincipal] || Array(12).fill(null);
+  const temVs = !!anoVs;
+  const valsVs = temVs ? (anosDados[anoVs] || Array(12).fill(null)) : null;
 
-  renderHistoricoChart(parque, valsA, valsB, anoA, anoB, isPercent);
+  if(chartWrap) chartWrap.innerHTML = buildChartCardHtml(parque, valsPrincipal, valsVs, anoPrincipal, anoVs, isPercent, false);
 
+  const mes = mesSel.value;
   const mesesParaTabela = mes === '' ? MES_LABELS.map((m,i) => i) : [Number(mes)];
 
   const rows = mesesParaTabela.map(i => {
-    const vA = valsA[i], vB = valsB[i];
-    const delta = fmtHistDelta(vA, vB, isPercent);
-    return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vA, isPercent)}</td><td>${fmtHistValor(vB, isPercent)}</td><td class="${delta.cls}">${delta.txt}</td></tr>`;
+    const vP = valsPrincipal[i];
+    if(!temVs){
+      return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vP, isPercent)}</td></tr>`;
+    }
+    const vV = valsVs[i];
+    const delta = fmtHistDelta(vV, vP, isPercent);
+    return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vV, isPercent)}</td><td>${fmtHistValor(vP, isPercent)}</td><td class="${delta.cls}">${delta.txt}</td></tr>`;
   }).join('');
 
   let totalRow = '';
   if(mes === '' && !isPercent){
-    const validosA = valsA.filter(v => v!==null && v!==undefined);
-    const validosB = valsB.filter(v => v!==null && v!==undefined);
-    const totalA = validosA.length ? validosA.reduce((a,b) => a+b, 0) : null;
-    const totalB = validosB.length ? validosB.reduce((a,b) => a+b, 0) : null;
-    const deltaTotal = fmtHistDelta(totalA, totalB, isPercent);
-    totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalA, isPercent)}</td><td>${fmtHistValor(totalB, isPercent)}</td><td class="${deltaTotal.cls}">${deltaTotal.txt}</td></tr>`;
+    const validosP = valsPrincipal.filter(v => v!==null && v!==undefined);
+    const totalP = validosP.length ? validosP.reduce((a,b) => a+b, 0) : null;
+    if(temVs){
+      const validosV = valsVs.filter(v => v!==null && v!==undefined);
+      const totalV = validosV.length ? validosV.reduce((a,b) => a+b, 0) : null;
+      const deltaTotal = fmtHistDelta(totalV, totalP, isPercent);
+      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalV, isPercent)}</td><td>${fmtHistValor(totalP, isPercent)}</td><td class="${deltaTotal.cls}">${deltaTotal.txt}</td></tr>`;
+    } else {
+      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalP, isPercent)}</td></tr>`;
+    }
   }
 
   if(!rows && !totalRow){
@@ -2703,8 +2789,12 @@ function renderHistorico(){
     return;
   }
 
+  const thead = temVs
+    ? `<th>Mês</th><th>${anoVs}</th><th>${anoPrincipal}</th><th>Δ</th>`
+    : `<th>Mês</th><th>${anoPrincipal}</th>`;
+
   tableWrap.innerHTML = `<table class="hist-table">
-    <thead><tr><th>Mês</th><th>${anoA || '-'}</th><th>${anoB || '-'}</th><th>Δ</th></tr></thead>
+    <thead><tr>${thead}</tr></thead>
     <tbody>${rows}${totalRow}</tbody>
   </table>`;
 }
