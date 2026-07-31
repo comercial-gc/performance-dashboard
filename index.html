@@ -307,9 +307,13 @@
   .hist-vs-tag{ font-size:9.5px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:#fff; background:var(--muted); border-radius:8px; padding:2px 6px; }
   .hist-chart-card{ border:1px solid var(--line); border-radius:10px; padding:16px 20px; margin:16px 0 20px; background:#fff; display:inline-block; max-width:100%; }
   .hist-chart-card svg{ display:block; max-width:100%; height:auto; }
-  .hist-chart-grid{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px; margin:16px 0 20px; }
-  .hist-chart-grid .hist-chart-card{ margin:0; padding:12px 14px; }
-  .hist-chart-grid .hist-park-title{ font-size:13px; font-weight:800; margin-bottom:6px; }
+  /* Grid "Todos os Parques": 2 parques por linha, 3 fileiras -- por isso aqui (só aqui) o
+     SVG estica pra preencher a coluna, diferente do gráfico único (que fica no tamanho
+     natural dos dados, sem esticar). */
+  .hist-chart-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin:16px 0 20px; }
+  .hist-chart-grid .hist-chart-card{ display:block; margin:0; padding:11px 13px; width:100%; }
+  .hist-chart-grid .hist-chart-card svg{ width:100%; }
+  .hist-chart-grid .hist-park-title{ font-size:13px; font-weight:800; margin-bottom:4px; }
   .hist-legend{ display:flex; gap:18px; margin-bottom:8px; flex-wrap:wrap; }
   .hist-legend-item{ display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; user-select:none; }
   .hist-legend-item.off{ opacity:.35; }
@@ -856,9 +860,9 @@
         <div class="mix-title">Histórico</div>
         <div class="mix-subtitle" id="histSubtitle">Série histórica por parque ou consolidada, com comparativo opcional entre anos</div>
       </div>
-      <div class="mix-morador-toggle" id="histModoToggle">
-        <button class="active" data-val="visitacao" onclick="setHistModo('visitacao')">Visitação</button>
-        <button data-val="share" onclick="setHistModo('share')">Share</button>
+      <div class="mix-morador-toggle" id="histViewToggle">
+        <button class="active" data-val="grafico" onclick="setHistView('grafico')">Gráfico</button>
+        <button data-val="regua" onclick="setHistView('regua')">Régua</button>
       </div>
     </div>
 
@@ -2667,7 +2671,7 @@ let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
 let EVENTOS = [];
 let HISTORICO = { parques: {}, parquesComShare: [] };
-let histModoState = 'visitacao'; // 'visitacao' | 'share'
+let histViewState = 'grafico'; // 'grafico' | 'regua' (régua = tabela)
 // legenda clicável: chave de cada série escondida -- 'principal'/'vs' nos modos normal e Vs,
 // ou o próprio ano (ex.: '2024') no modo "Todos os anos".
 let histHiddenSeries = new Set();
@@ -2745,16 +2749,20 @@ function renderEventosTab(){
 function getHistParqueData(parque){
   const d = HISTORICO.parques[parque];
   if(!d) return null;
-  return histModoState === 'share' ? d.anosShare : d.anos;
+  return d.anos;
 }
 
-// "Todos os Parques" é uma visão (grid de mini-gráficos, um por parque), não uma chave de
-// dado -- por isso entra na frente da lista, sem existir dentro de HISTORICO.parques.
+// "Todos os Parques" é uma visão (grid de mini-gráficos/mini-tabelas, um por parque), não uma
+// chave de dado -- por isso entra na frente da lista, sem existir dentro de HISTORICO.parques.
 function histParquesDisponiveis(){
-  const reais = histModoState === 'share'
-    ? (HISTORICO.parquesComShare || [])
-    : Object.keys(HISTORICO.parques || {});
+  const reais = Object.keys(HISTORICO.parques || {});
   return reais.length ? ['Todos os Parques', ...reais] : [];
+}
+
+function setHistView(view){
+  histViewState = view;
+  document.querySelectorAll('#histViewToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === view));
+  renderHistorico();
 }
 
 function populateHistoricoSelects(preserve){
@@ -2797,13 +2805,6 @@ function populateHistoricoSelects(preserve){
   vsSel.value = vsAtual;
   const vsWrap = document.querySelector('.hist-vs-wrap');
   if(vsWrap) vsWrap.style.display = anoAtual === HIST_ANO_TODOS ? 'none' : '';
-}
-
-function setHistModo(modo){
-  histModoState = modo;
-  document.querySelectorAll('#histModoToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === modo));
-  populateHistoricoSelects(true);
-  renderHistorico();
 }
 
 function onHistParqueChange(){
@@ -2901,9 +2902,9 @@ function buildChartCardHtml(parque, serieList, isPercent, compact){
   const nMeses = Math.max(1, ultimoMesComDado + 1);
 
   const pxPorMes = compact ? 34 : 54;
-  const padL = compact ? 42 : 54, padR = compact ? 10 : 16, padT = compact ? 16 : 20, padB = compact ? 22 : 28;
+  const padL = compact ? 40 : 54, padR = compact ? 8 : 16, padT = compact ? 14 : 20, padB = compact ? 20 : 28;
   const plotW = nMeses > 1 ? pxPorMes * (nMeses - 1) : pxPorMes;
-  const H = compact ? 132 : 250;
+  const H = compact ? 108 : 250;
   const W = padL + padR + plotW;
   const plotH = H - padT - padB;
   const slot = pxPorMes;
@@ -2996,6 +2997,89 @@ function renderHistoricoGrid(parques, anoPrincipal, anoVs, isPercent){
   wrap.innerHTML = `<div class="hist-chart-grid">${cards}</div>`;
 }
 
+// Monta só a <table> (sem wrapper) -- reaproveitada tanto no parque único (dentro de
+// #histTableWrap) quanto no grid "Todos os Parques" no modo Régua (uma mini-tabela por
+// parque, no lugar do mini-gráfico). Modo "Todos os anos": uma coluna por ano, sem Δ (não
+// tem um "ano base" único pra comparar, é uma foto lado a lado). Modo normal/Vs: Mês +
+// ano principal, com coluna extra de comparação (Δ) se um "Vs" foi escolhido.
+function buildHistTableHtml(serieList, mesesParaTabela, modoTodosAnos, anoVs, isPercent){
+  const totalPossivel = mesesParaTabela.length > 1 && !isPercent;
+
+  if(modoTodosAnos){
+    const rows = mesesParaTabela.map(i => {
+      const cols = serieList.map(s => `<td>${fmtHistValor(s.vals[i], isPercent)}</td>`).join('');
+      return `<tr><td>${MES_LABELS[i]}</td>${cols}</tr>`;
+    }).join('');
+    let totalRow = '';
+    if(totalPossivel){
+      const cols = serieList.map(s => {
+        const validos = s.vals.filter(v => v!==null && v!==undefined);
+        const total = validos.length ? validos.reduce((a,b) => a+b, 0) : null;
+        return `<td>${fmtHistValor(total, isPercent)}</td>`;
+      }).join('');
+      totalRow = `<tr class="total-row"><td>Acum.</td>${cols}</tr>`;
+    }
+    if(!rows && !totalRow) return '';
+    const thead = `<th>Mês</th>${serieList.map(s => `<th>${s.label}</th>`).join('')}`;
+    return `<table class="hist-table"><thead><tr>${thead}</tr></thead><tbody>${rows}${totalRow}</tbody></table>`;
+  }
+
+  const temVs = serieList.length > 1;
+  const valsPrincipal = serieList[0].vals;
+  const valsVs = temVs ? serieList[1].vals : null;
+
+  const rows = mesesParaTabela.map(i => {
+    const vP = valsPrincipal[i];
+    if(!temVs){
+      return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vP, isPercent)}</td></tr>`;
+    }
+    const vV = valsVs[i];
+    const delta = fmtHistDelta(vV, vP, isPercent);
+    return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vV, isPercent)}</td><td>${fmtHistValor(vP, isPercent)}</td><td class="${delta.cls}">${delta.txt}</td></tr>`;
+  }).join('');
+
+  let totalRow = '';
+  if(totalPossivel){
+    const validosP = valsPrincipal.filter(v => v!==null && v!==undefined);
+    const totalP = validosP.length ? validosP.reduce((a,b) => a+b, 0) : null;
+    if(temVs){
+      const validosV = valsVs.filter(v => v!==null && v!==undefined);
+      const totalV = validosV.length ? validosV.reduce((a,b) => a+b, 0) : null;
+      const deltaTotal = fmtHistDelta(totalV, totalP, isPercent);
+      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalV, isPercent)}</td><td>${fmtHistValor(totalP, isPercent)}</td><td class="${deltaTotal.cls}">${deltaTotal.txt}</td></tr>`;
+    } else {
+      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalP, isPercent)}</td></tr>`;
+    }
+  }
+
+  if(!rows && !totalRow) return '';
+
+  const thead = temVs
+    ? `<th>Mês</th><th>${anoVs}</th><th>${serieList[0].label}</th><th>Δ</th>`
+    : `<th>Mês</th><th>${serieList[0].label}</th>`;
+
+  return `<table class="hist-table"><thead><tr>${thead}</tr></thead><tbody>${rows}${totalRow}</tbody></table>`;
+}
+
+// Régua (tabela) do grid "Todos os Parques": mesma grade 2x3 do modo Gráfico, só que cada
+// card traz uma mini-tabela (ano completo, sem filtro de mês -- o seletor de Mês fica
+// escondido nesse modo) em vez do mini-gráfico.
+function renderHistoricoReguaGrid(parques, anoPrincipal, anoVs, isPercent){
+  const wrap = document.getElementById('histChartWrap');
+  if(!wrap) return;
+  const mesesParaTabela = MES_LABELS.map((m,i) => i);
+  const modoTodosAnos = anoPrincipal === HIST_ANO_TODOS;
+  const cards = parques.map(p => {
+    const anosDados = getHistParqueData(p) || {};
+    const serieList = buildHistSeries(p, anosDados, anoPrincipal, anoVs);
+    const tableHtml = buildHistTableHtml(serieList, mesesParaTabela, modoTodosAnos, anoVs, isPercent)
+      || '<div class="hist-empty">Sem dados.</div>';
+    const color = p === 'Consolidado' ? '#0f3d2e' : (PARK_COLORS[p] || '#333');
+    return `<div class="hist-chart-card"><div class="hist-park-title" style="color:${color}">${p}</div>${tableHtml}</div>`;
+  }).join('');
+  wrap.innerHTML = `<div class="hist-chart-grid">${cards}</div>`;
+}
+
 function renderHistorico(){
   const parqueSel = document.getElementById('histParqueSelect');
   const mesSel = document.getElementById('histMesSelect');
@@ -3014,11 +3098,20 @@ function renderHistorico(){
   const parque = parqueSel.value;
   const anoPrincipal = anoSel.value;
   const anoVs = vsSel.value; // '' = sem comparação (opcional)
-  const isPercent = histModoState === 'share';
+  const isPercent = false; // aba Histórico só mostra Visitação -- Share foi removido
+  const modoRegua = histViewState === 'regua';
 
   if(parque === 'Todos os Parques'){
-    const parquesReais = histParquesDisponiveis().filter(p => p !== 'Todos os Parques');
-    renderHistoricoGrid(parquesReais, anoPrincipal, anoVs, isPercent);
+    // "Consolidado" (Grupo Cataratas) não é um parque de verdade -- fica de fora do grid pra
+    // fechar certinho em 6 painéis, 2 por linha, 3 fileiras (AquaRio/BioParque, Paineiras/PNI,
+    // M3F/AquaFoz). Continua disponível como opção no seletor de parque único, se quiser ver
+    // o consolidado sozinho.
+    const parquesReais = histParquesDisponiveis().filter(p => p !== 'Todos os Parques' && p !== 'Consolidado');
+    if(modoRegua){
+      renderHistoricoReguaGrid(parquesReais, anoPrincipal, anoVs, isPercent);
+    } else {
+      renderHistoricoGrid(parquesReais, anoPrincipal, anoVs, isPercent);
+    }
     if(tableWrap) tableWrap.innerHTML = '';
     return;
   }
@@ -3026,81 +3119,17 @@ function renderHistorico(){
   const anosDados = getHistParqueData(parque) || {};
   const modoTodosAnos = anoPrincipal === HIST_ANO_TODOS;
   const serieList = buildHistSeries(parque, anosDados, anoPrincipal, anoVs);
-
-  if(chartWrap) chartWrap.innerHTML = buildChartCardHtml(parque, serieList, isPercent, false);
-
   const mes = mesSel.value;
   const mesesParaTabela = mes === '' ? MES_LABELS.map((m,i) => i) : [Number(mes)];
 
-  // Modo "Todos os anos": tabela com uma coluna por ano (sem Δ -- não há um "ano base" único
-  // pra comparar, é uma foto lado a lado de todos os anos).
-  if(modoTodosAnos){
-    const rows = mesesParaTabela.map(i => {
-      const cols = serieList.map(s => `<td>${fmtHistValor(s.vals[i], isPercent)}</td>`).join('');
-      return `<tr><td>${MES_LABELS[i]}</td>${cols}</tr>`;
-    }).join('');
-    let totalRow = '';
-    if(mes === '' && !isPercent){
-      const cols = serieList.map(s => {
-        const validos = s.vals.filter(v => v!==null && v!==undefined);
-        const total = validos.length ? validos.reduce((a,b) => a+b, 0) : null;
-        return `<td>${fmtHistValor(total, isPercent)}</td>`;
-      }).join('');
-      totalRow = `<tr class="total-row"><td>Acum.</td>${cols}</tr>`;
-    }
-    if(!rows && !totalRow){
-      tableWrap.innerHTML = '<div class="hist-empty">Sem dados para essa combinação de filtros.</div>';
-      return;
-    }
-    const thead = `<th>Mês</th>${serieList.map(s => `<th>${s.label}</th>`).join('')}`;
-    tableWrap.innerHTML = `<table class="hist-table">
-      <thead><tr>${thead}</tr></thead>
-      <tbody>${rows}${totalRow}</tbody>
-    </table>`;
-    return;
+  if(modoRegua){
+    if(chartWrap) chartWrap.innerHTML = '';
+    const tableHtml = buildHistTableHtml(serieList, mesesParaTabela, modoTodosAnos, anoVs, isPercent);
+    tableWrap.innerHTML = tableHtml || '<div class="hist-empty">Sem dados para essa combinação de filtros.</div>';
+  } else {
+    if(tableWrap) tableWrap.innerHTML = '';
+    if(chartWrap) chartWrap.innerHTML = buildChartCardHtml(parque, serieList, isPercent, false);
   }
-
-  const temVs = !!anoVs;
-  const valsPrincipal = serieList[0].vals;
-  const valsVs = temVs ? serieList[1].vals : null;
-
-  const rows = mesesParaTabela.map(i => {
-    const vP = valsPrincipal[i];
-    if(!temVs){
-      return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vP, isPercent)}</td></tr>`;
-    }
-    const vV = valsVs[i];
-    const delta = fmtHistDelta(vV, vP, isPercent);
-    return `<tr><td>${MES_LABELS[i]}</td><td>${fmtHistValor(vV, isPercent)}</td><td>${fmtHistValor(vP, isPercent)}</td><td class="${delta.cls}">${delta.txt}</td></tr>`;
-  }).join('');
-
-  let totalRow = '';
-  if(mes === '' && !isPercent){
-    const validosP = valsPrincipal.filter(v => v!==null && v!==undefined);
-    const totalP = validosP.length ? validosP.reduce((a,b) => a+b, 0) : null;
-    if(temVs){
-      const validosV = valsVs.filter(v => v!==null && v!==undefined);
-      const totalV = validosV.length ? validosV.reduce((a,b) => a+b, 0) : null;
-      const deltaTotal = fmtHistDelta(totalV, totalP, isPercent);
-      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalV, isPercent)}</td><td>${fmtHistValor(totalP, isPercent)}</td><td class="${deltaTotal.cls}">${deltaTotal.txt}</td></tr>`;
-    } else {
-      totalRow = `<tr class="total-row"><td>Acum.</td><td>${fmtHistValor(totalP, isPercent)}</td></tr>`;
-    }
-  }
-
-  if(!rows && !totalRow){
-    tableWrap.innerHTML = '<div class="hist-empty">Sem dados para essa combinação de filtros.</div>';
-    return;
-  }
-
-  const thead = temVs
-    ? `<th>Mês</th><th>${anoVs}</th><th>${anoPrincipal}</th><th>Δ</th>`
-    : `<th>Mês</th><th>${anoPrincipal}</th>`;
-
-  tableWrap.innerHTML = `<table class="hist-table">
-    <thead><tr>${thead}</tr></thead>
-    <tbody>${rows}${totalRow}</tbody>
-  </table>`;
 }
 const MIX_PARK_COLORS = {"AquaRio": "#305496", "BioParque": "#C65911", "Paineiras": "#548235", "M3F": "#CC0000", "AquaFoz": "#45818E", "Três Pescadores": "#741B47", "Vila Velha": "#BF9000", "PNI": "#0D5955"};
 const MIX_CAT_COLORS = {
