@@ -283,6 +283,12 @@
   .imt-detail-table td:first-child{ font-weight:700; }
   .imt-detail-table tbody tr:hover{ background:#fafcf9; }
   .imt-detail-table tr.total-row td{ font-weight:700; background:#fafafa; border-top:2px solid var(--line); }
+  .pm-detail-table{ width:100%; border-collapse:collapse; font-size:12px; }
+  .pm-detail-table th{ background:#f5f5f5; padding:6px 8px; text-align:left; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); white-space:nowrap; }
+  .pm-detail-table th:nth-child(7){ text-align:right; }
+  .pm-detail-table td{ padding:5px 8px; text-align:left; border-bottom:1px solid #f0f0f0; }
+  .pm-detail-table td:nth-child(7){ text-align:right; font-weight:600; }
+  .pm-detail-table tbody tr:hover{ background:#fafcf9; }
   .imt-detail-empty{ padding:20px; text-align:center; color:var(--muted); font-size:13px; }
   .imt-note{ font-size:11px; color:var(--muted); margin-top:16px; font-style:italic; }
 
@@ -506,6 +512,7 @@
     <button data-tab="mix-origem">Mix de Origem</button>
     <button data-tab="eventos">Eventos</button>
     <button data-tab="historico">Histórico</button>
+    <button data-tab="planomidia">Plano de Mídia</button>
   </nav>
 </header>
 
@@ -875,6 +882,44 @@
     <div id="histChartWrap"></div>
     <div id="histTableWrap"></div>
   </div>
+</section>
+
+<section id="tab-planomidia" style="display:none;">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Plano de Mídia</h2>
+      <span class="hint">Orçado, Previsto e Saldo por parque - 2026 | sem comparativo com 2025 (não existe na planilha de origem)</span>
+    </div>
+    <div class="panel-body">
+      <div class="regua-wrap">
+        <div class="invest-monthnum" id="pmMonthNums"></div>
+        <div class="regua" id="pmGrid"></div>
+      </div>
+      <div class="regua-legend">
+        <span>Cada célula: Orçado (verba do mês) / Previsto (já comprometido) / Saldo (o que resta)</span>
+      </div>
+
+      <div class="imt-filter-row" style="margin-top:22px; padding-top:14px; border-top:1px solid var(--line);">
+        <div class="imt-select-wrap" style="margin:0; padding:0; border:none;">
+          <label for="pmMesSelect">Mês</label>
+          <select id="pmMesSelect" onchange="renderPlanoMidiaDetail()"></select>
+        </div>
+        <div class="imt-select-wrap" style="margin:0; padding:0; border:none;">
+          <label for="pmParqueSelect">Parque</label>
+          <select id="pmParqueSelect" onchange="renderPlanoMidiaDetail()"></select>
+        </div>
+        <button class="imt-filter-clear" onclick="clearPlanoMidiaFilters()">Limpar filtros</button>
+      </div>
+
+      <div class="imt-detail-wrap open">
+        <table class="pm-detail-table">
+          <thead><tr><th>Mês</th><th>Parque</th><th>Tipo</th><th>Fornecedor</th><th>Descrição</th><th>Status</th><th>Valor</th></tr></thead>
+          <tbody id="pmDetailBody"></tbody>
+        </table>
+      </div>
+      <p class="imt-note">* Abas de Jan a Abr da planilha de origem não têm linha de Previsto/Saldo estruturada -- esses campos ficam "-" nesses meses (não é erro, é ausência de dado na planilha).</p>
+    </div>
+  </section>
 </section>
 
 </main>
@@ -1366,6 +1411,117 @@ function renderInvestAccumChart(){
     chartH: targetH, barW: 34, pairGap: 12, groupGap: 22, justify: 'space-around',
     fmtFull: v => fmtMoney(v)
   });
+}
+
+// ─── Plano de Mídia ─────────────────────────────────────────────────────────
+// Dinâmica parecida com Investimento Marketing (régua por mês/parque + lista de
+// lançamentos filtrável), mas SEM comparativo com 2025 -- a planilha de origem só tem o
+// planejado do ano corrente: Orçado (verba do mês) / Previsto (já comprometido) / Saldo.
+const PLANO_MIDIA_MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto'];
+const PLANO_MIDIA_PARKS = ['AquaRio','BioParque','AquaFoz','M3F','Vila Velha','3P'];
+let PLANO_MIDIA = { resumo: {}, detail: {} };
+
+function renderPlanoMidiaGrid(){
+  const resumo = PLANO_MIDIA.resumo || {};
+  const monthNumsEl = document.getElementById('pmMonthNums');
+  if(!monthNumsEl) return;
+  monthNumsEl.innerHTML =
+    PLANO_MIDIA_MESES.map(m => `<span>${m.slice(0,3)}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
+
+  const grid = document.getElementById('pmGrid');
+  grid.innerHTML = PLANO_MIDIA_PARKS.map(park => {
+    const parkColor = PARK_COLORS[park] || '#888';
+    const cells = PLANO_MIDIA_MESES.map(mes => {
+      const d = resumo[mes] ? resumo[mes][park] : null;
+      if(!d || d.orcado===null || d.orcado===undefined){
+        return `<div class="invest-cell empty" style="background:${parkColor}14">-</div>`;
+      }
+      const previstoStr = (d.previsto!==null && d.previsto!==undefined) ? fmtMoney(d.previsto) : '-';
+      const saldoStr = (d.saldo!==null && d.saldo!==undefined) ? fmtMoney(d.saldo) : '-';
+      const tip = `${mes}: Orçado ${fmtMoney(d.orcado)} | Previsto ${previstoStr} | Saldo ${saldoStr}`;
+      return `<div class="invest-cell" style="background:${parkColor}1f" data-tip="${tip}">
+        <div class="big">${fmtMoney(d.orcado)}</div>
+        <div class="sub"><span><b>Previsto</b> ${previstoStr}</span></div>
+        <div class="sub"><span><b>Saldo</b> ${saldoStr}</span></div>
+      </div>`;
+    }).join('');
+
+    let sumOrc=0, sumPrev=0, sumSaldo=0, hasOrc=false, hasPrev=false, hasSaldo=false;
+    PLANO_MIDIA_MESES.forEach(mes => {
+      const d = resumo[mes] ? resumo[mes][park] : null;
+      if(d && d.orcado!==null && d.orcado!==undefined){ sumOrc+=d.orcado; hasOrc=true; }
+      if(d && d.previsto!==null && d.previsto!==undefined){ sumPrev+=d.previsto; hasPrev=true; }
+      if(d && d.saldo!==null && d.saldo!==undefined){ sumSaldo+=d.saldo; hasSaldo=true; }
+    });
+    let accCell;
+    if(hasOrc){
+      accCell = `<div class="invest-cell" data-tip="Acumulado Jan-Ago: Orçado ${fmtMoney(sumOrc)}" style="background:${parkColor}1f;border-left-width:4px;margin-left:10px;">
+        <div class="big">${fmtMoney(sumOrc)}</div>
+        <div class="sub"><span><b>Previsto</b> ${hasPrev?fmtMoney(sumPrev):'-'}</span></div>
+        <div class="sub"><span><b>Saldo</b> ${hasSaldo?fmtMoney(sumSaldo):'-'}</span></div>
+      </div>`;
+    } else {
+      accCell = `<div class="invest-cell empty" style="background:${parkColor}14;margin-left:10px;">-</div>`;
+    }
+    return `<div class="invest-row">${parkLabel(park)}<div class="invest-days">${cells}${accCell}</div></div>`;
+  }).join('');
+}
+
+function populatePlanoMidiaSelects(){
+  const mesSel = document.getElementById('pmMesSelect');
+  const parqueSel = document.getElementById('pmParqueSelect');
+  if(!mesSel || !parqueSel) return;
+  mesSel.innerHTML = '<option value="">Todos os meses</option>' +
+    PLANO_MIDIA_MESES.map(m => `<option value="${m}">${m}</option>`).join('');
+  parqueSel.innerHTML = '<option value="">Todos os parques</option>' +
+    PLANO_MIDIA_PARKS.map(p => `<option value="${p}">${p==='3P' ? 'Três Pescadores' : p}</option>`).join('');
+}
+
+function clearPlanoMidiaFilters(){
+  const mesSel = document.getElementById('pmMesSelect');
+  const parqueSel = document.getElementById('pmParqueSelect');
+  if(mesSel) mesSel.value = '';
+  if(parqueSel) parqueSel.value = '';
+  renderPlanoMidiaDetail();
+}
+
+function renderPlanoMidiaDetail(){
+  const body = document.getElementById('pmDetailBody');
+  if(!body) return;
+  const mesSel = document.getElementById('pmMesSelect');
+  const parqueSel = document.getElementById('pmParqueSelect');
+  const mesFiltro = mesSel ? mesSel.value : '';
+  const parqueFiltro = parqueSel ? parqueSel.value : '';
+  const detail = PLANO_MIDIA.detail || {};
+  const meses = mesFiltro ? [mesFiltro] : PLANO_MIDIA_MESES;
+
+  const items = [];
+  meses.forEach(mes => {
+    (detail[mes] || []).forEach(it => {
+      if(parqueFiltro && it.parque !== parqueFiltro) return;
+      items.push({ ...it, mes });
+    });
+  });
+
+  if(!items.length){
+    body.innerHTML = `<tr><td colspan="7" class="imt-detail-empty">Nenhum lançamento encontrado para o filtro selecionado.</td></tr>`;
+    return;
+  }
+  body.innerHTML = items.map(it => `<tr>
+    <td>${it.mes}</td>
+    <td>${it.parque==='3P' ? 'Três Pescadores' : it.parque}</td>
+    <td>${it.tipo || '-'}</td>
+    <td>${it.fornecedor || '-'}</td>
+    <td>${it.descricao || '-'}</td>
+    <td>${it.status || '-'}</td>
+    <td>${it.valor!==null && it.valor!==undefined ? fmtMoney(it.valor) : '-'}</td>
+  </tr>`).join('');
+}
+
+function initPlanoMidiaTab(){
+  populatePlanoMidiaSelects();
+  renderPlanoMidiaGrid();
+  renderPlanoMidiaDetail();
 }
 
 // Carrinhos manuais no gráfico "Evolução mensal": marque aqui os meses (no formato "MM/AA",
@@ -2080,6 +2236,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn => {
     if(tab==='clima'){ renderClimaTab(); if(!climaForecastLoaded){ climaForecastLoaded = true; loadClimaForecast(); } }
     document.getElementById('tab-eventos').style.display = tab==='eventos' ? '' : 'none';
     document.getElementById('tab-historico').style.display = tab==='historico' ? '' : 'none';
+    document.getElementById('tab-planomidia').style.display = tab==='planomidia' ? '' : 'none';
     document.getElementById('toolbar-visitacao').style.display = tab==='visitacao' ? '' : 'none';
   });
 });
@@ -3068,6 +3225,7 @@ async function carregarDados(){
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
     EVENTOS = data.EVENTOS || [];
     HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
+    PLANO_MIDIA = data.PLANO_MIDIA || { resumo: {}, detail: {} };
   } catch(e) {
     console.error('Falha ao carregar data.json -- o painel vai renderizar com os dados vazios/zerados ate isso ser corrigido:', e);
   }
@@ -3087,6 +3245,7 @@ async function carregarDados(){
   renderEventosTab();
   populateHistoricoSelects(false);
   renderHistorico();
+  initPlanoMidiaTab();
 }
 
 carregarDados();
