@@ -1005,6 +1005,169 @@ def _clean_str(v):
     return s if s else None
 
 
+# ---------------------------------------------------------------------------
+# Plano de Mídia - 2026.xlsx (uma aba por parque/mês, nomeada à mão pelo time de mídia --
+# SEM padrão fixo, diferente de Investimento Marketing que usa JANEIRO..DEZEMBRO). Por isso
+# não dá pra montar o nome da aba dinamicamente a partir do mês -- este mapa precisa ser
+# atualizado manualmente conforme novas abas forem criadas (mesmo espírito de
+# MARKETING_ACTIONS, mais acima). Quando um parque tem mais de uma aba no mesmo mês (ex.:
+# duas verbas/tranches), uso uma lista -- os valores e lançamentos das abas são somados.
+# ---------------------------------------------------------------------------
+PLANO_MIDIA_SHEETS = {
+    "Janeiro":   {"AquaRio": " AQUARIO JAN 2026", "BioParque": "BIO JANEIRO 2026"},
+    "Fevereiro": {"AquaRio": "AQUARIO FEV 2026", "BioParque": "BIO fev 2026"},
+    "Março":     {"AquaRio": "AQUARIO MAR 2026", "BioParque": "BIO MAR 2026"},
+    "Abril":     {"AquaRio": "AQUARIO ABRIL", "BioParque": "BIOPARQUE ABRIL", "Vila Velha": "VILA VELHA"},
+    "Maio":      {"AquaRio": ["AQUARIO MAIO 1", "AQUARIO MAIO 2"], "BioParque": "BIOPARQUE MAIO", "AquaFoz": "AQUAFOZ MAIO"},
+    "Junho":     {"AquaRio": "AQUARIO JUNHO", "BioParque": "BIOPARQUE JUNHO"},
+    "Julho":     {"AquaRio": "AQUARIO JULHO", "BioParque": "BIOPARQUE JULHO", "AquaFoz": "AQUAFOZ JULHO",
+                  "M3F": "M3F JULHO", "Vila Velha": "VILA VELHA JULHO", "3P": "3 PESCADORES JULHO"},
+    "Agosto":    {"AquaRio": "AQUARIO AGOSTO", "BioParque": "BIOPARQUE AGOSTO", "AquaFoz": "AQUAFOZ AGOSTO",
+                  "M3F": "M3F AGOSTO", "Vila Velha": "VILA VELHA AGOSTO", "3P": "3 PESCADORES AGOSTO"},
+}
+PLANO_MIDIA_PARKS = ["AquaRio", "BioParque", "AquaFoz", "M3F", "Vila Velha", "3P"]
+
+
+def _parse_plano_midia_sheet(rows):
+    """Recebe as linhas (get_values) de UMA aba de parque/mês do Plano de Mídia e devolve
+    {"budget", "previsto", "saldo", "items"}. O layout de colunas varia de parque pra parque
+    (ex.: 'Empresa' vs 'Fornecedor' vs 'Veículo', com/sem coluna 'Card') e a linha de
+    cabeçalho também varia de posição (2 ou 3, conforme tem ou não uma linha de observação no
+    meio) -- por isso acha tudo pelo rótulo em vez de índice fixo, procurando a célula
+    "Parque" na coluna A pra achar o cabeçalho.
+
+    Nem toda aba tem linha-resumo ("ORÇADO"/"PREVISTO"/"SALDO"/"TOTAL") -- e nas abas mais
+    antigas (Jan a Mar) a lista de lançamentos é uma lista de PROPOSTAS/opções em negociação,
+    não só o que foi fechado, então o valor total dos lançamentos pode somar bem mais que o
+    orçamento (várias alternativas concorrentes pro mesmo espaço). Por isso "previsto" NUNCA
+    é calculado somando os lançamentos -- só vem de uma linha-resumo explícita da própria
+    planilha (ORÇADO/PREVISTO/TOTAL). Sem uma dessas linhas, "previsto" e "saldo" ficam None
+    (sem dado) em vez de arriscar um número que pode estar bem errado.
+    """
+    budget = cell(rows[0], 1) if rows else None
+    budget = budget if isinstance(budget, (int, float)) else None
+
+    header_idx = None
+    for i in range(min(8, len(rows))):
+        if _norm_txt(cell(rows[i], 0)) == "PARQUE":
+            header_idx = i
+            break
+    if header_idx is None:
+        return {"budget": budget, "previsto": None, "saldo": None, "items": []}
+
+    header = rows[header_idx]
+    col_map = {c: _norm_txt(v) for c, v in enumerate(header) if _norm_txt(v)}
+
+    def find_col(*keywords):
+        for c, h in col_map.items():
+            for kw in keywords:
+                if kw in h:
+                    return c
+        return None
+
+    col_valor = find_col("VALOR")
+    col_tipo = find_col("TIPO")
+    col_desc = find_col("PROPRIEDADE")
+    col_forn = find_col("EMPRESA", "FORNECEDOR", "VEICULO")
+    col_status = find_col("STATUS")
+
+    items = []
+    orcado_val = None
+    previsto_val = None
+    saldo_val = None
+    blank_streak = 0
+    i = header_idx + 1
+    maxi = min(len(rows), header_idx + 60)
+    while i < maxi:
+        row = rows[i]
+        row_norm = [_norm_txt(v) for v in row]
+        nums = [v for v in row if isinstance(v, (int, float))]
+        if "ORCADO" in row_norm or "TOTAL" in row_norm:
+            if nums: orcado_val = nums[0]
+            blank_streak = 0; i += 1; continue
+        if "PREVISTO" in row_norm:
+            if nums: previsto_val = nums[0]
+            blank_streak = 0; i += 1; continue
+        if "SALDO" in row_norm:
+            if nums: saldo_val = nums[0]
+            blank_streak = 0; i += 1; continue
+        valor = cell(row, col_valor) if col_valor is not None else None
+        valor = valor if isinstance(valor, (int, float)) else None
+        desc = _clean_str(cell(row, col_desc)) if col_desc is not None else None
+        forn = _clean_str(cell(row, col_forn)) if col_forn is not None else None
+        tipo = _clean_str(cell(row, col_tipo)) if col_tipo is not None else None
+        if valor is not None or desc or forn or tipo:
+            items.append({
+                "tipo": tipo,
+                "fornecedor": forn,
+                "descricao": desc,
+                "valor": valor,
+                "status": _clean_str(cell(row, col_status)) if col_status is not None else None,
+            })
+            blank_streak = 0
+        else:
+            blank_streak += 1
+            if blank_streak >= 25:
+                break
+        i += 1
+
+    previsto = previsto_val if previsto_val is not None else orcado_val
+    if budget is None and previsto is not None and saldo_val is not None:
+        budget = previsto + saldo_val
+    saldo = saldo_val
+    if saldo is None and budget is not None and previsto is not None:
+        saldo = budget - previsto
+
+    return {"budget": budget, "previsto": previsto, "saldo": saldo, "items": items}
+
+
+def build_plano_midia(service, spreadsheet_id):
+    """Lê a planilha 'Plano de Mídia' -- cada parque/mês tem sua própria aba oculta (ver
+    PLANO_MIDIA_SHEETS acima). Diferente de Investimento Marketing, aqui NÃO há comparativo
+    com 2025: é só o planejado do ano corrente (Orçado = verba do mês, Previsto = já
+    comprometido, Saldo = o que resta). Cada aba é lida isoladamente (try/except) -- se uma
+    não existir mais ou vier com erro, fica de fora sem derrubar o resto do mês/pipeline.
+    """
+    resumo = {}
+    detail = {}
+    for mes, parques_sheets in PLANO_MIDIA_SHEETS.items():
+        resumo[mes] = {}
+        detail[mes] = []
+        for park in PLANO_MIDIA_PARKS:
+            sheet_names = parques_sheets.get(park)
+            if not sheet_names:
+                continue
+            if isinstance(sheet_names, str):
+                sheet_names = [sheet_names]
+            budget_total = 0.0
+            previsto_total = 0.0
+            saldo_total = 0.0
+            has_budget = False
+            has_previsto = False
+            has_saldo = False
+            for sheet_name in sheet_names:
+                try:
+                    rows = get_values(service, spreadsheet_id, sheet_name)
+                    parsed = _parse_plano_midia_sheet(rows)
+                except Exception as e:
+                    print(f"AVISO: falha ao ler Plano de Mídia '{sheet_name}' ({e}) -- aba ignorada.", file=sys.stderr)
+                    continue
+                if parsed["budget"] is not None:
+                    budget_total += parsed["budget"]; has_budget = True
+                if parsed["previsto"] is not None:
+                    previsto_total += parsed["previsto"]; has_previsto = True
+                if parsed["saldo"] is not None:
+                    saldo_total += parsed["saldo"]; has_saldo = True
+                for it in parsed["items"]:
+                    detail[mes].append({**it, "parque": park})
+            resumo[mes][park] = {
+                "orcado": budget_total if has_budget else None,
+                "previsto": previsto_total if has_previsto else None,
+                "saldo": saldo_total if has_saldo else None,
+            }
+    return {"resumo": resumo, "detail": detail}
+
+
 def build_invest_mkt_detail(service, spreadsheet_id, meses):
     """Le a lista de campanhas de cada aba mensal. Retorna {mes: [ {parque, setor,
     custo, fornecedor, descricao, valor, observacao}, ... ]}.
@@ -1331,6 +1494,22 @@ def main():
         )
         historico = {"parques": {}, "parquesComShare": []}
 
+    print("Lendo Plano de Mídia...", file=sys.stderr)
+    plano_midia_id = cfg.get("plano_midia_id", "")
+    if plano_midia_id and not plano_midia_id.startswith("COLE_AQUI"):
+        try:
+            plano_midia = build_plano_midia(service, plano_midia_id)
+        except Exception as e:
+            print(f"AVISO: falha ao ler Plano de Mídia ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
+            plano_midia = {"resumo": {}, "detail": {}}
+    else:
+        print(
+            "Plano de Mídia: plano_midia_id ainda não configurado (placeholder) "
+            "-- aba fica vazia até o ID real ser colado no config.json.",
+            file=sys.stderr,
+        )
+        plano_midia = {"resumo": {}, "detail": {}}
+
     output = {
         "geradoEm": datetime.datetime.utcnow().isoformat() + "Z",
         "VISITACAO": visitacao,
@@ -1350,6 +1529,7 @@ def main():
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
         "EVENTOS": eventos,
         "HISTORICO": historico,
+        "PLANO_MIDIA": plano_midia,
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
