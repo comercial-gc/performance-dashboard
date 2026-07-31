@@ -289,6 +289,8 @@
   .pm-detail-table td{ padding:5px 8px; text-align:left; border-bottom:1px solid #f0f0f0; }
   .pm-detail-table td:nth-child(8){ text-align:right; font-weight:600; }
   .pm-detail-table tbody tr:hover{ background:#fafcf9; }
+  .pm-detail-table tr.total-row td{ font-weight:700; background:#fafafa; border-top:2px solid var(--line); text-align:right; }
+  .pm-detail-table tr.total-row td:first-child{ text-align:left; color:var(--ink); }
   .imt-detail-empty{ padding:20px; text-align:center; color:var(--muted); font-size:13px; }
   .imt-note{ font-size:11px; color:var(--muted); margin-top:16px; font-style:italic; }
 
@@ -1544,7 +1546,7 @@ function renderPlanoMidiaDetail(){
     body.innerHTML = `<tr><td colspan="8" class="imt-detail-empty">Nenhum lançamento encontrado para o filtro selecionado.</td></tr>`;
     return;
   }
-  body.innerHTML = items.map(it => `<tr>
+  const rows = items.map(it => `<tr>
     <td>${it.mes}</td>
     <td>${it.parque==='3P' ? 'Três Pescadores' : it.parque}</td>
     <td>${it.tipo || '-'}</td>
@@ -1554,6 +1556,13 @@ function renderPlanoMidiaDetail(){
     <td>${it.ok || '-'}</td>
     <td>${it.valor!==null && it.valor!==undefined ? fmtMoney(it.valor) : '-'}</td>
   </tr>`).join('');
+
+  // Total dinâmico: soma só o que está visível depois dos filtros aplicados (Mês, Parque,
+  // Tipo, Status, OK?) -- recalculado toda vez que algum filtro muda.
+  const totalValor = items.reduce((soma, it) => soma + (it.valor || 0), 0);
+  const totalRow = `<tr class="total-row"><td colspan="7">Total (${items.length} lançamento${items.length===1?'':'s'})</td><td>${fmtMoney(totalValor)}</td></tr>`;
+
+  body.innerHTML = rows + totalRow;
 }
 
 function initPlanoMidiaTab(){
