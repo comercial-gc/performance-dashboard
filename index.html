@@ -898,7 +898,7 @@
         <div class="regua" id="pmGrid"></div>
       </div>
       <div class="regua-legend">
-        <span>Cada célula: Orçado (verba do mês) / Previsto (soma dos lançamentos com "OK?" = Sim) / Saldo (o que resta)</span>
+        <span>Cada célula: <b>Previsto</b> (valor principal -- soma dos lançamentos com "OK?" = Sim) / Orçado (verba do mês) / Saldo (o que resta)</span>
       </div>
 
       <div class="imt-filter-row" style="margin-top:22px; padding-top:14px; border-top:1px solid var(--line);">
@@ -1454,10 +1454,13 @@ function renderPlanoMidiaGrid(){
       const orcadoStr = (d.orcado!==null && d.orcado!==undefined) ? fmtMoney(d.orcado) : '-';
       const previstoStr = (d.previsto!==null && d.previsto!==undefined) ? fmtMoney(d.previsto) : '-';
       const saldoStr = (d.saldo!==null && d.saldo!==undefined) ? fmtMoney(d.saldo) : '-';
-      const tip = `${mes}: Orçado ${orcadoStr} | Previsto ${previstoStr} | Saldo ${saldoStr}`;
+      const tip = `${mes}: Previsto (OK=Sim) ${previstoStr} | Orçado ${orcadoStr} | Saldo ${saldoStr}`;
+      // Número principal do card = Previsto (soma dos lançamentos com "OK?" = Sim), pra bater
+      // exatamente com o total que aparece na tabela de baixo quando se filtra por esse
+      // mês/parque/OK=Sim. Orçado (verba do mês) vira uma linha secundária de referência.
       return `<div class="invest-cell" style="background:${parkColor}1f" data-tip="${tip}">
-        <div class="big">${orcadoStr}</div>
-        <div class="sub"><span><b>Previsto</b> ${previstoStr}</span></div>
+        <div class="big">${previstoStr}</div>
+        <div class="sub"><span><b>Orçado</b> ${orcadoStr}</span></div>
         <div class="sub"><span><b>Saldo</b> ${saldoStr}</span></div>
       </div>`;
     }).join('');
@@ -1470,10 +1473,10 @@ function renderPlanoMidiaGrid(){
       if(d && d.saldo!==null && d.saldo!==undefined){ sumSaldo+=d.saldo; hasSaldo=true; }
     });
     let accCell;
-    if(hasOrc){
-      accCell = `<div class="invest-cell" data-tip="Acumulado Jan-Ago: Orçado ${fmtMoney(sumOrc)}" style="background:${parkColor}1f;border-left-width:4px;margin-left:10px;">
-        <div class="big">${fmtMoney(sumOrc)}</div>
-        <div class="sub"><span><b>Previsto</b> ${hasPrev?fmtMoney(sumPrev):'-'}</span></div>
+    if(hasPrev || hasOrc){
+      accCell = `<div class="invest-cell" data-tip="Acumulado Jan-Ago: Previsto ${hasPrev?fmtMoney(sumPrev):'-'} | Orçado ${hasOrc?fmtMoney(sumOrc):'-'}" style="background:${parkColor}1f;border-left-width:4px;margin-left:10px;">
+        <div class="big">${hasPrev?fmtMoney(sumPrev):'-'}</div>
+        <div class="sub"><span><b>Orçado</b> ${hasOrc?fmtMoney(sumOrc):'-'}</span></div>
         <div class="sub"><span><b>Saldo</b> ${hasSaldo?fmtMoney(sumSaldo):'-'}</span></div>
       </div>`;
     } else {
