@@ -285,9 +285,9 @@
   .imt-detail-table tr.total-row td{ font-weight:700; background:#fafafa; border-top:2px solid var(--line); }
   .pm-detail-table{ width:100%; border-collapse:collapse; font-size:12px; }
   .pm-detail-table th{ background:#f5f5f5; padding:6px 8px; text-align:left; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); white-space:nowrap; }
-  .pm-detail-table th:nth-child(7){ text-align:right; }
+  .pm-detail-table th:nth-child(8){ text-align:right; }
   .pm-detail-table td{ padding:5px 8px; text-align:left; border-bottom:1px solid #f0f0f0; }
-  .pm-detail-table td:nth-child(7){ text-align:right; font-weight:600; }
+  .pm-detail-table td:nth-child(8){ text-align:right; font-weight:600; }
   .pm-detail-table tbody tr:hover{ background:#fafcf9; }
   .imt-detail-empty{ padding:20px; text-align:center; color:var(--muted); font-size:13px; }
   .imt-note{ font-size:11px; color:var(--muted); margin-top:16px; font-style:italic; }
@@ -896,7 +896,7 @@
         <div class="regua" id="pmGrid"></div>
       </div>
       <div class="regua-legend">
-        <span>Cada célula: Orçado (verba do mês) / Previsto (já comprometido) / Saldo (o que resta)</span>
+        <span>Cada célula: Orçado (verba do mês) / Previsto (soma dos lançamentos com "OK?" = Sim) / Saldo (o que resta)</span>
       </div>
 
       <div class="imt-filter-row" style="margin-top:22px; padding-top:14px; border-top:1px solid var(--line);">
@@ -908,16 +908,28 @@
           <label for="pmParqueSelect">Parque</label>
           <select id="pmParqueSelect" onchange="renderPlanoMidiaDetail()"></select>
         </div>
+        <div class="imt-select-wrap" style="margin:0; padding:0; border:none;">
+          <label for="pmTipoSelect">Tipo</label>
+          <select id="pmTipoSelect" onchange="renderPlanoMidiaDetail()"></select>
+        </div>
+        <div class="imt-select-wrap" style="margin:0; padding:0; border:none;">
+          <label for="pmStatusSelect">Status</label>
+          <select id="pmStatusSelect" onchange="renderPlanoMidiaDetail()"></select>
+        </div>
+        <div class="imt-select-wrap" style="margin:0; padding:0; border:none;">
+          <label for="pmOkSelect">OK?</label>
+          <select id="pmOkSelect" onchange="renderPlanoMidiaDetail()"></select>
+        </div>
         <button class="imt-filter-clear" onclick="clearPlanoMidiaFilters()">Limpar filtros</button>
       </div>
 
       <div class="imt-detail-wrap open">
         <table class="pm-detail-table">
-          <thead><tr><th>Mês</th><th>Parque</th><th>Tipo</th><th>Fornecedor</th><th>Descrição</th><th>Status</th><th>Valor</th></tr></thead>
+          <thead><tr><th>Mês</th><th>Parque</th><th>Tipo</th><th>Fornecedor</th><th>Descrição</th><th>Status</th><th>OK?</th><th>Valor</th></tr></thead>
           <tbody id="pmDetailBody"></tbody>
         </table>
       </div>
-      <p class="imt-note">* Abas de Jan a Abr da planilha de origem não têm linha de Previsto/Saldo estruturada -- esses campos ficam "-" nesses meses (não é erro, é ausência de dado na planilha).</p>
+      <p class="imt-note">* Previsto e Saldo consideram só lançamentos com "OK?" = Sim -- os demais status (Não, Análise, Em negociação etc.) são propostas ainda não confirmadas e não entram na soma.</p>
     </div>
   </section>
 </section>
@@ -1433,14 +1445,16 @@ function renderPlanoMidiaGrid(){
     const parkColor = PARK_COLORS[park] || '#888';
     const cells = PLANO_MIDIA_MESES.map(mes => {
       const d = resumo[mes] ? resumo[mes][park] : null;
-      if(!d || d.orcado===null || d.orcado===undefined){
+      const temAlgo = d && [d.orcado, d.previsto, d.saldo].some(v => v!==null && v!==undefined);
+      if(!temAlgo){
         return `<div class="invest-cell empty" style="background:${parkColor}14">-</div>`;
       }
+      const orcadoStr = (d.orcado!==null && d.orcado!==undefined) ? fmtMoney(d.orcado) : '-';
       const previstoStr = (d.previsto!==null && d.previsto!==undefined) ? fmtMoney(d.previsto) : '-';
       const saldoStr = (d.saldo!==null && d.saldo!==undefined) ? fmtMoney(d.saldo) : '-';
-      const tip = `${mes}: Orçado ${fmtMoney(d.orcado)} | Previsto ${previstoStr} | Saldo ${saldoStr}`;
+      const tip = `${mes}: Orçado ${orcadoStr} | Previsto ${previstoStr} | Saldo ${saldoStr}`;
       return `<div class="invest-cell" style="background:${parkColor}1f" data-tip="${tip}">
-        <div class="big">${fmtMoney(d.orcado)}</div>
+        <div class="big">${orcadoStr}</div>
         <div class="sub"><span><b>Previsto</b> ${previstoStr}</span></div>
         <div class="sub"><span><b>Saldo</b> ${saldoStr}</span></div>
       </div>`;
@@ -1467,31 +1481,51 @@ function renderPlanoMidiaGrid(){
   }).join('');
 }
 
+// Preenche Tipo/Status/OK? com os valores que realmente aparecem nos lançamentos (em vez de
+// uma lista fixa) -- assim acompanha sozinho qualquer status novo que o time de mídia usar.
+function planoMidiaValoresUnicos(campo){
+  const detail = PLANO_MIDIA.detail || {};
+  const set = new Set();
+  Object.values(detail).forEach(lista => (lista || []).forEach(it => { if(it[campo]) set.add(it[campo]); }));
+  return [...set].sort((a,b) => a.localeCompare(b, 'pt-BR'));
+}
+
 function populatePlanoMidiaSelects(){
   const mesSel = document.getElementById('pmMesSelect');
   const parqueSel = document.getElementById('pmParqueSelect');
+  const tipoSel = document.getElementById('pmTipoSelect');
+  const statusSel = document.getElementById('pmStatusSelect');
+  const okSel = document.getElementById('pmOkSelect');
   if(!mesSel || !parqueSel) return;
   mesSel.innerHTML = '<option value="">Todos os meses</option>' +
     PLANO_MIDIA_MESES.map(m => `<option value="${m}">${m}</option>`).join('');
   parqueSel.innerHTML = '<option value="">Todos os parques</option>' +
     PLANO_MIDIA_PARKS.map(p => `<option value="${p}">${p==='3P' ? 'Três Pescadores' : p}</option>`).join('');
+  if(tipoSel) tipoSel.innerHTML = '<option value="">Todos</option>' +
+    planoMidiaValoresUnicos('tipo').map(v => `<option value="${v}">${v}</option>`).join('');
+  if(statusSel) statusSel.innerHTML = '<option value="">Todos</option>' +
+    planoMidiaValoresUnicos('status').map(v => `<option value="${v}">${v}</option>`).join('');
+  if(okSel) okSel.innerHTML = '<option value="">Todos</option>' +
+    planoMidiaValoresUnicos('ok').map(v => `<option value="${v}">${v}</option>`).join('');
 }
 
 function clearPlanoMidiaFilters(){
-  const mesSel = document.getElementById('pmMesSelect');
-  const parqueSel = document.getElementById('pmParqueSelect');
-  if(mesSel) mesSel.value = '';
-  if(parqueSel) parqueSel.value = '';
+  ['pmMesSelect','pmParqueSelect','pmTipoSelect','pmStatusSelect','pmOkSelect'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
   renderPlanoMidiaDetail();
 }
 
 function renderPlanoMidiaDetail(){
   const body = document.getElementById('pmDetailBody');
   if(!body) return;
-  const mesSel = document.getElementById('pmMesSelect');
-  const parqueSel = document.getElementById('pmParqueSelect');
-  const mesFiltro = mesSel ? mesSel.value : '';
-  const parqueFiltro = parqueSel ? parqueSel.value : '';
+  const val = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  const mesFiltro = val('pmMesSelect');
+  const parqueFiltro = val('pmParqueSelect');
+  const tipoFiltro = val('pmTipoSelect');
+  const statusFiltro = val('pmStatusSelect');
+  const okFiltro = val('pmOkSelect');
   const detail = PLANO_MIDIA.detail || {};
   const meses = mesFiltro ? [mesFiltro] : PLANO_MIDIA_MESES;
 
@@ -1499,12 +1533,15 @@ function renderPlanoMidiaDetail(){
   meses.forEach(mes => {
     (detail[mes] || []).forEach(it => {
       if(parqueFiltro && it.parque !== parqueFiltro) return;
+      if(tipoFiltro && it.tipo !== tipoFiltro) return;
+      if(statusFiltro && it.status !== statusFiltro) return;
+      if(okFiltro && it.ok !== okFiltro) return;
       items.push({ ...it, mes });
     });
   });
 
   if(!items.length){
-    body.innerHTML = `<tr><td colspan="7" class="imt-detail-empty">Nenhum lançamento encontrado para o filtro selecionado.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="8" class="imt-detail-empty">Nenhum lançamento encontrado para o filtro selecionado.</td></tr>`;
     return;
   }
   body.innerHTML = items.map(it => `<tr>
@@ -1514,6 +1551,7 @@ function renderPlanoMidiaDetail(){
     <td>${it.fornecedor || '-'}</td>
     <td>${it.descricao || '-'}</td>
     <td>${it.status || '-'}</td>
+    <td>${it.ok || '-'}</td>
     <td>${it.valor!==null && it.valor!==undefined ? fmtMoney(it.valor) : '-'}</td>
   </tr>`).join('');
 }
