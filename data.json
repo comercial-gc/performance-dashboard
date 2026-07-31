@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-31T11:31:00.479897Z",
+  "geradoEm": "2026-07-31T13:49:45.293887Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -6836,14 +6836,14 @@
           "MDE": {
             "realizado2026": 70150,
             "pctAq2026": 0.1294053625,
-            "realizado2025": 92964,
-            "pctAq2025": 0.191285525
+            "realizado2025": 93322,
+            "pctAq2025": 0.1920221566
           },
           "MDC": {
             "realizado2026": 78112,
             "pctAq2026": 0.1440928251,
-            "realizado2025": 111457,
-            "pctAq2025": 0.2293372785
+            "realizado2025": 111877,
+            "pctAq2025": 0.2302014831
           }
         }
       }
@@ -6853,100 +6853,100 @@
       "nDays": 31,
       "summary": {
         "AquaRio": {
-          "realizado": 114631,
-          "obz": 133611,
-          "pctObz": -0.1420541722,
-          "y2025": 126164,
-          "pct2025": -0.09141276434,
-          "acumRealizado": 656726,
-          "acumObzParcial": 643728,
-          "acumPctObz": 0.02019175801,
-          "acum2025": 612160,
-          "acumPct2025": 0.07280122844
+          "realizado": 118353,
+          "obz": 138736,
+          "pctObz": -0.1469193288,
+          "y2025": 130440,
+          "pct2025": -0.09266329347,
+          "acumRealizado": 660448,
+          "acumObzParcial": 648853,
+          "acumPctObz": 0.01786999521,
+          "acum2025": 616436,
+          "acumPct2025": 0.07139751734
         },
         "BioParque": {
-          "realizado": 96495,
-          "obz": 134953,
-          "pctObz": -0.284973287,
-          "y2025": 50546,
-          "pct2025": 0.9090531397,
-          "acumRealizado": 342481,
-          "acumObzParcial": 443057.01,
-          "acumPctObz": -0.2270046692,
-          "acum2025": 319691,
-          "acumPct2025": 0.07128758708
+          "realizado": 99276,
+          "obz": 138030,
+          "pctObz": -0.2807650511,
+          "y2025": 52258,
+          "pct2025": 0.8997282713,
+          "acumRealizado": 345262,
+          "acumObzParcial": 446134.01,
+          "acumPctObz": -0.2261024888,
+          "acum2025": 321403,
+          "acumPct2025": 0.07423390572
         },
         "Paineiras": {
-          "realizado": 128153,
-          "obz": 120767,
-          "pctObz": 0.06115909147,
-          "y2025": 114503,
-          "pct2025": 0.1192108504,
-          "acumRealizado": 944478,
-          "acumObzParcial": 932373.364,
-          "acumPctObz": 0.01298260597,
-          "acum2025": 888482,
-          "acumPct2025": 0.0630243494
+          "realizado": 131436,
+          "obz": 123643,
+          "pctObz": 0.06302823451,
+          "y2025": 119050,
+          "pct2025": 0.1040403192,
+          "acumRealizado": 947761,
+          "acumObzParcial": 935249.364,
+          "acumPctObz": 0.01337786101,
+          "acum2025": 893029,
+          "acumPct2025": 0.06128804328
         },
         "PNI": {
-          "realizado": 249338,
-          "obz": 214384,
-          "pctObz": 0.1630438839,
-          "y2025": 206276,
-          "pct2025": 0.2087591382,
-          "acumRealizado": 1312941,
-          "acumObzParcial": 1206505,
-          "acumPctObz": 0.08821844916,
-          "acum2025": 1160536,
-          "acumPct2025": 0.1313229404
+          "realizado": 255814,
+          "obz": 221496,
+          "pctObz": 0.1549373352,
+          "y2025": 214035,
+          "pct2025": 0.1951970472,
+          "acumRealizado": 1319417,
+          "acumObzParcial": 1213617,
+          "acumPctObz": 0.08717742088,
+          "acum2025": 1168295,
+          "acumPct2025": 0.1293526036
         },
         "M3F": {
-          "realizado": 76251,
-          "obz": 61138,
-          "pctObz": 0.2471948706,
-          "y2025": 58064,
-          "pct2025": 0.3132233398,
-          "acumRealizado": 360293,
-          "acumObzParcial": 299647,
-          "acumPctObz": 0.2023914806,
-          "acum2025": 287003,
-          "acumPct2025": 0.2553631844
+          "realizado": 78658,
+          "obz": 62532,
+          "pctObz": 0.2578839634,
+          "y2025": 59903,
+          "pct2025": 0.3130894947,
+          "acumRealizado": 362700,
+          "acumObzParcial": 301041,
+          "acumPctObz": 0.2048192771,
+          "acum2025": 288842,
+          "acumPct2025": 0.2557038104
         },
         "AquaFoz": {
-          "realizado": 68307,
-          "obz": 54786.119,
-          "pctObz": 0.2467939187,
+          "realizado": 69930,
+          "obz": 56035.314,
+          "pctObz": 0.2479630256,
           "y2025": 0.0,
           "pct2025": "-%",
-          "acumRealizado": 328989,
-          "acumObzParcial": 302823.919,
-          "acumPctObz": 0.08640361398,
+          "acumRealizado": 330612,
+          "acumObzParcial": 304073.114,
+          "acumPctObz": 0.08727797618,
           "acum2025": 0,
           "acumPct2025": "-%"
         },
         "Três Pescadores": {
-          "realizado": 21069,
-          "obz": 22873.14,
-          "pctObz": -0.07887592171,
-          "y2025": 20892,
-          "pct2025": 0.008472142447,
-          "acumRealizado": 86392,
-          "acumObzParcial": 102027.992,
-          "acumPctObz": -0.1532519821,
-          "acum2025": 92751,
-          "acumPct2025": -0.06855990771
+          "realizado": 21648,
+          "obz": 23394.68,
+          "pctObz": -0.07466141875,
+          "y2025": 21333,
+          "pct2025": 0.01476585572,
+          "acumRealizado": 86971,
+          "acumObzParcial": 102549.532,
+          "acumPctObz": -0.1519122681,
+          "acum2025": 93192,
+          "acumPct2025": -0.06675465705
         },
         "Vila Velha": {
-          "realizado": 8484,
-          "obz": 8080.25,
-          "pctObz": 0.04996751338,
-          "y2025": 7587,
-          "pct2025": 0.1182285488,
-          "acumRealizado": 42124,
-          "acumObzParcial": 42698.262,
-          "acumPctObz": -0.0134493062,
-          "acum2025": 39294,
-          "acumPct2025": 0.07202117372
+          "realizado": 8647,
+          "obz": 8282.98,
+          "pctObz": 0.0439479511,
+          "y2025": 7810,
+          "pct2025": 0.1071702945,
+          "acumRealizado": 42287,
+          "acumObzParcial": 42900.992,
+          "acumPctObz": -0.01431183689,
+          "acum2025": 39517,
+          "acumPct2025": 0.0700964142
         }
       },
       "daily": {
@@ -7451,7 +7451,7 @@
             1881.0,
             2638.0,
             2366.0,
-            null,
+            2407.0,
             null
           ],
           "OBZ 2026": [
@@ -7653,7 +7653,7 @@
             416.0,
             492.0,
             528.0,
-            577.0,
+            579.0,
             null
           ],
           "OBZ 2026": [
@@ -7787,7 +7787,7 @@
             203.0,
             178.0,
             33.0,
-            125.0,
+            163.0,
             null
           ],
           "OBZ 2026": [
@@ -7996,21 +7996,21 @@
         "accum": {
           "GEX": {
             "realizado2026": 44800,
-            "pctAq2026": 0.06821718647,
+            "pctAq2026": 0.06783274383,
             "realizado2025": null,
             "pctAq2025": null
           },
           "MDE": {
             "realizado2026": 83548,
-            "pctAq2026": 0.1272189619,
-            "realizado2025": 92964,
-            "pctAq2025": 0.1518622582
+            "pctAq2026": 0.1265020108,
+            "realizado2025": 93322,
+            "pctAq2025": 0.1513896009
           },
           "MDC": {
             "realizado2026": 95727,
-            "pctAq2026": 0.1457639868,
-            "realizado2025": 111457,
-            "pctAq2025": 0.1820716806
+            "pctAq2026": 0.1449425239,
+            "realizado2025": 111877,
+            "pctAq2025": 0.1814900493
           }
         }
       }
@@ -12089,12 +12089,12 @@
       "cv": 50390
     },
     "JULHO": {
-      "visitacao": 21646,
+      "visitacao": 21648,
       "cv": 92123
     }
   },
   "CAPTACAO_CV_3P_ANUAL": {
-    "visitacao": 85263,
+    "visitacao": 85265,
     "cv": 392449
   },
   "SEMMORADOR_RATIO": {
@@ -12669,7 +12669,7 @@
             "visitacao2025": 130439.9574980364,
             "ecommerce2025": 47751.11923451318,
             "share2025": 0.3660773903213822,
-            "investimento2026": 117274.06,
+            "investimento2026": 122384.88,
             "investimento2025": 102022.0
           },
           "Paineiras": {
@@ -12679,7 +12679,7 @@
             "visitacao2025": 119050.0,
             "ecommerce2025": 21232.993394980185,
             "share2025": 0.17835357744628463,
-            "investimento2026": 52929.07,
+            "investimento2026": 54915.84,
             "investimento2025": 46267.38
           },
           "M3F": {
@@ -12699,7 +12699,7 @@
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
-            "investimento2026": 68271.54,
+            "investimento2026": 70472.72,
             "investimento2025": null
           },
           "3P": {
@@ -12833,7 +12833,7 @@
             72111.52,
             57951.58,
             34726.44,
-            117274.06
+            122384.88
           ],
           "share": [
             0.2245370551,
@@ -12898,7 +12898,7 @@
             30134.01,
             40765.67,
             31278.29,
-            52929.07
+            54915.84
           ],
           "share": [
             0.1429418743,
@@ -13028,7 +13028,7 @@
             60474.95,
             29125.9,
             25409.63,
-            68271.54
+            70472.72
           ],
           "share": [
             null,
@@ -21276,6 +21276,13 @@
       "evento": "Escada rolante de paineiras será reformada pós alta temporada, e terá início em 03/08 e acabará em Maio/2026. Até um certo ponto, terá apenas elevador para ajudar a subir. Depois, será apenas escada."
     },
     {
+      "data": "2026-08-03",
+      "ano": 2026,
+      "mes": "Agosto",
+      "parque": "Aquario",
+      "evento": "haverá reforma no recinto dos axolotes durante o mês de agosto. Estamos retirando as comunicações de mídia e site com esse mote."
+    },
+    {
       "data": "2026-08-11",
       "ano": 2026,
       "mes": "Agosto",
@@ -22436,118 +22443,6 @@
       },
       "Consolidado": {
         "anos": {
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
-          ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
-          ],
-          "2025": [
-            666687.0,
-            398191.0,
-            451956.0,
-            421569.0,
-            402290.0,
-            363784.0,
-            590652.0,
-            422967.0,
-            413960.0,
-            491692.0,
-            500148.0,
-            520889.0
-          ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            389570.0,
-            422910.0,
-            710621.0,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2015": [
-            189451.0,
-            115349.0,
-            111054.0,
-            108663.0,
-            102143.0,
-            84400.0,
-            137042.0,
-            104524.0,
-            93861.0,
-            103315.0,
-            84938.0,
-            122376.0
-          ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
-          ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
           "2016": [
             176296.0,
             138970.99999999997,
@@ -22561,48 +22456,6 @@
             90256.0,
             173665.0,
             241981.0
-          ],
-          "2018": [
-            321385.0,
-            168024.0,
-            166856.0,
-            130740.00000000001,
-            108655.0,
-            97102.0,
-            190341.99999999994,
-            133243.0,
-            151118.0,
-            149282.0,
-            162033.0,
-            182819.0
-          ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
-          "2020": [
-            319895.0,
-            178103.0,
-            77834.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            26514.0,
-            84167.0,
-            84969.0,
-            90379.0,
-            79635.0
           ],
           "2017": [
             389929.0,
@@ -22618,14 +22471,126 @@
             163417.0,
             189763.0
           ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+          "2015": [
+            189451.0,
+            115349.0,
+            111054.0,
+            108663.0,
+            102143.0,
+            84400.0,
+            137042.0,
+            104524.0,
+            93861.0,
+            103315.0,
+            84938.0,
+            122376.0
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
+          ],
+          "2025": [
+            666687.0,
+            398191.0,
+            451956.0,
+            421569.0,
+            402290.0,
+            363784.0,
+            590652.0,
+            422967.0,
+            413960.0,
+            491692.0,
+            500148.0,
+            520889.0
+          ],
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
+          "2018": [
+            321385.0,
+            168024.0,
+            166856.0,
+            130740.00000000001,
+            108655.0,
+            97102.0,
+            190341.99999999994,
+            133243.0,
+            151118.0,
+            149282.0,
+            162033.0,
+            182819.0
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
+          ],
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            389570.0,
+            422910.0,
+            710621.0,
             null,
             null,
             null,
@@ -22645,61 +22610,103 @@
             107064.0,
             105700.0,
             132312.0
+          ],
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2020": [
+            319895.0,
+            178103.0,
+            77834.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            26514.0,
+            84167.0,
+            84969.0,
+            90379.0,
+            79635.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2021": [
-            726490,
-            1392943
-          ],
-          "2024": [
-            2410556,
-            2803391
-          ],
-          "2025": [
-            2704477,
-            2940308
-          ],
-          "2026": [
-            3132773,
-            710621
-          ],
-          "2015": [
-            711060,
-            646056
-          ],
-          "2022": [
-            1195615,
-            1502267
-          ],
-          "2019": [
-            1015073,
-            1044424
-          ],
           "2016": [
             635485,
             584255
-          ],
-          "2018": [
-            992762,
-            968837
-          ],
-          "2023": [
-            1486747,
-            1503931
-          ],
-          "2020": [
-            575832,
-            365664
           ],
           "2017": [
             1300881,
             1170345
           ],
+          "2015": [
+            711060,
+            646056
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2022": [
+            1195615,
+            1502267
+          ],
+          "2025": [
+            2704477,
+            2940308
+          ],
+          "2019": [
+            1015073,
+            1044424
+          ],
+          "2024": [
+            2410556,
+            2803391
+          ],
+          "2018": [
+            992762,
+            968837
+          ],
+          "2021": [
+            726490,
+            1392943
+          ],
+          "2026": [
+            3132773,
+            710621
+          ],
           "2014": [
             717316,
             673740
+          ],
+          "2020": [
+            575832,
+            365664
           ]
         }
       }
@@ -22709,5 +22716,2725 @@
       "BioParque",
       "Paineiras"
     ]
+  },
+  "PLANO_MIDIA": {
+    "resumo": {
+      "Janeiro": {
+        "AquaRio": {
+          "orcado": null,
+          "previsto": 433582.11,
+          "saldo": null
+        },
+        "BioParque": {
+          "orcado": null,
+          "previsto": 74250.0,
+          "saldo": null
+        }
+      },
+      "Fevereiro": {
+        "AquaRio": {
+          "orcado": 433733.0,
+          "previsto": 160873.52,
+          "saldo": 272859.48
+        },
+        "BioParque": {
+          "orcado": 64000.0,
+          "previsto": null,
+          "saldo": null
+        }
+      },
+      "Março": {
+        "AquaRio": {
+          "orcado": 254000.0,
+          "previsto": 133469.97,
+          "saldo": 120530.03
+        },
+        "BioParque": {
+          "orcado": 22000.0,
+          "previsto": 22000.0,
+          "saldo": 0.0
+        }
+      },
+      "Abril": {
+        "AquaRio": {
+          "orcado": 302262.0,
+          "previsto": null,
+          "saldo": null
+        },
+        "BioParque": {
+          "orcado": 39159.0,
+          "previsto": 38900.0,
+          "saldo": 259.0
+        },
+        "Vila Velha": {
+          "orcado": null,
+          "previsto": null,
+          "saldo": null
+        }
+      },
+      "Maio": {
+        "AquaRio": {
+          "orcado": 344065.0,
+          "previsto": 236588.97,
+          "saldo": 107476.03
+        },
+        "BioParque": {
+          "orcado": 78320.0,
+          "previsto": 20203.12,
+          "saldo": 58116.88
+        },
+        "AquaFoz": {
+          "orcado": 26089.0,
+          "previsto": 22367.0,
+          "saldo": 3722.0
+        }
+      },
+      "Junho": {
+        "AquaRio": {
+          "orcado": 248484.0,
+          "previsto": 179330.0,
+          "saldo": 69154.0
+        },
+        "BioParque": {
+          "orcado": 81101.0,
+          "previsto": 67716.0,
+          "saldo": 13385.0
+        }
+      },
+      "Julho": {
+        "AquaRio": {
+          "orcado": 411990.0,
+          "previsto": 399730.08,
+          "saldo": 12259.92
+        },
+        "BioParque": {
+          "orcado": 142952.0,
+          "previsto": 134678.91,
+          "saldo": 8273.09
+        },
+        "AquaFoz": {
+          "orcado": 71968.44,
+          "previsto": 15556.58,
+          "saldo": 56411.86
+        },
+        "M3F": {
+          "orcado": 62365.0,
+          "previsto": 39310.0,
+          "saldo": 23055.0
+        },
+        "Vila Velha": {
+          "orcado": 74650.0,
+          "previsto": 58330.0,
+          "saldo": 16320.0
+        },
+        "3P": {
+          "orcado": 77300.0,
+          "previsto": 54391.45,
+          "saldo": 22908.55
+        }
+      },
+      "Agosto": {
+        "AquaRio": {
+          "orcado": 154826.94,
+          "previsto": 94800.0,
+          "saldo": 60026.94
+        },
+        "BioParque": {
+          "orcado": 79305.41,
+          "previsto": 53562.83,
+          "saldo": 25742.58
+        },
+        "AquaFoz": {
+          "orcado": 50290.52,
+          "previsto": 10270.0,
+          "saldo": 40020.52
+        },
+        "M3F": {
+          "orcado": 160452.0,
+          "previsto": 18000.0,
+          "saldo": 142452.0
+        },
+        "Vila Velha": {
+          "orcado": 34030.0,
+          "previsto": 34030.0,
+          "saldo": 0.0
+        },
+        "3P": {
+          "orcado": 30000.0,
+          "previsto": 0.0,
+          "saldo": 30000.0
+        }
+      }
+    },
+    "detail": {
+      "Janeiro": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9250.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 22000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 10000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Empena Ponte Perimetral",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 30005.14,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "CORUJA",
+          "descricao": "Empena Copacabana",
+          "valor": 60000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Mega Led  da Ponte Rio Niterói",
+          "valor": 78000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Pedágio Ponte",
+          "valor": 5000,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
+          "valor": 5000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiência | Santos Dumont",
+          "valor": 86055.58,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "UBER",
+          "descricao": "UBER",
+          "valor": 80000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 40000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Portas Estáticos | Santos Dumont",
+          "valor": 70000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Circuito Digital Desembarque SDU",
+          "valor": 35000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "MUDE",
+          "descricao": "MUB Vertical |  Orlas IMPORTANTE: Resevei faces para janeiro",
+          "valor": 25000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiencia Rio Design",
+          "valor": 57000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Mix de Rua Ipanema",
+          "valor": 311383.8,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 89326.97,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Orlas Rio",
+          "descricao": "Quiosque Temático",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Kallas",
+          "descricao": "Túnel SDU",
+          "valor": 100000.0,
+          "status": "Em produção",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
+          "valor": 20000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "AQUA",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "433582.11",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "248310.08",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "133469.97",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "329648.49",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "231588.97",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "308494.49",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "534430.96",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9250.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 13000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio FM O Dia",
+          "descricao": "Spot 30 segs | Férias",
+          "valor": 22000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 4400.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 38518.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 40000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 26666.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MUDE",
+          "descricao": "Orlas | Mub vertical",
+          "valor": 25000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 40000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Bancas Estáticas",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Helloo",
+          "descricao": "Norte Shopping",
+          "valor": 77000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Mídia",
+          "descricao": "Mega Led Ibis e Gavea",
+          "valor": 120000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Helloo",
+          "descricao": "Shopping Tijuca",
+          "valor": 77000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        }
+      ],
+      "Fevereiro": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9250.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 22000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 10000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Empena Ponte Perimetral",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais PRÉ CARNAVAL",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital  PRÉ CARNAVAL /ALTERNAR",
+          "valor": 75012.18,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais PRÉ CARNAVAL",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "CORUJA",
+          "descricao": "Empena Copacabana",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Mega Led  da Ponte Rio Niterói",
+          "valor": 78000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Pedágio Ponte",
+          "valor": 5000,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
+          "valor": 5000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiência | Santos Dumont",
+          "valor": 86055.58,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "CORUJA",
+          "descricao": "Empena Tijuca",
+          "valor": 0.0,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "UBER",
+          "descricao": "UBER",
+          "valor": 80000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 40000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Portas Estáticos | Santos Dumont",
+          "valor": 70000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Circuito Digital Desembarque SDU",
+          "valor": 35000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "MUDE",
+          "descricao": "MUB Vertical |  Orlas IMPORTANTE: Resevei faces para 3 semanas de feveiro",
+          "valor": 40320.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiencia Rio Design",
+          "valor": 57000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Mix de Rua Ipanema",
+          "valor": 311383.8,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 120553.52,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Orlas Rio",
+          "descricao": "Quiosque Temático",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Shopping RIO SUL (17 faces)",
+          "valor": 11388.4,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromídia",
+          "descricao": "Bancas Digitais",
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "AquaRio",
+          "fornecedor": "Movie Midia",
+          "descricao": "MEGA LED iBIS",
+          "valor": 80000.0,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio",
+          "descricao": "FM ODIA PRÉ CARNAVAL /ALTERNAR",
+          "valor": 22000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
+          "valor": 20000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 478524.1,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9250.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 13000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio FM O Dia",
+          "descricao": "Spot 30 segs | Férias",
+          "valor": 11000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 4400.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 38518.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 40000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 26666.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MUDE",
+          "descricao": "Orlas | Mub vertical",
+          "valor": 42320.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 40000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Bancas Estáticas",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Helloo",
+          "descricao": "Norte Shopping",
+          "valor": 77000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Mídia",
+          "descricao": "Mega Led Ibis",
+          "valor": 80000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Helloo",
+          "descricao": "Shopping Tijuca",
+          "valor": 77000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        }
+      ],
+      "Março": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 11000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 22000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 10000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Empena Ponte Perimetral",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 36000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 50000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Mega Led  da Ponte Rio Niterói",
+          "valor": 78000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Pedágio Ponte",
+          "valor": 5000,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Project Midia",
+          "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
+          "valor": 5000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiência | Santos Dumont",
+          "valor": 86055.58,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 20000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Portas Estáticos | Santos Dumont",
+          "valor": 70000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Circuito Digital Desembarque SDU",
+          "valor": 35000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Circuito Experiencia Rio Design",
+          "valor": 57000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Mix de Rua Ipanema",
+          "valor": 311383.8,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "100 Faces | Mub Urbano - Bonificado",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 133469.97,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Orlas Rio",
+          "descricao": "Quiosque Temático",
+          "valor": 60000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "MEGA LED GÁVEA",
+          "valor": 30000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "AquaRio",
+          "fornecedor": "Movie Midia",
+          "descricao": "MEGA LED iBIS",
+          "valor": 70000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio",
+          "descricao": "Melodia",
+          "valor": 4500.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
+          "valor": 20000.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 304969.97,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "PROVISIONAR VERBA/SALDO PARA JULHO",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "FM O dia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 13000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 5000.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Ibis",
+          "valor": 40000.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "Led Gavea",
+          "valor": 26666.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 8000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        }
+      ],
+      "Abril": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 9000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 35000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 15005.9,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 129164.49,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Movie Midia",
+          "descricao": "MEGA LED GÁVEA",
+          "valor": 30000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "AquaRio",
+          "fornecedor": "Movie Midia",
+          "descricao": "MEGA LED iBIS",
+          "valor": 70000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Eletromidia",
+          "descricao": "SDU TELAS",
+          "valor": 26478.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio",
+          "descricao": "FM O DIA",
+          "valor": 15000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MUDE",
+          "descricao": "ORLAS RIO",
+          "valor": 26880.0,
+          "status": "PI assinada",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Grupo Coruja",
+          "descricao": "Empena Copacabana",
+          "valor": 0.0,
+          "status": "Cancelada",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 329648.39,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
+          "valor": 5900.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 25000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 8000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Jovem Pan",
+          "descricao": "4 por dia 15\" no Rotativo +1x 15\" no Pânico",
+          "valor": 2300.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MidiaLand",
+          "descricao": "2 Passarelas",
+          "valor": 5000.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Gráfica",
+          "descricao": "Pordução Passalera",
+          "valor": 750.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Neooh",
+          "descricao": "1 porta desembarque C | 10 colunas + mega LED",
+          "valor": 45000.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "PressTrip",
+          "descricao": null,
+          "valor": 10000.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Mix de Categorias (MUB-RUA)",
+          "valor": 25000.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MidiaLand",
+          "descricao": "3 sequencias midialand rodovia",
+          "valor": 15000.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Tipo",
+          "fornecedor": "Veículo",
+          "descricao": "Propriedade",
+          "valor": null,
+          "status": "STATUS",
+          "parque": "Vila Velha"
+        }
+      ],
+      "Maio": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 25000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "Rodoviária",
+          "valor": 8000.0,
+          "status": "Aguardando PI",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 133469.97,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Eletromidia",
+          "descricao": "SDU TELAS",
+          "valor": 13239.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio",
+          "descricao": "FM O DIA",
+          "valor": 0.0,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MUDE",
+          "descricao": "ORLAS RIO",
+          "valor": 26880.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Comerciais",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edifícios Residenciais",
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô MUB Digital",
+          "valor": 25000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "GIG",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Facebook",
+          "descricao": "Verba extra nova conta",
+          "valor": 5000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": "Eletromidia",
+          "descricao": "Metrô",
+          "valor": 0.0,
+          "status": "Em aprovação",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edificios Residenciais",
+          "valor": 1728.42,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia",
+          "descricao": "Edificios Comerciais",
+          "valor": 2338.45,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono",
+          "descricao": "Painel Cidade das Artes",
+          "valor": 9000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio Melodia",
+          "descricao": "Anuncio Spot 30 segundos",
+          "valor": 5136.25,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Facebook",
+          "descricao": "Verba extra nova conta",
+          "valor": 2000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "5900.0",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "5136.25",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "11036.25",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "PI APENAS FINGERS (1 ANO) |  Aeroporto de Foz",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH",
+          "descricao": "PI NEOOH DIGITAL COM PAINEIS | Aeroporto de Foz",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "AirPort Midia",
+          "descricao": "PUERTO IGUAZU - Argentina",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "AirPort Midia",
+          "descricao": "PRODUÇÃO OUTDOORS",
+          "valor": 7367.0,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "AirPort Midia",
+          "descricao": "PRODUÇÃO FINGERS",
+          "valor": 15000.0,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "AirPort Midia",
+          "descricao": "PRODUÇÃO STAND AERO IGU",
+          "valor": null,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaFoz"
+        }
+      ],
+      "Junho": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia GIG",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono | Empena Ipanema | Metro General Osorio + produção",
+          "descricao": null,
+          "valor": 82450.0,
+          "status": "Em produção",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromídia MUB metro",
+          "descricao": null,
+          "valor": 50000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ed. Residencial e Ed. Comercial",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Rodoviária",
+          "descricao": null,
+          "valor": null,
+          "status": "Cancelada",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio FM O dia",
+          "descricao": null,
+          "valor": 20000.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Orlas Rio",
+          "descricao": null,
+          "valor": null,
+          "status": "Em negociação",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "SDU",
+          "descricao": null,
+          "valor": null,
+          "status": "Cancelada",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "MUDES praias",
+          "descricao": null,
+          "valor": 26880.0,
+          "status": "Kv enviado",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Ações",
+          "fornecedor": null,
+          "descricao": "HEZAGONO | PAINEL CIDADE DAS ARTES",
+          "valor": 0.0,
+          "status": "Finalizada",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Hezagono | Empena Praça da Bandeira | Frontlight + produção",
+          "valor": 35981.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Residencial",
+          "valor": 2469.17,
+          "status": "Finalizada",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Comercial",
+          "valor": 3273.83,
+          "status": "Finalizada",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Rádio Melodia | Anúncio spot 30 segundos",
+          "valor": 5992.0,
+          "status": "Finalizada",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Rádio FM O DIA | Anúncio spot 30 segundos",
+          "valor": 20000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        }
+      ],
+      "Julho": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Eletromidia GIG",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono | Empena Ipanema | Metro General Osorio + produção",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Hezagono | Empena Copacabana | Barata Ribeiro | Digital",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ed. Residencial e Ed. Comercial",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rodoviária",
+          "descricao": null,
+          "valor": 13500.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio FM O dia",
+          "descricao": null,
+          "valor": 20000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MEGA EMPENA JARDIM OCEÂNICO | GRUPO CORUJA | ESTÁTICO + PRODUÇÃO",
+          "descricao": null,
+          "valor": 38100,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "ENVELOPAMENTO DE ONIBUS (CIRCULAR BARRA X CENTRO)",
+          "descricao": null,
+          "valor": 26500,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MEGA LED GAVEA + MEGA IBIS BARRA | GG",
+          "descricao": null,
+          "valor": 100000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "SANTOS DUMONT | CIRCUITO DIGITAL EXPERIÊNCIA",
+          "descricao": null,
+          "valor": 18535.08,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "METRÔ MUB DIGITAL | ELETROMIDIA",
+          "descricao": null,
+          "valor": 50000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "UBER | Viagens completas: 403.030 mil viagens (300 + 100 bonificadas)",
+          "descricao": null,
+          "valor": 100000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "HEZAGONO | CIdade das Artes",
+          "descricao": null,
+          "valor": 9000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "13% do valor investido de verba extra para Midia ON | AquaRio",
+          "descricao": null,
+          "valor": 4095.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "NEOOH | BodyTech | Barra Shopping, Rio Sul, Copacabana, Ipanema, Leblon, Shopping Leblon, Copacabana, Leblon 467",
+          "descricao": null,
+          "valor": 20000.0,
+          "status": "No Ar",
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "HEZAGONO | PAINEL CIDADE DAS ARTES",
+          "valor": 9000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Hezagono | Empena Praça da Bandeira | Frontlight + produção",
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Residencial",
+          "valor": 4444.2,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Comercial",
+          "valor": 3741.52,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Rádio Melodia | Anúncio spot 30 segundos",
+          "valor": 11984.59,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Rádio FM O DIA | Anúncio spot 30 segundos",
+          "valor": 20000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Reprovado",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Grupo Coruja | Busdoor",
+          "valor": 19000.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Mub Metrô",
+          "valor": 50008.6,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": "NEOOH | Rodoviária Novo Rio | Circuito Telas digitais + Mega LED + Testeira em LED 360º + Testeira LED Emb e Desembarque + Mega LED Embarque e Desembarque",
+          "valor": 16500.0,
+          "status": "No Ar",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Reprovado",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Aeroporto de Foz | Fingers + Circuito Digital",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Exacta | 3 Paineis Sequenciais",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rede Outdoor | Outdoors Av das Cataratas e Próximo ao hotel",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Midia Ativa | Hotéis",
+          "descricao": null,
+          "valor": 1800.0,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Aeroporto Puerto Iguazu | Estático",
+          "descricao": null,
+          "valor": 10336.58,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Painel Rodoviário | Próximo PDA, AQF e PNI + produção",
+          "descricao": null,
+          "valor": 2970.0,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "A hora do Araujo | Rádio Paraguai",
+          "descricao": null,
+          "valor": 450.0,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rede Outdoor | Painel Rodoviário | Sentido Trevo Argentina | 12x4m | FL52A",
+          "descricao": null,
+          "valor": 4720.0,
+          "status": "No Ar",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rede Outdoor | Front Light 12x4m | PRF Entrada de Foz | Sentido Foz do Iguaçu",
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Top Urbano Iluminado | General Meira | Sentido Centro | 3,5x5m 17,5m²",
+          "descricao": null,
+          "valor": 3190.0,
+          "status": "No Ar",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Felipe Wandscher | Sentido Centro | 12x4m 48m²",
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Rua do Aeroporto | 10x5m 50m²",
+          "descricao": null,
+          "valor": 11400.0,
+          "status": "No Ar",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Prox. Pedágio | Sentido Foz | 16x6m 96m²",
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Entrada da Cidade | Sentido Foz | 16x6m 96m²",
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Circuito Digital Desembarque | Aeroporto de Foz | NEOOH",
+          "descricao": null,
+          "valor": 20000.0,
+          "status": "No Ar",
+          "parque": "M3F"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "MídiaLand | Submarino pedágio | Sentido Ponta Grossa | 7 faces LED",
+          "descricao": null,
+          "valor": 10500.0,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Mega Painel RodoviárioBR 277 (Rodovia do Café), km 122 + 500 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1248-br-277-rodovia-do-cafe-km-115-norte-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 12827.5,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Painel VIP Rodoviário km 113+700 Norte | Sentido Ponta Grossa | 4,35x6,20m https://favrettomidiaexterior.com.br/ponto/3024-br-277-rodovia-do-cafe-km-110500-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 9587.5,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Mega Painel Rodoviário 1899 (ILUMINADO): BR 277, km 129+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1899-iluminado-br-277-rodovia-do-cafe-km-122-norte-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 12707.5,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Favretto | Mega Painel Rodoviário 1209 (ILUMINADO): BR 277, km 108+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1209-br-277-rodovia-do-cafe-km-100-logo-apos-o-contorno-sul-sentido-curitiba-ponta-grossa-pista-oposta/",
+          "descricao": null,
+          "valor": 12707.5,
+          "status": "No Ar",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "5350",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "12827.5",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "47470",
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "9587.5",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "12707.5",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "12707.5",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "833.3333333",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "77830",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Veiculação Midia dentro do Santuário Nacional",
+          "descricao": null,
+          "valor": 8000.0,
+          "status": "Em produção",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Lona Próximo ao Trem do Devoto",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Produção placa ACM | MW Gráfica",
+          "descricao": null,
+          "valor": 2900.0,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Lona Outdoor Avenida Itaguaçu",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Produção lona | MW Gráfica",
+          "descricao": null,
+          "valor": 10900.0,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Painel Rodoviário | Presidente Dutra KM 063 - Sentido Aparecida SP",
+          "descricao": null,
+          "valor": 14540.0,
+          "status": "Em produção",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Painel Rodoviário | Presidente Dutra KM 083+000",
+          "descricao": null,
+          "valor": 15420,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rádio Antena 1 | São José dos Campos",
+          "descricao": null,
+          "valor": 2631.45,
+          "status": "No Ar",
+          "parque": "3P"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Cancelada",
+          "parque": "3P"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Kv enviado",
+          "parque": "3P"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "3P"
+        }
+      ],
+      "Agosto": [
+        {
+          "tipo": "OOH",
+          "fornecedor": "Mega LED Av Beiramar + Sequencial Anexo ao Barra shopping + Painel LED Entrada principal Rio Sul + Painel LED Entrada estacionamento Rio sul + Painel LED saída do estacionamento Rio Sul",
+          "descricao": null,
+          "valor": 80000.0,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Mega Empena Digital Centro | Grupo Coruja",
+          "descricao": null,
+          "valor": 14800.0,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaRio"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": "Mega LED Maracanã + Painel LED Entrada principal Rio Sul + Painel LED Entrada estacionamento Rio sul + Painel LED saída do estacionamento Rio Sul",
+          "valor": 20000.0,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Melodia | Spot 30 seg",
+          "valor": 8560.42,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": "Grupo Coruja | Busdoor",
+          "valor": 20000.0,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Ed. Comercial",
+          "valor": 3287.83,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": "Eletromídia | Ed. Residêncial",
+          "valor": 1714.58,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Reprovado",
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "32400",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "trota",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "10080",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "672",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": null,
+          "fornecedor": null,
+          "descricao": "20160",
+          "valor": null,
+          "status": null,
+          "parque": "BioParque"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Aeroporto de Foz | Fingers, Paineis Estáticos e Circuito Digital",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Paineis Sequenciais | Exata",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Conjunto Outdoor | Fronteira Outdoor",
+          "descricao": null,
+          "valor": 0.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Painel Duplaface Próximo PDA e AQF",
+          "descricao": null,
+          "valor": 2970.0,
+          "status": "No Ar",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Painel Paraguai",
+          "descricao": null,
+          "valor": 5500.0,
+          "status": "Em negociação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Midia Ativa",
+          "descricao": null,
+          "valor": 1800.0,
+          "status": "Em negociação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em negociação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Em aprovação",
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "AquaFoz"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "Rede Outdoor | Front Light 12x4m | PRF Entrada de Foz | Sentido Foz do Iguaçu",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Top Urbano Iluminado | General Meira | Sentido Centro | 3,5x5m 17,5m²",
+          "descricao": null,
+          "valor": 2000.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": null,
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Felipe Wandscher | Sentido Centro | 12x4m 48m²",
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Ancora | Painel Urbano Iluminado | Rua do Aeroporto | 10x5m 50m²",
+          "descricao": null,
+          "valor": 8000.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "Circuito Digital Desembarque | Aeroporto de Foz | NEOOH",
+          "descricao": null,
+          "valor": 0.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "PAINEL VIALE CATARATAS | Ancora | AV. DAS CATARATAS , 2420  VILA ADRIANA SENTIDO: CENTRO → CATARATAS",
+          "descricao": null,
+          "valor": 2500.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": "PAINEL OKLAHOMA JK | Ancora | AV. JUSCELINO KUBITSCHEK, 3040 MONJOLO SENTIDO: CENTRO → AV. TANCREDO NEVES",
+          "descricao": null,
+          "valor": 2700.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Rede Outdoor | Painel Rodoviário | Sentido Trevo Argentina | 12x4m | FL52A",
+          "descricao": null,
+          "valor": 2800.0,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "M3F"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Mega Painel RodoviárioBR 277 (Rodovia do Café), km 122 + 500 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1248-br-277-rodovia-do-cafe-km-115-norte-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "Em negociação",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Painel VIP Rodoviário km 113+700 Norte | Sentido Ponta Grossa | 4,35x6,20m https://favrettomidiaexterior.com.br/ponto/3024-br-277-rodovia-do-cafe-km-110500-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "Em negociação",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Mega Painel Rodoviário 1899 (ILUMINADO): BR 277, km 129+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1899-iluminado-br-277-rodovia-do-cafe-km-122-norte-sentido-ponta-grossa/",
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "Em negociação",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "OOH",
+          "fornecedor": "Favretto | Mega Painel Rodoviário 1209 (ILUMINADO): BR 277, km 108+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1209-br-277-rodovia-do-cafe-km-100-logo-apos-o-contorno-sul-sentido-curitiba-ponta-grossa-pista-oposta/",
+          "descricao": null,
+          "valor": 8507.5,
+          "status": "Em negociação",
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "Vila Velha"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Cancelada",
+          "parque": "3P"
+        },
+        {
+          "tipo": "Digital",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": "Kv enviado",
+          "parque": "3P"
+        },
+        {
+          "tipo": "CONTATO FORNECEDORES AQUI",
+          "fornecedor": null,
+          "descricao": null,
+          "valor": null,
+          "status": null,
+          "parque": "3P"
+        }
+      ]
+    }
   }
 }
