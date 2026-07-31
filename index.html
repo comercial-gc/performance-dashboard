@@ -343,6 +343,8 @@
   .imt-ps-kpi .bar{ width:34px; height:3px; border-radius:2px; margin-bottom:10px; }
   .imt-ps-kpi .lbl{ font-size:10.5px; letter-spacing:.5px; color:#9fb0c9; font-weight:700; text-transform:uppercase; }
   .imt-ps-kpi .val{ font-size:22px; font-weight:800; margin-top:4px; }
+  .imt-ps-kpi .val.pos{ color:#3ddc84; }
+  .imt-ps-kpi .val.neg{ color:#ff6b5e; }
   .imt-ps-kpi .sub{ font-size:11px; color:#7e93b3; margin-top:4px; }
   .imt-ps-progress-wrap{ margin-bottom:22px; }
   .imt-ps-progress-track{ width:100%; height:10px; background:#0f1f38; border-radius:6px; overflow:hidden; }
@@ -2571,7 +2573,7 @@ function renderParkSummary() {
     </div>
     <div class="imt-ps-kpi"><div class="bar" style="background:#f39c12"></div>
       <div class="lbl">Saldo Atual</div>
-      <div class="val">${fmtPsMoney(saldo)}</div>
+      <div class="val${saldo!==null && saldo!==undefined && saldo>0 ? ' pos' : (saldo!==null && saldo!==undefined && saldo<0 ? ' neg' : '')}">${fmtPsMoney(saldo)}</div>
       <div class="sub">Disponível</div>
     </div>
     <div class="imt-ps-kpi"><div class="bar" style="background:#f39c12"></div>
