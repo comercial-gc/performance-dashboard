@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-31T14:02:53.351348Z",
+  "geradoEm": "2026-07-31T14:48:39.151423Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -7081,7 +7081,7 @@
             "sun",
             "alert",
             "sun",
-            null
+            "sun"
           ]
         },
         "BioParque": {
@@ -7416,7 +7416,7 @@
             "sun",
             "sun",
             "sun",
-            null,
+            "sun",
             null
           ]
         },
@@ -7752,7 +7752,7 @@
             "cloud",
             "sun",
             "sun",
-            null,
+            "sun",
             null
           ]
         },
@@ -7885,8 +7885,8 @@
             "sun",
             "sun",
             "sun",
+            "rain",
             "cloud",
-            null,
             null
           ]
         }
@@ -22443,6 +22443,20 @@
       },
       "Consolidado": {
         "anos": {
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
           "2022": [
             292287.0,
             163205.0,
@@ -22456,48 +22470,6 @@
             266973.0,
             202561.0,
             212826.0
-          ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
-          ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
           ],
           "2021": [
             121830.0,
@@ -22513,19 +22485,19 @@
             206960.0,
             198703.0
           ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            470681.0,
-            422910.0,
-            717481.0,
-            null,
-            null,
-            null,
-            null,
-            null
+          "2015": [
+            189451.0,
+            115349.0,
+            111054.0,
+            108663.0,
+            102143.0,
+            84400.0,
+            137042.0,
+            104524.0,
+            93861.0,
+            103315.0,
+            84938.0,
+            122376.0
           ],
           "2020": [
             319895.0,
@@ -22541,47 +22513,19 @@
             90379.0,
             79635.0
           ],
-          "2015": [
-            189451.0,
-            115349.0,
-            111054.0,
-            108663.0,
-            102143.0,
-            84400.0,
-            137042.0,
-            104524.0,
-            93861.0,
-            103315.0,
-            84938.0,
-            122376.0
-          ],
-          "2018": [
-            321385.0,
-            168024.0,
-            166856.0,
-            130740.00000000001,
-            108655.0,
-            97102.0,
-            190341.99999999994,
-            133243.0,
-            151118.0,
-            149282.0,
-            162033.0,
-            182819.0
-          ],
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "2012": [
             null,
@@ -22597,20 +22541,6 @@
             null,
             null
           ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
-          ],
           "2017": [
             389929.0,
             200085.0,
@@ -22625,6 +22555,90 @@
             163417.0,
             189763.0
           ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
+          "2018": [
+            321385.0,
+            168024.0,
+            166856.0,
+            130740.00000000001,
+            108655.0,
+            97102.0,
+            190341.99999999994,
+            133243.0,
+            151118.0,
+            149282.0,
+            162033.0,
+            182819.0
+          ],
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
+          ],
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            470681.0,
+            422910.0,
+            717481.0,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
+          ],
           "2025": [
             666687.0,
             398191.0,
@@ -22638,75 +22652,61 @@
             491692.0,
             500148.0,
             520889.0
-          ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
+          "2019": [
+            1015073,
+            1044424
+          ],
           "2022": [
             1195615,
             1502267
-          ],
-          "2023": [
-            1486747,
-            1503931
-          ],
-          "2014": [
-            717316,
-            673740
           ],
           "2021": [
             726490,
             1392943
           ],
-          "2026": [
-            3213884,
-            717481
+          "2015": [
+            711060,
+            646056
           ],
           "2020": [
             575832,
             365664
           ],
-          "2015": [
-            711060,
-            646056
-          ],
-          "2018": [
-            992762,
-            968837
-          ],
-          "2016": [
-            635485,
-            584255
-          ],
-          "2024": [
-            2410556,
-            2803391
+          "2014": [
+            717316,
+            673740
           ],
           "2017": [
             1300881,
             1170345
           ],
+          "2024": [
+            2410556,
+            2803391
+          ],
+          "2018": [
+            992762,
+            968837
+          ],
+          "2026": [
+            3213884,
+            717481
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2016": [
+            635485,
+            584255
+          ],
           "2025": [
             2704477,
             2940308
-          ],
-          "2019": [
-            1015073,
-            1044424
           ]
         }
       }
@@ -22734,13 +22734,13 @@
       "Fevereiro": {
         "AquaRio": {
           "orcado": 433733.0,
-          "previsto": 160873.52,
+          "previsto": 160873.52000000002,
           "saldo": 272859.48
         },
         "BioParque": {
           "orcado": 64000.0,
-          "previsto": null,
-          "saldo": null
+          "previsto": 53320.0,
+          "saldo": 10680.0
         }
       },
       "Março": {
@@ -22751,24 +22751,24 @@
         },
         "BioParque": {
           "orcado": 22000.0,
-          "previsto": 22000.0,
-          "saldo": 0.0
+          "previsto": 0.0,
+          "saldo": 22000.0
         }
       },
       "Abril": {
         "AquaRio": {
           "orcado": 302262.0,
-          "previsto": null,
-          "saldo": null
+          "previsto": 356528.39,
+          "saldo": -54266.390000000014
         },
         "BioParque": {
           "orcado": 39159.0,
-          "previsto": 38900.0,
-          "saldo": 259.0
+          "previsto": 0.0,
+          "saldo": 39159.0
         },
         "Vila Velha": {
           "orcado": null,
-          "previsto": null,
+          "previsto": 103050.0,
           "saldo": null
         }
       },
@@ -22781,12 +22781,12 @@
         "BioParque": {
           "orcado": 78320.0,
           "previsto": 20203.12,
-          "saldo": 58116.88
+          "saldo": 58116.880000000005
         },
         "AquaFoz": {
           "orcado": 26089.0,
-          "previsto": 22367.0,
-          "saldo": 3722.0
+          "previsto": 0.0,
+          "saldo": 26089.0
         }
       },
       "Junho": {
@@ -22805,12 +22805,12 @@
         "AquaRio": {
           "orcado": 411990.0,
           "previsto": 399730.08,
-          "saldo": 12259.92
+          "saldo": 12259.919999999984
         },
         "BioParque": {
           "orcado": 142952.0,
           "previsto": 134678.91,
-          "saldo": 8273.09
+          "saldo": 8273.089999999997
         },
         "AquaFoz": {
           "orcado": 71968.44,
@@ -22830,34 +22830,34 @@
         "3P": {
           "orcado": 77300.0,
           "previsto": 54391.45,
-          "saldo": 22908.55
+          "saldo": 22908.550000000003
         }
       },
       "Agosto": {
         "AquaRio": {
           "orcado": 154826.94,
-          "previsto": 94800.0,
-          "saldo": 60026.94
+          "previsto": 0.0,
+          "saldo": 154826.94
         },
         "BioParque": {
           "orcado": 79305.41,
-          "previsto": 53562.83,
-          "saldo": 25742.58
+          "previsto": 0.0,
+          "saldo": 79305.41
         },
         "AquaFoz": {
           "orcado": 50290.52,
-          "previsto": 10270.0,
-          "saldo": 40020.52
+          "previsto": 2970.0,
+          "saldo": 47320.52
         },
         "M3F": {
           "orcado": 160452.0,
-          "previsto": 18000.0,
-          "saldo": 142452.0
+          "previsto": 0.0,
+          "saldo": 160452.0
         },
         "Vila Velha": {
           "orcado": 34030.0,
-          "previsto": 34030.0,
-          "saldo": 0.0
+          "previsto": 0.0,
+          "saldo": 34030.0
         },
         "3P": {
           "orcado": 30000.0,
@@ -22874,6 +22874,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9250.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22882,6 +22883,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 22000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22890,6 +22892,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 10000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22898,6 +22901,7 @@
           "descricao": "Empena Ponte Perimetral",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22906,6 +22910,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22914,6 +22919,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 30005.14,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22922,6 +22928,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22930,6 +22937,7 @@
           "descricao": "Ibis",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22938,6 +22946,7 @@
           "descricao": "Led Gavea",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22946,6 +22955,7 @@
           "descricao": "Empena Copacabana",
           "valor": 60000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22954,6 +22964,7 @@
           "descricao": "Mega Led  da Ponte Rio Niterói",
           "valor": 78000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22962,6 +22973,7 @@
           "descricao": "Pedágio Ponte",
           "valor": 5000,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22970,6 +22982,7 @@
           "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
           "valor": 5000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22978,6 +22991,7 @@
           "descricao": "Circuito Experiência | Santos Dumont",
           "valor": 86055.58,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -22986,6 +23000,7 @@
           "descricao": "UBER",
           "valor": 80000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -22994,6 +23009,7 @@
           "descricao": "Rodoviária",
           "valor": 40000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23002,6 +23018,7 @@
           "descricao": "Portas Estáticos | Santos Dumont",
           "valor": 70000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23010,6 +23027,7 @@
           "descricao": "Circuito Digital Desembarque SDU",
           "valor": 35000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23018,6 +23036,7 @@
           "descricao": "MUB Vertical |  Orlas IMPORTANTE: Resevei faces para janeiro",
           "valor": 25000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23026,6 +23045,7 @@
           "descricao": "Circuito Experiencia Rio Design",
           "valor": 57000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23034,6 +23054,7 @@
           "descricao": "Mix de Rua Ipanema",
           "valor": 311383.8,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23042,6 +23063,7 @@
           "descricao": "GIG",
           "valor": 89326.97,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23050,6 +23072,7 @@
           "descricao": "Quiosque Temático",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23058,6 +23081,7 @@
           "descricao": "Túnel SDU",
           "valor": 100000.0,
           "status": "Em produção",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23066,70 +23090,7 @@
           "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
           "valor": 20000.0,
           "status": "Em negociação",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "AQUA",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "433582.11",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "248310.08",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "133469.97",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "329648.49",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "231588.97",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "308494.49",
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "534430.96",
-          "valor": null,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23138,6 +23099,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9250.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23146,6 +23108,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 13000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23154,6 +23117,7 @@
           "descricao": "Spot 30 segs | Férias",
           "valor": 22000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23162,6 +23126,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 4400.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23170,6 +23135,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23178,6 +23144,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 38518.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23186,6 +23153,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23194,6 +23162,7 @@
           "descricao": "Ibis",
           "valor": 40000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23202,6 +23171,7 @@
           "descricao": "Led Gavea",
           "valor": 26666.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23210,6 +23180,7 @@
           "descricao": "Orlas | Mub vertical",
           "valor": 25000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23218,6 +23189,7 @@
           "descricao": "Rodoviária",
           "valor": 40000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23226,6 +23198,7 @@
           "descricao": "Bancas Estáticas",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23234,6 +23207,7 @@
           "descricao": "Norte Shopping",
           "valor": 77000.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23242,6 +23216,7 @@
           "descricao": "Mega Led Ibis e Gavea",
           "valor": 120000.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23250,6 +23225,7 @@
           "descricao": "Shopping Tijuca",
           "valor": 77000.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         }
       ],
@@ -23260,6 +23236,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9250.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23268,6 +23245,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 22000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23276,6 +23254,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 10000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23284,6 +23263,7 @@
           "descricao": "Empena Ponte Perimetral",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23292,6 +23272,7 @@
           "descricao": "Edifícios Comerciais PRÉ CARNAVAL",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23300,6 +23281,7 @@
           "descricao": "Metrô MUB Digital  PRÉ CARNAVAL /ALTERNAR",
           "valor": 75012.18,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23308,6 +23290,7 @@
           "descricao": "Edifícios Residenciais PRÉ CARNAVAL",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23316,6 +23299,7 @@
           "descricao": "Ibis",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23324,6 +23308,7 @@
           "descricao": "Led Gavea",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23332,6 +23317,7 @@
           "descricao": "Empena Copacabana",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23340,6 +23326,7 @@
           "descricao": "Mega Led  da Ponte Rio Niterói",
           "valor": 78000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23348,6 +23335,7 @@
           "descricao": "Pedágio Ponte",
           "valor": 5000,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23356,6 +23344,7 @@
           "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
           "valor": 5000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23364,6 +23353,7 @@
           "descricao": "Circuito Experiência | Santos Dumont",
           "valor": 86055.58,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23372,6 +23362,7 @@
           "descricao": "Empena Tijuca",
           "valor": 0.0,
           "status": null,
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23380,6 +23371,7 @@
           "descricao": "UBER",
           "valor": 80000.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23388,6 +23380,7 @@
           "descricao": "Rodoviária",
           "valor": 40000.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23396,6 +23389,7 @@
           "descricao": "Portas Estáticos | Santos Dumont",
           "valor": 70000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23404,6 +23398,7 @@
           "descricao": "Circuito Digital Desembarque SDU",
           "valor": 35000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23412,6 +23407,7 @@
           "descricao": "MUB Vertical |  Orlas IMPORTANTE: Resevei faces para 3 semanas de feveiro",
           "valor": 40320.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23420,6 +23416,7 @@
           "descricao": "Circuito Experiencia Rio Design",
           "valor": 57000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23428,6 +23425,7 @@
           "descricao": "Mix de Rua Ipanema",
           "valor": 311383.8,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23436,6 +23434,7 @@
           "descricao": "GIG",
           "valor": 120553.52,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23444,6 +23443,7 @@
           "descricao": "Quiosque Temático",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23452,6 +23452,7 @@
           "descricao": "Shopping RIO SUL (17 faces)",
           "valor": 11388.4,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23460,6 +23461,7 @@
           "descricao": "Bancas Digitais",
           "valor": null,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23468,6 +23470,7 @@
           "descricao": "MEGA LED iBIS",
           "valor": 80000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23476,6 +23479,7 @@
           "descricao": "FM ODIA PRÉ CARNAVAL /ALTERNAR",
           "valor": 22000.0,
           "status": "Kv enviado",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -23484,14 +23488,7 @@
           "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
           "valor": 20000.0,
           "status": "Em negociação",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 478524.1,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23500,6 +23497,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9250.0,
           "status": "No Ar",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23508,6 +23506,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 13000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23516,6 +23515,7 @@
           "descricao": "Spot 30 segs | Férias",
           "valor": 11000.0,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23524,6 +23524,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 4400.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23532,6 +23533,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23540,6 +23542,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 38518.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23548,6 +23551,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23556,6 +23560,7 @@
           "descricao": "Ibis",
           "valor": 40000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23564,6 +23569,7 @@
           "descricao": "Led Gavea",
           "valor": 26666.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23572,6 +23578,7 @@
           "descricao": "Orlas | Mub vertical",
           "valor": 42320.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -23580,6 +23587,7 @@
           "descricao": "Rodoviária",
           "valor": 40000.0,
           "status": "No Ar",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23588,6 +23596,7 @@
           "descricao": "Bancas Estáticas",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23596,6 +23605,7 @@
           "descricao": "Norte Shopping",
           "valor": 77000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23604,6 +23614,7 @@
           "descricao": "Mega Led Ibis",
           "valor": 80000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23612,6 +23623,7 @@
           "descricao": "Shopping Tijuca",
           "valor": 77000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         }
       ],
@@ -23622,6 +23634,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 11000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23630,6 +23643,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 22000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23638,6 +23652,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 10000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23646,6 +23661,7 @@
           "descricao": "Empena Ponte Perimetral",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23654,6 +23670,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23662,6 +23679,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 36000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23670,6 +23688,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23678,6 +23697,7 @@
           "descricao": "Ibis",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23686,6 +23706,7 @@
           "descricao": "Led Gavea",
           "valor": 50000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23694,6 +23715,7 @@
           "descricao": "Mega Led  da Ponte Rio Niterói",
           "valor": 78000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23702,6 +23724,7 @@
           "descricao": "Pedágio Ponte",
           "valor": 5000,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23710,6 +23733,7 @@
           "descricao": "Barcas SA | TV Embarcação/LED Saguão/Telão LED Digital/Video Saguão de embarque",
           "valor": 5000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23718,6 +23742,7 @@
           "descricao": "Circuito Experiência | Santos Dumont",
           "valor": 86055.58,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23726,6 +23751,7 @@
           "descricao": "Rodoviária",
           "valor": 20000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23734,6 +23760,7 @@
           "descricao": "Portas Estáticos | Santos Dumont",
           "valor": 70000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23742,6 +23769,7 @@
           "descricao": "Circuito Digital Desembarque SDU",
           "valor": 35000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23750,6 +23778,7 @@
           "descricao": "Circuito Experiencia Rio Design",
           "valor": 57000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23758,6 +23787,7 @@
           "descricao": "Mix de Rua Ipanema",
           "valor": 311383.8,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23766,6 +23796,7 @@
           "descricao": "100 Faces | Mub Urbano - Bonificado",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23774,6 +23805,7 @@
           "descricao": "GIG",
           "valor": 133469.97,
           "status": "Em negociação",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23782,6 +23814,7 @@
           "descricao": "Quiosque Temático",
           "valor": 60000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23790,6 +23823,7 @@
           "descricao": "MEGA LED GÁVEA",
           "valor": 30000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23798,6 +23832,7 @@
           "descricao": "MEGA LED iBIS",
           "valor": 70000.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23806,6 +23841,7 @@
           "descricao": "Melodia",
           "valor": 4500.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23814,30 +23850,7 @@
           "descricao": "Bancas Digitais (GG OU ELETROMIDIA)",
           "valor": 20000.0,
           "status": "Em negociação",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 304969.97,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": "PROVISIONAR VERBA/SALDO PARA JULHO",
-          "descricao": null,
-          "valor": null,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -23846,6 +23859,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9000.0,
           "status": "No Ar",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23854,6 +23868,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 13000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23862,6 +23877,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 5000.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23870,6 +23886,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23878,6 +23895,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -23886,6 +23904,7 @@
           "descricao": "Ibis",
           "valor": 40000.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23894,6 +23913,7 @@
           "descricao": "Led Gavea",
           "valor": 26666.0,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -23902,6 +23922,7 @@
           "descricao": "Rodoviária",
           "valor": 8000.0,
           "status": "No Ar",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         }
       ],
@@ -23912,6 +23933,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 9000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23920,6 +23942,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23928,6 +23951,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 35000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23936,6 +23960,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23944,6 +23969,7 @@
           "descricao": "Rodoviária",
           "valor": 15005.9,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23952,6 +23978,7 @@
           "descricao": "GIG",
           "valor": 129164.49,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23960,6 +23987,7 @@
           "descricao": "MEGA LED GÁVEA",
           "valor": 30000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23968,6 +23996,7 @@
           "descricao": "MEGA LED iBIS",
           "valor": 70000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23976,6 +24005,7 @@
           "descricao": "SDU TELAS",
           "valor": 26478.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23984,6 +24014,7 @@
           "descricao": "FM O DIA",
           "valor": 15000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -23992,6 +24023,7 @@
           "descricao": "ORLAS RIO",
           "valor": 26880.0,
           "status": "PI assinada",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24000,22 +24032,7 @@
           "descricao": "Empena Copacabana",
           "valor": 0.0,
           "status": "Cancelada",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 329648.39,
-          "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -24024,6 +24041,7 @@
           "descricao": "Anúncio Spot 30 Segs / 3 inserções por dia",
           "valor": 5900.0,
           "status": "No Ar",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -24032,6 +24050,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 25000.0,
           "status": "No Ar",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -24040,6 +24059,7 @@
           "descricao": "Rodoviária",
           "valor": 8000.0,
           "status": "No Ar",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -24048,6 +24068,7 @@
           "descricao": "4 por dia 15\" no Rotativo +1x 15\" no Pânico",
           "valor": 2300.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24056,6 +24077,7 @@
           "descricao": "2 Passarelas",
           "valor": 5000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24064,6 +24086,7 @@
           "descricao": "Pordução Passalera",
           "valor": 750.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24072,6 +24095,7 @@
           "descricao": "1 porta desembarque C | 10 colunas + mega LED",
           "valor": 45000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24080,6 +24104,7 @@
           "descricao": null,
           "valor": 10000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24088,6 +24113,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24096,6 +24122,7 @@
           "descricao": "Mix de Categorias (MUB-RUA)",
           "valor": 25000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24104,14 +24131,7 @@
           "descricao": "3 sequencias midialand rodovia",
           "valor": 15000.0,
           "status": "No Ar",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": "Tipo",
-          "fornecedor": "Veículo",
-          "descricao": "Propriedade",
-          "valor": null,
-          "status": "STATUS",
+          "ok": "Sim",
           "parque": "Vila Velha"
         }
       ],
@@ -24122,6 +24142,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24130,6 +24151,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -24138,6 +24160,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24146,6 +24169,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 25000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24154,6 +24178,7 @@
           "descricao": "Rodoviária",
           "valor": 8000.0,
           "status": "Aguardando PI",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24162,6 +24187,7 @@
           "descricao": "GIG",
           "valor": 133469.97,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24170,6 +24196,7 @@
           "descricao": "SDU TELAS",
           "valor": 13239.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24178,6 +24205,7 @@
           "descricao": "FM O DIA",
           "valor": 0.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -24186,14 +24214,7 @@
           "descricao": "ORLAS RIO",
           "valor": 26880.0,
           "status": "No Ar",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24202,6 +24223,7 @@
           "descricao": "Painel LED Cidade das Artes, sentido Rio Centro",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24210,6 +24232,7 @@
           "descricao": "Edifícios Comerciais",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24218,6 +24241,7 @@
           "descricao": "Edifícios Residenciais",
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24226,6 +24250,7 @@
           "descricao": "Metrô MUB Digital",
           "valor": 25000.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24234,6 +24259,7 @@
           "descricao": "GIG",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24242,14 +24268,7 @@
           "descricao": "Verba extra nova conta",
           "valor": 5000.0,
           "status": "No Ar",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24258,6 +24277,7 @@
           "descricao": "Metrô",
           "valor": 0.0,
           "status": "Em aprovação",
+          "ok": "Não",
           "parque": "BioParque"
         },
         {
@@ -24266,6 +24286,7 @@
           "descricao": "Edificios Residenciais",
           "valor": 1728.42,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24274,6 +24295,7 @@
           "descricao": "Edificios Comerciais",
           "valor": 2338.45,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24282,6 +24304,7 @@
           "descricao": "Painel Cidade das Artes",
           "valor": 9000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24290,6 +24313,7 @@
           "descricao": "Anuncio Spot 30 segundos",
           "valor": 5136.25,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24298,30 +24322,7 @@
           "descricao": "Verba extra nova conta",
           "valor": 2000.0,
           "status": "No Ar",
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "5900.0",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "5136.25",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "11036.25",
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24330,6 +24331,7 @@
           "descricao": "PI APENAS FINGERS (1 ANO) |  Aeroporto de Foz",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24338,6 +24340,7 @@
           "descricao": "PI NEOOH DIGITAL COM PAINEIS | Aeroporto de Foz",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24346,6 +24349,7 @@
           "descricao": "PUERTO IGUAZU - Argentina",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24354,6 +24358,7 @@
           "descricao": "PRODUÇÃO OUTDOORS",
           "valor": 7367.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -24362,6 +24367,7 @@
           "descricao": "PRODUÇÃO FINGERS",
           "valor": 15000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -24370,14 +24376,7 @@
           "descricao": "PRODUÇÃO STAND AERO IGU",
           "valor": null,
           "status": null,
-          "parque": "AquaFoz"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         }
       ],
@@ -24388,6 +24387,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24396,6 +24396,7 @@
           "descricao": null,
           "valor": 82450.0,
           "status": "Em produção",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24404,6 +24405,7 @@
           "descricao": null,
           "valor": 50000.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24412,6 +24414,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24420,6 +24423,7 @@
           "descricao": null,
           "valor": null,
           "status": "Cancelada",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -24428,6 +24432,7 @@
           "descricao": null,
           "valor": 20000.0,
           "status": "Kv enviado",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24436,6 +24441,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaRio"
         },
         {
@@ -24444,6 +24450,7 @@
           "descricao": null,
           "valor": null,
           "status": "Cancelada",
+          "ok": "Não",
           "parque": "AquaRio"
         },
         {
@@ -24452,14 +24459,7 @@
           "descricao": null,
           "valor": 26880.0,
           "status": "Kv enviado",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24468,6 +24468,7 @@
           "descricao": "HEZAGONO | PAINEL CIDADE DAS ARTES",
           "valor": 0.0,
           "status": "Finalizada",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24476,6 +24477,7 @@
           "descricao": "Hezagono | Empena Praça da Bandeira | Frontlight + produção",
           "valor": 35981.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24484,6 +24486,7 @@
           "descricao": "Eletromídia | Residencial",
           "valor": 2469.17,
           "status": "Finalizada",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24492,6 +24495,7 @@
           "descricao": "Eletromídia | Comercial",
           "valor": 3273.83,
           "status": "Finalizada",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24500,6 +24504,7 @@
           "descricao": "Rádio Melodia | Anúncio spot 30 segundos",
           "valor": 5992.0,
           "status": "Finalizada",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24508,6 +24513,7 @@
           "descricao": "Rádio FM O DIA | Anúncio spot 30 segundos",
           "valor": 20000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         }
       ],
@@ -24518,6 +24524,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24526,6 +24533,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24534,6 +24542,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24542,6 +24551,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24550,6 +24560,7 @@
           "descricao": null,
           "valor": 13500.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24558,6 +24569,7 @@
           "descricao": null,
           "valor": 20000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24566,6 +24578,7 @@
           "descricao": null,
           "valor": 38100,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24574,6 +24587,7 @@
           "descricao": null,
           "valor": 26500,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24582,6 +24596,7 @@
           "descricao": null,
           "valor": 100000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24590,6 +24605,7 @@
           "descricao": null,
           "valor": 18535.08,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24598,6 +24614,7 @@
           "descricao": null,
           "valor": 50000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24606,6 +24623,7 @@
           "descricao": null,
           "valor": 100000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24614,6 +24632,7 @@
           "descricao": null,
           "valor": 9000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24622,6 +24641,7 @@
           "descricao": null,
           "valor": 4095.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24630,14 +24650,7 @@
           "descricao": null,
           "valor": 20000.0,
           "status": "No Ar",
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "AquaRio"
         },
         {
@@ -24646,6 +24659,7 @@
           "descricao": "HEZAGONO | PAINEL CIDADE DAS ARTES",
           "valor": 9000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24654,6 +24668,7 @@
           "descricao": "Hezagono | Empena Praça da Bandeira | Frontlight + produção",
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24662,6 +24677,7 @@
           "descricao": "Eletromídia | Residencial",
           "valor": 4444.2,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24670,6 +24686,7 @@
           "descricao": "Eletromídia | Comercial",
           "valor": 3741.52,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24678,6 +24695,7 @@
           "descricao": "Rádio Melodia | Anúncio spot 30 segundos",
           "valor": 11984.59,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24686,6 +24704,7 @@
           "descricao": "Rádio FM O DIA | Anúncio spot 30 segundos",
           "valor": 20000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24694,6 +24713,7 @@
           "descricao": null,
           "valor": null,
           "status": "Reprovado",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24702,6 +24722,7 @@
           "descricao": "Grupo Coruja | Busdoor",
           "valor": 19000.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24710,6 +24731,7 @@
           "descricao": "Eletromídia | Mub Metrô",
           "valor": 50008.6,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24718,6 +24740,7 @@
           "descricao": "NEOOH | Rodoviária Novo Rio | Circuito Telas digitais + Mega LED + Testeira em LED 360º + Testeira LED Emb e Desembarque + Mega LED Embarque e Desembarque",
           "valor": 16500.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "BioParque"
         },
         {
@@ -24726,6 +24749,7 @@
           "descricao": null,
           "valor": null,
           "status": "Reprovado",
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -24734,6 +24758,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24742,6 +24767,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24750,6 +24776,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24758,6 +24785,7 @@
           "descricao": null,
           "valor": 1800.0,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24766,6 +24794,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24774,6 +24803,7 @@
           "descricao": null,
           "valor": 10336.58,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24782,6 +24812,7 @@
           "descricao": null,
           "valor": 2970.0,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24790,6 +24821,7 @@
           "descricao": null,
           "valor": 450.0,
           "status": "Em aprovação",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -24798,14 +24830,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
-          "parque": "AquaFoz"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaFoz"
         },
         {
@@ -24814,6 +24839,7 @@
           "descricao": null,
           "valor": 4720.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "M3F"
         },
         {
@@ -24822,6 +24848,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Não",
           "parque": "M3F"
         },
         {
@@ -24830,6 +24857,7 @@
           "descricao": null,
           "valor": 3190.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "M3F"
         },
         {
@@ -24838,6 +24866,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Não",
           "parque": "M3F"
         },
         {
@@ -24846,6 +24875,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -24854,6 +24884,7 @@
           "descricao": null,
           "valor": 11400.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "M3F"
         },
         {
@@ -24862,6 +24893,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Não",
           "parque": "M3F"
         },
         {
@@ -24870,6 +24902,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -24878,6 +24911,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
+          "ok": "Não",
           "parque": "M3F"
         },
         {
@@ -24886,14 +24920,7 @@
           "descricao": null,
           "valor": 20000.0,
           "status": "No Ar",
-          "parque": "M3F"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "M3F"
         },
         {
@@ -24902,6 +24929,7 @@
           "descricao": null,
           "valor": 10500.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24910,6 +24938,7 @@
           "descricao": null,
           "valor": 12827.5,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24918,6 +24947,7 @@
           "descricao": null,
           "valor": 9587.5,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24926,6 +24956,7 @@
           "descricao": null,
           "valor": null,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24934,6 +24965,7 @@
           "descricao": null,
           "valor": 12707.5,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24942,6 +24974,7 @@
           "descricao": null,
           "valor": null,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -24950,70 +24983,7 @@
           "descricao": null,
           "valor": 12707.5,
           "status": "No Ar",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": "5350",
-          "descricao": null,
-          "valor": null,
-          "status": null,
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 8507.5,
-          "status": "12827.5",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": "47470",
-          "descricao": null,
-          "valor": 8507.5,
-          "status": "9587.5",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 8507.5,
-          "status": "12707.5",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": null,
-          "valor": 8507.5,
-          "status": "12707.5",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": "833.3333333",
-          "descricao": null,
-          "valor": null,
-          "status": null,
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": null,
-          "fornecedor": "77830",
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -25022,6 +24992,7 @@
           "descricao": null,
           "valor": 8000.0,
           "status": "Em produção",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25030,6 +25001,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25038,6 +25010,7 @@
           "descricao": null,
           "valor": 2900.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25046,6 +25019,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25054,6 +25028,7 @@
           "descricao": null,
           "valor": 10900.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25062,6 +25037,7 @@
           "descricao": null,
           "valor": 14540.0,
           "status": "Em produção",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25070,6 +25046,7 @@
           "descricao": null,
           "valor": 15420,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25078,6 +25055,7 @@
           "descricao": null,
           "valor": 2631.45,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "3P"
         },
         {
@@ -25086,6 +25064,7 @@
           "descricao": null,
           "valor": null,
           "status": "Cancelada",
+          "ok": "Não",
           "parque": "3P"
         },
         {
@@ -25094,14 +25073,7 @@
           "descricao": null,
           "valor": null,
           "status": "Kv enviado",
-          "parque": "3P"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "3P"
         }
       ],
@@ -25112,6 +25084,7 @@
           "descricao": null,
           "valor": 80000.0,
           "status": null,
+          "ok": null,
           "parque": "AquaRio"
         },
         {
@@ -25120,14 +25093,7 @@
           "descricao": null,
           "valor": 14800.0,
           "status": null,
-          "parque": "AquaRio"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": null,
           "parque": "AquaRio"
         },
         {
@@ -25136,6 +25102,7 @@
           "descricao": "Mega LED Maracanã + Painel LED Entrada principal Rio Sul + Painel LED Entrada estacionamento Rio sul + Painel LED saída do estacionamento Rio Sul",
           "valor": 20000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25144,6 +25111,7 @@
           "descricao": "Melodia | Spot 30 seg",
           "valor": 8560.42,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25152,6 +25120,7 @@
           "descricao": "Grupo Coruja | Busdoor",
           "valor": 20000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25160,6 +25129,7 @@
           "descricao": "Eletromídia | Ed. Comercial",
           "valor": 3287.83,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25168,6 +25138,7 @@
           "descricao": "Eletromídia | Ed. Residêncial",
           "valor": 1714.58,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25176,46 +25147,7 @@
           "descricao": null,
           "valor": null,
           "status": "Reprovado",
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "32400",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "trota",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "10080",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "672",
-          "valor": null,
-          "status": null,
-          "parque": "BioParque"
-        },
-        {
-          "tipo": null,
-          "fornecedor": null,
-          "descricao": "20160",
-          "valor": null,
-          "status": null,
+          "ok": "Análise Camila",
           "parque": "BioParque"
         },
         {
@@ -25224,6 +25156,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -25232,6 +25165,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -25240,6 +25174,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -25248,6 +25183,7 @@
           "descricao": null,
           "valor": 2970.0,
           "status": "No Ar",
+          "ok": "Sim",
           "parque": "AquaFoz"
         },
         {
@@ -25256,6 +25192,7 @@
           "descricao": null,
           "valor": null,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -25264,6 +25201,7 @@
           "descricao": null,
           "valor": 5500.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -25272,6 +25210,7 @@
           "descricao": null,
           "valor": 1800.0,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -25280,6 +25219,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "AquaFoz"
         },
         {
@@ -25288,14 +25228,7 @@
           "descricao": null,
           "valor": null,
           "status": "Em aprovação",
-          "parque": "AquaFoz"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Não",
           "parque": "AquaFoz"
         },
         {
@@ -25304,6 +25237,7 @@
           "descricao": null,
           "valor": null,
           "status": null,
+          "ok": null,
           "parque": "M3F"
         },
         {
@@ -25312,6 +25246,7 @@
           "descricao": null,
           "valor": 2000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25320,6 +25255,7 @@
           "descricao": null,
           "valor": null,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25328,6 +25264,7 @@
           "descricao": null,
           "valor": 8000.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25336,6 +25273,7 @@
           "descricao": null,
           "valor": 0.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25344,6 +25282,7 @@
           "descricao": null,
           "valor": 2500.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25352,6 +25291,7 @@
           "descricao": null,
           "valor": 2700.0,
           "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25360,14 +25300,7 @@
           "descricao": null,
           "valor": 2800.0,
           "status": null,
-          "parque": "M3F"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Análise Camila",
           "parque": "M3F"
         },
         {
@@ -25376,6 +25309,7 @@
           "descricao": null,
           "valor": 8507.5,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "Vila Velha"
         },
         {
@@ -25384,6 +25318,7 @@
           "descricao": null,
           "valor": 8507.5,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "Vila Velha"
         },
         {
@@ -25392,6 +25327,7 @@
           "descricao": null,
           "valor": 8507.5,
           "status": "Em negociação",
+          "ok": "Análise Camila",
           "parque": "Vila Velha"
         },
         {
@@ -25400,14 +25336,7 @@
           "descricao": null,
           "valor": 8507.5,
           "status": "Em negociação",
-          "parque": "Vila Velha"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Análise Camila",
           "parque": "Vila Velha"
         },
         {
@@ -25416,6 +25345,7 @@
           "descricao": null,
           "valor": null,
           "status": "Cancelada",
+          "ok": "Não",
           "parque": "3P"
         },
         {
@@ -25424,14 +25354,7 @@
           "descricao": null,
           "valor": null,
           "status": "Kv enviado",
-          "parque": "3P"
-        },
-        {
-          "tipo": "CONTATO FORNECEDORES AQUI",
-          "fornecedor": null,
-          "descricao": null,
-          "valor": null,
-          "status": null,
+          "ok": "Sim",
           "parque": "3P"
         }
       ]
