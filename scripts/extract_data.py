@@ -1070,6 +1070,7 @@ def _parse_plano_midia_sheet(rows):
     col_desc = find_col("PROPRIEDADE")
     col_forn = find_col("EMPRESA", "FORNECEDOR", "VEICULO")
     col_status = find_col("STATUS")
+    col_ok = find_col("OK")
 
     items = []
     orcado_val = None
@@ -1091,11 +1092,27 @@ def _parse_plano_midia_sheet(rows):
         if "SALDO" in row_norm:
             if nums: saldo_val = nums[0]
             blank_streak = 0; i += 1; continue
+        # Só conta como lançamento real se a coluna "Parque" (a primeira) repetir o nome do
+        # parque, igual em toda linha de item de verdade nessas planilhas -- isso evita
+        # "vazar" pra dentro da lista notas soltas tipo "CONTATO FORNECEDORES AQUI" ou uma
+        # tabela de recorte por parque que aparece depois da lista em algumas abas (ex.:
+        # " AQUARIO JAN 2026"), que não têm nada na coluna A mas por coincidência de posição
+        # de coluna acabam caindo em cima de "Tipo"/"Status"/"OK?".
+        # (algumas abas -- ex. a genérica "VILA VELHA", que empilha Abril e Maio na mesma
+        # aba -- repetem um segundo cabeçalho "Parque/Tipo/.../STATUS" mais pra baixo; sem
+        # esse segundo `or`, esse cabeçalho repetido também "vazaria" pra lista de itens).
+        if not _clean_str(cell(row, 0)) or _norm_txt(cell(row, 0)) == "PARQUE":
+            blank_streak += 1
+            if blank_streak >= 25:
+                break
+            i += 1
+            continue
         valor = cell(row, col_valor) if col_valor is not None else None
         valor = valor if isinstance(valor, (int, float)) else None
         desc = _clean_str(cell(row, col_desc)) if col_desc is not None else None
         forn = _clean_str(cell(row, col_forn)) if col_forn is not None else None
         tipo = _clean_str(cell(row, col_tipo)) if col_tipo is not None else None
+        ok = _clean_str(cell(row, col_ok)) if col_ok is not None else None
         if valor is not None or desc or forn or tipo:
             items.append({
                 "tipo": tipo,
@@ -1103,6 +1120,7 @@ def _parse_plano_midia_sheet(rows):
                 "descricao": desc,
                 "valor": valor,
                 "status": _clean_str(cell(row, col_status)) if col_status is not None else None,
+                "ok": ok,
             })
             blank_streak = 0
         else:
@@ -1111,12 +1129,19 @@ def _parse_plano_midia_sheet(rows):
                 break
         i += 1
 
-    previsto = previsto_val if previsto_val is not None else orcado_val
+    # "Previsto" (comprometido) só conta os lançamentos com "OK?" = "Sim" -- qualquer outro
+    # status ("Não", "Análise Camila", em branco etc.) é só proposta/opção em negociação e não
+    # deve entrar na soma que aparece nos cards. Isso substitui a leitura das linhas-resumo
+    # ORÇADO/PREVISTO/TOTAL da própria planilha (que não davam pra confiar que seguiam essa
+    # mesma regra) -- só cai de volta pra elas se a aba nem tiver uma coluna "OK?".
+    if col_ok is not None:
+        previsto = sum(it["valor"] for it in items if it["valor"] is not None and _norm_txt(it["ok"]) == "SIM")
+    else:
+        previsto = previsto_val if previsto_val is not None else orcado_val
+
     if budget is None and previsto is not None and saldo_val is not None:
         budget = previsto + saldo_val
-    saldo = saldo_val
-    if saldo is None and budget is not None and previsto is not None:
-        saldo = budget - previsto
+    saldo = (budget - previsto) if (budget is not None and previsto is not None) else saldo_val
 
     return {"budget": budget, "previsto": previsto, "saldo": saldo, "items": items}
 
