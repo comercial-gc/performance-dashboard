@@ -261,6 +261,12 @@ def detect_meses_com_dados(service, spreadsheet_id, meses_todos):
     existe mas ainda está vazia (só o molde, sem nenhum "Realizado 2026" preenchido) --
     os meses seguintes na sequência também são tratados como sem dado, mesmo que por
     algum motivo tenham aba criada fora de ordem.
+    BUG EVITADO: os meses futuros (ainda não iniciados) não ficam com a célula vazia --
+    a planilha preenche "Realizado 2026" com 0 (não com célula em branco) até o mês
+    realmente começar, igual já vimos nas abas DIÁRIO. Um teste de "existe valor não-nulo"
+    conta esse 0 como "tem dado" e deixava passar o ano inteiro (Setembro a Dezembro
+    incluídos, todos com 0). Por isso o teste exige um valor REALMENTE positivo (>0) em
+    algum dia/parque, não só "diferente de None".
     """
     resultado = []
     for mes in meses_todos:
@@ -274,7 +280,7 @@ def detect_meses_com_dados(service, spreadsheet_id, meses_todos):
         n_days = calendar.monthrange(2026, month_number)[1]
         daily = parse_month_daily(rows, n_days)
         tem_dado = any(
-            any(v is not None for v in (park_data.get("Realizado 2026") or []))
+            any(isinstance(v, (int, float)) and v > 0 for v in (park_data.get("Realizado 2026") or []))
             for park_data in daily.values()
         )
         if not tem_dado:
