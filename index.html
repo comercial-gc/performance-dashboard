@@ -790,12 +790,14 @@
           <option value="">Todos os Parques</option>
         </select>
       </div>
+      <div class="mix-morador-toggle" id="mixPeriodoToggle">
+        <button class="active" data-val="mensal" onclick="setMixPeriodo('mensal')">Mensal</button>
+        <button data-val="acumulado" onclick="setMixPeriodo('acumulado')">Acumulado</button>
+      </div>
       <div class="mix-filter-field">
-        <label for="mixPeriodoSelect">Período</label>
+        <label for="mixPeriodoSelect">Outro período</label>
         <select id="mixPeriodoSelect" onchange="setMixPeriodoSelect(this.value)">
-          <option value="mensal">Mês Atual</option>
-          <option value="acumulado">Acumulado no Ano</option>
-          <option value="custom">Personalizado</option>
+          <option value="">-- Selecionar --</option>
         </select>
       </div>
       <div class="mix-filter-field" id="mixCustomRangeWrap" style="display:none;">
@@ -809,7 +811,7 @@
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
       </div>
     </div>
-    <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | "Personalizado" e os meses individuais são calculados a partir do lançamento diário por parque</div>
+    <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | O menu "Outro período" (mês específico ou Personalizado) é calculado a partir do lançamento diário por parque</div>
     <div class="mix-grid" id="mixGrid"></div>
     <div class="mix-legend">
       <span><span class="sq" style="background:#3b7ddd"></span>Local</span>
@@ -3247,8 +3249,26 @@ function setMixParque(val){
   renderMixOrigem();
 }
 
-function setMixPeriodoSelect(val){
+// Toggle rápido Mensal/Acumulado -- exatamente como era antes do "Outro período" existir.
+function setMixPeriodo(val){
   mixPeriodoState = val;
+  document.querySelectorAll('#mixPeriodoToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === val));
+  const sel = document.getElementById('mixPeriodoSelect');
+  if(sel) sel.value = ''; // volta o "Outro período" pro estado neutro (nenhum mês/personalizado selecionado)
+  const customWrap = document.getElementById('mixCustomRangeWrap');
+  if(customWrap) customWrap.style.display = 'none';
+  renderMixOrigem();
+}
+
+// Dropdown "Outro período" -- controle ADICIONAL (mês específico ou Personalizado), não
+// substitui o toggle Mensal/Acumulado. Escolher "-- Selecionar --" de volta = usar o toggle.
+function setMixPeriodoSelect(val){
+  if(!val){
+    setMixPeriodo(mixPeriodoState === 'acumulado' ? 'acumulado' : 'mensal');
+    return;
+  }
+  mixPeriodoState = val;
+  document.querySelectorAll('#mixPeriodoToggle button').forEach(b => b.classList.remove('active'));
   const customWrap = document.getElementById('mixCustomRangeWrap');
   if(customWrap) customWrap.style.display = (val === 'custom') ? 'flex' : 'none';
   renderMixOrigem();
@@ -3284,12 +3304,13 @@ function populateMixOrigemFiltros(){
       return `<option value="mes:${mes}">${MES_CAP[mes]}</option>`;
     }).join('');
     periodoSel.innerHTML = `
-      <option value="mensal">Mês Atual</option>
-      <option value="acumulado">Acumulado no Ano</option>
+      <option value="">-- Selecionar --</option>
       ${mesesOptions}
       <option value="custom">Personalizado</option>
     `;
-    periodoSel.value = mixPeriodoState;
+    // só marca uma opção do "Outro período" se o estado atual for de fato mês/personalizado;
+    // Mensal/Acumulado são controlados pelo toggle de botões, não por este select.
+    periodoSel.value = (mixPeriodoState.startsWith('mes:') || mixPeriodoState === 'custom') ? mixPeriodoState : '';
 
     const dataIni = document.getElementById('mixDataIni');
     const dataFim = document.getElementById('mixDataFim');
