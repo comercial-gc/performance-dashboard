@@ -858,6 +858,152 @@ def build_mix_origem(service, spreadsheet_id, sheet_name, col_offset=0):
 
 
 # ---------------------------------------------------------------------------
+# [2026] Mix OBZ e visitação.xlsx -> abas "DIÁRIO - <PARQUE>"
+# Ledger diário por parque (uma linha por dia do ano), com blocos de colunas repetidos
+# por ano (2026 real, 2025 real, OBZ, anos anteriores, chuva etc.). Usamos só os 2
+# primeiros blocos (2026 e 2025, sempre nessa ordem) pra alimentar o filtro por período
+# customizado da aba Mix de Origem -- a aba "ANÁLISE MIX DE ORIGEM 2026" só tem o mês
+# atual + acumulado do ano prontos, não tem cada mês passado em separado.
+# BUG EVITADO (mesma classe de outras abas irregulares do projeto): o texto do cabeçalho
+# da 2ª linha (ex.: "BRASIL 25") às vezes fica com o ano errado mesmo dentro do bloco de
+# 2026 (a planilha não atualiza o sufixo do rótulo todo ano) -- por isso identificamos o
+# bloco pelo ANO NA LINHA 1 (que está certo), nunca pelo sufixo do rótulo da linha 2.
+# Categorias variam por parque (fiéis à fonte, sem forçar padronização -- mesmos nomes
+# já usados na aba Mix de Origem mensal, pra herdar cor/legenda):
+#   - AquaRio/BioParque/Paineiras/Três Pescadores/Vila Velha: Local, Brasileiros, Estrangeiros
+#   - M3F/AquaFoz: Morador, Estado (coluna "LOCAL"), Brasileiros, Mercosul, Estrangeiros
+#   - PNI: Morador/Estado (coluna única "MORADOR/LOCAL"), Brasileiros, Mercosul, Estrangeiros
+# ---------------------------------------------------------------------------
+
+DIARIO_SHEET_NAMES = {
+    "AquaRio": "DIÁRIO - AQUA",
+    "BioParque": "DIÁRIO - BIO",
+    "Paineiras": "DIÁRIO - PAI",
+    "M3F": "DIÁRIO - M3F",
+    "AquaFoz": "DIÁRIO - AQF",
+    "PNI": "DIÁRIO PNI",
+    "Três Pescadores": "DIÁRIO - 3 PESCADORES",
+    "Vila Velha": "DIÁRIO - VILA VELHA",
+}
+
+
+def _diario_find_col(header, start, end, keyword, exclude):
+    for c in range(start, end):
+        if c in exclude:
+            continue
+        h = _norm_txt(header[c]) if c < len(header) else ""
+        if keyword in h:
+            return c
+    return None
+
+
+def _diario_parse_block_cols(header, start, end):
+    claimed = set()
+    col_data = _diario_find_col(header, start, end, "DATA", claimed)
+    if col_data is not None:
+        claimed.add(col_data)
+    col_morador = _diario_find_col(header, start, end, "MORADOR", claimed)
+    if col_morador is not None:
+        claimed.add(col_morador)
+    col_mercosul = _diario_find_col(header, start, end, "MERCOSUL", claimed)
+    if col_mercosul is not None:
+        claimed.add(col_mercosul)
+    col_estrangeiro = _diario_find_col(header, start, end, "ESTRANGEIRO", claimed)
+    if col_estrangeiro is not None:
+        claimed.add(col_estrangeiro)
+    col_brasil = _diario_find_col(header, start, end, "BRASIL", claimed)
+    if col_brasil is not None:
+        claimed.add(col_brasil)
+    col_local = _diario_find_col(header, start, end, "LOCAL", claimed)
+    return {
+        "data": col_data, "morador": col_morador, "mercosul": col_mercosul,
+        "estrangeiro": col_estrangeiro, "brasil": col_brasil, "local": col_local,
+    }
+
+
+def _diario_categoria_labels(cols):
+    """Decide os nomes de categoria deste bloco a partir de quais colunas existem -- os
+    mesmos nomes já usados na aba Mix de Origem mensal, pra herdar cor/legenda no front."""
+    labels = []
+    if cols["morador"] is not None and cols["local"] is None:
+        labels.append(("Morador/Estado", "morador"))
+    elif cols["morador"] is not None and cols["local"] is not None:
+        labels.append(("Morador", "morador"))
+        labels.append(("Estado", "local"))
+    elif cols["local"] is not None:
+        labels.append(("Local", "local"))
+    if cols["brasil"] is not None:
+        labels.append(("Brasileiros", "brasil"))
+    if cols["mercosul"] is not None:
+        labels.append(("Mercosul", "mercosul"))
+    if cols["estrangeiro"] is not None:
+        labels.append(("Estrangeiros", "estrangeiro"))
+    return labels
+
+
+def _parse_diario_sheet(rows):
+    if len(rows) < 3:
+        return None
+    header = rows[1]
+    # BUG EVITADO: a 1a linha (marcador de ano por bloco, tipo "2026"/"2025") não fica
+    # alinhada de forma confiável com o inicio real de cada bloco -- em algumas abas vem
+    # deslocada 1-2 colunas pra direita, em outras (PNI) o marcador do bloco de 2026 nem
+    # existe. Por isso os blocos são identificados pela própria coluna "Data" da 2a linha
+    # (cabeçalho de verdade), que sempre existe e sempre abre cada bloco.
+    data_cols = [c for c, v in enumerate(header) if "DATA" in _norm_txt(v)]
+    if len(data_cols) < 2:
+        return None
+    c26_start, c25_start = data_cols[0], data_cols[1]
+    c25_end = data_cols[2] if len(data_cols) > 2 else len(header)
+
+    cols26 = _diario_parse_block_cols(header, c26_start, c25_start)
+    cols25 = _diario_parse_block_cols(header, c25_start, c25_end)
+    if cols26["data"] is None or cols25["data"] is None:
+        return None
+
+    labels26 = _diario_categoria_labels(cols26)
+    if not labels26:
+        return None
+    categorias = [lbl for lbl, _key in labels26]
+    labels25_map = dict(_diario_categoria_labels(cols25))  # label -> key, pra achar a coluna certa no bloco 2025
+
+    dias = []
+    for row in rows[2:]:
+        data26_serial = cell(row, cols26["data"])
+        if data26_serial is None:
+            continue
+        data26 = serial_to_date(data26_serial)
+        if data26 is None:
+            continue
+        v26, v25 = {}, {}
+        for lbl, key in labels26:
+            v26[lbl] = cell(row, cols26[key]) if cols26.get(key) is not None else None
+        for lbl in categorias:
+            key25 = labels25_map.get(lbl)
+            v25[lbl] = cell(row, cols25[key25]) if key25 and cols25.get(key25) is not None else None
+        # pula dias sem nenhum valor real em 2026 (linhas-molde do resto do ano ainda vazias)
+        if all(v is None for v in v26.values()):
+            continue
+        dias.append({"data": data26.isoformat(), "v26": v26, "v25": v25})
+
+    return {"categorias": categorias, "dias": dias}
+
+
+def build_mix_origem_diario(service, spreadsheet_id):
+    result = {}
+    for park, sheet_name in DIARIO_SHEET_NAMES.items():
+        try:
+            rows = get_values(service, spreadsheet_id, sheet_name)
+            parsed = _parse_diario_sheet(rows)
+        except Exception as e:
+            print(f"AVISO: falha ao ler aba diária de {park} ({e}) -- fica sem dado diário neste ciclo.", file=sys.stderr)
+            parsed = None
+        if parsed:
+            result[park] = parsed
+    return result
+
+
+# ---------------------------------------------------------------------------
 # [2026] Mix OBZ e visitação.xlsx -> aba "AQF E M3F | SMorador"
 # Proporcao "Sem morador" / "Com morador" mais recente, usada para estimar a Captação
 # PNI "sem morador" (ver comentario original no HTML sobre SEMMORADOR_RATIO).
@@ -1495,6 +1641,16 @@ def main():
         service, cfg["mix_obz_visitacao_id"], cfg["sheet_names"]["mix_origem"], col_offset=11
     )
 
+    print("Lendo Mix de Origem diário (para filtro por período)...", file=sys.stderr)
+    try:
+        mix_origem_diario = build_mix_origem_diario(service, cfg["mix_obz_visitacao_id"])
+    except Exception as e:
+        # NUNCA deixa esse filtro novo derrubar o resto do pipeline -- se der erro (aba
+        # renomeada, layout mudou etc.), o filtro por período fica sem dado neste ciclo,
+        # mas o resto do Mix de Origem (Mensal/Acumulado) continua normal.
+        print(f"AVISO: falha ao ler Mix de Origem diário ({e}) -- filtro por período fica vazio neste ciclo.", file=sys.stderr)
+        mix_origem_diario = {}
+
     print("Lendo Eventos...", file=sys.stderr)
     eventos = build_eventos(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
@@ -1552,6 +1708,7 @@ def main():
         "INVEST_MKT_DETAIL": invest_mkt_detail,
         "MIX_ORIGEM": mix_origem,
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
+        "MIX_ORIGEM_DIARIO": mix_origem_diario,
         "EVENTOS": eventos,
         "HISTORICO": historico,
         "PLANO_MIDIA": plano_midia,
