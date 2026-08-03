@@ -370,7 +370,10 @@
 
   /* ── Aba Mix de Origem ── */
   .mix-container{ padding:16px 24px; }
-  .mix-title-row{ display:flex; align-items:flex-start; gap:10px; margin-bottom:4px; }
+  .mix-title-row{ display:flex; align-items:flex-start; flex-wrap:wrap; row-gap:10px; gap:10px; margin-bottom:4px; }
+  .mix-filter-field{ display:flex; align-items:center; gap:6px; }
+  .mix-filter-field label{ font-size:12.5px; font-weight:700; color:var(--muted); }
+  .mix-filter-field select, .mix-filter-field input[type=date]{ font-size:12.5px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink); cursor:pointer; }
   .mix-morador-toggle{ margin-left:auto; display:flex; background:#eef1ee; border-radius:20px; padding:3px; gap:2px; }
   .mix-morador-toggle button{ border:none; background:transparent; padding:7px 16px; border-radius:16px; font-size:12.5px; font-weight:700; color:var(--muted); cursor:pointer; }
   .mix-morador-toggle button.active{ background:#0f3d2e; color:#fff; }
@@ -781,16 +784,32 @@
         <div class="mix-title" id="mixTitle">Mix de Origem | Parques Rio</div>
         <div class="mix-subtitle" id="mixSubtitle"></div>
       </div>
-      <div class="mix-morador-toggle" id="mixPeriodoToggle">
-        <button class="active" data-val="mensal" onclick="setMixPeriodo('mensal')">Mensal</button>
-        <button data-val="acumulado" onclick="setMixPeriodo('acumulado')">Acumulado</button>
+      <div class="mix-filter-field">
+        <label for="mixParqueSelect">Parque</label>
+        <select id="mixParqueSelect" onchange="setMixParque(this.value)">
+          <option value="">Todos os Parques</option>
+        </select>
+      </div>
+      <div class="mix-filter-field">
+        <label for="mixPeriodoSelect">Período</label>
+        <select id="mixPeriodoSelect" onchange="setMixPeriodoSelect(this.value)">
+          <option value="mensal">Mês Atual</option>
+          <option value="acumulado">Acumulado no Ano</option>
+          <option value="custom">Personalizado</option>
+        </select>
+      </div>
+      <div class="mix-filter-field" id="mixCustomRangeWrap" style="display:none;">
+        <label for="mixDataIni">De</label>
+        <input type="date" id="mixDataIni" onchange="renderMixOrigem()">
+        <label for="mixDataFim">Até</label>
+        <input type="date" id="mixDataFim" onchange="renderMixOrigem()">
       </div>
       <div class="mix-morador-toggle" id="mixMoradorToggle" style="margin-left:8px;">
         <button class="active" data-val="com" onclick="setMixMorador('com')">Com Morador</button>
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
       </div>
     </div>
-    <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria)</div>
+    <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | "Personalizado" e os meses individuais são calculados a partir do lançamento diário por parque</div>
     <div class="mix-grid" id="mixGrid"></div>
     <div class="mix-legend">
       <span><span class="sq" style="background:#3b7ddd"></span>Local</span>
@@ -1758,6 +1777,27 @@ function updateMixOrigemHeader(){
   const subEl = document.getElementById('mixSubtitle');
   if(!titleEl || !subEl) return;
 
+  if(mixPeriodoState === 'acumulado'){
+    titleEl.textContent = 'Mix de Origem | Parques Rio | Acumulado no Ano';
+    subEl.textContent = 'comparado ao mesmo período acumulado de 2025';
+    return;
+  }
+  if(mixPeriodoState === 'custom'){
+    const ini = document.getElementById('mixDataIni') ? document.getElementById('mixDataIni').value : '';
+    const fim = document.getElementById('mixDataFim') ? document.getElementById('mixDataFim').value : '';
+    titleEl.textContent = 'Mix de Origem | Parques Rio | Personalizado';
+    subEl.textContent = (ini && fim)
+      ? `${fmtDataBr(ini)} a ${fmtDataBr(fim)} comparado ao mesmo período de 2025`
+      : 'selecione as datas De/Até';
+    return;
+  }
+  if(mixPeriodoState.startsWith('mes:')){
+    const mesNome = MES_CAP[mixPeriodoState.slice(4)] || mixPeriodoState.slice(4);
+    titleEl.textContent = `Mix de Origem | Parques Rio | ${mesNome}`;
+    subEl.textContent = 'comparado ao mesmo mês de 2025';
+    return;
+  }
+
   const mesData = VISITACAO[OPEN_MONTH];
   let lastDay = null;
   if(mesData && mesData.daily){
@@ -1782,6 +1822,12 @@ function updateMixOrigemHeader(){
   } else {
     subEl.textContent = `comparado ao mesmo período 2025`;
   }
+}
+
+function fmtDataBr(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
 }
 let weatherLoaded = false;
 
@@ -2671,6 +2717,7 @@ function renderParkSummary() {
 
 let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
+let MIX_ORIGEM_DIARIO = {};
 let EVENTOS = [];
 let HISTORICO = { parques: {}, parquesComShare: [] };
 let histViewState = 'grafico'; // 'grafico' | 'regua' (régua = tabela)
@@ -3162,8 +3209,10 @@ function fmtMixDelta(v) {
 }
 
 let mixMoradorState = 'com';
-let mixPeriodoState = 'mensal';
+let mixPeriodoState = 'mensal'; // 'mensal' | 'acumulado' | 'mes:JANEIRO'..'mes:DEZEMBRO' | 'custom'
+let mixParqueState = ''; // '' = Todos os Parques
 const MIX_MORADOR_LABEL = { 'M3F':'Morador', 'AquaFoz':'Morador', 'PNI':'Morador/Estado' };
+const MESES_DIARIO_ORDEM = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
 
 function setMixMorador(val){
   mixMoradorState = val;
@@ -3171,10 +3220,131 @@ function setMixMorador(val){
   renderMixOrigem();
 }
 
-function setMixPeriodo(val){
-  mixPeriodoState = val;
-  document.querySelectorAll('#mixPeriodoToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === val));
+function setMixParque(val){
+  mixParqueState = val;
   renderMixOrigem();
+}
+
+function setMixPeriodoSelect(val){
+  mixPeriodoState = val;
+  const customWrap = document.getElementById('mixCustomRangeWrap');
+  if(customWrap) customWrap.style.display = (val === 'custom') ? 'flex' : 'none';
+  renderMixOrigem();
+}
+
+// Monta as opções do dropdown de Parque e de Período a partir do que realmente existe em
+// MIX_ORIGEM (mensal, pra lista de parques) e MIX_ORIGEM_DIARIO (pra saber quais meses têm
+// dado diário e os limites min/max dos campos de data "Personalizado").
+function populateMixOrigemFiltros(){
+  const parqueSel = document.getElementById('mixParqueSelect');
+  if(parqueSel){
+    const parques = Object.keys(MIX_ORIGEM).sort((a,b) => a.localeCompare(b,'pt-BR'));
+    parqueSel.innerHTML = '<option value="">Todos os Parques</option>' +
+      parques.map(p => `<option value="${p}">${p}</option>`).join('');
+    parqueSel.value = mixParqueState;
+  }
+
+  const periodoSel = document.getElementById('mixPeriodoSelect');
+  if(periodoSel){
+    let minData = null, maxData = null;
+    const mesesComDado = new Set();
+    Object.values(MIX_ORIGEM_DIARIO).forEach(src => {
+      (src.dias || []).forEach(d => {
+        mesesComDado.add(d.data.slice(0,7)); // 'YYYY-MM'
+        if(!minData || d.data < minData) minData = d.data;
+        if(!maxData || d.data > maxData) maxData = d.data;
+      });
+    });
+    const mesesOptions = MESES_DIARIO_ORDEM.map((mes, i) => {
+      const mm = String(i+1).padStart(2,'0');
+      const temDado = mesesComDado.has(`2026-${mm}`);
+      if(!temDado) return '';
+      return `<option value="mes:${mes}">${MES_CAP[mes]}</option>`;
+    }).join('');
+    periodoSel.innerHTML = `
+      <option value="mensal">Mês Atual</option>
+      <option value="acumulado">Acumulado no Ano</option>
+      ${mesesOptions}
+      <option value="custom">Personalizado</option>
+    `;
+    periodoSel.value = mixPeriodoState;
+
+    const dataIni = document.getElementById('mixDataIni');
+    const dataFim = document.getElementById('mixDataFim');
+    if(dataIni && dataFim && minData && maxData){
+      dataIni.min = minData; dataIni.max = maxData;
+      dataFim.min = minData; dataFim.max = maxData;
+      if(!dataIni.value) dataIni.value = minData;
+      if(!dataFim.value) dataFim.value = maxData;
+    }
+  }
+}
+
+// Soma os lançamentos diários (MIX_ORIGEM_DIARIO) dentro de um intervalo de datas
+// [dataIni, dataFim] (strings 'YYYY-MM-DD', inclusive) e devolve no MESMO formato que
+// MIX_ORIGEM/MIX_ORIGEM_ACUMULADO ({parque: {formato, categorias:[...]}}), pra poder
+// reaproveitar o renderMixOrigem() (cards, tabela, evolução e donuts) sem duplicar nada.
+function computeMixOrigemPeriodo(dataIni, dataFim){
+  const fonte = {};
+  if(!dataIni || !dataFim) return fonte;
+  Object.keys(MIX_ORIGEM_DIARIO).forEach(parque => {
+    const src = MIX_ORIGEM_DIARIO[parque];
+    if(!src || !src.dias || !src.dias.length) return;
+    const dias = src.dias.filter(d => d.data >= dataIni && d.data <= dataFim);
+    if(!dias.length) return;
+
+    const sum26 = {}, sum25 = {};
+    src.categorias.forEach(cat => { sum26[cat] = 0; sum25[cat] = 0; });
+    let temAlgum2025 = false;
+    dias.forEach(d => {
+      src.categorias.forEach(cat => {
+        const v26 = d.v26 ? d.v26[cat] : null;
+        const v25 = d.v25 ? d.v25[cat] : null;
+        if(v26 !== null && v26 !== undefined) sum26[cat] += v26;
+        if(v25 !== null && v25 !== undefined){ sum25[cat] += v25; temAlgum2025 = true; }
+      });
+    });
+    const total26 = src.categorias.reduce((s,c) => s + sum26[c], 0);
+    const total25 = src.categorias.reduce((s,c) => s + sum25[c], 0);
+    const isFull = temAlgum2025 && total25 > 0;
+
+    const categorias = src.categorias.map(cat => {
+      const v2026 = sum26[cat];
+      const v2025 = isFull ? sum25[cat] : null;
+      const delta = (isFull && v2025 > 0) ? (v2026 - v2025) / v2025 : null;
+      const share26 = total26 > 0 ? v2026 / total26 : null;
+      const share25 = (isFull && total25 > 0) ? v2025 / total25 : null;
+      return { label: cat, v2025, v2026, delta, share25, share26 };
+    });
+    const totalDelta = (isFull && total25 > 0) ? (total26 - total25) / total25 : null;
+    categorias.push({
+      label: 'Total Período', v2025: isFull ? total25 : null, v2026: total26,
+      delta: totalDelta, share25: isFull ? 1 : null, share26: 1,
+    });
+
+    fonte[parque] = { formato: isFull ? 'full' : 'somente2026', categorias };
+  });
+  return fonte;
+}
+
+// Decide qual objeto de dados alimenta o grid, conforme o Período selecionado -- Mensal e
+// Acumulado continuam vindo prontos da aba "ANÁLISE MIX DE ORIGEM 2026" (sem mudança);
+// mês específico e Personalizado são calculados na hora a partir do lançamento diário.
+function getMixFonte(){
+  if(mixPeriodoState === 'acumulado') return MIX_ORIGEM_ACUMULADO;
+  if(mixPeriodoState === 'mensal') return MIX_ORIGEM;
+  if(mixPeriodoState === 'custom'){
+    const ini = document.getElementById('mixDataIni') ? document.getElementById('mixDataIni').value : '';
+    const fim = document.getElementById('mixDataFim') ? document.getElementById('mixDataFim').value : '';
+    return computeMixOrigemPeriodo(ini, fim);
+  }
+  if(mixPeriodoState.startsWith('mes:')){
+    const mes = mixPeriodoState.slice(4);
+    const mm = String(MESES_DIARIO_ORDEM.indexOf(mes) + 1).padStart(2,'0');
+    const ultimoDia = new Date(2026, MESES_DIARIO_ORDEM.indexOf(mes) + 1, 0).getDate();
+    return computeMixOrigemPeriodo(`2026-${mm}-01`, `2026-${mm}-${String(ultimoDia).padStart(2,'0')}`);
+  }
+  return MIX_ORIGEM;
 }
 
 // Recalcula categorias/total excluindo a categoria "Morador" e redistribuindo o share
@@ -3203,8 +3373,17 @@ function renderMixOrigem() {
 
   updateMixOrigemHeader();
 
-  const fonte = mixPeriodoState === 'acumulado' ? MIX_ORIGEM_ACUMULADO : MIX_ORIGEM;
-  grid.innerHTML = Object.keys(fonte).map(parque => {
+  const fonte = getMixFonte();
+  const parquesOrdem = Object.keys(MIX_ORIGEM).length ? Object.keys(MIX_ORIGEM) : Object.keys(fonte);
+  const parquesFiltrados = (mixParqueState ? parquesOrdem.filter(p => p === mixParqueState) : parquesOrdem)
+    .filter(p => fonte[p]);
+
+  if(!parquesFiltrados.length){
+    grid.innerHTML = '<div class="hist-empty">Sem dados para esse período/parque.</div>';
+    return;
+  }
+
+  grid.innerHTML = parquesFiltrados.map(parque => {
     const d = fonte[parque];
     const isFull = d.formato === "full";
     const color = MIX_PARK_COLORS[parque] || "#333";
@@ -3393,6 +3572,7 @@ async function carregarDados(){
     INVEST_MKT_RESUMO = data.INVEST_MKT_RESUMO || {};
     MIX_ORIGEM = data.MIX_ORIGEM || {};
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
+    MIX_ORIGEM_DIARIO = data.MIX_ORIGEM_DIARIO || {};
     EVENTOS = data.EVENTOS || [];
     HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
     PLANO_MIDIA = data.PLANO_MIDIA || { resumo: {}, detail: {} };
@@ -3409,6 +3589,7 @@ async function carregarDados(){
   renderInvestMktResumo();
   renderInvestAccumChart();
   renderShareMonthRegua();
+  populateMixOrigemFiltros();
   renderMixOrigem();
   renderComboCharts('comboGrid','investimento', v=>fmtMoney(v));
   populateEventosSelects();
