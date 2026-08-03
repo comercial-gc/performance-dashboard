@@ -972,8 +972,12 @@ let VISITACAO = {};
 let SHARE = {};
 
 const MONTHS = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
-const MONTH_LABEL = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', ABRIL:'Abril', MAIO:'Maio', JUNHO:'Junho', JULHO:'Julho (parcial)', AGOSTO:'Agosto (só meta)', SETEMBRO:'Setembro (só meta)', OUTUBRO:'Outubro (só meta)', NOVEMBRO:'Novembro (só meta)', DEZEMBRO:'Dezembro (só meta)'};
-const CLOSED_MONTHS = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO'];
+// MONTH_LABEL/CLOSED_MONTHS/OPEN_MONTH eram travados na mão (ficavam parados em "Julho"
+// pra sempre, mesmo meses depois) -- agora são recalculados em computeMonthState(), a
+// partir de quais meses o VISITACAO (data.json) realmente trouxe com dado, toda vez que
+// os dados carregam. Valores abaixo são só o estado inicial antes do primeiro load.
+let MONTH_LABEL = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', ABRIL:'Abril', MAIO:'Maio', JUNHO:'Junho', JULHO:'Julho', AGOSTO:'Agosto', SETEMBRO:'Setembro', OUTUBRO:'Outubro', NOVEMBRO:'Novembro', DEZEMBRO:'Dezembro'};
+let CLOSED_MONTHS = [];
 const PARKS = ['AquaRio','BioParque','Paineiras','PNI','M3F','AquaFoz','Três Pescadores','Vila Velha'];
 const PARK_COLORS = {
   AquaRio:'#305496', BioParque:'#C65911', Paineiras:'#548235', PNI:'#0D5955',
@@ -993,7 +997,7 @@ function populateSelects(){
   const ms = document.getElementById('monthSelect');
   ms.innerHTML = MONTHS.map(m => `<option value="${m}">${MONTH_LABEL[m]}</option>`).join('')
     + '<option value="PERSONALIZADO">Personalizado...</option>';
-  ms.value = 'JULHO';
+  ms.value = OPEN_MONTH;
 }
 
 function kpiCardHtml(label, value, d2025, dobz){
@@ -1765,8 +1769,26 @@ function renderComboCharts(containerId, barField, barFmt){
   }).join('');
 }
 
-const OPEN_MONTH = MONTHS.find(m => !CLOSED_MONTHS.includes(m));
+let OPEN_MONTH = MONTHS[0];
 const MES_CAP = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', ABRIL:'Abril', MAIO:'Maio', JUNHO:'Junho', JULHO:'Julho', AGOSTO:'Agosto', SETEMBRO:'Setembro', OUTUBRO:'Outubro', NOVEMBRO:'Novembro', DEZEMBRO:'Dezembro'};
+
+// Recalcula OPEN_MONTH/CLOSED_MONTHS/MONTH_LABEL a partir do que o VISITACAO (data.json)
+// realmente trouxe -- chamado logo depois de carregar os dados, antes de popular qualquer
+// select de mês. O "mês aberto" (parcial) é sempre o ÚLTIMO mês que o backend detectou com
+// Realizado (detect_meses_com_dados no extract_data.py); os anteriores viram "fechados";
+// os seguintes (sem dado ainda) ficam com o rótulo "(só meta)".
+function computeMonthState(){
+  const comDados = MONTHS.filter(m => VISITACAO[m]);
+  OPEN_MONTH = comDados.length ? comDados[comDados.length - 1] : MONTHS[0];
+  CLOSED_MONTHS = comDados.slice(0, -1);
+  MONTH_LABEL = {};
+  MONTHS.forEach(m => {
+    const nome = MES_CAP[m] || m;
+    if(m === OPEN_MONTH) MONTH_LABEL[m] = `${nome} (parcial)`;
+    else if(CLOSED_MONTHS.includes(m)) MONTH_LABEL[m] = nome;
+    else MONTH_LABEL[m] = `${nome} (só meta)`;
+  });
+}
 
 // Calcula, a partir dos dados reais de VISITACAO (não mais texto fixo), até que dia do
 // mês atual (OPEN_MONTH) já existe "Realizado 2026" preenchido -- usado no cabeçalho da
@@ -1856,7 +1878,7 @@ function populateClimaMonthSelect(){
   const sel = document.getElementById('climaMonthSelect');
   if(!sel || sel.options.length) return;
   sel.innerHTML = MONTHS.map(m => `<option value="${m}">${MONTH_LABEL[m]}</option>`).join('');
-  sel.value = 'JULHO';
+  sel.value = OPEN_MONTH;
 }
 
 const CLIMA_COLORS = {
@@ -3581,6 +3603,7 @@ async function carregarDados(){
   }
 
   initTooltip();
+  computeMonthState();
   populateSelects();
   initCustomRangeControls();
   renderLogoBanner();
