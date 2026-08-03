@@ -653,7 +653,7 @@
 <section class="panel">
     <div class="panel-head">
       <h2>Visitação, E-commerce e Share por mês</h2>
-      <span class="hint">Jan a Jul/26, vs 2025 no mês | meta de Share: 25% (exceto PNI, Três Pescadores e Vila Velha)</span>
+      <span class="hint" id="shareMonthHint">Jan a Jul/26, vs 2025 no mês | meta de Share: 25% (exceto PNI, Três Pescadores e Vila Velha)</span>
     </div>
     <div class="panel-body">
       <div class="regua-wrap">
@@ -674,7 +674,7 @@
   <section class="panel">
     <div class="panel-head">
       <h2>Evolução mensal, investimento x share</h2>
-      <span class="hint">Jan/25 a Jul/26 (parcial), por parque | barra branca dentro = % share, linha pontilhada = R$ investido</span>
+      <span class="hint" id="comboEvolucaoHint">Jan/25 a Jul/26 (parcial), por parque | barra branca dentro = % share, linha pontilhada = R$ investido</span>
     </div>
     <div class="panel-body">
       <div class="combo-grid" id="comboGrid"></div>
@@ -1312,7 +1312,7 @@ function computeAccum(meses, park){
 function renderShareMonthRegua(){
   const meses = SHARE.investimentoMidia.meses; // { Janeiro: {AquaRio:{...}, ...}, ... }
   document.getElementById('shareMonthNums').innerHTML =
-    INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m==='Julho' ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
+    INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m===MES_CAP[OPEN_MONTH] ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
   const grid = document.getElementById('shareMonthGrid');
   const metaRows = SHARE_PARKS.map((park, parkIdx) => {
     const parkColor = PARK_COLORS[park] || '#888';
@@ -1388,14 +1388,19 @@ function renderShareMonthRegua(){
   renderShareMetaChart(gcShareAcum);
 }
 
-const INVEST_MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
+// BUG EVITADO: esta lista ficava travada em Jan-Jul na mão -- por isso "Agosto" não
+// aparecia nas tabelas "Visitação/E-commerce/Share por mês" e "Investimento em mídia por
+// mês" mesmo já tendo virado o mês vigente (o gráfico ao lado usava outra fonte, dinâmica,
+// por isso só ele mostrava Agosto certo). Agora é recalculada em computeMonthState(),
+// sempre até o OPEN_MONTH (mês vigente de verdade).
+let INVEST_MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
 const INVEST_PARKS = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz','3P','Vila Velha'];
 const SHARE_PARKS  = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz'];
 
 function renderInvestRegua(){
   const meses = SHARE.investimentoMidia.meses;
   document.getElementById('investMonthNums').innerHTML =
-    INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m==='Julho' ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
+    INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m===MES_CAP[OPEN_MONTH] ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
   const grid = document.getElementById('investGrid');
   grid.innerHTML = INVEST_PARKS.map(park => {
     const parkColor = PARK_COLORS[park] || '#888';
@@ -1804,6 +1809,16 @@ function computeMonthState(){
     else if(CLOSED_MONTHS.includes(m)) MONTH_LABEL[m] = nome;
     else MONTH_LABEL[m] = `${nome} (só meta)`;
   });
+
+  // INVEST_MONTHS (tabelas "Visitação/E-commerce/Share por mês" e "Investimento em mídia
+  // por mês") e os textos "Jan a Jul/26..." -- travados na mão antes, agora até OPEN_MONTH.
+  const idxOpen = MONTHS.indexOf(OPEN_MONTH);
+  INVEST_MONTHS = MONTHS.slice(0, idxOpen + 1).map(m => MES_CAP[m]);
+  const openAbrev = MES_CAP[OPEN_MONTH].slice(0,3);
+  const shareHint = document.getElementById('shareMonthHint');
+  if(shareHint) shareHint.textContent = `Jan a ${openAbrev}/26, vs 2025 no mês | meta de Share: 25% (exceto PNI, Três Pescadores e Vila Velha)`;
+  const comboHint = document.getElementById('comboEvolucaoHint');
+  if(comboHint) comboHint.textContent = `Jan/25 a ${openAbrev}/26 (parcial), por parque | barra branca dentro = % share, linha pontilhada = R$ investido`;
 }
 
 // Calcula, a partir dos dados reais de VISITACAO (não mais texto fixo), até que dia do
