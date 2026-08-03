@@ -687,7 +687,7 @@
       <span class="hint">Valor 2026, com 2025 e variação</span>
     </div>
     <div class="panel-body">
-      <div class="split-grid" style="grid-template-columns:1.5fr 1fr;">
+      <div class="split-grid" style="grid-template-columns:1fr;">
         <div class="regua-wrap" id="investReguaWrap">
           <div class="invest-monthnum" id="investMonthNums"></div>
           <div class="regua" id="investGrid"></div>
@@ -697,7 +697,7 @@
           <div class="chart-legend">
             <span><span class="sw" style="background:#4a5a52"></span>2026</span>
             <span><span class="sw" style="background:#c9d1cc"></span>2025</span>
-            <span>acumulado Jan a Jul</span>
+            <span id="investChartAcumLabel">acumulado Jan a Jul</span>
           </div>
         </div>
       </div>
@@ -1819,6 +1819,8 @@ function computeMonthState(){
   if(shareHint) shareHint.textContent = `Jan a ${openAbrev}/26, vs 2025 no mês | meta de Share: 25% (exceto PNI, Três Pescadores e Vila Velha)`;
   const comboHint = document.getElementById('comboEvolucaoHint');
   if(comboHint) comboHint.textContent = `Jan/25 a ${openAbrev}/26 (parcial), por parque | barra branca dentro = % share, linha pontilhada = R$ investido`;
+  const investAcumLabel = document.getElementById('investChartAcumLabel');
+  if(investAcumLabel) investAcumLabel.textContent = `acumulado Jan a ${openAbrev}`;
 }
 
 // Calcula, a partir dos dados reais de VISITACAO (não mais texto fixo), até que dia do
