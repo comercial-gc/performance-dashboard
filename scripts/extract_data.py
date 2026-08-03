@@ -251,6 +251,38 @@ def parse_atrativos_accum(rows):
     return accum
 
 
+def detect_meses_com_dados(service, spreadsheet_id, meses_todos):
+    """Descobre sozinho até qual mês a planilha 'Visitação Parques 2026.xlsx' já tem aba
+    criada E com pelo menos um dia de "Realizado 2026" preenchido -- substitui a lista
+    manual "meses_com_dados" do config.json, que antes precisava ser atualizada à mão
+    todo mês assim que o resultado real do mês começava a entrar (o motivo de Agosto ter
+    ficado só com Meta: a lista nunca foi atualizada).
+    Para no primeiro mês em que: (a) a aba ainda não existe na planilha, ou (b) a aba já
+    existe mas ainda está vazia (só o molde, sem nenhum "Realizado 2026" preenchido) --
+    os meses seguintes na sequência também são tratados como sem dado, mesmo que por
+    algum motivo tenham aba criada fora de ordem.
+    """
+    resultado = []
+    for mes in meses_todos:
+        try:
+            rows = get_values(service, spreadsheet_id, mes)
+        except Exception:
+            break  # aba desse mês ainda não existe -- para aqui
+        if not rows:
+            break
+        month_number = MONTH_NUMBER[mes]
+        n_days = calendar.monthrange(2026, month_number)[1]
+        daily = parse_month_daily(rows, n_days)
+        tem_dado = any(
+            any(v is not None for v in (park_data.get("Realizado 2026") or []))
+            for park_data in daily.values()
+        )
+        if not tem_dado:
+            break
+        resultado.append(mes)
+    return resultado
+
+
 def build_visitacao(service, spreadsheet_id, meses_com_dados):
     visitacao = {}
     for mes in meses_com_dados:
@@ -1529,6 +1561,17 @@ def main():
         cfg = json.load(f)
 
     service = get_drive_service()
+
+    print("Detectando automaticamente até qual mês já tem Realizado preenchido...", file=sys.stderr)
+    try:
+        cfg["meses_com_dados"] = detect_meses_com_dados(service, cfg["visitacao_parques_id"], cfg["meses"])
+    except Exception as e:
+        # Fallback defensivo: se a autodetecção falhar por algum motivo (ex.: planilha
+        # temporariamente inacessível), usa o que já estiver salvo no config.json em vez
+        # de derrubar o pipeline inteiro.
+        print(f"AVISO: falha ao autodetectar meses_com_dados ({e}) -- usando o valor salvo no config.json.", file=sys.stderr)
+        cfg.setdefault("meses_com_dados", [])
+    print(f"Meses com Realizado detectados: {cfg['meses_com_dados']}", file=sys.stderr)
 
     print("Lendo Visitação Parques 2026...", file=sys.stderr)
     visitacao = build_visitacao(service, cfg["visitacao_parques_id"], cfg["meses_com_dados"])
