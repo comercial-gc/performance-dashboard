@@ -1779,8 +1779,22 @@ const MES_CAP = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', AB
 // select de mês. O "mês aberto" (parcial) é sempre o ÚLTIMO mês que o backend detectou com
 // Realizado (detect_meses_com_dados no extract_data.py); os anteriores viram "fechados";
 // os seguintes (sem dado ainda) ficam com o rótulo "(só meta)".
+function mesTemRealizado(m){
+  const d = VISITACAO[m];
+  if(!d || !d.daily) return false;
+  // BUG EVITADO: TODO mês (mesmo Set-Dez, sem resultado ainda) recebe uma entrada no
+  // VISITACAO -- só que com Meta (projeção "Nova2026") no lugar do OBZ e Realizado vazio.
+  // Checar só "a chave existe" contava esses meses futuros como "com dado" e o último
+  // (Dezembro) virava sempre o mês aberto. Por isso aqui exige um valor > 0 de verdade em
+  // "Realizado 2026", igual ao detect_meses_com_dados() do extract_data.py.
+  return Object.values(d.daily).some(parkData =>
+    parkData && Array.isArray(parkData['Realizado 2026']) &&
+    parkData['Realizado 2026'].some(v => typeof v === 'number' && v > 0)
+  );
+}
+
 function computeMonthState(){
-  const comDados = MONTHS.filter(m => VISITACAO[m]);
+  const comDados = MONTHS.filter(mesTemRealizado);
   OPEN_MONTH = comDados.length ? comDados[comDados.length - 1] : MONTHS[0];
   CLOSED_MONTHS = comDados.slice(0, -1);
   MONTH_LABEL = {};
