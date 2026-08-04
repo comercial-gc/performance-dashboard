@@ -652,7 +652,15 @@ def build_evolucao_ppt_parcial(service, spreadsheet_id, mes_atual_pt_upper, ano_
                 total_vis_total += visv
                 if d.day <= cutoff_day:
                     total_vis_parcial += visv
-        if achou and total_vis_total > 0:
+        # Guarda de segurança: se o bloco de 2025 desse parque na aba PPT tiver o mês
+        # inteiro fechado mas o trecho até o cutoff_day vier zerado (ex.: alguem colou o
+        # 2025 inteiro de uma vez só perto do fim do mes, em vez de dia a dia -- caso real
+        # visto no BioParque em Agosto/2026, onde os dias 1-20 vieram 0 e só 21-31 tinham
+        # valor), a "regra de 3" geraria um comparativo falso de 0 em vez de cair pro total
+        # do mes inteiro (que já está correto). Por isso só usamos o comparativo D-1 quando
+        # o parcial em si é > 0 -- senão, melhor deixar o override de fora e manter o valor
+        # cheio de "Ecommerce (base TI)" que o resto do painel já usa.
+        if achou and total_vis_total > 0 and total_vis_parcial > 0:
             resultado[park] = {
                 "visitacao2025_parcial": total_vis_parcial,
                 "ecommerce2025_parcial": total_ecom_parcial,
