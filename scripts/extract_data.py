@@ -27,6 +27,7 @@ import calendar
 import datetime
 import io
 import json
+import re
 import socket
 import sys
 import unicodedata
@@ -1421,29 +1422,115 @@ def build_invest_mkt_detail(service, spreadsheet_id, meses):
     return detail
 
 
+MESES_NOME_PT = {
+    "janeiro": 1, "fevereiro": 2, "março": 3, "marco": 3, "abril": 4, "maio": 5, "junho": 6,
+    "julho": 7, "agosto": 8, "setembro": 9, "outubro": 10, "novembro": 11, "dezembro": 12,
+}
+
+
+def _eventos_ano_com_rollover(mes_fim, data_ini):
+    """Se o mes final extraido do texto for menor que o mes da data-ancora, assume que o
+    intervalo atravessa a virada de ano (ex.: 28/12 a 05/01) -- rollover pro ano seguinte."""
+    return data_ini.year + (1 if mes_fim < data_ini.month else 0)
+
+
+def _extrair_data_fim(texto, data_ini):
+    """Extrai (best-effort) a data de termino de um evento a partir do texto livre da coluna
+    'Evento' -- a planilha nao tem coluna de Data Fim, o prazo sempre vem embutido na frase
+    (ex.: "Feriado (18/04 até 24/04)", "de 19 a 22 de junho", "Período 09/07 a 12/06").
+    Tenta alguns padroes comuns, na ordem: (1) duas datas completas DD/MM/AAAA; (2) "a partir
+    do dia DD/MM ... até DD/MM"; (3) "DD/MM (até|a) DD/MM"; (4) "de D a D de <mes por extenso>".
+    Nao tenta ser exaustivo -- texto livre em portugues nao e' 100% padronizavel, e um humano
+    sempre revisa o Report antes de copiar/enviar, entao "pega a maioria dos casos, nunca
+    inventa um errado" e' a barra certa aqui, nao "perfeito".
+    BUG EVITADO: sem validacao de sanidade, um erro de digitacao na planilha (ex.: "Período
+    09/07 a 12/06" quando a data-ancora e' 09/07 -- devia ser 12/07) faria o rollover de ano
+    "corrigir" errado pra quase 1 ano depois (12/06 do ano seguinte). Por isso descarta
+    qualquer resultado anterior a data_ini ou com mais de 60 dias de distancia -- nesses casos
+    cai no fallback seguro (evento de 1 dia so, ancorado em "data").
+    """
+    if not texto:
+        return None
+    t = str(texto)
+    fim = None
+
+    m = re.search(r'(\d{1,2})/(\d{1,2})/(\d{4})\s*(?:e|a|at[eé])\s*(\d{1,2})/(\d{1,2})/(\d{4})', t, re.I)
+    if m:
+        dd, mm, yyyy = int(m.group(4)), int(m.group(5)), int(m.group(6))
+        try:
+            fim = datetime.date(yyyy, mm, dd)
+        except ValueError:
+            fim = None
+
+    if fim is None:
+        m = re.search(r'a\s*partir\s*d[oa]?\s*dia\s*(\d{1,2})/(\d{1,2}).{0,40}?at[eé]\s*(\d{1,2})/(\d{1,2})', t, re.I)
+        if m:
+            dd2, mm2 = int(m.group(3)), int(m.group(4))
+            ano = _eventos_ano_com_rollover(mm2, data_ini)
+            try:
+                fim = datetime.date(ano, mm2, dd2)
+            except ValueError:
+                fim = None
+
+    if fim is None:
+        m = re.search(r'(\d{1,2})/(\d{1,2})\s*(?:at[eé]|a)\s*(\d{1,2})/(\d{1,2})(?!/\d)', t, re.I)
+        if m:
+            dd2, mm2 = int(m.group(3)), int(m.group(4))
+            ano = _eventos_ano_com_rollover(mm2, data_ini)
+            try:
+                fim = datetime.date(ano, mm2, dd2)
+            except ValueError:
+                fim = None
+
+    if fim is None:
+        m = re.search(r'\bde\s+(\d{1,2})\s+a\s+(\d{1,2})\s+de\s+(\w+)', t, re.I)
+        if m:
+            mes = MESES_NOME_PT.get(m.group(3).lower())
+            if mes:
+                dd2 = int(m.group(2))
+                ano = _eventos_ano_com_rollover(mes, data_ini)
+                try:
+                    fim = datetime.date(ano, mes, dd2)
+                except ValueError:
+                    fim = None
+
+    if fim is not None and (fim < data_ini or (fim - data_ini).days > 60):
+        return None
+    return fim
+
+
 def build_eventos(service, spreadsheet_id, sheet_name):
     """Aba 'Eventos' de Visitação Parques 2026: calendário simples (uma linha por evento) com
-    3 colunas -- Data | Parque | Evento -- cobrindo Abril/2025 em diante (sem separação por
-    aba/mês como as outras abas dessa planilha). Retorna lista ordenada por data, com ano/mês
-    (PT) já calculados pra facilitar o filtro no front-end. O campo "parque" é mantido como
-    veio da planilha (ex.: "Aquario", "Parques Rio", "Todos os Parques") -- os nomes lá não
-    seguem exatamente a lista canônica de parques do painel, então não tentamos remapear.
+    4 colunas -- Data | Parque | Categoria | Evento -- cobrindo Abril/2025 em diante (sem
+    separação por aba/mês como as outras abas dessa planilha). A coluna Categoria (adicionada
+    depois da 1a versão desta função) é uma das 5 fixas: "Operação do Parque", "Ações
+    Comerciais e Institucionais", "Clima e Meio Ambiente", "Calendário Turístico", "Eventos
+    Externos". Retorna lista ordenada por data, com ano/mês (PT) já calculados pra facilitar o
+    filtro no front-end, mais "dataFim" (best-effort, ver _extrair_data_fim) pra uso do
+    gerador de Report -- não existe coluna de Data Fim na planilha, então quando o texto não
+    tem um padrão reconhecível "dataFim" fica igual a "data" (evento de 1 dia). O campo
+    "parque" é mantido como veio da planilha (ex.: "Aquario", "Parques Rio", "Todos os
+    Parques") -- os nomes lá não seguem exatamente a lista canônica de parques do painel,
+    então não tentamos remapear.
     """
     rows = get_values(service, spreadsheet_id, sheet_name)
     eventos = []
-    for row in rows[1:]:  # linha 0 = cabeçalho (Data / Parque / Evento)
+    for row in rows[1:]:  # linha 0 = cabeçalho (Data / Parque / Categoria / Evento)
         serial = cell(row, 0)
-        evento = _clean_str(cell(row, 2))
+        evento = _clean_str(cell(row, 3))
         if serial is None or not evento:
             continue
         d = serial_to_date(serial)
         if d is None:
             continue
+        data_fim = _extrair_data_fim(evento, d) or d
         eventos.append({
             "data": d.isoformat(),
+            "dataFim": data_fim.isoformat(),
             "ano": d.year,
             "mes": MESES_PT[d.month - 1],
             "parque": _clean_str(cell(row, 1)) or "",
+            "categoria": _clean_str(cell(row, 2)) or "",
             "evento": evento,
         })
     eventos.sort(key=lambda e: e["data"])
