@@ -1428,6 +1428,132 @@ MESES_NOME_PT = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Visitação Parques 2026.xlsx -> aba "APOIO REPORT"
+# Aba de apoio usada hoje (fora deste painel) para alimentar o gerador de Report Diário
+# (Gemini/Claude configurado com os "Gold Standards" da equipe). O objetivo aqui NAO e'
+# gerar o texto do report (isso continua no agente ja calibrado) -- e' so' automatizar a
+# parte chata/manual: ler direto da planilha os dados que hoje sao copiados a mao.
+# Layout (bloco "Realizado ontem", colunas B a E): marcador de regiao solto na coluna A
+# em alguma linha dentro do bloco de cada regiao (ex.: "Parques Rio", "Parques Foz",
+# "Soul Parques"); nome do parque na coluna C seguido de ate' 5 linhas de metrica
+# ("Realizado 2026"/"OBZ 2026"/"% OBZ"/"Realizado 2025"/"% 2025") na coluna C com valor na
+# coluna D. AquaFoz so' tem 3 linhas de metrica (sem Realizado/% 2025 -- consistente com a
+# regra "AquaFoz nunca tem comparativo vs 2025", ja' embutida na propria planilha).
+# Metricas extras (captacao/share dos parques satelite) aparecem soltas, ou na coluna C
+# com valor na mesma linha coluna D (ex.: "Captação CV"), ou na coluna E com o valor na
+# MESMA coluna uma linha abaixo (ex.: "Share PNI (parcial)") -- copiado fielmente, sem
+# tentar renomear/reinterpretar o rotulo.
+# Bloco "Agosto(PARCIAL)" (resumo mensal, colunas G-L): tabela reta por parque + linhas de
+# agregado (Grupo Cataratas SSS / Total Grupo Cataratas / Total Soul Parques / Total Geral).
+# NAO extraidos nesta versao (layout ainda ambiguo ou vazio nesta planilha-exemplo, a
+# confirmar com o usuario antes de automatizar): bloco "Clima de Ontem" (sem valores
+# preenchidos na planilha lida), bloco "Realizado Final de Semana" (erros #DIV/0! nesta
+# leitura -- so' faz sentido numa segunda-feira real) e bloco "META OBZ (Julho)" (colunas
+# de valor sem cabecalho claro).
+# ---------------------------------------------------------------------------
+
+APOIO_REPORT_METRICAS = ["Realizado 2026", "OBZ 2026", "% OBZ", "Realizado 2025", "% 2025"]
+
+# BUG EVITADO: o marcador de regiao da coluna A ("Parques Rio"/"Parques Foz"/"Soul Parques")
+# vem de uma celula mesclada no Google Sheets -- ao ler via openpyxl/API, o valor so'
+# aparece na linha exata onde a mesclagem "ancora" (uma linha arbitraria dentro do bloco,
+# nao necessariamente a primeira), nunca em todas as linhas que ela cobre visualmente.
+# Tentar usar essa coluna pra decidir a regiao de cada parque quebra (ex.: BioParque cai
+# sem regiao porque o marcador so' aparece 2 linhas depois, na propria linha de "OBZ
+# 2026"). Por isso a regiao de cada parque vem de uma lista fixa (mesmo padrao ja' usado
+# em MIX_ORIGEM_PARK_NAMES/DIARIO_SHEET_NAMES pra outras abas com nomes/posicoes
+# inconsistentes), nao da leitura da coluna A.
+APOIO_REPORT_PARK_REGIAO = {
+    "AquaRio": "Parques Rio", "BioParque": "Parques Rio", "Paineiras": "Parques Rio",
+    "PNI": "Parques Foz", "URBIA + CATARATAS (PNI)": "Parques Foz",
+    "M3F": "Parques Foz", "AquaFoz": "Parques Foz",
+    "Três Pescadores": "Soul Parques", "Vila Velha": "Soul Parques",
+}
+APOIO_REPORT_PARK_ALIAS = {"URBIA + CATARATAS (PNI)": "PNI"}
+
+
+def _apoio_report_realizado_ontem(rows, linha_inicio, linha_fim):
+    """Percorre o bloco 'Realizado ontem' (colunas C=2 a E=4) e devolve
+    {regiao: {parque: {"metricas": {...}, "extras": {...}}}}. Ve' Nota acima sobre por que
+    a regiao vem de APOIO_REPORT_PARK_REGIAO, nao da coluna A."""
+    resultado = {}
+    parque_atual = None
+    regiao_atual = None
+    for r in range(linha_inicio, linha_fim):
+        row = rows[r]
+        label_c = cell(row, 2)
+        valor_d = cell(row, 3)
+        if isinstance(label_c, str) and label_c.strip():
+            label_c = label_c.strip()
+            if label_c in APOIO_REPORT_METRICAS:
+                if parque_atual is not None:
+                    resultado[regiao_atual][parque_atual]["metricas"][label_c] = valor_d
+            elif label_c in APOIO_REPORT_PARK_REGIAO:
+                parque_atual = APOIO_REPORT_PARK_ALIAS.get(label_c, label_c)
+                regiao_atual = APOIO_REPORT_PARK_REGIAO[label_c]
+                resultado.setdefault(regiao_atual, {})
+                resultado[regiao_atual].setdefault(parque_atual, {"metricas": {}, "extras": {}})
+            elif parque_atual is not None:
+                # rotulo "extra" (captacao/share) com valor na propria linha coluna D
+                resultado[regiao_atual][parque_atual]["extras"][label_c] = valor_d
+
+        # rotulos "extra" que vivem na coluna E (ex.: "Share PNI (parcial)"), com o valor
+        # uma linha abaixo, na mesma coluna E -- padrao observado na planilha real.
+        label_e = cell(row, 4)
+        if isinstance(label_e, str) and label_e.strip() and parque_atual is not None:
+            valor_e = cell(rows[r + 1], 4) if r + 1 < linha_fim else None
+            resultado[regiao_atual][parque_atual]["extras"][label_e.strip()] = valor_e
+    return resultado
+
+
+def _apoio_report_resumo_mensal(rows, nome_col, valor_col_inicio, linha_titulo, linha_fim):
+    """Le' o bloco reto 'Agosto(PARCIAL)' (ou equivalente): titulo do mes uma coluna a
+    direita do nome do parque, na linha do cabecalho; depois uma linha por parque/agregado
+    com Realizado/OBZ/%OBZ/2025/%2025."""
+    titulo = cell(rows[linha_titulo], valor_col_inicio)
+    header_row = rows[linha_titulo + 1]
+    headers = [cell(header_row, valor_col_inicio + i) for i in range(5)]
+    parques = {}
+    for r in range(linha_titulo + 2, linha_fim):
+        nome = cell(rows[r], nome_col)
+        if not isinstance(nome, str) or not nome.strip():
+            continue
+        valores = {}
+        for i, h in enumerate(headers):
+            if isinstance(h, str):
+                chave = _clean_str(h)
+            elif isinstance(h, float) and h.is_integer():
+                chave = str(int(h))
+            else:
+                chave = str(h)
+            valores[chave or f"col{i}"] = cell(rows[r], valor_col_inicio + i)
+        parques[nome.strip()] = valores
+    return {"titulo": _clean_str(titulo) if isinstance(titulo, str) else titulo, "parques": parques}
+
+
+def build_apoio_report(service, spreadsheet_id, sheet_name):
+    """Aba 'APOIO REPORT': fonte primaria hoje usada (fora deste painel) pelo gerador de
+    Report Diario. So' automatiza a LEITURA -- a geracao do texto continua no
+    Gemini/Claude ja calibrado com os Gold Standards da equipe (ver documentos anexados)."""
+    rows = get_values(service, spreadsheet_id, sheet_name)
+    n = len(rows)
+
+    realizado_ontem = _apoio_report_realizado_ontem(rows, 0, min(66, n))
+
+    resumo_mensal = {}
+    for r in range(0, min(20, n)):
+        titulo = cell(rows[r], 7)
+        if isinstance(titulo, str) and titulo.strip() and cell(rows[r + 1], 6) == "GRUPO CATARATAS":
+            resumo_mensal = _apoio_report_resumo_mensal(rows, 6, 7, r, r + 14)
+            break
+
+    return {
+        "realizadoOntem": realizado_ontem,
+        "resumoMensal": resumo_mensal,
+    }
+
+
 def _eventos_ano_com_rollover(mes_fim, data_ini):
     """Se o mes final extraido do texto for menor que o mes da data-ancora, assume que o
     intervalo atravessa a virada de ano (ex.: 28/12 a 05/01) -- rollover pro ano seguinte."""
@@ -1792,6 +1918,17 @@ def main():
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
     )
 
+    print("Lendo Apoio Report...", file=sys.stderr)
+    try:
+        apoio_report = build_apoio_report(
+            service, cfg["visitacao_parques_id"], cfg["sheet_names"].get("apoio_report", "APOIO REPORT")
+        )
+    except Exception as e:
+        # Igual às outras abas defensivas: se a aba mudar de layout ou nome, a aba Report
+        # do painel fica vazia neste ciclo em vez de derrubar o resto do pipeline.
+        print(f"AVISO: falha ao ler Apoio Report ({e}) -- aba Report fica vazia neste ciclo.", file=sys.stderr)
+        apoio_report = {"realizadoOntem": {}, "resumoMensal": {}}
+
     print("Lendo Histórico...", file=sys.stderr)
     historico_id = cfg.get("visitacao_historico_id", "")
     if historico_id and not historico_id.startswith("COLE_AQUI"):
@@ -1846,6 +1983,7 @@ def main():
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
         "MIX_ORIGEM_DIARIO": mix_origem_diario,
         "EVENTOS": eventos,
+        "APOIO_REPORT": apoio_report,
         "HISTORICO": historico,
         "PLANO_MIDIA": plano_midia,
     }
