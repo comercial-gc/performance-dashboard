@@ -1824,9 +1824,31 @@ function computeMonthState(){
 }
 
 // Calcula, a partir dos dados reais de VISITACAO (não mais texto fixo), até que dia do
-// mês atual (OPEN_MONTH) já existe "Realizado 2026" preenchido -- usado no cabeçalho da
-// aba Mix de Origem, que antes ficava com a data travada na última vez que foi editada
-// a mão (ex.: "20/07" meses depois de julho já ter passado).
+// mês atual (OPEN_MONTH) já existe "Realizado 2026" preenchido -- em formato ISO
+// 'YYYY-MM-DD'. Usado tanto no cabeçalho da aba Mix de Origem quanto para decidir o
+// intervalo real (Mensal/Acumulado) em getMixFonte() -- assim os dois nunca mais
+// dessincronizam (cabeçalho dizendo "Parcial Agosto" com a tabela ainda mostrando Julho).
+function getOpenMonthLastDataDate(){
+  const mesData = VISITACAO[OPEN_MONTH];
+  let lastDay = null;
+  if(mesData && mesData.daily){
+    Object.values(mesData.daily).forEach(parkData => {
+      const arr = parkData ? parkData['Realizado 2026'] : null;
+      if(!arr) return;
+      for(let i = arr.length - 1; i >= 0; i--){
+        if(arr[i] !== null && arr[i] !== undefined){
+          if(lastDay === null || (i + 1) > lastDay) lastDay = i + 1;
+          break;
+        }
+      }
+    });
+  }
+  if(!lastDay || !mesData) return null;
+  const mm = String(mesData.monthNumber).padStart(2, '0');
+  const dd = String(lastDay).padStart(2, '0');
+  return `2026-${mm}-${dd}`;
+}
+
 function updateMixOrigemHeader(){
   const titleEl = document.getElementById('mixTitle');
   const subEl = document.getElementById('mixSubtitle');
@@ -1834,7 +1856,10 @@ function updateMixOrigemHeader(){
 
   if(mixPeriodoState === 'acumulado'){
     titleEl.textContent = 'Mix de Origem | Parques Rio | Acumulado no Ano';
-    subEl.textContent = 'comparado ao mesmo período acumulado de 2025';
+    const fimAcum = getOpenMonthLastDataDate();
+    subEl.textContent = fimAcum
+      ? `Jan a ${fmtDataBr(fimAcum)} comparado ao mesmo período acumulado de 2025`
+      : 'comparado ao mesmo período acumulado de 2025';
     return;
   }
   if(mixPeriodoState === 'custom'){
@@ -1853,30 +1878,12 @@ function updateMixOrigemHeader(){
     return;
   }
 
-  const mesData = VISITACAO[OPEN_MONTH];
-  let lastDay = null;
-  if(mesData && mesData.daily){
-    Object.values(mesData.daily).forEach(parkData => {
-      const arr = parkData ? parkData['Realizado 2026'] : null;
-      if(!arr) return;
-      for(let i = arr.length - 1; i >= 0; i--){
-        if(arr[i] !== null && arr[i] !== undefined){
-          if(lastDay === null || (i + 1) > lastDay) lastDay = i + 1;
-          break;
-        }
-      }
-    });
-  }
-
   const mesNome = MES_CAP[OPEN_MONTH] || OPEN_MONTH;
   titleEl.textContent = `Mix de Origem | Parques Rio | Parcial ${mesNome}`;
-  if(lastDay && mesData){
-    const dd = String(lastDay).padStart(2, '0');
-    const mm = String(mesData.monthNumber).padStart(2, '0');
-    subEl.textContent = `atualizado até ${dd}/${mm} comparado ao mesmo período 2025`;
-  } else {
-    subEl.textContent = `comparado ao mesmo período 2025`;
-  }
+  const fimMes = getOpenMonthLastDataDate();
+  subEl.textContent = fimMes
+    ? `atualizado até ${fmtDataBr(fimMes)} comparado ao mesmo período 2025`
+    : `comparado ao mesmo período 2025`;
 }
 
 function fmtDataBr(iso){
@@ -3401,12 +3408,26 @@ function computeMixOrigemPeriodo(dataIni, dataFim){
   return fonte;
 }
 
-// Decide qual objeto de dados alimenta o grid, conforme o Período selecionado -- Mensal e
-// Acumulado continuam vindo prontos da aba "ANÁLISE MIX DE ORIGEM 2026" (sem mudança);
-// mês específico e Personalizado são calculados na hora a partir do lançamento diário.
+// Decide qual objeto de dados alimenta o grid, conforme o Período selecionado.
+// BUG EVITADO: Mensal e Acumulado usavam os blocos "MIX PARCIAL"/"MIX ACUMULADO ANO" da
+// aba "ANÁLISE MIX DE ORIGEM 2026", que são colados a mão -- ficavam travados no último
+// mês em que alguém atualizou aquele bloco (ex.: título já dizia "Parcial Agosto" mas a
+// tabela ainda mostrava os números fechados de Julho). Agora os dois são calculados a
+// partir do lançamento diário (MIX_ORIGEM_DIARIO), amarrados ao OPEN_MONTH real -- o
+// mesmo dado que já corrige título/subtítulo -- então acompanham a virada de mês sozinhos,
+// sem depender de ninguém colar nada na planilha todo mês. MIX_ORIGEM/MIX_ORIGEM_ACUMULADO
+// só entram como fallback caso VISITACAO ainda não tenha nenhum dia com Realizado.
 function getMixFonte(){
-  if(mixPeriodoState === 'acumulado') return MIX_ORIGEM_ACUMULADO;
-  if(mixPeriodoState === 'mensal') return MIX_ORIGEM;
+  if(mixPeriodoState === 'acumulado'){
+    const fim = getOpenMonthLastDataDate();
+    if(fim) return computeMixOrigemPeriodo('2026-01-01', fim);
+    return MIX_ORIGEM_ACUMULADO;
+  }
+  if(mixPeriodoState === 'mensal'){
+    const fim = getOpenMonthLastDataDate();
+    if(fim) return computeMixOrigemPeriodo(`${fim.slice(0,7)}-01`, fim);
+    return MIX_ORIGEM;
+  }
   if(mixPeriodoState === 'custom'){
     const ini = document.getElementById('mixDataIni') ? document.getElementById('mixDataIni').value : '';
     const fim = document.getElementById('mixDataFim') ? document.getElementById('mixDataFim').value : '';
