@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-04T17:31:13.079176Z",
+  "geradoEm": "2026-08-04T18:32:26.048720Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -44666,1501 +44666,1929 @@
   "EVENTOS": [
     {
       "data": "2025-04-08",
+      "dataFim": "2025-04-08",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Operação suspensa pelo ICMBIO devido ao elevador inoperante às 14h e retornou 16:32"
     },
     {
       "data": "2025-04-08",
+      "dataFim": "2025-04-08",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "DNA (Dia da Alegria) - Entrada gratuita (visita social)"
     },
     {
       "data": "2025-04-10",
+      "dataFim": "2025-04-10",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "DNA (Dia da Alegria) - Entrada gratuita (visita social) - Foram 1.264 pessoas recebidas no Bio nos dois dias de evento"
     },
     {
       "data": "2025-04-11",
+      "dataFim": "2025-04-11",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "DNA (Dia da Alegria) - Entrada gratuita (visita social) - Foram 740 pessoas recebidas no Bio"
     },
     {
       "data": "2025-04-13",
+      "dataFim": "2025-04-13",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Sessão Azul"
     },
     {
       "data": "2025-04-18",
+      "dataFim": "2025-04-24",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado (18/04 até 24/04)"
     },
     {
       "data": "2025-04-18",
+      "dataFim": "2025-04-24",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado (18/04 até 24/04)"
     },
     {
       "data": "2025-04-18",
+      "dataFim": "2025-04-24",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Bioparque",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado (18/04 até 24/04)"
     },
     {
       "data": "2025-04-28",
+      "dataFim": "2025-04-28",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Configuração da bilheteria local de trade em Paineiras para preenchimento de estado."
     },
     {
       "data": "2025-04-29",
+      "dataFim": "2025-04-29",
       "ano": 2025,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Contrato AquaFoz assinado - Sinnapse (Novo site integrado)"
     },
     {
       "data": "2025-04-30",
+      "dataFim": "2025-04-30",
       "ano": 2025,
       "mes": "Abril",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "GTM Atualizado com o email do Parques Rio como conta principal (3 parques)"
     },
     {
       "data": "2025-05-01",
+      "dataFim": "2025-05-01",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado - alto fluxo de visitação"
     },
     {
       "data": "2025-05-05",
+      "dataFim": "2025-05-05",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Após a reunião, ficou decidido — conforme comunicado pela Camila — que o espaço do axolote será inaugurado no BioParque. A previsão de abertura é em aproximadamente 45 dias."
     },
     {
       "data": "2025-05-08",
+      "dataFim": "2025-05-08",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Transição Time de Mídia - Pareto > AKM (Google e TikTok)"
     },
     {
       "data": "2025-05-10",
+      "dataFim": "2025-05-10",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Trajeto de acesso ao Centro de Visitantes está passando por obras desde início de Maio. Impactando a jornada dos clientes que sobem de Van. Previsão de conclusão está para Agosto/Setembro"
     },
     {
       "data": "2025-05-12",
+      "dataFim": "2025-05-12",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Integração Carrinho abandonado voltou a funcionar na RD Station"
     },
     {
       "data": "2025-05-13",
+      "dataFim": "2025-05-13",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Instalação do Plug in da HandTalk nos e-commerces dos Parques do RJ"
     },
     {
       "data": "2025-05-13",
+      "dataFim": "2025-05-13",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Alinhamos em não colocar mais saldo no Meta até passar o acesso para AKM (Meta)"
     },
     {
       "data": "2025-05-14",
+      "dataFim": "2025-05-14",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "AKM entrou em contato com o Meta e abriram chamado interno para tentar resolver a questão dos acessos"
     },
     {
       "data": "2025-05-15",
+      "dataFim": "2025-05-15",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Reunião com a Ecan pedindo suporte no reembolso do saldo parado na conta antiga do Meta"
     },
     {
       "data": "2025-05-15",
+      "dataFim": "2025-05-15",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Outros Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Envio do passo a passo da instalação do plug in da HandTalk nos E-commerces do M3F e EcoNoronha"
     },
     {
       "data": "2025-05-15",
+      "dataFim": "2025-05-15",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Implementado Cupom VISIT10 BIOPARQUE (10%)"
     },
     {
       "data": "2025-05-15",
+      "dataFim": "2025-05-15",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Implementado Cupom VISIT10 AQUARIO (10%)"
     },
     {
       "data": "2025-05-16",
+      "dataFim": "2025-05-16",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Contrato AKM - Iniciado o fluxo de assinaturas dos contratos."
     },
     {
       "data": "2025-05-17",
+      "dataFim": "2025-05-17",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Show gratuito da cantora Iza - Praça Mauá"
     },
     {
       "data": "2025-05-21",
+      "dataFim": "2025-05-21",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Configuração dos domínios do BioParque e Paineiras realizado na RD Station, bases dos parques incluídas na plataforma."
     },
     {
       "data": "2025-05-23",
+      "dataFim": "2025-05-23",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Aquario",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Tempo fechado com possibilidade de chuva"
     },
     {
       "data": "2025-05-24",
+      "dataFim": "2025-05-24",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "O Pix ficou com erro desde 24/05 depois das 17h, nos Sites dos 3 parques e no Portal do Agente. Foi aberto um chamado 25/04 e foi corrigido o erro logo depois às 08h33."
     },
     {
       "data": "2025-05-31",
+      "dataFim": "2025-06-01",
       "ano": 2025,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Arraiá da Quinta da Boa Vista (11h às 20h) (31/05/2025 e 01/06/2025)"
     },
     {
       "data": "2025-06-06",
+      "dataFim": "2025-06-06",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Estamos com problema para pagamento em cartao, ja esta sendo acompanhado pelo Ti pois é em todo parque (1ª notificação 09h42)"
     },
     {
       "data": "2025-06-07",
+      "dataFim": "2025-06-07",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Tivemos uma alteração na promoção de Namorados no AquaRio, porque os clientes não estavam entendendo a dinâmica. Foi criado um novo bilhete no valor de R$148,50 correspondendo a 1 ngresos promocional RJ (R$99) + 01 Ingressos com 50% de desconto da Promoção de Namorados (R$49,50)"
     },
     {
       "data": "2025-06-13",
+      "dataFim": "2025-06-13",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Saldo do Tiktok disponível para a conta principal em 13/06/2025"
     },
     {
       "data": "2025-06-13",
+      "dataFim": "2025-06-13",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Bienal do Rio (13 a 22/06)"
     },
     {
       "data": "2025-06-15",
+      "dataFim": "2025-06-15",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Instabilidade no Banco do Brasil afetou pagamento por PIX no e-commerce de Paineiras. Período: 8h às 13:55."
     },
     {
       "data": "2025-06-16",
+      "dataFim": "2025-06-16",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Calendário Turístico"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Ação prorrogada de Dia dos Namorados (só trocamos o nome do bilhete para O Amor está no mar). Campanha ativada às"
     },
     {
       "data": "2025-06-17",
+      "dataFim": "2025-06-17",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Bioparque",
-      "evento": "Calendário Turístico"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Ação prorrogada de Dia dos Namorados (só trocamos o nome do bilhete para Diversão em dobro). Foi aprovado dia 16/06 às 16:30 por isso só ativamos no dia seguinte."
     },
     {
       "data": "2025-06-18",
+      "dataFim": "2025-06-18",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Maratona do Rio (18 a 22)"
     },
     {
       "data": "2025-06-19",
+      "dataFim": "2025-06-22",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Bioparque",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "\"Junina da Quinta\", uma festa junina gratuita que acontecerá de 19 a 22 de junho, das 11h às 20h (FERIADO PROLONGADO)"
     },
     {
       "data": "2025-06-19",
+      "dataFim": "2025-06-19",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Eventos Externos",
+      "evento": "INTERDIÇÕES PARA CONCENTRAÇÃO E DESLOCAMENTO DA PROCISSÃO em ruas do Centro a partir das 14:30 até 17h"
     },
     {
       "data": "2025-06-20",
+      "dataFim": "2025-06-20",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Paineiras",
-      "evento": "Calendário Turístico"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "20/07 (domingo): Evento com término previsto às 10h. Início da operação a partir das 11h.\n ⮕ Neste dia, já estaremos em alta temporada de julho e a bilheteria encerrará às 18h."
     },
     {
       "data": "2025-06-21",
+      "dataFim": "2025-06-21",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Eventos Externos",
+      "evento": "Maratona do Rio (21 a 22) - Interdição das vias em torno do Parque poderão afetar o fluxo até o AquaRio."
     },
     {
       "data": "2025-06-23",
+      "dataFim": "2025-06-23",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Paineiras",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Em razão das obras, o tempo de subida foi de 1h40 para as 10 vans que realizaram o percurso."
     },
     {
       "data": "2025-06-24",
+      "dataFim": "2025-06-24",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Parques Rio",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "No dia 24/07 foi feriado no Município de Niterói"
     },
     {
       "data": "2025-06-24",
+      "dataFim": "2025-06-24",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Paineiras",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Devido ao clima nublado e à baixa visibilidade no Cristo, a visitação registrou fluxo reduzido."
     },
     {
       "data": "2025-06-26",
+      "dataFim": "2025-06-26",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Festa Junina da Narcisa no Bio Parque para as crianças [Fechada]"
     },
     {
       "data": "2025-06-28",
+      "dataFim": "2025-06-28",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Festa Junina do Bio Parque (28 e 29/06)"
     },
     {
       "data": "2025-06-29",
+      "dataFim": "2025-06-29",
       "ano": 2025,
       "mes": "Junho",
       "parque": "Paineiras",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "29/06 (domingo): Evento com término previsto às 07h30. Início da operação a partir das 08h.\n ⮕ Neste dia, a bilheteria será encerrada às 17h (conforme padrão atual)."
     },
     {
       "data": "2025-07-02",
+      "dataFim": "2025-07-02",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "O ecommerce virou para o novo layout."
     },
     {
       "data": "2025-07-04",
+      "dataFim": "2025-07-04",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "No dia 04/07 será ponto facultativo na cidade do Rio de Janeiro, porém não iremos aderir. (Brics)"
     },
     {
       "data": "2025-07-04",
+      "dataFim": "2025-07-04",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "No dia 04, 05 e 06/07 Festa Junina na Yup Star"
     },
     {
       "data": "2025-07-05",
+      "dataFim": "2025-07-05",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Evento Sescoop (+4k passaporte)"
     },
     {
       "data": "2025-07-05",
+      "dataFim": "2025-07-05",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "AnarRIÔ de Janeiro • Festa Julina (Quinta da Boa Vista) - 05 e 06/07/2025"
     },
     {
       "data": "2025-07-07",
+      "dataFim": "2025-07-07",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "No dia 07/07 será ponto facultativo na cidade do Rio de Janeiro, porém não iremos aderir. (Brics)"
     },
     {
       "data": "2025-07-10",
+      "dataFim": "2025-07-10",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Tivemos perda no parâmetro de mídia; no GA 67% do receita do dia estava sendo atribuida a \"not set\""
     },
     {
       "data": "2025-07-11",
+      "dataFim": "2025-07-11",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Início ao horário da alta temporada no dia 11/07 com data prevista de término 03/08. Último horário de entrada do parque será às 17h e encerramento às 18h."
     },
     {
       "data": "2025-07-14",
+      "dataFim": "2025-07-14",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Pausa na obra para Paineiras"
     },
     {
       "data": "2025-07-15",
+      "dataFim": "2025-07-15",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Acontecerá no Parque Nacional da Tijuca a corrida UpHill 2025. Horário de funcionamento das bilheterias e operação iniciará às 11h. Centro de Visitantes Paineiras: das 11h às 18h; e Bilheterias Copacabana e Largo do Machado: das 11h às 16h30."
     },
     {
       "data": "2025-07-16",
+      "dataFim": "2025-07-16",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "O ecommerce virou para o novo layout."
     },
     {
       "data": "2025-07-16",
+      "dataFim": "2025-07-16",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "O ecommerce virou para o novo layout."
     },
     {
       "data": "2025-07-16",
+      "dataFim": "2025-07-16",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Bilhetes GEX ativados no ecommerce - GEX (Globo Experience)\n - Combo AquaRio + GEX (Globo Experience)\n - Experiência Completa + GEX (Globo Experience)"
     },
     {
       "data": "2025-07-18",
+      "dataFim": "2025-07-18",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Parque Interditado Temporariamente (Comunicado feito na noite anterior)"
     },
     {
       "data": "2025-07-18",
+      "dataFim": "2025-07-18",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "BioParque ficou fechado a partir de 18/07 por gripe aviária. Retornou funcionamento em 24/07."
     },
     {
       "data": "2025-07-19",
+      "dataFim": "2025-07-19",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Criado bilhete de 50% no Aqua para quem comprou BioParque e não pode ir por conta da interdição."
     },
     {
       "data": "2025-07-22",
+      "dataFim": "2025-07-22",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Lentidão no site institucional"
     },
     {
       "data": "2025-07-23",
+      "dataFim": "2025-07-23",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Foi finalizado o upgrade no servidor do AquaRio às 23:10. Tivemos um volume alto de sessões no site, tivemos que alterar o servidor do site junto a RioMarca"
     },
     {
       "data": "2025-07-23",
+      "dataFim": "2025-07-23",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Tivemos que pedir para o TI encerrar a compra do dia 24/07 no e-com às 15:15 por lotação (acima de 7k ingressos vendidos)"
     },
     {
       "data": "2025-07-25",
+      "dataFim": "2025-07-25",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Velório de Preta Gil será aberto ao público no Theatro Municipal do Rio (Podendo influenciar indiretamente no fluxo do trânsito)"
     },
     {
       "data": "2025-07-25",
+      "dataFim": "2025-07-25",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "[report rcv - 15:10] Não tivemos compra aprovada em cartão de crédito dos últimos 57 links gerados no link de pagamento, somente do AquaRio, com 27 erros na tentativa, a última compra aprovada via crédito ocorreu às 11:14"
     },
     {
       "data": "2025-07-25",
+      "dataFim": "2025-07-25",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "[report rcv - 15:16] No link de pagamento do BioParque sem aprovação em crédito das últimas 12 tentativas com 8 erros"
     },
     {
       "data": "2025-07-25",
+      "dataFim": "2025-07-25",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "[report rcv - 15:16] o link de pagamento de Paineiras 4 erros nos ultimos 6 links gerados"
     },
     {
       "data": "2025-07-26",
+      "dataFim": "2025-07-26",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Alto Corcovado ficou sem energia, afetando funcionamento dos acessos pelo elevador e escada rolante às 13h e normalizou às 15h; Tiveram notícias negativas sobre o Trem."
     },
     {
       "data": "2025-07-31",
+      "dataFim": "2025-07-31",
       "ano": 2025,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "[BIOPARQUE]_Desde o dia 31/07/2025 o BIOPARQUE retornou a ficar fechado para o público devido ao falecimento da ave (Gripe aviária)"
     },
     {
       "data": "2025-08-06",
+      "dataFim": "2025-08-06",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Campanha 'Pai Paga Meia' – Experiência Completa + GEX (Compras até 15/08, utilização até 31/08)"
     },
     {
       "data": "2025-08-12",
+      "dataFim": "2025-08-15",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Eventos Externos",
+      "evento": "Evento Rio Innovation Week acontecendo na zona portuaria, entre os dias 12/08 a 15/08"
     },
     {
       "data": "2025-08-20",
+      "dataFim": "2025-08-20",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Fluxo Carrinho Abandonado Bio e Paineiras ativos"
     },
     {
       "data": "2025-08-21",
+      "dataFim": "2025-08-21",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "[BIO] Campanha de reabertura: 'Criança não paga' (até 12 anos) — válido para compras e utilização até 31/08"
     },
     {
       "data": "2025-08-22",
+      "dataFim": "2025-08-22",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Volta das obras em estrada para Paineiras"
     },
     {
       "data": "2025-08-23",
+      "dataFim": "2025-08-23",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Outros Parques",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "[Parques Foz] M3F teve baixa visitação no final de semana após fortes chuvas (23 e 24/08)"
     },
     {
       "data": "2025-08-25",
+      "dataFim": "2025-08-25",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Identificado site fake do AquaRio (https://www.aquac-rio.info ). TI acionado."
     },
     {
       "data": "2025-08-28",
+      "dataFim": "2025-08-28",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Identificado novo site fake do AquaRio (https://www.venda-aquario.info ). TI acionado."
     },
     {
       "data": "2025-08-29",
+      "dataFim": "2025-08-29",
       "ano": 2025,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Identificado novo site fake do AquaRio (https://www.venda-aquario.info ). TI acionado."
     },
     {
       "data": "2025-09-15",
+      "dataFim": "2025-09-15",
       "ano": 2025,
       "mes": "Setembro",
       "parque": "Parques Rio",
-      "evento": "Calendário Turístico"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Hoje (15/09/25) entrou um saldo extra de R$ 6.300,00 (referente ao pagamento realizado na última janela de agosto).\n O valor provisionado para setembro tem previsão de cair no dia 18/09 (quarta-feira), o que impactará diretamente as atividades de mídia das contas de Paineiras e BioParque"
     },
     {
       "data": "2025-10-07",
+      "dataFim": "2025-10-07",
       "ano": 2025,
       "mes": "Outubro",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Problema na compra online, após o preenchimento dos dados o sistema não libera para prosseguir a compra."
     },
     {
       "data": "2025-10-15",
+      "dataFim": "2025-10-15",
       "ano": 2025,
       "mes": "Outubro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Criado cupom FISK20 para o Trade (Tarifa trade20) no e-commerce"
     },
     {
       "data": "2025-10-15",
+      "dataFim": "2025-10-15",
       "ano": 2025,
       "mes": "Outubro",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Criado cupom FISK20 para o Trade (Tarifa trade20) no e-commerce"
     },
     {
       "data": "2025-10-16",
+      "dataFim": "2025-10-16",
       "ano": 2025,
       "mes": "Outubro",
       "parque": "Bioparque",
-      "evento": "Calendário Turístico"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Prorrogada camapanha de Dia das Crinaças do BioParque"
     },
     {
       "data": "2025-10-28",
+      "dataFim": "2025-10-28",
       "ano": 2025,
       "mes": "Outubro",
       "parque": "Parques Rio",
-      "evento": "Operação do Parque"
+      "categoria": "Eventos Externos",
+      "evento": "MegaOperação policial no Rio De Janeiro - Vias interditadas/ tiroteio que afetou o fluxo em toda cidade e regiões próximas"
     },
     {
       "data": "2025-11-06",
+      "dataFim": "2025-11-06",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Hoje às 10h começou uma instabilidade bancária nacional no PIX - Não impactou nas vendas, mas não emitiu o bilhete de quem fez as transações. Está sendo liberado cortesia como tratativa."
     },
     {
       "data": "2025-11-10",
+      "dataFim": "2025-11-10",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "AquaFoz",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Fluxo de familiares de funcionários e teste de bilheteria em Aquafoz. (Inauguração prevista somente para 13/11 e aberto ao público 14/11)"
     },
     {
       "data": "2025-11-11",
+      "dataFim": "2025-11-11",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "AquaFoz",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Fluxo de Escola Pública e Trade. (Inauguração prevista somente para 13/11 e aberto ao público 14/11)"
     },
     {
       "data": "2025-11-18",
+      "dataFim": "2025-11-18",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "TI relatou problemas no CloudFire, com isso ecommerce passou parte da manhã fora do ar e com instabilidade."
     },
     {
       "data": "2025-11-19",
+      "dataFim": "2025-11-19",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "TI relatou problemas no CloudFire, com isso ecommerce passou parte da manhã fora do ar e com instabilidade."
     },
     {
       "data": "2025-11-22",
+      "dataFim": "2025-11-22",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Show Dua Lipa RJ"
     },
     {
       "data": "2025-11-22",
+      "dataFim": "2025-11-22",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Identificado Site Fake do AquaRio - Tivemos reclamações na Operação do Parque. O site caiu"
     },
     {
       "data": "2025-11-23",
+      "dataFim": "2025-11-23",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Parada LGBTQIA+ em Copacabana"
     },
     {
       "data": "2025-11-26",
+      "dataFim": "2025-11-26",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Tela de verificação de identidade do cloudflare no site e ecom do AquaRio afetando o fluxo e campanhas de google. Tivemos todas as campanhas recusadas pela plataforma até a retirada da tela."
     },
     {
       "data": "2025-11-27",
+      "dataFim": "2025-11-27",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Tela de verificação de identidade do cloudflare no site e ecom do BioParque afetando o fluxo e campanhas de google. Tivemos todas as campanhas recusadas pela plataforma até a retirada da tela. Normalizado por volta de 16h."
     },
     {
       "data": "2025-11-28",
+      "dataFim": "2025-11-28",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Instabilidade no Santander afetou pagamento por PIX no e-commerce do AquaRio. Período: 9:23h às 10:29."
     },
     {
       "data": "2025-11-28",
+      "dataFim": "2025-11-28",
       "ano": 2025,
       "mes": "Novembro",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Instabilidade no Santander afetou pagamento por PIX no e-commerce do AquaRio. Período: 9:27h às 10:29."
     },
     {
       "data": "2025-12-26",
+      "dataFim": "2025-12-26",
       "ano": 2025,
       "mes": "Dezembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Ecommerce AquaRio, BioParque e Paineiras fora do ar na parte da manhã"
     },
     {
       "data": "2025-12-29",
+      "dataFim": "2025-12-29",
       "ano": 2025,
       "mes": "Dezembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Erro 481 (Antifraude) pagamento por cartão nos E-commerces (Parques Rio e Foz)"
     },
     {
       "data": "2025-12-30",
+      "dataFim": "2025-12-30",
       "ano": 2025,
       "mes": "Dezembro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Erro 481 (Antifraude) pagamento por cartão nos E-commerces (Parques Rio e Foz)"
     },
     {
       "data": "2026-01-01",
+      "dataFim": "2026-01-01",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "O Meta começou a descontar em torno de 12% de imposto sobre o valor investido na plataforma para TODOS os parques."
     },
     {
       "data": "2026-01-15",
+      "dataFim": "2026-01-15",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Venda antecipada 1 dia com desconto de 10% somente para ingresso inteira no Bio."
     },
     {
       "data": "2026-01-20",
+      "dataFim": "2026-01-20",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário Parque estendido: Ultimo acesso 18h e Encerramento 19h | MDE, MDC e GEX: Ultimo acesso 19h e Encerramento 20h"
     },
     {
       "data": "2026-01-22",
+      "dataFim": "2026-01-22",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário Parque estendido: Ultimo acesso 18h e Encerramento 19h | MDE, MDC e GEX: Ultimo acesso 19h e Encerramento 20h"
     },
     {
       "data": "2026-01-23",
+      "dataFim": "2026-01-23",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Bilheteria encerrada às 17h devido às condições climáticas"
     },
     {
       "data": "2026-01-24",
+      "dataFim": "2026-01-24",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "AquaRio - último acesso 17h30 e encerramento 18h30. MDE MDC e GEX - último acesso 18h30 e encerramento 19h30"
     },
     {
       "data": "2026-01-26",
+      "dataFim": "2026-01-26",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Outros Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Institucional do M3F caiu às 15:52 ; apenas e-commerce funcionou. Voltou ao normal às 16:20"
     },
     {
       "data": "2026-01-27",
+      "dataFim": "2026-01-27",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Mudança na OBZ do Bio"
     },
     {
       "data": "2026-01-28",
+      "dataFim": "2026-01-28",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização no ERP da Limber que deixará o E-commerce fora do ar das 21h até as 1h do dia 29/01"
     },
     {
       "data": "2026-01-30",
+      "dataFim": "2026-01-30",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Instablidade no PIX no e-commerce (sáb e domingo) - 30/01 e 01/02"
     },
     {
       "data": "2026-01-31",
+      "dataFim": "2026-01-31",
       "ano": 2026,
       "mes": "Janeiro",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Evacuação no Aquafoz de 14h às 15:30 por conta de problema de energia impactando um transformador. Impacto na visitação. Após isso a situação foi controlada e a visitação normalizada."
     },
     {
       "data": "2026-02-10",
+      "dataFim": "2026-02-10",
       "ano": 2026,
       "mes": "Fevereiro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Identificado site fake do AquaRio. TI acionado"
     },
     {
       "data": "2026-02-25",
+      "dataFim": "2026-02-25",
       "ano": 2026,
       "mes": "Fevereiro",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "MON Sem Paredes - Exposição ao ar livre no Parque Vila Velha"
     },
     {
       "data": "2026-02-27",
+      "dataFim": "2026-02-27",
       "ano": 2026,
       "mes": "Fevereiro",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
     },
     {
       "data": "2026-03-03",
+      "dataFim": "2026-03-03",
       "ano": 2026,
       "mes": "Março",
       "parque": "AquaFoz",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Obras na Av. Cataratas chegaram na frente do AquaFoz, podemos ter impacto na visitação"
     },
     {
       "data": "2026-03-03",
+      "dataFim": "2026-03-03",
       "ano": 2026,
       "mes": "Março",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "[INTERNET] Rompimento da fibra na entrada do Parque; Estão rodando com a Starlink por contingência. POS e ECOM indisponíveis. Instabilidade começou a noite e a equipe técnica atuará na manhã de 04/03."
     },
     {
       "data": "2026-03-09",
+      "dataFim": "2026-03-09",
       "ano": 2026,
       "mes": "Março",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
     },
     {
       "data": "2026-03-11",
+      "dataFim": "2026-03-11",
       "ano": 2026,
       "mes": "Março",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário Parque estendido: Ultimo acesso 16h30h e Encerramento 17h30h | MDE, MDC e GEX: Ultimo acesso 17h30 e Encerramento 18h30h"
     },
     {
       "data": "2026-03-12",
+      "dataFim": "2026-03-12",
       "ano": 2026,
       "mes": "Março",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Interditado o acesso ao Mirante Dona Marta, seja por veículo ou a pé/bicicleta."
     },
     {
       "data": "2026-03-16",
+      "dataFim": "2026-03-16",
       "ano": 2026,
       "mes": "Março",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Problemas no AquaFoz; e-commerce fora do ar"
     },
     {
       "data": "2026-03-20",
+      "dataFim": "2026-03-20",
       "ano": 2026,
       "mes": "Março",
       "parque": "Aquario",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "O site do Aquário passará a oferecer aos nossos clientes a opção de contribuir com o Fundo Rio de Janeiro, uma iniciativa dedicada a promover o Rio de Janeiro como destino turístico"
     },
     {
       "data": "2026-03-23",
+      "dataFim": "2026-03-23",
       "ano": 2026,
       "mes": "Março",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina, para fins turísticos. A cidade fronteiriça de Puerto Iguazú está entre os destinos mais procurados para o período."
     },
     {
       "data": "2026-03-24",
+      "dataFim": "2026-03-24",
       "ano": 2026,
       "mes": "Março",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina. Dia Nacional da Memória pela Verdade e a Justiça; a cidade fronteiriça de Puerto Iguazú está entre os destinos mais procurados para o período."
     },
     {
       "data": "2026-04-01",
+      "dataFim": "2026-04-01",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Site institucional do AquaFoz fora do ar. Normalizado às 14h"
     },
     {
       "data": "2026-04-02",
+      "dataFim": "2026-04-02",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina. Dia do Veterano da Guerra das Malvinas e Quinta-Feira Santa"
     },
     {
       "data": "2026-04-03",
+      "dataFim": "2026-04-03",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Sexta-Feira Santa"
     },
     {
       "data": "2026-04-03",
+      "dataFim": "2026-04-03",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
     },
     {
       "data": "2026-04-03",
+      "dataFim": "2026-04-03",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "[oportunidade de mercado] Na sexta feira santa o comércio do Paraguai fecha e com isso o fluxo para Foz aumenta."
     },
     {
       "data": "2026-04-04",
+      "dataFim": "2026-04-04",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
     },
     {
       "data": "2026-04-05",
+      "dataFim": "2026-04-05",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido no feriado de páscoa, 03,04, 05 abril. Bilheteria até às 18h."
     },
     {
       "data": "2026-04-06",
+      "dataFim": "2026-04-06",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "GEX - Três televisões não estão funcionando desde sábado (04/04), o que pode afetar na experiência do cliente"
     },
     {
       "data": "2026-04-06",
+      "dataFim": "2026-04-06",
       "ano": 2026,
       "mes": "Abril",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
     },
     {
       "data": "2026-04-06",
+      "dataFim": "2026-04-06",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Rádio Jovem Pan"
     },
     {
       "data": "2026-04-07",
+      "dataFim": "2026-04-07",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
     },
     {
       "data": "2026-04-07",
+      "dataFim": "2026-04-07",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Eletromidia Mub de Rua"
     },
     {
       "data": "2026-04-10",
+      "dataFim": "2026-04-10",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "A partir de hoje será necessário incluir Nome e CPF do acompanhante nas compras do e-commerce e RCV."
     },
     {
       "data": "2026-04-11",
+      "dataFim": "2026-04-11",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Desde 11/04 capacidade reduzida em dias de grande fluxo e estamos ganhado de lavada no share"
     },
     {
       "data": "2026-04-13",
+      "dataFim": "2026-04-13",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
     },
     {
       "data": "2026-04-14",
+      "dataFim": "2026-04-14",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
     },
     {
       "data": "2026-04-15",
+      "dataFim": "2026-04-15",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Eletromidia Edificios"
     },
     {
       "data": "2026-04-16",
+      "dataFim": "2026-04-16",
       "ano": 2026,
       "mes": "Abril",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Saldo de Google Ads zerado (pago pelo financeiro no dia 22/04)"
     },
     {
       "data": "2026-04-17",
+      "dataFim": "2026-04-17",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Rodovia Midialand"
     },
     {
       "data": "2026-04-18",
+      "dataFim": "2026-04-18",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido até 18h devido ao feriadão"
     },
     {
       "data": "2026-04-18",
+      "dataFim": "2026-04-18",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "NEOOH portas do Aeroporto"
     },
     {
       "data": "2026-04-19",
+      "dataFim": "2026-04-19",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido até 18h devido ao feriadão"
     },
     {
       "data": "2026-04-20",
+      "dataFim": "2026-04-20",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido até 18h devido ao feriadão"
     },
     {
       "data": "2026-04-21",
+      "dataFim": "2026-04-21",
       "ano": 2026,
       "mes": "Abril",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Horário estendido até 18h devido ao feriadão"
     },
     {
       "data": "2026-04-27",
+      "dataFim": "2026-04-27",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Greve dos ônibus; muitos turistas usam a linha que vai para o PNI"
     },
     {
       "data": "2026-04-27",
+      "dataFim": "2026-04-27",
       "ano": 2026,
       "mes": "Abril",
       "parque": "Paineiras",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Investimento extra de R$ 4.000,00 (dinheiro do investimento de maio; em breve ira repor)"
     },
     {
       "data": "2026-05-01",
+      "dataFim": "2026-05-01",
       "ano": 2026,
       "mes": "Maio",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Dia do Trabalhador"
     },
     {
       "data": "2026-05-01",
+      "dataFim": "2026-05-01",
       "ano": 2026,
       "mes": "Maio",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Dia do trabalhador; comércio fechado no Paraguai Oportunidade para tentar atrair o público para o AquaFoz"
     },
     {
       "data": "2026-05-01",
+      "dataFim": "2026-05-01",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
     },
     {
       "data": "2026-05-02",
+      "dataFim": "2026-05-02",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
     },
     {
       "data": "2026-05-03",
+      "dataFim": "2026-05-03",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horários estendidos nos parques. AquaFoz: 09h - 18h e Marco: 11h - 21h"
     },
     {
       "data": "2026-05-05",
+      "dataFim": "2026-05-05",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "[AQUAFOZ][M3F] Alteração do valor de AquaFoz para R$109 no Combo AquaFoz + M3F para os dois parques. Padronização do valor de M3F (R$48 no e-com e R$53 no físico). Tarifa inteira final no Combo: Bilheteria e demais canais físicos R$ 162; E-commerces: R$ 157"
     },
     {
       "data": "2026-05-06",
+      "dataFim": "2026-05-06",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Todos os Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Meta comecou a desativar contas inativas. Os parques perderam seguidores no Instagram."
     },
     {
       "data": "2026-05-07",
+      "dataFim": "2026-05-07",
       "ano": 2026,
       "mes": "Maio",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Crazy Week no Paraguai (uma adaptaçãp da Black Friday). Oportunidade para atrair público"
     },
     {
       "data": "2026-05-08",
+      "dataFim": "2026-05-08",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Todos os Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Devido a um problema na nuvem da Amazon estamos sendo impactados com instabilidade no atendimento via Wpp."
     },
     {
       "data": "2026-05-08",
+      "dataFim": "2026-05-08",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Ecommerce BioParque com instabilidade"
     },
     {
       "data": "2026-05-10",
+      "dataFim": "2026-05-10",
       "ano": 2026,
       "mes": "Maio",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "Crazy Week no Paraguai (uma adaptaçãp da Black Friday). Oportunidade para atrair público"
     },
     {
       "data": "2026-05-13",
+      "dataFim": "2026-05-13",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Começamos a rodar a conta de anúncios nova do BioParque com campanhas de topo de funil."
     },
     {
       "data": "2026-05-18",
+      "dataFim": "2026-05-18",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Parques Foz",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Parque das Aves passará a abrir 8:30 e encerrar as atividades às 18h30 . A atualização acompanha a redução da luminosidade natural ao longo do dia durante os meses de outono e inverno e busca proporcionar uma experiência mais confortável e organizada ao público."
     },
     {
       "data": "2026-05-19",
+      "dataFim": "2026-05-19",
       "ano": 2026,
       "mes": "Maio",
       "parque": "Soul Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "[VILA VELHA]"
     },
     {
       "data": "2026-05-25",
+      "dataFim": "2026-05-25",
       "ano": 2026,
       "mes": "Maio",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina. Revolução de Maio de 1810"
     },
     {
       "data": "2026-06-04",
+      "dataFim": "2026-06-04",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Todos os Parques",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado Nacional (Corpus Chisti)"
     },
     {
       "data": "2026-06-10",
+      "dataFim": "2026-06-14",
       "ano": 2026,
       "mes": "Junho",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "10/06 a 14/06 - cidade com fluxo do festival de turismo"
     },
     {
       "data": "2026-06-10",
+      "dataFim": "2026-06-10",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Parques Foz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "FERIADO - ANIVERSÁRIO FOZ DO IGUAÇU (baixo fluxo de visitação)"
     },
     {
       "data": "2026-06-11",
+      "dataFim": "2026-06-11",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário estendido em meia hora para acesso ao AquaRio e demais atrativos."
     },
     {
       "data": "2026-06-15",
+      "dataFim": "2026-06-15",
       "ano": 2026,
       "mes": "Junho",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina. General Güemes (herói nacional)"
     },
     {
       "data": "2026-06-19",
+      "dataFim": "2026-06-19",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Falta de Luz na parte da tarde."
     },
     {
       "data": "2026-06-20",
+      "dataFim": "2026-06-20",
       "ano": 2026,
       "mes": "Junho",
       "parque": "AquaFoz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado na Argentina. General Belgrano (herói nacional) e Dia da Bandeira"
     },
     {
       "data": "2026-06-24",
+      "dataFim": "2026-06-24",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Parques Foz",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriado municipal em foz"
     },
     {
       "data": "2026-06-24",
+      "dataFim": "2026-06-24",
       "ano": 2026,
       "mes": "Junho",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Jogo da copa no Marco (Tarde e Noite)"
     },
     {
       "data": "2026-06-25",
+      "dataFim": "2026-06-25",
       "ano": 2026,
       "mes": "Junho",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "tarifário M3F - 25/06 (novo preço ativo)"
     },
     {
       "data": "2026-06-25",
+      "dataFim": "2026-06-25",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Horário estendido em 30min, até 17:30."
     },
     {
       "data": "2026-06-26",
+      "dataFim": "2026-08-03",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Vila Velha",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Hello Kitty Parade em Vila Velha. Estará aberto ao público a partir do dia 26/06 e ficará até 03/08."
     },
     {
       "data": "2026-06-29",
+      "dataFim": "2026-06-29",
       "ano": 2026,
       "mes": "Junho",
       "parque": "3 Pescadores",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Fechou em uma segunda, excepcionalmente por conta do jogo do Brasil."
     },
     {
       "data": "2026-06-29",
+      "dataFim": "2026-06-29",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Parques Rio",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "Greve dos rodoviários no Rio de Janeiro. se estendeu até..."
     },
     {
       "data": "2026-06-30",
+      "dataFim": "2026-06-30",
       "ano": 2026,
       "mes": "Junho",
       "parque": "Parques Foz",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "30/06 e 01/07 (terça e quarta-feira) o acesso ao parque passará por obras. O transporte público nesses dois dias não vai conseguir acessar o ponto interno do parque. Nesses dias, o desembarque será realizado no ponto do Parque das Aves."
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-31",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Caravana do Silvinho - de 01/07 a 31/07"
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-01",
       "ano": 2026,
       "mes": "Julho",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Vai voltar ao valor de 150 no site e 135 antecipado"
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-01",
       "ano": 2026,
       "mes": "Julho",
       "parque": "3 Pescadores",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Em Julho irá abrir todos os dias"
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-01",
       "ano": 2026,
       "mes": "Julho",
       "parque": "3 Pescadores",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Todos os dias irá trabalhar com balsa"
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-01",
       "ano": 2026,
       "mes": "Julho",
       "parque": "AquaFoz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Novo site de Aquafoz foi virado."
     },
     {
       "data": "2026-07-01",
+      "dataFim": "2026-07-01",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Bioparque abrirá todos os dias de Julho."
     },
     {
       "data": "2026-07-03",
+      "dataFim": "2026-07-03",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Ecommerce Aquario está com problemas ao criar cupom."
     },
     {
       "data": "2026-07-05",
+      "dataFim": "2026-07-05",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "devido ao jogo da Seleção Brasileira na Copa do Mundo no próximo domingo, dia 05/07, trabalharemos em horário de baixa temporada. Abertura 9h | Último acesso 16h |Encerramento 17h"
     },
     {
       "data": "2026-07-05",
+      "dataFim": "2026-07-05",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Soul Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Calendário Turístico",
+      "evento": "devido ao jogo da Seleção Brasileira na Copa do Mundo no próximo domingo, dia 05/07, Soul parques fechará às 16h."
     },
     {
       "data": "2026-07-05",
+      "dataFim": "2026-07-05",
       "ano": 2026,
       "mes": "Julho",
       "parque": "M3F",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "pagode das 14:30 às 16:30 | Transmissão do jogo às 17:00 |apresentações culturais 19:00 às 20:30"
     },
     {
       "data": "2026-07-06",
+      "dataFim": "2026-07-06",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Vila Velha",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "A partir do dia 06/07, ativaremos a Campanha do Agasalho do SESC. A mecânica será a mesma da anterior: 10% de desconto no ingresso para quem realizar a doação, benefício válido apenas para compras via e-commerce."
     },
     {
       "data": "2026-07-06",
+      "dataFim": "2026-07-06",
       "ano": 2026,
       "mes": "Julho",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Com a saída do Brasil da Copa, a programação prevista até o dia 19/07 no Marco das 3 Fronteiras foi cancelado."
     },
     {
       "data": "2026-07-06",
+      "dataFim": "2026-07-08",
       "ano": 2026,
       "mes": "Julho",
       "parque": "M3F",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "No M3F, aba antifraude no site está afetando as mídias ativas e pode estar influenciando no fluxo de compra no e-commerce. ficamos no período de 06/07 a 08/07 sem rodar as campanhas, se normalizando às 17h"
     },
     {
       "data": "2026-07-07",
+      "dataFim": "2026-07-07",
       "ano": 2026,
       "mes": "Julho",
       "parque": "AquaFoz",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "12:20 tivemos um problema com a internet no aquafoz e nosso site está, temporariamente, com o fluxo de compra afetado. Às 14h foi normalizado."
     },
     {
       "data": "2026-07-08",
+      "dataFim": "2026-07-08",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Atualização do ERP e PDVs de AquaFoz; foi necessário parar a Base de Dados; vendas do E-Commerce fora do ar"
     },
     {
       "data": "2026-07-08",
+      "dataFim": "2026-07-08",
       "ano": 2026,
       "mes": "Julho",
       "parque": "M3F",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Site estava sem a opção de parcelamento e foi normalizado hoje. Time de RCV que identificou o problema."
     },
     {
       "data": "2026-07-09",
+      "dataFim": "2026-07-09",
       "ano": 2026,
       "mes": "Julho",
       "parque": "3 Pescadores",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "Feriadão no estado, iniciando dia 09 (Quinta-feira). Período 09/07 a 12/06."
     },
     {
       "data": "2026-07-13",
+      "dataFim": "2026-08-02",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Calendário Turístico"
+      "categoria": "Calendário Turístico",
+      "evento": "ALTA TEMPORADA NO AQUARIO. Alta iniciará no dia 13/7 a 2/8. Horário estendido todos os dias"
     },
     {
       "data": "2026-07-15",
+      "dataFim": "2026-07-15",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Favretto Rodovia"
     },
     {
       "data": "2026-07-16",
+      "dataFim": "2026-07-16",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Todos os Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Limber informou que os serviços da Fiserv ficaram instáveis, impactando pagamentos com cartão em todos os parques. Foi orientado usar o POS e realizar o pagamento manual nos PDVs como POS Manual."
     },
     {
       "data": "2026-07-16",
+      "dataFim": "2026-07-16",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Vila Velha",
-      "evento": "Eventos Externos"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Midialand Submarino Pedágio"
     },
     {
       "data": "2026-07-21",
+      "dataFim": "2026-07-21",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Soul Parques",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Início de aviso prévio de encerramento de contrato Torus."
     },
     {
       "data": "2026-07-24",
+      "dataFim": "2026-07-24",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Movimento muito bom impulsionado pela alta e pelo dia chuvoso. Horário estendido em 30 min. último acesso Aqua 17:30 / Encerramento 18:30. Atrativos último acesso 18:30 / Encerramento 19:30."
     },
     {
       "data": "2026-07-24",
+      "dataFim": "2026-07-24",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Bioparque",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Movimentação de verba restante do google de Bioparque (5k) para reforço do AquaRio. Campanhas de Bioparque serão pausadas."
     },
     {
       "data": "2026-07-24",
+      "dataFim": "2026-07-24",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "AquaRio teve a maior visitação histórica, atingindo 9095 pax."
     },
     {
       "data": "2026-07-28",
+      "dataFim": "2026-07-28",
       "ano": 2026,
       "mes": "Julho",
       "parque": "PNI",
-      "evento": "Eventos Externos"
+      "categoria": "Eventos Externos",
+      "evento": "[INFLUÊNCIA EXTERNA] Acidente com o barco do Macuco Safari, nas Cataratas, com noticiário divulgando 1 morto mais 8 desaparecidos. Concessão diferente da nossa, não tem a ver com a gente, só o espaço é nosso."
     },
     {
       "data": "2026-07-28",
+      "dataFim": "2026-07-28",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Paineiras",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "10 anos de Paineiras."
     },
     {
       "data": "2026-07-28",
+      "dataFim": "2026-07-28",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Vila Velha",
-      "evento": "Ações Comerciais e Institucionais"
+      "categoria": "Ações Comerciais e Institucionais",
+      "evento": "Ação um dia no parque vila velha por 20,00 reais."
     },
     {
       "data": "2026-07-29",
+      "dataFim": "2026-07-29",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Ventania de 100km/h que paralizou todos os transportes no Rio, por volta das 16h até 18h."
     },
     {
       "data": "2026-07-30",
+      "dataFim": "2026-07-30",
       "ano": 2026,
       "mes": "Julho",
       "parque": "Parques Rio",
-      "evento": "Clima e Meio Ambiente"
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "30/07 - Bioparque e Paineiras irão abrir a partir das 10h, devido às rajadas de vento forte no Rio ocorridos em 29/07/2026."
     },
     {
       "data": "2026-08-03",
+      "dataFim": "2026-08-03",
       "ano": 2026,
       "mes": "Agosto",
       "parque": "Paineiras",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Escada rolante de paineiras será reformada pós alta temporada, e terá início em 03/08 e acabará em Maio/2026. Até um certo ponto, terá apenas elevador para ajudar a subir. Depois, será apenas escada."
     },
     {
       "data": "2026-08-03",
+      "dataFim": "2026-08-03",
       "ano": 2026,
       "mes": "Agosto",
       "parque": "Aquario",
-      "evento": "Operação do Parque"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "haverá reforma no recinto dos axolotes durante o mês de agosto. Estamos retirando as comunicações de mídia e site com esse mote."
     },
     {
       "data": "2026-08-11",
+      "dataFim": "2026-08-11",
       "ano": 2026,
       "mes": "Agosto",
       "parque": "Parques Foz",
-      "evento": "Eventos Externos"
+      "categoria": "Operação Parque / Situações Internas",
+      "evento": "Parque das Aves abrirá apenas de manhã, das 8h30 às 12h."
     }
   ],
   "HISTORICO": {
@@ -47316,19 +47744,33 @@
       },
       "Consolidado": {
         "anos": {
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
+          ],
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            470681.0,
+            422910.0,
+            717481.0,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "2012": [
             null,
@@ -47344,33 +47786,33 @@
             null,
             null
           ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
           ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
           ],
           "2018": [
             321385.0,
@@ -47386,19 +47828,19 @@
             162033.0,
             182819.0
           ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
           ],
           "2015": [
             189451.0,
@@ -47428,75 +47870,33 @@
             500148.0,
             520889.0
           ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
-          ],
-          "2020": [
-            319895.0,
-            178103.0,
-            77834.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            26514.0,
-            84167.0,
-            84969.0,
-            90379.0,
-            79635.0
-          ],
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
-          ],
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
           ],
           "2023": [
             366579.0,
@@ -47512,38 +47912,74 @@
             249211.0,
             188895.0
           ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            470681.0,
-            422910.0,
-            717481.0,
-            null,
-            null,
-            null,
-            null,
-            null
+          "2020": [
+            319895.0,
+            178103.0,
+            77834.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            26514.0,
+            84167.0,
+            84969.0,
+            90379.0,
+            79635.0
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
+          ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2021": [
-            726490,
-            1392943
+          "2022": [
+            1195615,
+            1502267
           ],
-          "2024": [
-            2410556,
-            2803391
+          "2026": [
+            3213884,
+            717481
+          ],
+          "2014": [
+            717316,
+            673740
+          ],
+          "2019": [
+            1015073,
+            1044424
           ],
           "2018": [
             992762,
             968837
           ],
-          "2019": [
-            1015073,
-            1044424
+          "2016": [
+            635485,
+            584255
           ],
           "2015": [
             711060,
@@ -47553,33 +47989,25 @@
             2704477,
             2940308
           ],
-          "2014": [
-            717316,
-            673740
-          ],
-          "2022": [
-            1195615,
-            1502267
-          ],
-          "2020": [
-            575832,
-            365664
-          ],
-          "2016": [
-            635485,
-            584255
-          ],
-          "2017": [
-            1300881,
-            1170345
+          "2024": [
+            2410556,
+            2803391
           ],
           "2023": [
             1486747,
             1503931
           ],
-          "2026": [
-            3213884,
-            717481
+          "2020": [
+            575832,
+            365664
+          ],
+          "2021": [
+            726490,
+            1392943
+          ],
+          "2017": [
+            1300881,
+            1170345
           ]
         }
       }
