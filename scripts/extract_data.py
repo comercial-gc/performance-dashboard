@@ -479,26 +479,52 @@ def build_clima_emoji(service, spreadsheet_id, sheet_name, meses_com_dados):
 # CAPTAÇÃO CV - 3P (mesma planilha "Visitação Parques 2026")
 # ---------------------------------------------------------------------------
 
-# grupos de colunas por mes: (indice da coluna de data, visitacao, cv), 0-indexed
-CAPTACAO_CV_3P_COLS = {
-    "JANEIRO": (1, 2, 3), "FEVEREIRO": (6, 7, 8), "MARÇO": (11, 12, 13),
-    "ABRIL": (16, 17, 18), "MAIO": (21, 22, 23), "JUNHO": (26, 27, 28), "JULHO": (31, 32, 33),
-}
-
-
 def build_captacao_cv_3p(service, spreadsheet_id, sheet_name):
+    """Le a aba "CAPTAÇÃO CV - 3P": um bloco de 4 colunas (DATA | VISITAÇÃO 3P | CV |
+    CAPTAÇÃO) por mes, um do lado do outro, com o titulo do mes uma linha acima do
+    cabecalho (ex.: "CAPTAÇÃO TRÊS PESCADORES AGOSTO").
+
+    BUG EVITADO: a versao anterior usava um dict fixo de indices de coluna por mes
+    (CAPTACAO_CV_3P_COLS), que so' ia até Julho -- todo mes novo (Agosto em diante)
+    tinha que ser adicionado a mao nesse dict, e enquanto isso o card ficava mostrando
+    "-" (mes "sem dado", mesmo com a planilha ja preenchida). Agora o bloco de cada
+    mes e' encontrado dinamicamente pelo titulo (mesmo padrao usado em outras partes
+    do pipeline, ex.: build_evolucao_ppt_parcial), sem precisar editar nada todo mes.
+
+    Alem do total por mes (by_month) e do acumulado (anual), tambem devolve o detalhe
+    DIARIO (diario: {"AAAA-MM-DD": {"visitacao":.., "cv":..}}) -- usado pelo frontend
+    pra somar qualquer intervalo de datas (filtro "Personalizado"), que antes so'
+    funcionava pra Visitação/OBZ e sempre mostrava "-" na Captação CV.
+    """
     rows = get_values(service, spreadsheet_id, sheet_name)
+    if len(rows) < 2:
+        return {}, {"visitacao": 0, "cv": 0}, {}
+
+    titulo_row, header_row = rows[0], rows[1]
+    meses_norm = {_norm_txt(nome): (nome, num) for nome, num in MONTH_NUMBER.items()}
+
+    blocos = []  # (mes_nome, month_number, dcol)
+    for c, v in enumerate(header_row):
+        if _norm_txt(v) != "DATA":
+            continue
+        titulo = _norm_txt(cell(titulo_row, c))
+        for nome_norm, (mes_nome, month_number) in meses_norm.items():
+            if nome_norm and nome_norm in titulo:
+                blocos.append((mes_nome, month_number, c))
+                break
+
     by_month = {}
+    diario = {}
     total_vis, total_cv = 0.0, 0.0
-    for mes, (dcol, vcol, ccol) in CAPTACAO_CV_3P_COLS.items():
-        month_number = MONTH_NUMBER[mes]
+    for mes_nome, month_number, dcol in blocos:
+        vcol, ccol = dcol + 1, dcol + 2
         vis_sum, cv_sum = 0.0, 0.0
         for r in rows[2:]:
             d = serial_to_date(cell(r, dcol))
             # BUG EVITADO: filtramos por DATA real do mes, nao por posicao de linha --
             # a planilha tem uma linha de "total do mes" logo apos os dias, que nao tem
-            # data preenchida. Se somarmos por posicao de linha (ex.: linhas 3 a 34) esse
-            # total entra junto e o resultado sai em dobro.
+            # data preenchida. Se somarmos por posicao de linha esse total entra junto
+            # e o resultado sai em dobro.
             if d and d.year == 2026 and d.month == month_number:
                 v = cell(r, vcol)
                 c = cell(r, ccol)
@@ -506,10 +532,14 @@ def build_captacao_cv_3p(service, spreadsheet_id, sheet_name):
                     vis_sum += v
                 if isinstance(c, (int, float)):
                     cv_sum += c
-        by_month[mes] = {"visitacao": int(vis_sum), "cv": int(cv_sum)}
+                diario[d.isoformat()] = {
+                    "visitacao": v if isinstance(v, (int, float)) else None,
+                    "cv": c if isinstance(c, (int, float)) else None,
+                }
+        by_month[mes_nome] = {"visitacao": int(vis_sum), "cv": int(cv_sum)}
         total_vis += vis_sum
         total_cv += cv_sum
-    return by_month, {"visitacao": int(total_vis), "cv": int(total_cv)}
+    return by_month, {"visitacao": int(total_vis), "cv": int(total_cv)}, diario
 
 
 # ---------------------------------------------------------------------------
@@ -1842,7 +1872,7 @@ def main():
                 visitacao[mes]["daily"][park]["Emoji"] = emoji_arr
 
     print("Lendo Captação CV - 3P...", file=sys.stderr)
-    cv3p_by_month, cv3p_anual = build_captacao_cv_3p(
+    cv3p_by_month, cv3p_anual, cv3p_diario = build_captacao_cv_3p(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["captacao_cv_3p"]
     )
 
@@ -1977,6 +2007,7 @@ def main():
         "VISITACAO": visitacao,
         "CAPTACAO_CV_3P_BY_MONTH": cv3p_by_month,
         "CAPTACAO_CV_3P_ANUAL": cv3p_anual,
+        "CAPTACAO_CV_3P_DIARIO": cv3p_diario,
         "SEMMORADOR_RATIO": semmorador_ratio,
         "SHARE_META_MESES": [MESES_PT[MONTH_NUMBER[m] - 1] for m in cfg["meses_com_dados"]],
         "SHARE_META_GRUPO_CATARATAS": share_meta_grupo_cataratas,
