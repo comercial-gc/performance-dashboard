@@ -2102,6 +2102,7 @@ let SEMMORADOR_RATIO = {};
 
 let CAPTACAO_CV_3P_BY_MONTH = {};
 let CAPTACAO_CV_3P_ANUAL = {};
+let CAPTACAO_CV_3P_DIARIO = {};
 
 function captacaoCardsHtml(bucket, month){
   const labels = { M3F: 'Captação PNI (M3F)', AquaFoz: 'Captação PNI (AquaFoz)' };
@@ -2125,15 +2126,38 @@ function captacaoCardsHtml(bucket, month){
   }).join('');
 }
 
+// Soma o detalhe DIARIO da Captação CV (3P) num intervalo de datas -- usado só pro
+// filtro "Personalizado" da Visitação, que não existe como chave em
+// CAPTACAO_CV_3P_BY_MONTH (esse é por mês calendário, ex.: "AGOSTO"). Sem isso, o card
+// de Captação CV sempre mostrava "-" em Personalizado, mesmo com dado real no intervalo.
+function captacaoCV3PPersonalizadoData(){
+  const fromStr = document.getElementById('customDateFrom') ? document.getElementById('customDateFrom').value : '';
+  const toStr = document.getElementById('customDateTo') ? document.getElementById('customDateTo').value : '';
+  if(!fromStr || !toStr) return null;
+  let vis = 0, cv = 0, achou = false;
+  Object.keys(CAPTACAO_CV_3P_DIARIO).forEach(dt => {
+    if(dt < fromStr || dt > toStr) return;
+    const v = CAPTACAO_CV_3P_DIARIO[dt];
+    if(typeof v.visitacao === 'number'){ vis += v.visitacao; achou = true; }
+    if(typeof v.cv === 'number'){ cv += v.cv; achou = true; }
+  });
+  return achou ? { visitacao: vis, cv: cv } : null;
+}
+
 function captacaoCV3PCardHtml(bucket, month){
   const color = PARK_COLORS['Três Pescadores'];
-  // BUG EVITADO: no bucket "anual" o card sempre mostrava CAPTACAO_CV_3P_ANUAL (total fixo
-  // Jan-Jul), não importa qual mês estivesse selecionado -- por isso continuava aparecendo
-  // com resultado mesmo em Agosto+ (mês sem dado real nenhum). Agora só mostra quando o mês
-  // selecionado realmente tem dado (existe em CAPTACAO_CV_3P_BY_MONTH).
-  const mesTemDado = CAPTACAO_CV_3P_BY_MONTH[month] !== undefined;
-  const d = mesTemDado ? (bucket === 'anual' ? CAPTACAO_CV_3P_ANUAL : CAPTACAO_CV_3P_BY_MONTH[month]) : null;
-  const captacao = d ? d.visitacao / d.cv : null;
+  let d;
+  if(month === 'PERSONALIZADO'){
+    d = captacaoCV3PPersonalizadoData();
+  } else {
+    // BUG EVITADO: no bucket "anual" o card sempre mostrava CAPTACAO_CV_3P_ANUAL (total fixo
+    // Jan-Jul), não importa qual mês estivesse selecionado -- por isso continuava aparecendo
+    // com resultado mesmo em Agosto+ (mês sem dado real nenhum). Agora só mostra quando o mês
+    // selecionado realmente tem dado (existe em CAPTACAO_CV_3P_BY_MONTH).
+    const mesTemDado = CAPTACAO_CV_3P_BY_MONTH[month] !== undefined;
+    d = mesTemDado ? (bucket === 'anual' ? CAPTACAO_CV_3P_ANUAL : CAPTACAO_CV_3P_BY_MONTH[month]) : null;
+  }
+  const captacao = (d && d.cv) ? d.visitacao / d.cv : null;
   return `<div class="capta-card" style="border-left-color:${color}">
     <div class="lbl" style="color:${color}">Captação CV (Três Pescadores)</div>
     <div class="big">${fmtPct(captacao)}</div>
@@ -3918,6 +3942,7 @@ async function carregarDados(){
     SEMMORADOR_RATIO = data.SEMMORADOR_RATIO || {};
     CAPTACAO_CV_3P_BY_MONTH = data.CAPTACAO_CV_3P_BY_MONTH || {};
     CAPTACAO_CV_3P_ANUAL = data.CAPTACAO_CV_3P_ANUAL || {};
+    CAPTACAO_CV_3P_DIARIO = data.CAPTACAO_CV_3P_DIARIO || {};
     INVEST_MKT_DETAIL = data.INVEST_MKT_DETAIL || {};
     INVEST_MKT_RESUMO = data.INVEST_MKT_RESUMO || {};
     MIX_ORIGEM = data.MIX_ORIGEM || {};
