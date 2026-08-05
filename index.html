@@ -392,6 +392,8 @@
   .mix-morador-toggle{ margin-left:auto; display:flex; background:#eef1ee; border-radius:20px; padding:3px; gap:2px; }
   .mix-morador-toggle button{ border:none; background:transparent; padding:7px 16px; border-radius:16px; font-size:12.5px; font-weight:700; color:var(--muted); cursor:pointer; }
   .mix-morador-toggle button.active{ background:#0f3d2e; color:#fff; }
+  .mix-vs-toggle button{ border:none; padding:7px 16px; border-radius:20px; font-size:12.5px; font-weight:700; cursor:pointer; background:#eef1ee; color:var(--muted); }
+  .mix-vs-toggle button.active{ background:#0f3d2e; color:#fff; }
   .mix-title-bar{ width:4px; align-self:stretch; background:var(--ink); border-radius:2px; }
   .mix-title{ font-size:22px; font-weight:800; color:var(--ink); line-height:1.2; }
   .mix-subtitle{ font-size:12.5px; font-style:italic; color:var(--muted); margin-top:2px; }
@@ -825,6 +827,9 @@
       <div class="mix-morador-toggle" id="mixMoradorToggle" style="margin-left:8px;">
         <button class="active" data-val="com" onclick="setMixMorador('com')">Com Morador</button>
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
+      </div>
+      <div class="mix-vs-toggle" style="margin-left:8px;">
+        <button id="mixVs2025Btn" class="active" onclick="setMixVs2025(!mixVs2025State)">Vs 2025: ON</button>
       </div>
     </div>
     <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | O menu "Outro período" (mês específico ou Personalizado) é calculado a partir do lançamento diário por parque</div>
@@ -3504,6 +3509,7 @@ function fmtMixDelta(v) {
 let mixMoradorState = 'com';
 let mixPeriodoState = 'mensal'; // 'mensal' | 'acumulado' | 'mes:JANEIRO'..'mes:DEZEMBRO' | 'custom'
 let mixParqueState = ''; // '' = Todos os Parques
+let mixVs2025State = true; // false = esconde tabela/evolução/donut de 2025, mostra só 2026
 const MIX_MORADOR_LABEL = { 'M3F':'Morador', 'AquaFoz':'Morador', 'PNI':'Morador/Estado' };
 const MESES_DIARIO_ORDEM = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
 
@@ -3515,6 +3521,19 @@ function setMixMorador(val){
 
 function setMixParque(val){
   mixParqueState = val;
+  renderMixOrigem();
+}
+
+// ON/OFF do comparativo Vs 2025 -- quando desligado, cada card cai no mesmo layout já usado
+// pros parques sem histórico (2026 puro: sem colunas 2025/Δ%/Sh25 na tabela, sem barra 2025
+// na evolução, sem donut SHARE 25).
+function setMixVs2025(val){
+  mixVs2025State = val;
+  const btn = document.getElementById('mixVs2025Btn');
+  if(btn){
+    btn.classList.toggle('active', val);
+    btn.textContent = 'Vs 2025: ' + (val ? 'ON' : 'OFF');
+  }
   renderMixOrigem();
 }
 
@@ -3712,27 +3731,32 @@ function renderMixOrigem() {
   grid.innerHTML = parquesFiltrados.map(parque => {
     const d = fonte[parque];
     const isFull = d.formato === "full";
+    // showVs controla o que é RENDERIZADO (tabela/evolução/donut) -- fica igual a isFull,
+    // exceto quando o usuário desliga o toggle "Vs 2025", que força o card (mesmo os com
+    // histórico) a cair no mesmo layout 2026-puro já usado pros parques novos sem 2025.
+    const showVs = isFull && mixVs2025State;
     const color = MIX_PARK_COLORS[parque] || "#333";
     const categoriasBase = mixMoradorState === 'sem' ? stripMorador(parque, d.categorias) : d.categorias;
     const cats = categoriasBase.filter(c => !String(c.label).startsWith("Total"));
     const totalRow = categoriasBase.find(c => String(c.label).startsWith("Total"));
 
-    // Badge
+    // Badge -- "Novo" é sobre o parque (sem histórico 2025); some quando Vs 2025 está
+    // desligado manualmente (não é a mesma coisa que não ter histórico).
     let badgeHtml = '';
-    if (isFull && totalRow && totalRow.delta !== null) {
+    if (showVs && totalRow && totalRow.delta !== null) {
       const dir = totalRow.delta >= 0 ? '' : 'down';
       badgeHtml = `<span class="mix-badge ${dir}">${fmtMixDelta(totalRow.delta)} Total</span>`;
-    } else {
+    } else if (!isFull) {
       badgeHtml = `<span class="mix-badge novo">Novo</span>`;
     }
 
     // Tabela
-    const theadCols = isFull
+    const theadCols = showVs
       ? '<th>Origem</th><th>2025</th><th>2026</th><th>Δ%</th><th>Sh25</th><th>Sh26</th>'
       : '<th>Origem</th><th>2026</th><th>Sh26</th>';
 
     const bodyRows = cats.map(c => {
-      if (isFull) {
+      if (showVs) {
         const dcls = (c.delta !== null && c.delta !== undefined) ? (c.delta >= 0 ? 'up' : 'down') : '';
         return `<tr>
           <td>${c.label}</td><td>${fmtMixInt(c.v2025)}</td><td>${fmtMixInt(c.v2026)}</td>
@@ -3744,16 +3768,16 @@ function renderMixOrigem() {
       }
     }).join('');
 
-    const totalTr = totalRow ? (isFull
+    const totalTr = totalRow ? (showVs
       ? `<tr class="total-row"><td>${totalRow.label}</td><td>${fmtMixInt(totalRow.v2025)}</td><td>${fmtMixInt(totalRow.v2026)}</td><td>${fmtMixDelta(totalRow.delta)}</td><td>${fmtMixPct(totalRow.share25)}</td><td>${fmtMixPct(totalRow.share26)}</td></tr>`
       : `<tr class="total-row"><td>${totalRow.label}</td><td>${fmtMixInt(totalRow.v2026)}</td><td>${fmtMixPct(totalRow.share26)}</td></tr>`
     ) : '';
 
     // Evolução - com valor ao final da barra e tooltip interativo
-    const maxVal = Math.max(...cats.map(c => Math.max(c.v2025||0, c.v2026||0)), 1);
+    const maxVal = Math.max(...cats.map(c => Math.max(showVs ? (c.v2025||0) : 0, c.v2026||0)), 1);
     const evoRows = cats.map(c => {
       const catColor = MIX_CAT_COLORS[c.label] || "#999";
-      if (isFull) {
+      if (showVs) {
         const w25 = (c.v2025||0) / maxVal * 100;
         const w26 = (c.v2026||0) / maxVal * 100;
         const tip25 = `${c.label} 2025: ${fmtMixInt(c.v2025)} (${fmtMixPct(c.share25)})`;
@@ -3855,7 +3879,7 @@ function renderMixOrigem() {
     }
 
     let donutsHtml = '';
-    if (isFull) {
+    if (showVs) {
       donutsHtml = `<div class="mix-donuts">
         <div class="mix-donut-block"><div class="mix-donut-label">SHARE 25</div>${buildDonutSvg('share25','v2025')}</div>
         <div class="mix-donut-block"><div class="mix-donut-label">SHARE 26</div>${buildDonutSvg('share26','v2026')}</div>
@@ -3875,7 +3899,7 @@ function renderMixOrigem() {
         <thead><tr>${theadCols}</tr></thead>
         <tbody>${bodyRows}${totalTr}</tbody>
       </table>
-      <div class="mix-evo-title">EVOLUÇÃO (25 VS 26)</div>
+      <div class="mix-evo-title">${showVs ? 'EVOLUÇÃO (25 VS 26)' : 'EVOLUÇÃO (2026)'}</div>
       ${evoRows}
       ${donutsHtml}
     </div>`;
