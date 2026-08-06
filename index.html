@@ -392,8 +392,6 @@
   .mix-morador-toggle{ margin-left:auto; display:flex; background:#eef1ee; border-radius:20px; padding:3px; gap:2px; }
   .mix-morador-toggle button{ border:none; background:transparent; padding:7px 16px; border-radius:16px; font-size:12.5px; font-weight:700; color:var(--muted); cursor:pointer; }
   .mix-morador-toggle button.active{ background:#0f3d2e; color:#fff; }
-  .mix-vs-toggle button{ border:none; padding:7px 16px; border-radius:20px; font-size:12.5px; font-weight:700; cursor:pointer; background:#eef1ee; color:var(--muted); }
-  .mix-vs-toggle button.active{ background:#0f3d2e; color:#fff; }
   .mix-title-bar{ width:4px; align-self:stretch; background:var(--ink); border-radius:2px; }
   .mix-title{ font-size:22px; font-weight:800; color:var(--ink); line-height:1.2; }
   .mix-subtitle{ font-size:12.5px; font-style:italic; color:var(--muted); margin-top:2px; }
@@ -828,8 +826,19 @@
         <button class="active" data-val="com" onclick="setMixMorador('com')">Com Morador</button>
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
       </div>
-      <div class="mix-vs-toggle" style="margin-left:8px;">
-        <button id="mixVs2025Btn" class="active" onclick="setMixVs2025(!mixVs2025State)">Vs 2025: ON</button>
+      <div class="mix-filter-field" style="margin-left:8px;">
+        <label for="mixVsSelect">Vs</label>
+        <select id="mixVsSelect" onchange="setMixVs(this.value)">
+          <option value="nenhum">Nenhum</option>
+          <option value="2025" selected>2025 (mesmo período)</option>
+          <option value="custom">Personalizado</option>
+        </select>
+      </div>
+      <div class="mix-filter-field" id="mixVsCustomRangeWrap" style="display:none;">
+        <label for="mixVsDataIni">De</label>
+        <input type="date" id="mixVsDataIni" onchange="renderMixOrigem()">
+        <label for="mixVsDataFim">Até</label>
+        <input type="date" id="mixVsDataFim" onchange="renderMixOrigem()">
       </div>
     </div>
     <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | O menu "Outro período" (mês específico ou Personalizado) é calculado a partir do lançamento diário por parque</div>
@@ -1139,7 +1148,7 @@ function renderRegua(month){
   document.getElementById('reguaDayNums').innerHTML =
     Array.from({length:n}, (_,i) => `<span>${data.dayLabels ? data.dayLabels[i] : 'Dia '+(i+1)}</span>`).join('');
   const grid = document.getElementById('reguaGrid');
-  grid.innerHTML = PARKS.map(park => {
+  grid.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
     const block = data.daily[park];
     const r2026 = block ? (block['Realizado 2026']||[]) : [];
     const r2025 = block ? (block['Realizado 2025']||[]) : [];
@@ -2204,7 +2213,7 @@ function renderVizMensal(month){
     return;
   }
 
-  tbody.innerHTML = PARKS.map(park => {
+  tbody.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
     const s = data.summary[park] || {};
     const dailyObz = (data.daily[park] && data.daily[park]['OBZ 2026']) || [];
     const obzMesCompleto = dailyObz.reduce((sum,v) => sum + (typeof v === 'number' ? v : 0), 0);
@@ -2258,7 +2267,7 @@ function renderVizAcumulado(month){
     return;
   }
 
-  tbody.innerHTML = PARKS.map(park => {
+  tbody.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
     const s = data.summary[park] || {};
     const clsObz = (typeof s.acumPctObz==='number') ? (s.acumPctObz>=0?'up':'down') : '';
     const cls2025 = (typeof s.acumPct2025==='number') ? (s.acumPct2025>=0?'up':'down') : '';
@@ -2489,7 +2498,10 @@ const PARK_LOGOS = {"AquaRio": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ
 PARK_LOGOS['3P'] = PARK_LOGOS['Três Pescadores']; // alias: dados de evolução mensal usam a chave "3P" para este parque
 function renderLogoBanner(){
   const initials = { AquaRio:'AR', BioParque:'BP', Paineiras:'PA', PNI:'PNI', M3F:'M3F', AquaFoz:'AF', 'Três Pescadores':'3P', 'Vila Velha':'VV' };
-  document.getElementById('logoRow').innerHTML = PARKS.map((p,i) => {
+  // BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- logo removido do
+  // cabeçalho (pedido do usuário). Continua em PARKS (usado noutras abas pro histórico
+  // Jan-Jul e pra série de Histórico), só não aparece mais aqui.
+  document.getElementById('logoRow').innerHTML = PARKS.filter(p => p !== 'BioParque').map((p,i) => {
     const inner = PARK_LOGOS[p] ? `<img src="${PARK_LOGOS[p]}" alt="${p}">` : `<span>${initials[p]}</span>`;
     return `<div class="logo-shape circle" title="${p}"><div class="inner">${inner}</div></div>`;
   }).join('');
@@ -2944,8 +2956,10 @@ function renderEventosTab(){
 
 const REPORT_ORDEM_REGIOES = ['Parques Rio', 'Parques Foz', 'Soul Parques'];
 // Ordem oficial dos parques dentro de cada região (Documento 02, Guia Editorial).
+// BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- removido daqui (o backend
+// também já não manda mais dado dele em APOIO_REPORT, ver build_apoio_report).
 const REPORT_ORDEM_PARQUES = {
-  'Parques Rio': ['AquaRio', 'Paineiras', 'BioParque'],
+  'Parques Rio': ['AquaRio', 'Paineiras'],
   'Parques Foz': ['PNI', 'M3F', 'AquaFoz'],
   'Soul Parques': ['Vila Velha', 'Três Pescadores'],
 };
@@ -3533,7 +3547,7 @@ function fmtMixDelta(v) {
 let mixMoradorState = 'com';
 let mixPeriodoState = 'mensal'; // 'mensal' | 'acumulado' | 'mes:JANEIRO'..'mes:DEZEMBRO' | 'custom'
 let mixParqueState = ''; // '' = Todos os Parques
-let mixVs2025State = true; // false = esconde tabela/evolução/donut de 2025, mostra só 2026
+let mixVsMode = '2025'; // 'nenhum' | '2025' (mesmo período ano anterior) | 'mes:JANEIRO'..'mes:DEZEMBRO' | 'custom'
 const MIX_MORADOR_LABEL = { 'M3F':'Morador', 'AquaFoz':'Morador', 'PNI':'Morador/Estado' };
 const MESES_DIARIO_ORDEM = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
 
@@ -3548,17 +3562,119 @@ function setMixParque(val){
   renderMixOrigem();
 }
 
-// ON/OFF do comparativo Vs 2025 -- quando desligado, cada card cai no mesmo layout já usado
-// pros parques sem histórico (2026 puro: sem colunas 2025/Δ%/Sh25 na tabela, sem barra 2025
-// na evolução, sem donut SHARE 25).
-function setMixVs2025(val){
-  mixVs2025State = val;
-  const btn = document.getElementById('mixVs2025Btn');
-  if(btn){
-    btn.classList.toggle('active', val);
-    btn.textContent = 'Vs 2025: ' + (val ? 'ON' : 'OFF');
-  }
+// Seletor "Vs": Nenhum (2026 puro) | 2025 (mesmo período ano anterior, já vem calculado
+// em cada categoria) | mês específico de 2026 | Personalizado (intervalo de datas) --
+// os dois últimos comparam 2026 contra outro período de 2026 (ver mergeMixComparativo).
+function setMixVs(val){
+  mixVsMode = val;
+  const wrap = document.getElementById('mixVsCustomRangeWrap');
+  if(wrap) wrap.style.display = (val === 'custom') ? 'flex' : 'none';
   renderMixOrigem();
+}
+
+// Intervalo [ini,fim] do período de comparação ("Vs"), quando for mês específico ou
+// Personalizado. Pra "nenhum"/"2025" não tem range B -- o "2025" já vem pronto em cada
+// categoria (year-over-year), calculado no mesmo lugar que monta o período principal.
+function getMixVsRange(){
+  if(mixVsMode.startsWith('mes:')){
+    const mes = mixVsMode.slice(4);
+    const idx = MESES_DIARIO_ORDEM.indexOf(mes);
+    if(idx === -1) return null;
+    const mm = String(idx + 1).padStart(2,'0');
+    const ultimoDia = new Date(2026, idx + 1, 0).getDate();
+    return { ini: `2026-${mm}-01`, fim: `2026-${mm}-${String(ultimoDia).padStart(2,'0')}` };
+  }
+  if(mixVsMode === 'custom'){
+    const ini = document.getElementById('mixVsDataIni') ? document.getElementById('mixVsDataIni').value : '';
+    const fim = document.getElementById('mixVsDataFim') ? document.getElementById('mixVsDataFim').value : '';
+    return (ini && fim) ? { ini, fim } : null;
+  }
+  return null;
+}
+
+// Intervalo [ini,fim] do período PRINCIPAL atualmente selecionado (Mensal/Acumulado/mês
+// específico/Personalizado) -- usado só pra decidir se a comparação "Vs" escolhida faz
+// sentido (ver checagem de span de meses em renderMixOrigem). Espelha a mesma lógica de
+// getMixFonte() sem recalcular os números.
+function getMixPrimaryRange(){
+  if(mixPeriodoState === 'acumulado'){
+    const fim = getOpenMonthLastDataDate();
+    return fim ? { ini: '2026-01-01', fim } : null;
+  }
+  if(mixPeriodoState === 'mensal'){
+    const fim = getOpenMonthLastDataDate();
+    return fim ? { ini: `${fim.slice(0,7)}-01`, fim } : null;
+  }
+  if(mixPeriodoState === 'custom'){
+    const ini = document.getElementById('mixDataIni') ? document.getElementById('mixDataIni').value : '';
+    const fim = document.getElementById('mixDataFim') ? document.getElementById('mixDataFim').value : '';
+    return (ini && fim) ? { ini, fim } : null;
+  }
+  if(mixPeriodoState.startsWith('mes:')){
+    const mes = mixPeriodoState.slice(4);
+    const idx = MESES_DIARIO_ORDEM.indexOf(mes);
+    const mm = String(idx + 1).padStart(2,'0');
+    const ultimoDia = new Date(2026, idx + 1, 0).getDate();
+    return { ini: `2026-${mm}-01`, fim: `2026-${mm}-${String(ultimoDia).padStart(2,'0')}` };
+  }
+  return null;
+}
+
+// Quantos meses de calendário um intervalo [ini,fim] ('YYYY-MM-DD') atravessa.
+function mixMonthsSpan(ini, fim){
+  const [ay, am] = ini.split('-').map(Number);
+  const [by, bm] = fim.split('-').map(Number);
+  return (by*12 + bm) - (ay*12 + am) + 1;
+}
+
+// Rótulo curto pra exibir no lugar de "2025" (cabeçalho da tabela, título da evolução,
+// label do donut) quando a comparação é um mês específico ou um intervalo Personalizado.
+function getMixVsLabel(){
+  if(mixVsMode === '2025') return '2025';
+  if(mixVsMode.startsWith('mes:')){
+    const mes = mixVsMode.slice(4);
+    return (MES_CAP[mes] || mes).slice(0,3) + '/26';
+  }
+  if(mixVsMode === 'custom'){
+    const r = getMixVsRange();
+    if(!r) return 'Período B';
+    const fmt = s => s.slice(8,10) + '/' + s.slice(5,7);
+    return fmt(r.ini) + '–' + fmt(r.fim);
+  }
+  return '2025';
+}
+
+// Combina o período principal (fonteA, já no formato {parque:{formato,categorias}}) com
+// o período de comparação (fonteB, no MESMO formato) quando o "Vs" é mês específico ou
+// Personalizado -- os dois são 2026 contra 2026, então usamos só o campo v2026 de fonteB
+// como "valor de comparação" (reaproveitando os campos v2025/delta/share25 de cada
+// categoria, que a renderização já sabe exibir). formato/histórico 2025 original de
+// fonteA NÃO é alterado -- quem decide se mostra comparação agora é o novo campo
+// _temComparacao (ver renderMixOrigem).
+function mergeMixComparativo(fonteA, fonteB){
+  const resultado = {};
+  Object.keys(fonteA).forEach(parque => {
+    const dA = fonteA[parque];
+    const dB = fonteB[parque];
+    let mapB = null, totalB = null;
+    if(dB && dB.categorias && dB.categorias.length){
+      mapB = {};
+      dB.categorias.forEach(c => { mapB[c.label] = c.v2026; });
+      const totalRowB = dB.categorias.find(c => String(c.label).startsWith('Total'));
+      totalB = totalRowB ? totalRowB.v2026 : null;
+    }
+    const temComparacao = !!(mapB && typeof totalB === 'number' && totalB > 0);
+    const categorias = dA.categorias.map(c => {
+      if(!temComparacao) return { ...c, v2025: null, delta: null, share25: null };
+      const vB = mapB[c.label];
+      const hasB = typeof vB === 'number';
+      const delta = (hasB && vB > 0) ? (c.v2026 - vB) / vB : null;
+      const shareB = hasB ? vB / totalB : null;
+      return { ...c, v2025: hasB ? vB : null, delta, share25: shareB };
+    });
+    resultado[parque] = { ...dA, categorias, _temComparacao: temComparacao };
+  });
+  return resultado;
 }
 
 // Toggle rápido Mensal/Acumulado -- exatamente como era antes do "Outro período" existir.
@@ -3598,23 +3714,24 @@ function populateMixOrigemFiltros(){
     parqueSel.value = mixParqueState;
   }
 
+  let minData = null, maxData = null;
+  const mesesComDado = new Set();
+  Object.values(MIX_ORIGEM_DIARIO).forEach(src => {
+    (src.dias || []).forEach(d => {
+      mesesComDado.add(d.data.slice(0,7)); // 'YYYY-MM'
+      if(!minData || d.data < minData) minData = d.data;
+      if(!maxData || d.data > maxData) maxData = d.data;
+    });
+  });
+  const mesesOptions = MESES_DIARIO_ORDEM.map((mes, i) => {
+    const mm = String(i+1).padStart(2,'0');
+    const temDado = mesesComDado.has(`2026-${mm}`);
+    if(!temDado) return '';
+    return `<option value="mes:${mes}">${MES_CAP[mes]}</option>`;
+  }).join('');
+
   const periodoSel = document.getElementById('mixPeriodoSelect');
   if(periodoSel){
-    let minData = null, maxData = null;
-    const mesesComDado = new Set();
-    Object.values(MIX_ORIGEM_DIARIO).forEach(src => {
-      (src.dias || []).forEach(d => {
-        mesesComDado.add(d.data.slice(0,7)); // 'YYYY-MM'
-        if(!minData || d.data < minData) minData = d.data;
-        if(!maxData || d.data > maxData) maxData = d.data;
-      });
-    });
-    const mesesOptions = MESES_DIARIO_ORDEM.map((mes, i) => {
-      const mm = String(i+1).padStart(2,'0');
-      const temDado = mesesComDado.has(`2026-${mm}`);
-      if(!temDado) return '';
-      return `<option value="mes:${mes}">${MES_CAP[mes]}</option>`;
-    }).join('');
     periodoSel.innerHTML = `
       <option value="">-- Selecionar --</option>
       ${mesesOptions}
@@ -3631,6 +3748,27 @@ function populateMixOrigemFiltros(){
       dataFim.min = minData; dataFim.max = maxData;
       if(!dataIni.value) dataIni.value = minData;
       if(!dataFim.value) dataFim.value = maxData;
+    }
+  }
+
+  // Dropdown "Vs" -- mesma lista de meses com dado real, + Personalizado (intervalo próprio).
+  const vsSel = document.getElementById('mixVsSelect');
+  if(vsSel){
+    vsSel.innerHTML = `
+      <option value="nenhum">Nenhum</option>
+      <option value="2025">2025 (mesmo período)</option>
+      ${mesesOptions}
+      <option value="custom">Personalizado</option>
+    `;
+    vsSel.value = mixVsMode;
+
+    const vsDataIni = document.getElementById('mixVsDataIni');
+    const vsDataFim = document.getElementById('mixVsDataFim');
+    if(vsDataIni && vsDataFim && minData && maxData){
+      vsDataIni.min = minData; vsDataIni.max = maxData;
+      vsDataFim.min = minData; vsDataFim.max = maxData;
+      if(!vsDataIni.value) vsDataIni.value = minData;
+      if(!vsDataFim.value) vsDataFim.value = maxData;
     }
   }
 }
@@ -3691,7 +3829,7 @@ function computeMixOrigemPeriodo(dataIni, dataFim){
 // mesmo dado que já corrige título/subtítulo -- então acompanham a virada de mês sozinhos,
 // sem depender de ninguém colar nada na planilha todo mês. MIX_ORIGEM/MIX_ORIGEM_ACUMULADO
 // só entram como fallback caso VISITACAO ainda não tenha nenhum dia com Realizado.
-function getMixFonte(){
+function getMixFontePrimaria(){
   if(mixPeriodoState === 'acumulado'){
     const fim = getOpenMonthLastDataDate();
     if(fim) return computeMixOrigemPeriodo('2026-01-01', fim);
@@ -3714,6 +3852,20 @@ function getMixFonte(){
     return computeMixOrigemPeriodo(`2026-${mm}-01`, `2026-${mm}-${String(ultimoDia).padStart(2,'0')}`);
   }
   return MIX_ORIGEM;
+}
+
+// Aplica o "Vs" escolhido por cima do período principal. "nenhum"/"2025" não precisam de
+// nada extra (a fonte primária já traz v2025 pronto, ou simplesmente não é usado quando
+// showVs=false). "mes:X"/"custom" comparam 2026 contra outro pedaço de 2026 -- calculado
+// via computeMixOrigemPeriodo() no range escolhido e mesclado por mergeMixComparativo().
+function getMixFonte(){
+  const fonteA = getMixFontePrimaria();
+  if(mixVsMode.startsWith('mes:') || mixVsMode === 'custom'){
+    const vsRange = getMixVsRange();
+    const fonteB = vsRange ? computeMixOrigemPeriodo(vsRange.ini, vsRange.fim) : {};
+    return mergeMixComparativo(fonteA, fonteB);
+  }
+  return fonteA;
 }
 
 // Recalcula categorias/total excluindo a categoria "Morador" e redistribuindo o share
@@ -3742,6 +3894,22 @@ function renderMixOrigem() {
 
   updateMixOrigemHeader();
 
+  // Aviso: comparar um período de vários meses (Acumulado ou Personalizado longo) com um
+  // "Vs" bem mais curto (mês específico ou Personalizado curto) não é uma comparação
+  // válida -- em vez de mostrar um % que não quer dizer nada, avisa e pede pra revisar.
+  if(mixVsMode.startsWith('mes:') || mixVsMode === 'custom'){
+    const primaryRange = getMixPrimaryRange();
+    const vsRange = getMixVsRange();
+    if(primaryRange && vsRange){
+      const spanPrimario = mixMonthsSpan(primaryRange.ini, primaryRange.fim);
+      const spanVs = mixMonthsSpan(vsRange.ini, vsRange.fim);
+      if(spanPrimario > 1 && spanVs < spanPrimario){
+        grid.innerHTML = '<div class="hist-empty">Períodos muito diferentes para comparar (período principal cobre ' + spanPrimario + ' meses, a comparação escolhida é mais curta). Revise os filtros de período antes de comparar.</div>';
+        return;
+      }
+    }
+  }
+
   const fonte = getMixFonte();
   const parquesOrdem = Object.keys(MIX_ORIGEM).length ? Object.keys(MIX_ORIGEM) : Object.keys(fonte);
   const parquesFiltrados = (mixParqueState ? parquesOrdem.filter(p => p === mixParqueState) : parquesOrdem)
@@ -3752,31 +3920,38 @@ function renderMixOrigem() {
     return;
   }
 
+  const vsLabel = getMixVsLabel();
+
   grid.innerHTML = parquesFiltrados.map(parque => {
     const d = fonte[parque];
-    const isFull = d.formato === "full";
-    // showVs controla o que é RENDERIZADO (tabela/evolução/donut) -- fica igual a isFull,
-    // exceto quando o usuário desliga o toggle "Vs 2025", que força o card (mesmo os com
-    // histórico) a cair no mesmo layout 2026-puro já usado pros parques novos sem 2025.
-    const showVs = isFull && mixVs2025State;
+    // temHistorico2025: fato do parque (tem ou não série 2025) -- não muda com o "Vs"
+    // escolhido. Usado só pra decidir o badge "Novo" quando o modo é 2025/Nenhum.
+    const temHistorico2025 = d.formato === "full";
+    // temComparacaoAtual: existe dado válido pra comparar AGORA, dado o "Vs" escolhido.
+    // "nenhum" nunca compara; "2025" depende do histórico do parque; "mes:X"/"custom"
+    // dependem de mergeMixComparativo() ter achado dado real no período B pra esse parque.
+    const temComparacaoAtual = mixVsMode === 'nenhum' ? false
+      : mixVsMode === '2025' ? temHistorico2025
+      : !!d._temComparacao;
+    const showVs = temComparacaoAtual;
     const color = MIX_PARK_COLORS[parque] || "#333";
     const categoriasBase = mixMoradorState === 'sem' ? stripMorador(parque, d.categorias) : d.categorias;
     const cats = categoriasBase.filter(c => !String(c.label).startsWith("Total"));
     const totalRow = categoriasBase.find(c => String(c.label).startsWith("Total"));
 
-    // Badge -- "Novo" é sobre o parque (sem histórico 2025); some quando Vs 2025 está
-    // desligado manualmente (não é a mesma coisa que não ter histórico).
+    // Badge -- "Novo" só faz sentido nos modos 2025/Nenhum (parque sem histórico 2025);
+    // em mes/custom (2026 vs 2026) não existe "Novo", só "sem dado nesse período" (sem badge).
     let badgeHtml = '';
     if (showVs && totalRow && totalRow.delta !== null) {
       const dir = totalRow.delta >= 0 ? '' : 'down';
       badgeHtml = `<span class="mix-badge ${dir}">${fmtMixDelta(totalRow.delta)} Total</span>`;
-    } else if (!isFull) {
+    } else if ((mixVsMode === 'nenhum' || mixVsMode === '2025') && !temHistorico2025) {
       badgeHtml = `<span class="mix-badge novo">Novo</span>`;
     }
 
     // Tabela
     const theadCols = showVs
-      ? '<th>Origem</th><th>2025</th><th>2026</th><th>Δ%</th><th>Sh25</th><th>Sh26</th>'
+      ? `<th>Origem</th><th>${vsLabel}</th><th>2026</th><th>Δ%</th><th>Sh Comp.</th><th>Sh26</th>`
       : '<th>Origem</th><th>2026</th><th>Sh26</th>';
 
     const bodyRows = cats.map(c => {
@@ -3804,7 +3979,7 @@ function renderMixOrigem() {
       if (showVs) {
         const w25 = (c.v2025||0) / maxVal * 100;
         const w26 = (c.v2026||0) / maxVal * 100;
-        const tip25 = `${c.label} 2025: ${fmtMixInt(c.v2025)} (${fmtMixPct(c.share25)})`;
+        const tip25 = `${c.label} ${vsLabel}: ${fmtMixInt(c.v2025)} (${fmtMixPct(c.share25)})`;
         const tip26 = `${c.label} 2026: ${fmtMixInt(c.v2026)} (${fmtMixPct(c.share26)})`;
         return `<div class="mix-evo-row">
           <div class="mix-evo-label">${c.label}</div>
@@ -3905,7 +4080,7 @@ function renderMixOrigem() {
     let donutsHtml = '';
     if (showVs) {
       donutsHtml = `<div class="mix-donuts">
-        <div class="mix-donut-block"><div class="mix-donut-label">SHARE 25</div>${buildDonutSvg('share25','v2025')}</div>
+        <div class="mix-donut-block"><div class="mix-donut-label">SHARE ${vsLabel.toUpperCase()}</div>${buildDonutSvg('share25','v2025')}</div>
         <div class="mix-donut-block"><div class="mix-donut-label">SHARE 26</div>${buildDonutSvg('share26','v2026')}</div>
       </div>`;
     } else {
@@ -3923,7 +4098,7 @@ function renderMixOrigem() {
         <thead><tr>${theadCols}</tr></thead>
         <tbody>${bodyRows}${totalTr}</tbody>
       </table>
-      <div class="mix-evo-title">${showVs ? 'EVOLUÇÃO (25 VS 26)' : 'EVOLUÇÃO (2026)'}</div>
+      <div class="mix-evo-title">${showVs ? `EVOLUÇÃO (${vsLabel.toUpperCase()} VS 2026)` : 'EVOLUÇÃO (2026)'}</div>
       ${evoRows}
       ${donutsHtml}
     </div>`;
