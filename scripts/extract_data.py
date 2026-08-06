@@ -53,6 +53,26 @@ MONTH_NUMBER = {
 PARKS = ["AquaRio", "BioParque", "Paineiras", "PNI", "M3F", "AquaFoz", "Três Pescadores", "Vila Velha"]
 ATRATIVOS = ["GEX", "MDE", "MDC"]
 
+# BioParque saiu do Grupo Cataratas a partir de Agosto/2026 (pedido do usuário, 06/08/2026).
+# Meses fechados (Jan-Jul/2026) e todo o histórico anterior continuam contando pro
+# acumulado/histórico normalmente -- só a partir de Agosto/2026 o parque precisa
+# desaparecer de toda visão "atual" do painel (linha da tabela, réguas, dropdowns,
+# agregados do Grupo Cataratas, Report, Mix de Origem, Share, Investimento, Plano de
+# Mídia). Um único ponto de verdade aqui evita ter que caçar essa regra em 10 funções
+# diferentes -- cada builder chama uma das duas funções abaixo, do jeito que combinar
+# com o formato de "mês" que ele já usa (nome PT completo, "AGOSTO", ou (ano, mes_num)).
+BIOPARQUE_SAIDA_ANO_MES = (2026, 8)  # (ano, mes numérico) do 1º período que NÃO conta mais
+BIOPARQUE_MESES_PT_POS_SAIDA = {
+    "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
+}
+BIOPARQUE_MESES_PT_MAIUSCULO_POS_SAIDA = {m.upper() for m in BIOPARQUE_MESES_PT_POS_SAIDA}
+
+
+def _bioparque_ainda_conta(ano, mes_numero):
+    """True se BioParque ainda contava como Grupo Cataratas nesse ano/mês (todo o
+    histórico até Julho/2026); False a partir de Agosto/2026."""
+    return (ano, mes_numero) < BIOPARQUE_SAIDA_ANO_MES
+
 SHEETS_EPOCH = datetime.date(1899, 12, 30)
 
 
@@ -296,11 +316,19 @@ def build_visitacao(service, spreadsheet_id, meses_com_dados):
         rows = get_values(service, spreadsheet_id, mes)
         month_number = MONTH_NUMBER[mes]
         n_days = calendar.monthrange(2026, month_number)[1]
+        summary = parse_month_summary(rows)
+        daily = parse_month_daily(rows, n_days)
+        if not _bioparque_ainda_conta(2026, month_number):
+            # BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- some da tabela
+            # mensal/régua/agregados a partir daqui (Jan-Jul continuam intactos, lidos
+            # normalmente nos ciclos anteriores deste mesmo loop).
+            summary.pop("BioParque", None)
+            daily.pop("BioParque", None)
         visitacao[mes] = {
             "monthNumber": month_number,
             "nDays": n_days,
-            "summary": parse_month_summary(rows),
-            "daily": parse_month_daily(rows, n_days),
+            "summary": summary,
+            "daily": daily,
             "atrativos": {
                 "daily": parse_atrativos_daily(rows, n_days),
                 "accum": parse_atrativos_accum(rows),
@@ -738,6 +766,8 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
         idx_2025 = 25 + mes_idx  # coluna do mes/ano em 2025 (Jan/2025 comeca no indice 25)
         meses[mes_pt] = {}
         for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
+            if park == "BioParque" and not _bioparque_ainda_conta(2026, mes_idx + 1):
+                continue  # saiu do Grupo Cataratas -- some do Share E-commerce a partir daqui
             vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
             # BUG EVITADO: por pedido do usuario, o painel passou a usar "Ecommerce (base
             # TI)" em vez da linha "Ecommerce" simples -- mas o deslocamento dessa linha
@@ -832,6 +862,17 @@ def build_evolucao_mensal(service, spreadsheet_id, sheet_name, meses_com_dados, 
             ecom25_corrigido = _escala_proporcional(p["ecommerce2025_parcial"], p["ecommerce2025_total"], ecom_base_ti)
             parques[park]["visitacaoTotal"][idx_alvo] = vis25_corrigido
             parques[park]["share"][idx_alvo] = (ecom25_corrigido / vis25_corrigido) if vis25_corrigido else None
+
+        if park == "BioParque":
+            # saiu do Grupo Cataratas a partir de Agosto/2026 -- zera os pontos da série a
+            # partir daí (Jan/25-Jul/26 continuam intactos, é literalmente o histórico real).
+            for i, label in enumerate(labels):
+                mm, yy = label.split("/")
+                ano_label = 2000 + int(yy)
+                if not _bioparque_ainda_conta(ano_label, int(mm)):
+                    parques[park]["investimento"][i] = None
+                    parques[park]["share"][i] = None
+                    parques[park]["visitacaoTotal"][i] = None
 
     return {"labels": labels, "parques": parques}
 
@@ -1075,6 +1116,14 @@ def build_mix_origem_diario(service, spreadsheet_id):
         except Exception as e:
             print(f"AVISO: falha ao ler aba diária de {park} ({e}) -- fica sem dado diário neste ciclo.", file=sys.stderr)
             parsed = None
+        if parsed and park == "BioParque":
+            # saiu do Grupo Cataratas a partir de Agosto/2026 -- mantém só os dias
+            # anteriores (Jan-Jul), pro Mix de Origem acumulado/histórico continuar
+            # contando o período em que o parque de fato fazia parte do grupo.
+            parsed = {
+                "categorias": parsed["categorias"],
+                "dias": [d for d in parsed["dias"] if d["data"] < "2026-08-01"],
+            }
         if parsed:
             result[park] = parsed
     return result
@@ -1382,6 +1431,8 @@ def build_plano_midia(service, spreadsheet_id):
         resumo[mes] = {}
         detail[mes] = []
         for park in PLANO_MIDIA_PARKS:
+            if park == "BioParque" and mes in BIOPARQUE_MESES_PT_POS_SAIDA:
+                continue  # saiu do Grupo Cataratas -- some do Plano de Mídia a partir daqui
             sheet_names = parques_sheets.get(park)
             if not sheet_names:
                 continue
@@ -1586,6 +1637,14 @@ def build_apoio_report(service, spreadsheet_id, sheet_name):
             resumo_mensal = _apoio_report_resumo_mensal(rows, 6, 7, r, r + 14)
             break
 
+    # BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- o Report é sempre sobre
+    # "ontem"/"o mês em curso", que hoje já é sempre Agosto/2026 em diante, então o parque
+    # não deve mais aparecer aqui (mesmo que a planilha ainda tenha a linha preenchida).
+    # Continua reconhecido em APOIO_REPORT_PARK_REGIAO só pra consumir corretamente o bloco
+    # dele na leitura (sem "vazar" pro parque vizinho) -- é descartado só no final, aqui.
+    realizado_ontem.get("Parques Rio", {}).pop("BioParque", None)
+    resumo_mensal.get("parques", {}).pop("BioParque", None)
+
     return {
         "realizadoOntem": realizado_ontem,
         "resumoMensal": resumo_mensal,
@@ -1771,6 +1830,18 @@ def build_historico(service, spreadsheet_id):
         idx_sem = _historico_find_row(rows, "Visão semestral")
         anos_semestral = _historico_parse_block(rows, idx_sem, 2) if idx_sem is not None else {}
 
+        if park == "BioParque" and "2026" in anos_visitacao:
+            # saiu do Grupo Cataratas a partir de Agosto/2026 -- zera Ago-Dez/2026 (índices
+            # 7-11, Jan=0) tanto na visitação quanto no share; Jan-Jul/2026 e todo o
+            # histórico anterior (2023-2025) continuam intactos, sem nenhuma alteração.
+            for i in range(7, 12):
+                if i < len(anos_visitacao["2026"]):
+                    anos_visitacao["2026"][i] = None
+            if "2026" in anos_share:
+                for i in range(7, 12):
+                    if i < len(anos_share["2026"]):
+                        anos_share["2026"][i] = None
+
         parques[park] = {
             "anos": anos_visitacao,
             "anosShare": anos_share,
@@ -1848,6 +1919,8 @@ def main():
             n_days = calendar.monthrange(2026, month_number)[1]
             daily = {}
             for park in cfg["parques"]:
+                if park == "BioParque" and not _bioparque_ainda_conta(2026, month_number):
+                    continue  # saiu do Grupo Cataratas -- sem Meta projetada daqui em diante
                 meta_arr = visitacao_meta.get(mes, {}).get(park)
                 daily[park] = {
                     "Realizado 2026": [None] * n_days,
