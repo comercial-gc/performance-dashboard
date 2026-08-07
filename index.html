@@ -1054,9 +1054,29 @@ const ATRATIVO_COLORS = { GEX:'#FF00FF', MDE:'#3C78D8', MDC:'#980000' };
 const ATRATIVOS_LABEL = { GEX:'GEX', MDE:'Mar de Espelhos', MDC:'Museu de Cera' };
 
 
-function fmtInt(v){ if(v===null||v===undefined) return '-'; return Math.round(v).toLocaleString('pt-BR'); }
+// Regra de arredondamento padrão do painel inteiro (pedido do usuário, 07/08/2026): de
+// 0,1 até 0,4 arredonda pra baixo, 0,5 mantém quebrado (não arredonda pra nenhum lado),
+// de 0,6 até 0,9 arredonda pra cima. Math.round() já faz 0,1-0,4 pra baixo e 0,6-0,9 pra
+// cima igual a essa regra -- a única diferença é o caso exato de 0,5 (Math.round leva
+// sempre pra cima); por isso só precisamos tratar esse caso especial aqui.
+function smartRound(v){
+  if(typeof v !== 'number' || isNaN(v)) return v;
+  const neg = v < 0;
+  const av = Math.abs(v);
+  const floor = Math.floor(av);
+  const frac = av - floor;
+  const meio = Math.abs(frac - 0.5) < 1e-9;
+  const r = meio ? (floor + 0.5) : Math.round(av);
+  return neg ? -r : r;
+}
+function fmtSmartNumber(r){
+  if(Number.isInteger(r)) return r.toLocaleString('pt-BR');
+  return r.toLocaleString('pt-BR', {minimumFractionDigits:1, maximumFractionDigits:1});
+}
+function fmtInt(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return fmtSmartNumber(smartRound(v)); }
 function fmtPct(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return (v*100).toFixed(1).replace('.',',')+'%'; }
-function fmtMoney(v){ if(v===null||v===undefined) return '-'; return 'R$ '+Math.round(v).toLocaleString('pt-BR'); }
+function fmtPctInt(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return fmtSmartNumber(smartRound(v))+'%'; }
+function fmtMoney(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return 'R$ '+fmtSmartNumber(smartRound(v)); }
 function pctClass(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return ''; return v>=0 ? 'up' : 'down'; }
 function pillClass(v){ if(v===null||v===undefined) return 'flat'; return v>=0 ? 'up' : 'down'; }
 
@@ -1723,7 +1743,7 @@ function renderComboCharts(containerId, barField, barFmt){
     const invVals = allInv.slice(startIdx);
     const shareVals = allShare.slice(startIdx);
     const visitVals = allVisit.slice(startIdx);
-    const ecomVals = shareVals.map((s,i) => (s!==null && s!==undefined && visitVals[i]!==null && visitVals[i]!==undefined) ? Math.round(s*visitVals[i]) : null);
+    const ecomVals = shareVals.map((s,i) => (s!==null && s!==undefined && visitVals[i]!==null && visitVals[i]!==undefined) ? smartRound(s*visitVals[i]) : null);
     const n = labels.length;
 
     // Colunas com largura FIXA em px - gráfico e tabela usam exatamente as mesmas medidas,
@@ -2060,7 +2080,7 @@ async function loadClimaForecast(){
         return `<div class="weather-day">
           <div class="wd">${wd} ${dm}</div>
           <div class="we">${wmoEmoji(d.weathercode[j])}</div>
-          <div class="wt">${Math.round(d.temperature_2m_max[j])}°/${Math.round(d.temperature_2m_min[j])}°</div>
+          <div class="wt">${fmtSmartNumber(smartRound(d.temperature_2m_max[j]))}°/${fmtSmartNumber(smartRound(d.temperature_2m_min[j]))}°</div>
         </div>`;
       }).join('');
       return `<div class="weather-city"><div class="city-name">${c.name}</div><div class="weather-days" style="overflow-x:auto;">${days}</div></div>`;
@@ -2090,7 +2110,7 @@ async function loadWeather(){
         return `<div class="weather-day">
           <div class="wd">${wd}</div>
           <div class="we">${wmoEmoji(d.weathercode[j])}</div>
-          <div class="wt">${Math.round(d.temperature_2m_max[j])}°/${Math.round(d.temperature_2m_min[j])}°</div>
+          <div class="wt">${fmtSmartNumber(smartRound(d.temperature_2m_max[j]))}°/${fmtSmartNumber(smartRound(d.temperature_2m_min[j]))}°</div>
         </div>`;
       }).join('');
       return `<div class="weather-city"><div class="city-name">${c.name}</div><div class="weather-days">${days}</div></div>`;
@@ -2100,15 +2120,14 @@ async function loadWeather(){
   }
 }
 
-// Captação PNI (S/Morador) - dado estático extraído da planilha "AQF E M3F | SMorador"
-// Não recalculado automaticamente por mês; representa o mês/ano de referência mais recente informado.
-// Captação PNI (M3F/AquaFoz) e Captação CV (Três Pescadores) - CALCULADAS DINAMICAMENTE
-// a partir da visitação real de cada mês (VISITACAO), em vez de números fixos.
-// Fórmula confirmada na planilha "AQF E M3F | SMorador": Captação = visitação do
-// próprio parque no mês ÷ visitação do PNI no mesmo mês.
-// "Sem morador" usa a proporção mais recente conhecida (semMorador/comMorador), já que
-// não temos o detalhamento de Morador por mês histórico - só o snapshot mais atual.
-let SEMMORADOR_RATIO = {};
+// Captação PNI (M3F/AquaFoz) - lida direto da aba de apoio "AQF E M3F | SMorador" (pedido
+// do usuário, 07/08/2026): essa aba já calcula a captação de forma proporcional aos dias
+// do mês vigente (pra não comparar mês fechado com mês em andamento), então usamos o
+// valor dela em vez de recalcular Realizado(parque)÷Realizado(PNI) no próprio painel.
+// Formato: CAPTACAO_PNI_SEMMORADOR[parque].porMes["Agosto"] = {captacao, semMorador} (um
+// bloco por mês, igual o time for empilhando na planilha) e .ano = {captacao, semMorador}
+// (o acumulado mais recente, sempre o mesmo card independente do mês selecionado).
+let CAPTACAO_PNI_SEMMORADOR = {};
 
 let CAPTACAO_CV_3P_BY_MONTH = {};
 let CAPTACAO_CV_3P_ANUAL = {};
@@ -2116,18 +2135,13 @@ let CAPTACAO_CV_3P_DIARIO = {};
 
 function captacaoCardsHtml(bucket, month){
   const labels = { M3F: 'Captação PNI (M3F)', AquaFoz: 'Captação PNI (AquaFoz)' };
-  const data = VISITACAO[month];
+  const mesLabel = (month && month !== 'PERSONALIZADO') ? (month.charAt(0) + month.slice(1).toLowerCase()) : null;
   return Object.keys(labels).map(p => {
     const color = PARK_COLORS[p];
-    let captacao = null;
-    if(data){
-      const parkVal = bucket === 'anual' ? data.summary[p]?.acumRealizado : data.summary[p]?.realizado;
-      const pniVal = bucket === 'anual' ? data.summary['PNI']?.acumRealizado : data.summary['PNI']?.realizado;
-      if(typeof parkVal === 'number' && typeof pniVal === 'number' && pniVal > 0){
-        captacao = parkVal / pniVal;
-      }
-    }
-    const semMorador = (captacao !== null) ? captacao * SEMMORADOR_RATIO[p] : null;
+    const fonte = CAPTACAO_PNI_SEMMORADOR[p] || {};
+    const ponto = bucket === 'anual' ? fonte.ano : (mesLabel ? fonte.porMes?.[mesLabel] : null);
+    const captacao = (ponto && typeof ponto.captacao === 'number') ? ponto.captacao : null;
+    const semMorador = (ponto && typeof ponto.semMorador === 'number') ? ponto.semMorador : null;
     return `<div class="capta-card" style="border-left-color:${color}">
       <div class="lbl" style="color:${color}">${labels[p]}</div>
       <div class="big">${fmtPct(captacao)}</div>
@@ -2660,7 +2674,7 @@ const MIDIA_BUCKET_MAP = {
 function fmtPsMoney(v) {
   if (v === null || v === undefined) return "R$ 0";
   const sign = v < 0 ? "-" : "";
-  return sign + "R$ " + Math.abs(Math.round(v)).toLocaleString("pt-BR");
+  return sign + "R$ " + fmtSmartNumber(smartRound(Math.abs(v)));
 }
 
 // BUG EVITADO: essa tabela (Investimento em Marketing, por parque) estava em HTML
@@ -2832,7 +2846,7 @@ function renderParkSummary() {
       const midAngleRad = (-90 + midFrac * 360) * Math.PI / 180;
       const lx = cx + (r) * Math.cos(midAngleRad);
       const ly = cy + (r) * Math.sin(midAngleRad);
-      const pctLabel = Math.round(frac * 100);
+      const pctLabel = smartRound(frac * 100);
       return { color: b.color, dash, gap, dashoffset, lx, ly, pctLabel };
     });
 
@@ -2843,12 +2857,12 @@ function renderParkSummary() {
 
     const labelsHtml = arcs.filter(a => a.pctLabel >= 5).map(a => `
       <text x="${a.lx}" y="${a.ly}" text-anchor="middle" dominant-baseline="middle"
-        font-size="15" font-weight="800" fill="#fff">${a.pctLabel}%</text>
+        font-size="15" font-weight="800" fill="#fff">${fmtSmartNumber(a.pctLabel)}%</text>
     `).join('');
 
     const legendHtml = bucketList.map(b => {
-      const pct = totalItens > 0 ? Math.round(b.total / totalItens * 100) : 0;
-      return `<span><span class="sq" style="background:${b.color}"></span>${b.label} (${pct}%)</span>`;
+      const pct = totalItens > 0 ? smartRound(b.total / totalItens * 100) : 0;
+      return `<span><span class="sq" style="background:${b.color}"></span>${b.label} (${fmtSmartNumber(pct)}%)</span>`;
     }).join('');
 
     donutHtml = `
@@ -3218,7 +3232,7 @@ function toggleHistSerie(serie){
 
 function fmtHistValor(v, isPercent){
   if(v === null || v === undefined) return '-';
-  return isPercent ? (v*100).toFixed(1).replace('.', ',') + '%' : Math.round(v).toLocaleString('pt-BR');
+  return isPercent ? (v*100).toFixed(1).replace('.', ',') + '%' : fmtSmartNumber(smartRound(v));
 }
 
 // fmtHistDelta(base, atual): variação do valor "atual" em relação ao "base".
@@ -3542,11 +3556,11 @@ const MIX_CAT_COLORS = {
 function fmtMixShort(v) {
   if (v === null || v === undefined) return "-";
   if (Math.abs(v) >= 1000) return (v/1000).toFixed(v >= 100000 ? 0 : 1).replace('.', ',') + "k";
-  return Math.round(v).toLocaleString("pt-BR");
+  return fmtSmartNumber(smartRound(v));
 }
 function fmtMixInt(v) {
   if (v === null || v === undefined) return "-";
-  return Math.round(v).toLocaleString("pt-BR");
+  return fmtSmartNumber(smartRound(v));
 }
 function fmtMixPct(v) {
   if (v === null || v === undefined) return "-";
@@ -4043,9 +4057,9 @@ function renderMixOrigem() {
         const midFrac = accFrac + frac / 2;
         accFrac += frac;
         const col = MIX_CAT_COLORS[c.label] || "#999";
-        const pctLabel = Math.round(frac * 100);
+        const pctLabel = smartRound(frac * 100);
         const val = c[valueKey];
-        const tip = `${c.label}: ${fmtMixInt(val)} (${pctLabel}%)`;
+        const tip = `${c.label}: ${fmtMixInt(val)} (${fmtSmartNumber(pctLabel)}%)`;
 
         circlesSvg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="${strokeW}"
           stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${dashoffset}" transform="rotate(-90 ${cx} ${cy})" data-tip="${tip}"></circle>`;
@@ -4128,7 +4142,7 @@ async function carregarDados(){
     SHARE = data.SHARE || {};
     SHARE_META_MESES = data.SHARE_META_MESES || [];
     SHARE_META_GRUPO_CATARATAS = data.SHARE_META_GRUPO_CATARATAS || {};
-    SEMMORADOR_RATIO = data.SEMMORADOR_RATIO || {};
+    CAPTACAO_PNI_SEMMORADOR = data.CAPTACAO_PNI_SEMMORADOR || {};
     CAPTACAO_CV_3P_BY_MONTH = data.CAPTACAO_CV_3P_BY_MONTH || {};
     CAPTACAO_CV_3P_ANUAL = data.CAPTACAO_CV_3P_ANUAL || {};
     CAPTACAO_CV_3P_DIARIO = data.CAPTACAO_CV_3P_DIARIO || {};
