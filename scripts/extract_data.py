@@ -185,8 +185,78 @@ RESUMO_MENSAL_AGREGADOS = [
 ]
 
 
+def _norm_label(v):
+    if v is None:
+        return ""
+    return re.sub(r"\s+", " ", str(v).strip().lower())
+
+
+def _is_year(v, ano):
+    try:
+        return int(v) == ano
+    except (TypeError, ValueError):
+        return False
+
+
+def _find_summary_columns(rows):
+    """Acha as colunas de cada campo do resumo (mes E acumulado) pelo PROPRIO ROTULO na
+    linha de cabecalho, em vez de confiar em offset fixo (1,2,3,4,5,7,8,9,10,11).
+
+    BUG EVITADO: em Agosto/2026 o time inseriu uma coluna nova na aba (uma nota manual
+    "Bio Até Julho" sobre a saida do BioParque), o que empurrou o bloco ACUMULADO inteiro
+    uma coluna pra direita -- qualquer leitura por posição fixa desalinha TODOS os campos
+    do acumulado (o que seria uma contagem grande passa a ser lido como se fosse um "%",
+    virando números como 66916900,0%). Agora cada coluna e' achada pelo seu proprio rotulo
+    na linha de cabecalho ("Realizado"/"OBZ"/"% OBZ"/2025/"% 2025" pro bloco do mes; 2026/
+    "OBZ (Parcial)"/"%OBZ"/2025/"% 2025" pro bloco acumulado) -- funciona com qualquer
+    coluna inserida/removida no meio, nos dois blocos.
+    """
+    header_idx = None
+    for i, row in enumerate(rows[:6]):
+        if any(_norm_label(c) == "realizado" for c in row):
+            header_idx = i
+            break
+    if header_idx is None:
+        return None
+    header = rows[header_idx]
+    acum_start = None
+    for i, v in enumerate(header):
+        if _is_year(v, 2026):
+            acum_start = i
+            break
+    if acum_start is None:
+        acum_start = len(header)
+
+    cols = {}
+    for i, v in enumerate(header):
+        label = _norm_label(v)
+        if i < acum_start:
+            if label == "realizado" and "realizado" not in cols:
+                cols["realizado"] = i
+            elif label == "obz" and "obz" not in cols:
+                cols["obz"] = i
+            elif label == "% obz" and "pctObz" not in cols:
+                cols["pctObz"] = i
+            elif _is_year(v, 2025) and "y2025" not in cols:
+                cols["y2025"] = i
+            elif label == "% 2025" and "pct2025" not in cols:
+                cols["pct2025"] = i
+        else:
+            if _is_year(v, 2026) and "acumRealizado" not in cols:
+                cols["acumRealizado"] = i
+            elif "%" in label and "obz" in label and "acumPctObz" not in cols:
+                cols["acumPctObz"] = i
+            elif "obz" in label and "acumObzParcial" not in cols:
+                cols["acumObzParcial"] = i
+            elif _is_year(v, 2025) and "acum2025" not in cols:
+                cols["acum2025"] = i
+            elif label == "% 2025" and "acumPct2025" not in cols:
+                cols["acumPct2025"] = i
+    return cols
+
+
 def parse_month_summary(rows):
-    """Resumo por parque (linhas ~3-10, colunas B-F = mes, H-L = acumulado).
+    """Resumo por parque (linhas ~3-10, colunas do mes e do acumulado achadas por rotulo).
 
     BUG EVITADO: a versao anterior lia por POSICAO fixa (rows[2+i], uma linha por parque na
     ordem de PARKS) -- funcionava enquanto a aba tivesse exatamente as mesmas 8 linhas de
@@ -197,8 +267,22 @@ def parse_month_summary(rows):
     Agora cada linha e' identificada pelo seu proprio rotulo (coluna A), igual ja se faz em
     find_daily_blocks() -- funciona com a linha do BioParque presente OU ausente, e com
     qualquer outra reordenação futura. Limitado as primeiras 20 linhas pra não casar por
-    acidente com os títulos dos blocos diários (bem mais abaixo na mesma aba).
+    acidente com os títulos dos blocos diários (bem mais abaixo na mesma aba). As COLUNAS
+    tambem sao achadas por rotulo (ver _find_summary_columns) pelo mesmo motivo -- uma
+    coluna inserida no meio da aba quebraria a leitura por posição fixa igual a das linhas.
     """
+    cols = _find_summary_columns(rows) or {}
+    c_realizado = cols.get("realizado", 1)
+    c_obz = cols.get("obz", 2)
+    c_pctObz = cols.get("pctObz", 3)
+    c_y2025 = cols.get("y2025", 4)
+    c_pct2025 = cols.get("pct2025", 5)
+    c_acumRealizado = cols.get("acumRealizado", 7)
+    c_acumObzParcial = cols.get("acumObzParcial", 8)
+    c_acumPctObz = cols.get("acumPctObz", 9)
+    c_acum2025 = cols.get("acum2025", 10)
+    c_acumPct2025 = cols.get("acumPct2025", 11)
+
     summary = {}
     for row in rows[:20]:
         label = str(cell(row, 0) or "").strip()
@@ -215,16 +299,16 @@ def parse_month_summary(rows):
         if chave is None or chave in summary:
             continue
         summary[chave] = {
-            "realizado": cell(row, 1),
-            "obz": cell(row, 2),
-            "pctObz": cell(row, 3),
-            "y2025": cell(row, 4),
-            "pct2025": cell(row, 5),
-            "acumRealizado": cell(row, 7),
-            "acumObzParcial": cell(row, 8),
-            "acumPctObz": cell(row, 9),
-            "acum2025": cell(row, 10),
-            "acumPct2025": cell(row, 11),
+            "realizado": cell(row, c_realizado),
+            "obz": cell(row, c_obz),
+            "pctObz": cell(row, c_pctObz),
+            "y2025": cell(row, c_y2025),
+            "pct2025": cell(row, c_pct2025),
+            "acumRealizado": cell(row, c_acumRealizado),
+            "acumObzParcial": cell(row, c_acumObzParcial),
+            "acumPctObz": cell(row, c_acumPctObz),
+            "acum2025": cell(row, c_acum2025),
+            "acumPct2025": cell(row, c_acumPct2025),
         }
     return summary
 
