@@ -179,22 +179,52 @@ def cell(row, idx):
 # Visitação Parques 2026.xlsx (uma aba por mês: JANEIRO..JULHO)
 # ---------------------------------------------------------------------------
 
+RESUMO_MENSAL_AGREGADOS = [
+    "Grupo Cataratas (SSS)", "Grupo Cataratas SSS", "Total Grupo Cataratas",
+    "Total Soul Parques", "Total Geral",
+]
+
+
 def parse_month_summary(rows):
-    """Linhas 3-10 (index 2-9): resumo por parque. Colunas B-F = mes, H-L = acumulado."""
+    """Resumo por parque (linhas ~3-10, colunas B-F = mes, H-L = acumulado).
+
+    BUG EVITADO: a versao anterior lia por POSICAO fixa (rows[2+i], uma linha por parque na
+    ordem de PARKS) -- funcionava enquanto a aba tivesse exatamente as mesmas 8 linhas de
+    sempre, mas a partir de Agosto/2026 o time apagou a linha do BioParque na planilha ao
+    vivo (ele saiu do Grupo Cataratas), o que empurrou Paineiras/PNI/M3F/AquaFoz/3P/Vila
+    Velha uma linha pra cima -- e a leitura por posição passou a atribuir a cada parque o
+    valor que era do PROXIMO (ex.: "Paineiras" no painel mostrava o numero real do PNI).
+    Agora cada linha e' identificada pelo seu proprio rotulo (coluna A), igual ja se faz em
+    find_daily_blocks() -- funciona com a linha do BioParque presente OU ausente, e com
+    qualquer outra reordenação futura. Limitado as primeiras 20 linhas pra não casar por
+    acidente com os títulos dos blocos diários (bem mais abaixo na mesma aba).
+    """
     summary = {}
-    for i, park in enumerate(PARKS):
-        r = rows[2 + i]
-        summary[park] = {
-            "realizado": cell(r, 1),
-            "obz": cell(r, 2),
-            "pctObz": cell(r, 3),
-            "y2025": cell(r, 4),
-            "pct2025": cell(r, 5),
-            "acumRealizado": cell(r, 7),
-            "acumObzParcial": cell(r, 8),
-            "acumPctObz": cell(r, 9),
-            "acum2025": cell(r, 10),
-            "acumPct2025": cell(r, 11),
+    for row in rows[:20]:
+        label = str(cell(row, 0) or "").strip()
+        if not label:
+            continue
+        chave = None
+        if label in RESUMO_MENSAL_AGREGADOS:
+            chave = label
+        else:
+            for p in PARKS:
+                if p.lower().replace("ê", "e") in label.lower().replace("ê", "e"):
+                    chave = p
+                    break
+        if chave is None or chave in summary:
+            continue
+        summary[chave] = {
+            "realizado": cell(row, 1),
+            "obz": cell(row, 2),
+            "pctObz": cell(row, 3),
+            "y2025": cell(row, 4),
+            "pct2025": cell(row, 5),
+            "acumRealizado": cell(row, 7),
+            "acumObzParcial": cell(row, 8),
+            "acumPctObz": cell(row, 9),
+            "acum2025": cell(row, 10),
+            "acumPct2025": cell(row, 11),
         }
     return summary
 
@@ -312,18 +342,41 @@ def detect_meses_com_dados(service, spreadsheet_id, meses_todos):
 
 def build_visitacao(service, spreadsheet_id, meses_com_dados):
     visitacao = {}
+    # Snapshot do acumulado de Julho do BioParque -- usado para "congelar" o card dele na
+    # visão ACUMULADO a partir de Agosto (pedido do usuário, 07/08/2026: "BioParque no
+    # Acumulado pode constar, porém com valores até Julho com uma sinalização"). Guardamos
+    # aqui porque a partir de Agosto a linha dele nem existe mais na planilha ao vivo.
+    bioparque_julho_frozen = None
     for mes in meses_com_dados:
         rows = get_values(service, spreadsheet_id, mes)
         month_number = MONTH_NUMBER[mes]
         n_days = calendar.monthrange(2026, month_number)[1]
         summary = parse_month_summary(rows)
         daily = parse_month_daily(rows, n_days)
-        if not _bioparque_ainda_conta(2026, month_number):
+        if _bioparque_ainda_conta(2026, month_number):
+            if mes == "JULHO" and "BioParque" in summary:
+                bioparque_julho_frozen = dict(summary["BioParque"])
+        else:
             # BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- some da tabela
-            # mensal/régua/agregados a partir daqui (Jan-Jul continuam intactos, lidos
-            # normalmente nos ciclos anteriores deste mesmo loop).
+            # MENSAL/régua a partir daqui (Jan-Jul continuam intactos, lidos normalmente
+            # nos ciclos anteriores deste mesmo loop). some de "daily" tambem (sem isso o
+            # filtro do front `data.daily[park]` continuaria mostrando ele na tabela mensal).
             summary.pop("BioParque", None)
             daily.pop("BioParque", None)
+            # No ACUMULADO, por pedido explícito do usuário, ele continua aparecendo -- mas
+            # SÓ com o valor acumulado que já tinha fechado até Julho (congelado, nunca soma
+            # nada de Agosto em diante), sinalizado no front via "historicoAteJulho".
+            if bioparque_julho_frozen:
+                summary["BioParque"] = {
+                    "realizado": None, "obz": None, "pctObz": None,
+                    "y2025": None, "pct2025": None,
+                    "acumRealizado": bioparque_julho_frozen.get("acumRealizado"),
+                    "acumObzParcial": bioparque_julho_frozen.get("acumObzParcial"),
+                    "acumPctObz": bioparque_julho_frozen.get("acumPctObz"),
+                    "acum2025": bioparque_julho_frozen.get("acum2025"),
+                    "acumPct2025": bioparque_julho_frozen.get("acumPct2025"),
+                    "historicoAteJulho": True,
+                }
         visitacao[mes] = {
             "monthNumber": month_number,
             "nDays": n_days,
@@ -582,12 +635,38 @@ def build_captacao_cv_3p(service, spreadsheet_id, sheet_name):
 # (Visitação/Ecommerce/Share/R$ em mídia) e' o mesmo dos outros blocos. As chaves "3P" e
 # "Vila Velha" (em vez de "Três Pescadores") sao de proposito -- e' o nome que o HTML
 # (INVEST_PARKS) ja espera pra esses dois parques nesta tabela especifica.
+# BUG EVITADO (mesma classe do fix em parse_month_summary): antes, os blocos eram achados
+# por OFFSET FIXO (SHARE_ECOMMERCE_BLOCKS abaixo, mantido só como fallback/documentação).
+# Isso quebra se algum bloco for removido/inserido na planilha -- ex.: BioParque saiu do
+# Grupo Cataratas e o time pode remover o bloco dele aqui também, empurrando AquaRio/
+# Paineiras/M3F/etc. pra cima, o que faria cada parque ler o resultado do PRÓXIMO. Agora
+# cada bloco é achado pelo próprio rótulo (coluna A), via _find_share_ecommerce_blocks().
 SHARE_ECOMMERCE_BLOCKS = {
     "BioParque": 0, "AquaRio": 9, "Paineiras": 17, "M3F": 25, "AquaFoz": 33,
     "3P": 44, "Vila Velha": 52,
 }
 MESES_PT = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
             "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+
+def _find_share_ecommerce_blocks(rows):
+    """Acha a linha de título (r0) de cada bloco de parque na aba Share_Ecommerce_2026
+    pelo próprio rótulo da coluna A, em vez de confiar em offsets fixos -- funciona com
+    qualquer bloco removido/inserido/reordenado (ver comentário acima de
+    SHARE_ECOMMERCE_BLOCKS)."""
+    labels_to_park = {
+        "BioParque": "BioParque", "AquaRio": "AquaRio", "Paineiras": "Paineiras",
+        "M3F": "M3F", "AquaFoz": "AquaFoz", "3P": "3P", "Três Pescadores": "3P",
+        "Vila Velha": "Vila Velha",
+    }
+    blocos = {}
+    for i, row in enumerate(rows):
+        label = cell(row, 0)
+        if isinstance(label, str) and label.strip() in labels_to_park:
+            park = labels_to_park[label.strip()]
+            if park not in blocos:
+                blocos[park] = i
+    return blocos
 
 
 def _find_labeled_row_idx(rows, r0, label, max_offset=10):
@@ -758,6 +837,7 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
     especial (num() ja devolve None pra celula vazia).
     """
     rows = get_values(service, spreadsheet_id, sheet_name)
+    blocos = _find_share_ecommerce_blocks(rows) or SHARE_ECOMMERCE_BLOCKS
     meses = {}
     for i, mes_en in enumerate(meses_com_dados):
         mes_idx = MONTH_NUMBER[mes_en] - 1  # 0 = Janeiro
@@ -765,7 +845,7 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
         idx_2026 = 37 + mes_idx  # coluna do mes/ano em 2026 (Jan/2026 comeca no indice 37)
         idx_2025 = 25 + mes_idx  # coluna do mes/ano em 2025 (Jan/2025 comeca no indice 25)
         meses[mes_pt] = {}
-        for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
+        for park, r0 in blocos.items():
             if park == "BioParque" and not _bioparque_ainda_conta(2026, mes_idx + 1):
                 continue  # saiu do Grupo Cataratas -- some do Share E-commerce a partir daqui
             vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
@@ -835,8 +915,9 @@ def build_evolucao_mensal(service, spreadsheet_id, sheet_name, meses_com_dados, 
         v = cell(row, idx)
         return v if isinstance(v, (int, float)) else None
 
+    blocos = _find_share_ecommerce_blocks(rows) or SHARE_ECOMMERCE_BLOCKS
     parques = {}
-    for park, r0 in SHARE_ECOMMERCE_BLOCKS.items():
+    for park, r0 in blocos.items():
         vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
         # mesma logica de build_investimento_midia: usa a Share de "Ecommerce (base TI)",
         # cujo deslocamento varia por bloco -- procura pelo rotulo em vez de indice fixo.
