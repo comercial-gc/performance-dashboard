@@ -424,20 +424,27 @@ def parse_atrativos_daily(rows, n_days):
 
 
 def parse_atrativos_accum(rows):
-    """Linhas 3-5 (index 2-4), colunas N-Q (index 13-17): nome, realizado2026, pctAq2026,
-    realizado2025, pctAq2025."""
+    """Bloco lateral "ACUMULADO GEX | MDE | MDC" (por volta das linhas 3-5, colunas N em
+    diante): nome, realizado2026, pctAq2026, realizado2025, pctAq2025.
+
+    BUG EVITADO: a versao anterior lia por POSICAO fixa (coluna N = index 13 pro rotulo,
+    colunas seguintes pros valores) -- quebrou quando a MESMA coluna extra que desalinhou o
+    bloco ACUMULADO principal (ver _find_summary_columns) empurrou esse bloco lateral
+    tambem uma coluna pra direita (rotulo "GEX"/"MDE"/"MDC" saiu da coluna N pra O). Agora
+    o proprio rotulo e' procurado em cada linha, e os 4 valores são lidos relativos a onde
+    ele foi encontrado -- funciona com qualquer deslocamento de coluna.
+    """
     accum = {}
-    for i, a in enumerate(ATRATIVOS):
-        r = rows[2 + i]
-        name = cell(r, 13)
-        if name != a:
-            continue
-        accum[a] = {
-            "realizado2026": cell(r, 14),
-            "pctAq2026": cell(r, 15),
-            "realizado2025": cell(r, 16) if cell(r, 16) != "-" else None,
-            "pctAq2025": cell(r, 17) if cell(r, 17) != "-" else None,
-        }
+    for row in rows[:10]:
+        for j, v in enumerate(row):
+            if v in ATRATIVOS and v not in accum:
+                accum[v] = {
+                    "realizado2026": cell(row, j + 1),
+                    "pctAq2026": cell(row, j + 2),
+                    "realizado2025": cell(row, j + 3) if cell(row, j + 3) != "-" else None,
+                    "pctAq2025": cell(row, j + 4) if cell(row, j + 4) != "-" else None,
+                }
+                break
     return accum
 
 
