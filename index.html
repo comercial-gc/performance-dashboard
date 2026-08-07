@@ -112,6 +112,7 @@
   .viz-table td.up{ color:var(--green); }
   .viz-table td.down{ color:var(--red); }
   .viz-table td.main-col{ background:#eef4f1; }
+  .viz-table .sub-meta{ font-size:10px; font-weight:600; color:#7a8a86; margin-top:2px; }
   .viz-side{ display:flex; flex-direction:column; gap:8px; flex:0 0 220px; min-width:0; }
   .viz-side-row{ display:flex; flex-direction:column; gap:8px; }
   .viz-captacao-row{ display:flex; flex-direction:row; gap:14px; margin-top:14px; flex-wrap:wrap; }
@@ -2220,10 +2221,13 @@ function renderVizMensal(month){
     const obzMesCompleto = dailyObz.reduce((sum,v) => sum + (typeof v === 'number' ? v : 0), 0);
     const clsParcial = (typeof s.pctObz==='number') ? (s.pctObz>=0?'up':'down') : '';
     const cls2025 = (typeof s.pct2025==='number') ? (s.pct2025>=0?'up':'down') : '';
+    // % de atingimento da meta: Realizado ÷ OBZ do mês COMPLETO (não o parcial até hoje) --
+    // pedido do usuário pra aparecer menor, embaixo do Realizado, em toda tabela Mensal.
+    const pctAtingimento = (obzMesCompleto > 0 && typeof s.realizado === 'number') ? (s.realizado / obzMesCompleto) : null;
     return `<tr>
       ${parkBlockTd(park)}
       <td>${obzMesCompleto ? fmtInt(obzMesCompleto) : '-'}</td>
-      <td class="main-col">${fmtInt(s.realizado)}</td>
+      <td class="main-col">${fmtInt(s.realizado)}${pctAtingimento!==null ? `<div class="sub-meta">${fmtPct(pctAtingimento)} da meta</div>` : ''}</td>
       <td>${fmtInt(s.obz)}</td>
       <td class="${clsParcial}">${pctArrow(s.pctObz)}${fmtPct(s.pctObz)}</td>
       <td>${s.y2025!==null&&s.y2025!==undefined?fmtInt(s.y2025):'-'}</td>
@@ -2277,9 +2281,13 @@ function renderVizAcumulado(month){
     const clsObz = (typeof s.acumPctObz==='number') ? (s.acumPctObz>=0?'up':'down') : '';
     const cls2025 = (typeof s.acumPct2025==='number') ? (s.acumPct2025>=0?'up':'down') : '';
     const congelado = !!s.historicoAteJulho;
+    // % de atingimento da meta: Realizado acumulado ÷ OBZ-Acumulado -- pedido do usuário
+    // pra aparecer menor, embaixo do Realizado, em toda tabela Acumulado.
+    const pctAtingimentoAcum = (typeof s.acumRealizado === 'number' && typeof s.acumObzParcial === 'number' && s.acumObzParcial > 0)
+      ? (s.acumRealizado / s.acumObzParcial) : null;
     return `<tr${congelado ? ' style="opacity:.65"' : ''}>
       ${parkBlockTd(park, congelado ? 'até Julho' : null)}
-      <td class="main-col">${s.acumRealizado!==null&&s.acumRealizado!==undefined?fmtInt(s.acumRealizado):'-'}</td>
+      <td class="main-col">${s.acumRealizado!==null&&s.acumRealizado!==undefined?fmtInt(s.acumRealizado):'-'}${pctAtingimentoAcum!==null ? `<div class="sub-meta">${fmtPct(pctAtingimentoAcum)} da meta</div>` : ''}</td>
       <td>${s.acumObzParcial!==null&&s.acumObzParcial!==undefined?fmtInt(s.acumObzParcial):'-'}</td>
       <td class="${clsObz}">${pctArrow(s.acumPctObz)}${fmtPct(s.acumPctObz)}</td>
       <td>${s.acum2025!==null&&s.acum2025!==undefined?fmtInt(s.acum2025):'-'}</td>
