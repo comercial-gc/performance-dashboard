@@ -1358,20 +1358,93 @@ def build_mix_origem_diario(service, spreadsheet_id):
 
 # ---------------------------------------------------------------------------
 # [2026] Mix OBZ e visitação.xlsx -> aba "AQF E M3F | SMorador"
-# Proporcao "Sem morador" / "Com morador" mais recente, usada para estimar a Captação
-# PNI "sem morador" (ver comentario original no HTML sobre SEMMORADOR_RATIO).
+# Captação PNI (com e sem morador) de M3F e AquaFoz -- pedido do usuário (07/08/2026):
+# usar direto essa aba de apoio, que já calcula a captação de forma proporcional aos dias
+# do mês vigente (em vez de recalcular no painel Realizado/PNI e aplicar um fator fixo).
+#
+# Layout da aba (mantido manualmente pelo time, um bloco novo por mês, empilhado):
+#   linha N       : nome do mês solto na coluna A (ex.: "Julho", depois "Agosto" abaixo)
+#   linha N+1     : "M3F" (coluna A) e "Aquafoz" (coluna E) -- cabeçalho de cada metade
+#   linha N+3     : "Captação PNI" (rótulo, mesmas colunas do cabeçalho)
+#   linha N+4     : o VALOR da Captação PNI (com morador) do mês
+#   linha N+5     : "*SEM MORADOR:" (rótulo) + o valor logo na coluna seguinte
+# O bloco ANUAL (M3F/Aquafoz "ANO", sempre o acumulado mais recente) fica ao lado do
+# PRIMEIRO bloco mensal, achado pelo rótulo exato "ANO" (blocos antigos ficam com o
+# rótulo "Anual até <mês>" e são ignorados -- o time só marca visualmente como obsoleto,
+# sem apagar, então não dá pra confiar em posição, só no texto exato).
+#
+# BUG EVITADO: a versão anterior lia por POSIÇÃO FIXA (linha 5/6, colunas 0/1/4/5) --
+# funcionava só enquanto existisse um único bloco "mês corrente" na aba. A partir do
+# momento em que o time começou a empilhar um bloco novo por mês (Julho, Agosto, ...)
+# pra manter histórico, a leitura por posição fixa ia sempre nos mesmos números antigos
+# (Julho), nunca no mês novo -- e não tinha nenhum jeito de saber qual bloco escolher sem
+# procurar pelo nome do mês. Agora cada bloco é achado pelo próprio rótulo.
 # ---------------------------------------------------------------------------
+
+def _norm_park_semmorador(nome):
+    n = str(nome or "").strip().lower()
+    if "aqua" in n and "foz" in n:
+        return "AquaFoz"
+    if n == "m3f":
+        return "M3F"
+    return None
+
 
 def build_semmorador_ratio(service, spreadsheet_id, sheet_name):
     rows = get_values(service, spreadsheet_id, sheet_name)
-    # linha 6 (index5) = % C/Morador do mes corrente; linha 7 (index6) = % S/Morador do mes
-    # corrente. M3F nas colunas 0-1, AquaFoz nas colunas 4-5 (ver aba "MÊS <mes atual>").
-    com_m3f, sem_m3f = cell(rows[5], 0), cell(rows[6], 1)
-    com_aqf, sem_aqf = cell(rows[5], 4), cell(rows[6], 5)
-    return {
-        "M3F": (sem_m3f / com_m3f) if com_m3f else None,
-        "AquaFoz": (sem_aqf / com_aqf) if com_aqf else None,
-    }
+    resultado = {"M3F": {"porMes": {}, "ano": None}, "AquaFoz": {"porMes": {}, "ano": None}}
+
+    # --- Blocos MENSAIS (um por mês, achado pelo nome do mês solto na coluna A) ---
+    for i, row in enumerate(rows):
+        mes_label = str(cell(row, 0) or "").strip()
+        if mes_label not in MESES_PT:
+            continue
+        header_row = rows[i + 1] if i + 1 < len(rows) else []
+        # valida que é mesmo um bloco de Captação (evita casar com "Julho"/"Agosto"
+        # soltos em qualquer outro lugar da aba, que tem mais de 1000 linhas)
+        if not any(_norm_park_semmorador(v) for v in header_row[:16]):
+            continue
+        captacao_row = rows[i + 4] if i + 4 < len(rows) else []
+        semmorador_row = rows[i + 5] if i + 5 < len(rows) else []
+        for c, v in enumerate(header_row[:16]):
+            park = _norm_park_semmorador(v)
+            # BUG EVITADO: o bloco ANUAL ("M3F"/"Aquafoz" de novo, mais a direita) fica na
+            # MESMA linha do cabeçalho do primeiro bloco mensal (a planilha desenha os dois
+            # lado a lado) -- sem essa guarda, a segunda ocorrência de "M3F"/"Aquafoz" (a do
+            # bloco ANUAL) sobrescreveria o valor mensal certo com o valor anual errado.
+            # Como a coluna do bloco mensal sempre vem ANTES (esquerda) da coluna do bloco
+            # anual, ficar com a PRIMEIRA ocorrência resolve sem precisar fixar coluna.
+            if park is None or mes_label in resultado[park]["porMes"]:
+                continue
+            captacao = cell(captacao_row, c)
+            if not isinstance(captacao, (int, float)):
+                continue
+            semmorador = cell(semmorador_row, c + 1)
+            resultado[park]["porMes"][mes_label] = {
+                "captacao": captacao,
+                "semMorador": semmorador if isinstance(semmorador, (int, float)) else None,
+            }
+
+    # --- Bloco ANUAL atual (rótulo exato "ANO" -- ignora "Anual até <mês>", obsoleto) ---
+    for i, row in enumerate(rows[:15]):
+        for c, v in enumerate(row[:20]):
+            if str(v or "").strip() != "ANO":
+                continue
+            header_row = rows[i - 6] if i - 6 >= 0 else []
+            park = _norm_park_semmorador(cell(header_row, c))
+            if park is None or resultado[park]["ano"] is not None:
+                continue
+            captacao_row = rows[i - 3] if i - 3 >= 0 else []
+            semmorador_row = rows[i - 2] if i - 2 >= 0 else []
+            captacao = cell(captacao_row, c)
+            if not isinstance(captacao, (int, float)):
+                continue
+            semmorador = cell(semmorador_row, c + 1)
+            resultado[park]["ano"] = {
+                "captacao": captacao,
+                "semMorador": semmorador if isinstance(semmorador, (int, float)) else None,
+            }
+    return resultado
 
 
 # ---------------------------------------------------------------------------
@@ -2308,7 +2381,7 @@ def main():
         "CAPTACAO_CV_3P_BY_MONTH": cv3p_by_month,
         "CAPTACAO_CV_3P_ANUAL": cv3p_anual,
         "CAPTACAO_CV_3P_DIARIO": cv3p_diario,
-        "SEMMORADOR_RATIO": semmorador_ratio,
+        "CAPTACAO_PNI_SEMMORADOR": semmorador_ratio,
         "SHARE_META_MESES": [MESES_PT[MONTH_NUMBER[m] - 1] for m in cfg["meses_com_dados"]],
         "SHARE_META_GRUPO_CATARATAS": share_meta_grupo_cataratas,
         "SHARE": {
