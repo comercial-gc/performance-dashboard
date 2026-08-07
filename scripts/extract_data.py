@@ -255,21 +255,83 @@ def _find_summary_columns(rows):
     return cols
 
 
-def parse_month_summary(rows):
+def _read_label_rows(rows):
+    """Acha a linha de cada parque/agregado do resumo mensal, na ORDEM em que aparecem na
+    planilha -- usado por _detect_acum_row_shift pra saber quais linhas comparar."""
+    found = []
+    seen = set()
+    for i, row in enumerate(rows[:20]):
+        label = str(cell(row, 0) or "").strip()
+        if not label:
+            continue
+        chave = None
+        if label in RESUMO_MENSAL_AGREGADOS:
+            chave = label
+        else:
+            for p in PARKS:
+                if p.lower().replace("ê", "e") in label.lower().replace("ê", "e"):
+                    chave = p
+                    break
+        if chave is None or chave in seen:
+            continue
+        seen.add(chave)
+        found.append((i, chave))
+    return found
+
+
+def _detect_acum_row_shift(rows, label_rows, cols, bioparque_frozen=None):
+    """Acha, com precisão, se o bloco ACUMULADO ficou desalinhado por causa de uma linha
+    extra inserida (ex.: nota manual "Bio Até Julho" com o valor congelado do BioParque
+    colado na linha de outro parque, empurrando o acumulado de todo mundo dali pra baixo
+    uma posição, sem alterar o bloco do MES).
+
+    BUG EVITADO: uma primeira versão desse detector tentava adivinhar o ponto de virada só
+    com a matemática "Total Soul = 3P+VilaVelha / Total Geral = TotalGC+TotalSoul" -- mas
+    essa conta fecha para VÁRIOS pontos de virada diferentes ao mesmo tempo (deslocar a
+    partir do AquaRio, do Paineiras, da PNI... todos "fecham" a soma igualmente, porque
+    deslocar um trecho contíguo em bloco preserva a soma interna dele mesmo estando errado
+    linha a linha) -- então a conta sozinha NÃO identifica o ponto certo, só confirma que
+    ALGO está deslocado. Em vez disso, usamos uma "impressão digital" única: já sabemos o
+    valor exato do acumulado congelado do BioParque (calculado a partir da própria aba de
+    Julho, antes dele saltar fora do Grupo Cataratas). Procuramos esse número EXATO nas
+    linhas do bloco acumulado -- a linha onde ele aparece (colado por engano em cima do
+    parque errado) é o ponto exato onde o deslocamento comeca, sem ambiguidade.
+    """
+    if not isinstance(bioparque_frozen, dict):
+        return None
+    alvo = bioparque_frozen.get("acumRealizado")
+    if not isinstance(alvo, (int, float)):
+        return None
+    c_acum = cols.get("acumRealizado", 7)
+    tol = max(1.0, abs(alvo) * 0.001)
+    for i, _chave in label_rows:
+        v = cell(rows[i], c_acum)
+        if isinstance(v, (int, float)) and abs(v - alvo) <= tol:
+            return i
+    return None
+
+
+def parse_month_summary(rows, bioparque_frozen=None):
     """Resumo por parque (linhas ~3-10, colunas do mes e do acumulado achadas por rotulo).
 
-    BUG EVITADO: a versao anterior lia por POSICAO fixa (rows[2+i], uma linha por parque na
-    ordem de PARKS) -- funcionava enquanto a aba tivesse exatamente as mesmas 8 linhas de
-    sempre, mas a partir de Agosto/2026 o time apagou a linha do BioParque na planilha ao
-    vivo (ele saiu do Grupo Cataratas), o que empurrou Paineiras/PNI/M3F/AquaFoz/3P/Vila
-    Velha uma linha pra cima -- e a leitura por posição passou a atribuir a cada parque o
-    valor que era do PROXIMO (ex.: "Paineiras" no painel mostrava o numero real do PNI).
-    Agora cada linha e' identificada pelo seu proprio rotulo (coluna A), igual ja se faz em
-    find_daily_blocks() -- funciona com a linha do BioParque presente OU ausente, e com
-    qualquer outra reordenação futura. Limitado as primeiras 20 linhas pra não casar por
-    acidente com os títulos dos blocos diários (bem mais abaixo na mesma aba). As COLUNAS
-    tambem sao achadas por rotulo (ver _find_summary_columns) pelo mesmo motivo -- uma
-    coluna inserida no meio da aba quebraria a leitura por posição fixa igual a das linhas.
+    BUG EVITADO (linhas): a versao anterior lia por POSICAO fixa (rows[2+i], uma linha por
+    parque na ordem de PARKS) -- funcionava enquanto a aba tivesse exatamente as mesmas 8
+    linhas de sempre, mas a partir de Agosto/2026 o time apagou a linha do BioParque na
+    planilha ao vivo (ele saiu do Grupo Cataratas), o que empurrou Paineiras/PNI/M3F/
+    AquaFoz/3P/Vila Velha uma linha pra cima -- e a leitura por posição passou a atribuir a
+    cada parque o valor que era do PROXIMO. Agora cada linha e' identificada pelo seu
+    proprio rotulo (coluna A), igual ja se faz em find_daily_blocks().
+
+    BUG EVITADO (colunas): as colunas tambem sao achadas por rotulo (ver
+    _find_summary_columns), porque uma coluna inserida no meio da aba quebraria a leitura
+    por posição fixa igual as linhas quebravam.
+
+    BUG EVITADO (linhas do ACUMULADO especificamente): mesmo com rotulo certo na linha do
+    MES, o bloco ACUMULADO pode estar deslocado por causa de uma linha extra inserida SÓ
+    naquele bloco (ver _detect_acum_row_shift) -- corrigido automaticamente procurando o
+    valor exato do acumulado congelado do BioParque (parâmetro bioparque_frozen, vindo de
+    Julho) dentro das linhas do acumulado; a linha onde ele aparece é o ponto exato do
+    deslocamento.
     """
     cols = _find_summary_columns(rows) or {}
     c_realizado = cols.get("realizado", 1)
@@ -283,32 +345,25 @@ def parse_month_summary(rows):
     c_acum2025 = cols.get("acum2025", 10)
     c_acumPct2025 = cols.get("acumPct2025", 11)
 
+    label_rows = _read_label_rows(rows)
+    shift_from = _detect_acum_row_shift(rows, label_rows, cols, bioparque_frozen)
+
     summary = {}
-    for row in rows[:20]:
-        label = str(cell(row, 0) or "").strip()
-        if not label:
-            continue
-        chave = None
-        if label in RESUMO_MENSAL_AGREGADOS:
-            chave = label
-        else:
-            for p in PARKS:
-                if p.lower().replace("ê", "e") in label.lower().replace("ê", "e"):
-                    chave = p
-                    break
-        if chave is None or chave in summary:
-            continue
+    for i, chave in label_rows:
+        row = rows[i]
+        acum_idx = i + 1 if (shift_from is not None and i >= shift_from) else i
+        acum_row = rows[acum_idx] if acum_idx < len(rows) else row
         summary[chave] = {
             "realizado": cell(row, c_realizado),
             "obz": cell(row, c_obz),
             "pctObz": cell(row, c_pctObz),
             "y2025": cell(row, c_y2025),
             "pct2025": cell(row, c_pct2025),
-            "acumRealizado": cell(row, c_acumRealizado),
-            "acumObzParcial": cell(row, c_acumObzParcial),
-            "acumPctObz": cell(row, c_acumPctObz),
-            "acum2025": cell(row, c_acum2025),
-            "acumPct2025": cell(row, c_acumPct2025),
+            "acumRealizado": cell(acum_row, c_acumRealizado),
+            "acumObzParcial": cell(acum_row, c_acumObzParcial),
+            "acumPctObz": cell(acum_row, c_acumPctObz),
+            "acum2025": cell(acum_row, c_acum2025),
+            "acumPct2025": cell(acum_row, c_acumPct2025),
         }
     return summary
 
@@ -435,7 +490,7 @@ def build_visitacao(service, spreadsheet_id, meses_com_dados):
         rows = get_values(service, spreadsheet_id, mes)
         month_number = MONTH_NUMBER[mes]
         n_days = calendar.monthrange(2026, month_number)[1]
-        summary = parse_month_summary(rows)
+        summary = parse_month_summary(rows, bioparque_frozen=bioparque_julho_frozen)
         daily = parse_month_daily(rows, n_days)
         if _bioparque_ainda_conta(2026, month_number):
             if mes == "JULHO" and "BioParque" in summary:
