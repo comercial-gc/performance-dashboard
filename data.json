@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-07T12:29:10.124160Z",
+  "geradoEm": "2026-08-07T14:06:52.112890Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -12916,7 +12916,7 @@
       314764,
       286231,
       511705,
-      43817
+      51502
     ],
     "ecommerce": [
       138935.0,
@@ -12926,7 +12926,7 @@
       81101.0,
       71243.0,
       137178.0,
-      10556
+      12488
     ],
     "share": [
       0.26408126103625307,
@@ -12936,7 +12936,7 @@
       0.25765652997166133,
       0.24890036369226254,
       0.2680802415454217,
-      0.24091106191660772
+      0.2424760203487243
     ]
   },
   "SHARE": {
@@ -12946,74 +12946,74 @@
         {
           "parque": "Aquario",
           "metaAnual": 0.25,
-          "ecommerce2026": 187940,
-          "visitacao2026": 676225,
-          "share2026": 0.2779252468,
+          "ecommerce2026": 188243,
+          "visitacao2026": 677850,
+          "share2026": 0.2777059821,
           "ecommerce2025": 107864,
           "visitacao2025": 447945,
           "share2025": 0.2407974193,
-          "deltaPP": 0.03712782745,
-          "gapMeta": 0.02792524677
+          "deltaPP": 0.03690856282,
+          "gapMeta": 0.02770598215
         },
         {
           "parque": "Bioparque",
           "metaAnual": 0.25,
-          "ecommerce2026": 147094,
-          "visitacao2026": 362841,
-          "share2026": 0.4053952007,
+          "ecommerce2026": 147371,
+          "visitacao2026": 364532,
+          "share2026": 0.4042745219,
           "ecommerce2025": 127797,
           "visitacao2025": 321404,
           "share2025": 0.3976210626,
-          "deltaPP": 0.007774138065,
-          "gapMeta": 0.1553952007
+          "deltaPP": 0.006653459265,
+          "gapMeta": 0.1542745219
         },
         {
           "parque": "Paineiras",
           "metaAnual": 0.25,
-          "ecommerce2026": 197166,
-          "visitacao2026": 969040,
-          "share2026": 0.2034652852,
+          "ecommerce2026": 198425,
+          "visitacao2026": 972889,
+          "share2026": 0.203954408,
           "ecommerce2025": 132427,
           "visitacao2025": 913144,
           "share2025": 0.1450231289,
-          "deltaPP": 0.05844215635,
-          "gapMeta": -0.04653471477
+          "deltaPP": 0.05893127907,
+          "gapMeta": -0.04604559205
         },
         {
           "parque": "Marco",
           "metaAnual": 0.25,
-          "ecommerce2026": 57773,
-          "visitacao2026": 372332,
-          "share2026": 0.1551652826,
+          "ecommerce2026": 57987,
+          "visitacao2026": 373563,
+          "share2026": 0.1552268292,
           "ecommerce2025": 31651,
           "visitacao2025": 297466,
           "share2025": 0.1064020762,
-          "deltaPP": 0.04876320639,
-          "gapMeta": -0.0948347174
+          "deltaPP": 0.04882475301,
+          "gapMeta": -0.09477317079
         },
         {
           "parque": "Aquafoz",
           "metaAnual": 0.25,
-          "ecommerce2026": 66213,
-          "visitacao2026": 338750,
-          "share2026": 0.1954627306,
+          "ecommerce2026": 66369,
+          "visitacao2026": 339730,
+          "share2026": 0.1953580785,
           "ecommerce2025": 0,
           "visitacao2025": 0,
           "share2025": 0,
-          "deltaPP": 0.1954627306,
-          "gapMeta": -0.05453726937
+          "deltaPP": 0.1953580785,
+          "gapMeta": -0.05464192153
         },
         {
           "parque": "Grupo Cataratas",
           "metaAnual": 0.25,
-          "ecommerce2026": 402033,
-          "visitacao2026": 1704213,
-          "share2026": 0.235905371,
+          "ecommerce2026": 403783,
+          "visitacao2026": 1710984,
+          "share2026": 0.235994609,
           "ecommerce2025": 291875,
           "visitacao2025": 1532014,
           "share2025": 0.1905171885,
-          "deltaPP": 0.0453881825,
-          "gapMeta": -0.01409462902
+          "deltaPP": 0.04547742046,
+          "gapMeta": -0.01400539105
         }
       ]
     },
@@ -13525,9 +13525,9 @@
         },
         "Agosto": {
           "AquaRio": {
-            "visitacao2026": 12079,
-            "ecommerce2026": 3737,
-            "share2026": 0.3093799155559235,
+            "visitacao2026": 13704,
+            "ecommerce2026": 4040,
+            "share2026": 0.29480443666082895,
             "visitacao2025": 17161.21398289234,
             "ecommerce2025": 5992.7485706804,
             "share2025": 0.34920306783974886,
@@ -13535,9 +13535,9 @@
             "investimento2025": 29636.0
           },
           "Paineiras": {
-            "visitacao2026": 17619,
-            "ecommerce2026": 4444,
-            "share2026": 0.2522277087235371,
+            "visitacao2026": 21468,
+            "ecommerce2026": 5703,
+            "share2026": 0.26565120178870877,
             "visitacao2025": 18067.0,
             "ecommerce2025": 3211.7448020674265,
             "share2025": 0.17776857264999316,
@@ -13545,9 +13545,9 @@
             "investimento2025": 32393.32
           },
           "M3F": {
-            "visitacao2026": 7452,
-            "ecommerce2026": 1312,
-            "share2026": 0.1760601180891036,
+            "visitacao2026": 8683,
+            "ecommerce2026": 1526,
+            "share2026": 0.17574571000806172,
             "visitacao2025": 7111.0,
             "ecommerce2025": 505.0,
             "share2025": 0.0710167346364787,
@@ -13555,9 +13555,9 @@
             "investimento2025": 2014.21
           },
           "AquaFoz": {
-            "visitacao2026": 6667,
-            "ecommerce2026": 1063,
-            "share2026": 0.15944202789860507,
+            "visitacao2026": 7647,
+            "ecommerce2026": 1219,
+            "share2026": 0.15940891853014255,
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
@@ -13565,7 +13565,7 @@
             "investimento2025": null
           },
           "3P": {
-            "visitacao2026": 2101,
+            "visitacao2026": 2275,
             "ecommerce2026": null,
             "share2026": 0,
             "visitacao2025": null,
@@ -13575,7 +13575,7 @@
             "investimento2025": null
           },
           "Vila Velha": {
-            "visitacao2026": 1104,
+            "visitacao2026": 1177,
             "ecommerce2026": null,
             "share2026": 0,
             "visitacao2025": null,
@@ -13722,7 +13722,7 @@
             0.2648099518,
             0.2458279427,
             0.3046349477,
-            0.3093799156
+            0.2948044367
           ],
           "visitacaoTotal": [
             127823,
@@ -13744,7 +13744,7 @@
             81111,
             76521,
             122051,
-            12079
+            13704
           ]
         },
         "Paineiras": {
@@ -13790,7 +13790,7 @@
             0.2401266395,
             0.2195908453,
             0.2180079351,
-            0.2522277087
+            0.2656512018
           ],
           "visitacaoTotal": [
             183774,
@@ -13812,7 +13812,7 @@
             110550,
             95514,
             135096,
-            17619
+            21468
           ]
         },
         "M3F": {
@@ -13858,7 +13858,7 @@
             0.1399023332,
             0.1341773959,
             0.1630173928,
-            0.1760601181
+            0.17574571
           ],
           "visitacaoTotal": [
             61517.0,
@@ -13880,7 +13880,7 @@
             46075,
             42019,
             80838,
-            7452
+            8683
           ]
         },
         "AquaFoz": {
@@ -13926,7 +13926,7 @@
             0.2680102666,
             0.2478315097,
             0.2812285542,
-            0.1594420279
+            0.1594089185
           ],
           "visitacaoTotal": [
             null,
@@ -13948,7 +13948,7 @@
             34286,
             35278,
             71401,
-            6667
+            7647
           ]
         },
         "3P": {
@@ -14016,7 +14016,7 @@
             13148,
             10603,
             22162,
-            2101
+            2275
           ]
         },
         "Vila Velha": {
@@ -14084,7 +14084,7 @@
             4187,
             5166,
             8940,
-            1104
+            1177
           ]
         }
       }
@@ -14469,8 +14469,8 @@
       },
       "SETEMBRO": {
         "disponivel": null,
-        "realizado": 0,
-        "saldo": 0
+        "realizado": 3000,
+        "saldo": -3000
       },
       "OUTUBRO": {
         "disponivel": null,
@@ -14489,8 +14489,8 @@
       },
       "TOTAL": {
         "disponivel": 0,
-        "realizado": 119530,
-        "saldo": -119530
+        "realizado": 122530,
+        "saldo": -122530
       }
     },
     "Três Pescadores": {
@@ -18208,18 +18208,18 @@
         "parque": "AQUARIO",
         "setor": "Performance",
         "custo": "Custo Fixo",
-        "fornecedor": "RP BRASIL",
+        "fornecedor": "AKM",
         "descricao": "CUSTOS FIXOS",
-        "valor": 17757.52,
+        "valor": 9021.9,
         "observacao": "CUSTOS FIXOS"
       },
       {
         "parque": "AQUARIO",
         "setor": "Performance",
         "custo": "Custo Fixo",
-        "fornecedor": "YURI (V4 COMPANY)",
+        "fornecedor": "RP BRASIL",
         "descricao": "CUSTOS FIXOS",
-        "valor": 9021.9,
+        "valor": 17757.52,
         "observacao": "CUSTOS FIXOS"
       },
       {
@@ -18970,6 +18970,15 @@
         "descricao": "Rede Massa ",
         "valor": 2625.0,
         "observacao": "Festival Gastronomico 2/2"
+      },
+      {
+        "parque": "VILA VELHA",
+        "setor": "Performance",
+        "custo": "Mídia OFF",
+        "fornecedor": "Jornal Diários do Campos",
+        "descricao": "Publicação no diários do Campos para o aniversário de Ponta Grossa",
+        "valor": 3000.0,
+        "observacao": null
       },
       {
         "parque": "AQUAFOZ",
@@ -47282,7 +47291,16 @@
       "mes": "Agosto",
       "parque": "Parques Rio",
       "categoria": "Clima e Meio Ambiente",
-      "evento": "⚠️ *_Alerta de ventania_* no RJ emitido pela Defesa Civil. Escolas públicas fechadas para manter segurança."
+      "evento": "A Defesa Civil emitiu alertas severos para os dias 6 a 9 de agosto de 2026, com pico de risco concentrado nos dias 7 (sexta-feira) e 8 (sábado), devido aos ventos fortes provocados por um ciclone extratropical no oceano. No Rio de Janeiro, a cidade entrou em Estágio 2 e as aulas da rede pública foram suspensas nesta sexta-feira (7) devido a rajadas previstas acima de 90 km/h."
+    },
+    {
+      "data": "2026-08-07",
+      "dataFim": "2026-08-07",
+      "ano": 2026,
+      "mes": "Agosto",
+      "parque": "Bioparque",
+      "categoria": "Clima e Meio Ambiente",
+      "evento": "Por determinação da prefeitura, em razões das condições climáticas, todos os parques urbanos fecharão 12h, incluindo a quinta da Boa Vista."
     },
     {
       "data": "2026-08-11",
@@ -48617,62 +48635,6 @@
       },
       "Consolidado": {
         "anos": {
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
-          ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
-          ],
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
-          ],
           "2025": [
             666687.0,
             398191.0,
@@ -48687,48 +48649,6 @@
             500148.0,
             520889.0
           ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
           "2015": [
             189451.0,
             115349.0,
@@ -48742,20 +48662,6 @@
             103315.0,
             84938.0,
             122376.0
-          ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
           ],
           "2026": [
             780085.0,
@@ -48785,19 +48691,89 @@
             90379.0,
             79635.0
           ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
+          ],
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
+          "2018": [
+            321385.0,
+            168024.0,
+            166856.0,
+            130740.00000000001,
+            108655.0,
+            97102.0,
+            190341.99999999994,
+            133243.0,
+            151118.0,
+            149282.0,
+            162033.0,
+            182819.0
+          ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
           ],
           "2022": [
             292287.0,
@@ -48813,54 +48789,72 @@
             202561.0,
             212826.0
           ],
-          "2018": [
-            321385.0,
-            168024.0,
-            166856.0,
-            130740.00000000001,
-            108655.0,
-            97102.0,
-            190341.99999999994,
-            133243.0,
-            151118.0,
-            149282.0,
-            162033.0,
-            182819.0
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
+          ],
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2016": [
-            635485,
-            584255
-          ],
-          "2017": [
-            1300881,
-            1170345
-          ],
-          "2021": [
-            726490,
-            1392943
-          ],
           "2025": [
             2704477,
             2940308
           ],
-          "2019": [
-            1015073,
-            1044424
-          ],
-          "2023": [
-            1486747,
-            1503931
-          ],
           "2015": [
             711060,
             646056
-          ],
-          "2014": [
-            717316,
-            673740
           ],
           "2026": [
             3213884,
@@ -48870,17 +48864,41 @@
             575832,
             365664
           ],
-          "2024": [
-            2410556,
-            2803391
+          "2021": [
+            726490,
+            1392943
+          ],
+          "2019": [
+            1015073,
+            1044424
+          ],
+          "2018": [
+            992762,
+            968837
+          ],
+          "2017": [
+            1300881,
+            1170345
           ],
           "2022": [
             1195615,
             1502267
           ],
-          "2018": [
-            992762,
-            968837
+          "2014": [
+            717316,
+            673740
+          ],
+          "2016": [
+            635485,
+            584255
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2024": [
+            2410556,
+            2803391
           ]
         }
       }
@@ -49025,8 +49043,8 @@
         },
         "Vila Velha": {
           "orcado": 34030.0,
-          "previsto": 0.0,
-          "saldo": 34030.0
+          "previsto": 34030.0,
+          "saldo": 0.0
         },
         "3P": {
           "orcado": 30000.0,
@@ -51450,8 +51468,8 @@
           "fornecedor": "Favretto | Mega Painel RodoviárioBR 277 (Rodovia do Café), km 122 + 500 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1248-br-277-rodovia-do-cafe-km-115-norte-sentido-ponta-grossa/",
           "descricao": null,
           "valor": 8507.5,
-          "status": "Em negociação",
-          "ok": "Análise Camila",
+          "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -51459,8 +51477,8 @@
           "fornecedor": "Favretto | Painel VIP Rodoviário km 113+700 Norte | Sentido Ponta Grossa | 4,35x6,20m https://favrettomidiaexterior.com.br/ponto/3024-br-277-rodovia-do-cafe-km-110500-sentido-ponta-grossa/",
           "descricao": null,
           "valor": 8507.5,
-          "status": "Em negociação",
-          "ok": "Análise Camila",
+          "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -51468,8 +51486,8 @@
           "fornecedor": "Favretto | Mega Painel Rodoviário 1899 (ILUMINADO): BR 277, km 129+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1899-iluminado-br-277-rodovia-do-cafe-km-122-norte-sentido-ponta-grossa/",
           "descricao": null,
           "valor": 8507.5,
-          "status": "Em negociação",
-          "ok": "Análise Camila",
+          "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
@@ -51477,8 +51495,8 @@
           "fornecedor": "Favretto | Mega Painel Rodoviário 1209 (ILUMINADO): BR 277, km 108+300 Norte, sentido Ponta Grossa. https://favrettomidiaexterior.com.br/ponto/1209-br-277-rodovia-do-cafe-km-100-logo-apos-o-contorno-sul-sentido-curitiba-ponta-grossa-pista-oposta/",
           "descricao": null,
           "valor": 8507.5,
-          "status": "Em negociação",
-          "ok": "Análise Camila",
+          "status": "No Ar",
+          "ok": "Sim",
           "parque": "Vila Velha"
         },
         {
