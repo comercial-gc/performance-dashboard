@@ -1054,18 +1054,21 @@ const ATRATIVO_COLORS = { GEX:'#FF00FF', MDE:'#3C78D8', MDC:'#980000' };
 const ATRATIVOS_LABEL = { GEX:'GEX', MDE:'Mar de Espelhos', MDC:'Museu de Cera' };
 
 
-// Regra de arredondamento padrão do painel inteiro (pedido do usuário, 07/08/2026): de
-// 0,1 até 0,4 arredonda pra baixo, 0,5 mantém quebrado (não arredonda pra nenhum lado),
-// de 0,6 até 0,9 arredonda pra cima. Math.round() já faz 0,1-0,4 pra baixo e 0,6-0,9 pra
-// cima igual a essa regra -- a única diferença é o caso exato de 0,5 (Math.round leva
-// sempre pra cima); por isso só precisamos tratar esse caso especial aqui.
+// Regra de arredondamento padrão do painel inteiro (pedido do usuário, 07/08/2026,
+// detalhada pela segunda casa decimal em 07/08/2026): olhando a casa decimal (frac =
+// parte depois do inteiro), de 0,00 a 0,49 arredonda pra baixo; de 0,50 a 0,59 mantém
+// o número "quebrado" em X,5 (NÃO arredonda pra nenhum lado, mesmo que seja 0,51,
+// 0,55 ou 0,59 -- a faixa inteira vira ",5"); de 0,60 a 0,99 arredonda pra cima.
+// CUIDADO: não é só o ponto exato 0,50 -- é a faixa toda de 0,50 até 0,59 (por isso o
+// teste de "meio" abaixo usa um intervalo, não só uma tolerância em torno de 0,5).
 function smartRound(v){
   if(typeof v !== 'number' || isNaN(v)) return v;
   const neg = v < 0;
   const av = Math.abs(v);
   const floor = Math.floor(av);
   const frac = av - floor;
-  const meio = Math.abs(frac - 0.5) < 1e-9;
+  const eps = 1e-9;
+  const meio = frac >= (0.5 - eps) && frac < (0.6 - eps);
   const r = meio ? (floor + 0.5) : Math.round(av);
   return neg ? -r : r;
 }
@@ -1074,7 +1077,7 @@ function fmtSmartNumber(r){
   return r.toLocaleString('pt-BR', {minimumFractionDigits:1, maximumFractionDigits:1});
 }
 function fmtInt(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return fmtSmartNumber(smartRound(v)); }
-function fmtPct(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return (v*100).toFixed(1).replace('.',',')+'%'; }
+function fmtPct(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return fmtSmartNumber(smartRound(v*100))+'%'; }
 function fmtPctInt(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return fmtSmartNumber(smartRound(v))+'%'; }
 function fmtMoney(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '-'; return 'R$ '+fmtSmartNumber(smartRound(v)); }
 function pctClass(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return ''; return v>=0 ? 'up' : 'down'; }
@@ -1857,7 +1860,7 @@ function renderComboCharts(containerId, barField, barFmt){
       // altura da barra = % de share, com piso mínimo pra sempre caber o texto
       const h = minH + (shareV/maxShare)*(plotH-minH);
       const yBar = padT + plotH - h;
-      const tip = labels[i] + ': Share ' + (shareV*100).toFixed(1) + '%' + (v!==null&&v!==undefined ? ' | Investimento ' + barFmt(v) : '');
+      const tip = labels[i] + ': Share ' + fmtSmartNumber(smartRound(shareV*100)) + '%' + (v!==null&&v!==undefined ? ' | Investimento ' + barFmt(v) : '');
       bars += `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${yBar.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}"></rect>`;
       // share % sempre em branco, dentro da barra
       shareLabels += `<text x="${cx.toFixed(1)}" y="${(padT+plotH-6).toFixed(1)}" font-size="9" font-weight="800" text-anchor="middle" fill="#ffffff">${fmtSmartNumber(smartRound(shareV*100))}%</text>`;
@@ -2892,7 +2895,7 @@ function renderParkSummary() {
     </div>
     <div class="imt-ps-kpi"><div class="bar" style="background:#f39c12"></div>
       <div class="lbl">% Utilizado</div>
-      <div class="val">${pctUtilizado !== null ? pctUtilizado.toFixed(2).replace('.',',') + '%' : '-'}</div>
+      <div class="val">${pctUtilizado !== null ? fmtSmartNumber(smartRound(pctUtilizado)) + '%' : '-'}</div>
       <div class="sub">Do orçamento</div>
     </div>
     </div>`;
@@ -2901,7 +2904,7 @@ function renderParkSummary() {
   const progressHtml = `
     <div class="imt-ps-progress-wrap">
       <div class="imt-ps-progress-track"><div class="imt-ps-progress-fill" style="width:${pctBar}%"></div></div>
-      <div class="imt-ps-progress-label">${pctUtilizado !== null ? pctUtilizado.toFixed(2).replace('.',',') : '0'}% do orçamento utilizado</div>
+      <div class="imt-ps-progress-label">${pctUtilizado !== null ? fmtSmartNumber(smartRound(pctUtilizado)) : '0'}% do orçamento utilizado</div>
     </div>`;
 
   let areaCardsHtml = '';
@@ -2914,7 +2917,7 @@ function renderParkSummary() {
         <div class="lbl">${b.label}</div>
         <div class="val">${fmtPsMoney(b.total)}</div>
         <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${b.color}"></div></div>
-        <div class="pct">${pct.toFixed(1).replace('.',',')}% do total realizado</div>
+        <div class="pct">${fmtSmartNumber(smartRound(pct))}% do total realizado</div>
       </div>`;
     }).join('');
 
@@ -3318,7 +3321,7 @@ function toggleHistSerie(serie){
 
 function fmtHistValor(v, isPercent){
   if(v === null || v === undefined) return '-';
-  return isPercent ? (v*100).toFixed(1).replace('.', ',') + '%' : fmtSmartNumber(smartRound(v));
+  return isPercent ? fmtSmartNumber(smartRound(v*100)) + '%' : fmtSmartNumber(smartRound(v));
 }
 
 // fmtHistDelta(base, atual): variação do valor "atual" em relação ao "base".
@@ -3327,12 +3330,12 @@ function fmtHistDelta(vBase, vAtual, isPercent){
   if(isPercent){
     const pp = (vAtual - vBase) * 100;
     const sign = pp >= 0 ? '+' : '';
-    return { txt: sign + pp.toFixed(1).replace('.', ',') + ' p.p.', cls: pp >= 0 ? 'up' : 'down' };
+    return { txt: sign + fmtSmartNumber(smartRound(Math.abs(pp))) + ' p.p.', cls: pp >= 0 ? 'up' : 'down' };
   }
   if(!vBase){ return {txt:'-', cls:''}; }
   const pct = (vAtual - vBase) / vBase * 100;
   const sign = pct >= 0 ? '+' : '';
-  return { txt: sign + pct.toFixed(1).replace('.', ',') + '%', cls: pct >= 0 ? 'up' : 'down' };
+  return { txt: sign + fmtSmartNumber(smartRound(Math.abs(pct))) + '%', cls: pct >= 0 ? 'up' : 'down' };
 }
 
 // Quebra a série em segmentos contínuos (sem mês nulo no meio) -- cada segmento desenha e
