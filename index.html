@@ -2178,10 +2178,11 @@ function pctArrow(v){
   if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return '';
   return v>=0 ? '▲ ' : '▼ ';
 }
-function parkBlockTd(park){
+function parkBlockTd(park, badge){
   const color = PARK_COLORS[park] || '#333';
   const displayName = park === '3P' ? 'Três Pescadores' : park;
-  return `<td style="background:${color}1f; color:${color};">${displayName}</td>`;
+  const badgeHtml = badge ? ` <span style="font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px; background:#fff; border:1px solid ${color}; color:${color}; vertical-align:middle;">${badge}</span>` : '';
+  return `<td style="background:${color}1f; color:${color};">${displayName}${badgeHtml}</td>`;
 }
 
 function renderVizMensal(month){
@@ -2267,12 +2268,17 @@ function renderVizAcumulado(month){
     return;
   }
 
-  tbody.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
+  // BioParque: some da tabela MENSAL/régua a partir de Agosto/2026 (saiu do Grupo
+  // Cataratas), mas no ACUMULADO ele continua listado com o valor congelado até Julho
+  // (flag "historicoAteJulho" vinda do backend) -- por isso o filtro aqui é diferente do
+  // usado em renderVizMensal/renderRegua (que só olham data.daily[park]).
+  tbody.innerHTML = PARKS.filter(park => data.daily[park] || (data.summary[park] || {}).historicoAteJulho).map(park => {
     const s = data.summary[park] || {};
     const clsObz = (typeof s.acumPctObz==='number') ? (s.acumPctObz>=0?'up':'down') : '';
     const cls2025 = (typeof s.acumPct2025==='number') ? (s.acumPct2025>=0?'up':'down') : '';
-    return `<tr>
-      ${parkBlockTd(park)}
+    const congelado = !!s.historicoAteJulho;
+    return `<tr${congelado ? ' style="opacity:.65"' : ''}>
+      ${parkBlockTd(park, congelado ? 'até Julho' : null)}
       <td class="main-col">${s.acumRealizado!==null&&s.acumRealizado!==undefined?fmtInt(s.acumRealizado):'-'}</td>
       <td>${s.acumObzParcial!==null&&s.acumObzParcial!==undefined?fmtInt(s.acumObzParcial):'-'}</td>
       <td class="${clsObz}">${pctArrow(s.acumPctObz)}${fmtPct(s.acumPctObz)}</td>
