@@ -1214,18 +1214,47 @@ const HOLIDAYS_PY = {
 };
 const WEEKDAY_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
 
-function holidaysInMonth(list, year, monthNumber){
-  const prefix = year + '-' + String(monthNumber).padStart(2,'0');
-  return list.filter(([d]) => d.startsWith(prefix));
+// Tudo baseado em INTERVALO DE DATAS (não mais "mês fixo") pra funcionar igual tanto no
+// mês normal quanto no filtro "Personalizado" da aba Visitação -- pedido do usuário,
+// 10/08/2026 ("os blocos novos não puxam informação do período personalizado").
+function holidaysInRange(list, startISO, endISO){
+  return list.filter(([d]) => d >= startISO && d <= endISO);
 }
-function countWeekendDays(year, monthNumber){
-  const nDays = new Date(year, monthNumber, 0).getDate();
+function countWeekendDaysInRange(startISO, endISO){
   let count = 0;
-  for(let day=1; day<=nDays; day++){
-    const wd = new Date(year, monthNumber-1, day).getDay();
+  let d = new Date(startISO+'T00:00:00');
+  const end = new Date(endISO+'T00:00:00');
+  while(d <= end){
+    const wd = d.getDay();
     if(wd===0 || wd===6) count++;
+    d.setDate(d.getDate()+1);
   }
   return count;
+}
+// Descobre o período (2026) e o período equivalente do ano anterior (2025, mesmos
+// dia/mês, um ano antes) pro mês selecionado ou pro range "Personalizado". No mês normal
+// é sempre o 1º ao último dia do mês; no Personalizado usa exatamente as datas escolhidas
+// nos campos De/Até (via data.dayLabels, já calculado em buildCustomRangeData).
+function computeComparisonRanges(month){
+  const data = VISITACAO[month];
+  if(!data) return null;
+  const pad = n => String(n).padStart(2,'0');
+  if(data.monthNumber){
+    const mm = data.monthNumber;
+    const nDays = data.nDays || new Date(2026, mm, 0).getDate();
+    return {
+      r26start: `2026-${pad(mm)}-01`, r26end: `2026-${pad(mm)}-${pad(nDays)}`,
+      r25start: `2025-${pad(mm)}-01`, r25end: `2025-${pad(mm)}-${pad(nDays)}`,
+    };
+  }
+  if(data.dayLabels && data.dayLabels.length){
+    const [d1,m1] = data.dayLabels[0].split('/');
+    const [d2,m2] = data.dayLabels[data.dayLabels.length-1].split('/');
+    const r26start = `2026-${m1}-${d1}`, r26end = `2026-${m2}-${d2}`;
+    const shiftYear = (iso, delta) => { const d = new Date(iso+'T00:00:00'); d.setFullYear(d.getFullYear()+delta); return d.toISOString().slice(0,10); };
+    return { r26start, r26end, r25start: shiftYear(r26start,-1), r25end: shiftYear(r26end,-1) };
+  }
+  return null;
 }
 function buildHolidaySet(list){
   const set = new Set();
@@ -1257,9 +1286,9 @@ function blockLength(dateStr, holidaySet){
   const len = Math.round((new Date(end+'T00:00:00') - new Date(start+'T00:00:00'))/86400000) + 1;
   return { start, end, len };
 }
-function resumoComparativoBR(monthNumber){
-  const h25 = holidaysInMonth(HOLIDAYS_BR[2025], 2025, monthNumber);
-  const h26 = holidaysInMonth(HOLIDAYS_BR[2026], 2026, monthNumber);
+function resumoComparativoBR(ranges){
+  const h25 = holidaysInRange(HOLIDAYS_BR[2025], ranges.r25start, ranges.r25end);
+  const h26 = holidaysInRange(HOLIDAYS_BR[2026], ranges.r26start, ranges.r26end);
   function contarProlongados(lista){
     const vistos = new Set();
     let count = 0;
@@ -1274,30 +1303,31 @@ function resumoComparativoBR(monthNumber){
   return {
     feriadoNacional: { 2025: h25.length, 2026: h26.length },
     feriadosProlongados: { 2025: contarProlongados(h25), 2026: contarProlongados(h26) },
-    diasFinsDeSemana: { 2025: countWeekendDays(2025, monthNumber), 2026: countWeekendDays(2026, monthNumber) },
+    diasFinsDeSemana: { 2025: countWeekendDaysInRange(ranges.r25start, ranges.r25end), 2026: countWeekendDaysInRange(ranges.r26start, ranges.r26end) },
   };
 }
-// Oportunidades do mês selecionado: feriados de Brasil/Argentina/Paraguai (só esses 3
-// países, os que mais visitam os parques e têm relevância de feriado prolongado -- pedido
-// do usuário, 10/08/2026, não é lista mundial) + notas manuais da aba Eventos (categoria
-// "Calendário Turístico") no mesmo mês.
-function oportunidadesDoMes(monthNumber, mesLabel){
+// Oportunidades do período selecionado (mês ou range Personalizado): feriados de
+// Brasil/Argentina/Paraguai (só esses 3 países, os que mais visitam os parques e têm
+// relevância de feriado prolongado -- pedido do usuário, 10/08/2026, não é lista mundial)
+// + notas manuais da aba Eventos (categoria "Calendário Turístico") no mesmo período.
+function oportunidadesDoMes(ranges){
   const itens = [];
   // Sigla em português (BRA/ARG/PAR) em vez de emoji de bandeira -- no Windows sem fonte
   // de emoji de bandeira, 🇦🇷/🇵🇾 aparecem como o texto crú "AR"/"PY" (código ISO em
   // inglês) em vez do desenho da bandeira, o que confundia. Pedido do usuário, 10/08/2026.
-  function addCountry(list, holidaySet, year, sigla, pais){
-    holidaysInMonth(list[year], year, monthNumber).forEach(([dateStr, nome]) => {
+  function addCountry(list, holidaySet, sigla, pais){
+    holidaysInRange(list[2026], ranges.r26start, ranges.r26end).forEach(([dateStr, nome]) => {
       const wd = new Date(dateStr+'T00:00:00').getDay();
       const b = blockLength(dateStr, holidaySet);
-      itens.push({ pais, sigla, data: dateStr, dia: dateStr.slice(8,10), weekday: WEEKDAY_PT[wd], nome, prolongado: b.len >= 3 });
+      itens.push({ pais, sigla, data: dateStr, dia: dateStr.slice(8,10), mes: dateStr.slice(5,7), weekday: WEEKDAY_PT[wd], nome, prolongado: b.len >= 3 });
     });
   }
-  addCountry(HOLIDAYS_BR, HOLIDAY_SET_BR, 2026, 'BRA', 'Brasil');
-  addCountry(HOLIDAYS_AR, HOLIDAY_SET_AR, 2026, 'ARG', 'Argentina');
-  addCountry(HOLIDAYS_PY, HOLIDAY_SET_PY, 2026, 'PAR', 'Paraguai');
+  addCountry(HOLIDAYS_BR, HOLIDAY_SET_BR, 'BRA', 'Brasil');
+  addCountry(HOLIDAYS_AR, HOLIDAY_SET_AR, 'ARG', 'Argentina');
+  addCountry(HOLIDAYS_PY, HOLIDAY_SET_PY, 'PAR', 'Paraguai');
   itens.sort((a,b) => a.data.localeCompare(b.data));
-  const eventosDoMes = (typeof EVENTOS !== 'undefined' ? EVENTOS : []).filter(e => e.categoria === 'Calendário Turístico' && e.mes === mesLabel);
+  const eventosDoMes = (typeof EVENTOS !== 'undefined' ? EVENTOS : [])
+    .filter(e => e.categoria === 'Calendário Turístico' && e.data >= ranges.r26start && e.data <= ranges.r26end);
   return { itens, eventosDoMes };
 }
 
@@ -2649,10 +2679,33 @@ function renderVizAcumulado(month){
 // em 2025, então nunca reaproveitamos o dia da semana de um ano pro outro.
 const IMPACTO_PARKS = PARKS.filter(p => p !== 'BioParque');
 
+// Lista de {dd,mm} (dia/mês calendário) pra cada posição i dos arrays diários de um
+// VISITACAO[month] -- funciona tanto pro mês normal (posição i = dia i+1 do monthNumber)
+// quanto pro "Personalizado" (usa data.dayLabels, já no formato "DD/MM", calculado em
+// buildCustomRangeData). Sem isso, o Personalizado não tinha como saber a que dia
+// calendário cada posição do array correspondia -- pedido do usuário, 10/08/2026.
+function getDateList(data){
+  if(data.monthNumber){
+    const mm = data.monthNumber;
+    const nDays = data.nDays || 31;
+    const out = [];
+    for(let d=1; d<=nDays; d++) out.push({ dd:d, mm });
+    return out;
+  }
+  if(data.dayLabels && data.dayLabels.length){
+    return data.dayLabels.map(lbl => {
+      const [dd, mm] = lbl.split('/').map(Number);
+      return { dd, mm };
+    });
+  }
+  return [];
+}
+
 function computeDSFDS(month){
   const data = VISITACAO[month];
-  if(!data || !data.monthNumber) return null;
-  const mm = data.monthNumber;
+  if(!data) return null;
+  const dates = getDateList(data);
+  if(!dates.length) return null;
   const rows = {};
   IMPACTO_PARKS.forEach(p => {
     const dd = data.daily[p];
@@ -2660,25 +2713,24 @@ function computeDSFDS(month){
     if(dd){
       const r26 = dd['Realizado 2026'] || [];
       const r25 = dd['Realizado 2025'] || [];
-      const nDays = data.nDays || r26.length || 31;
-      for(let day=1; day<=nDays; day++){
-        const v26 = r26[day-1];
+      dates.forEach((dt, i) => {
+        const v26 = r26[i];
         // BUG CORRIGIDO (10/08/2026): no mês vigente (ainda em andamento), 2026 só tem dado
         // até o dia de hoje, mas 2025 já vem com o mês inteiro fechado na planilha. Somar os
         // dois lados sem esse filtro comparava "2026 parcial" com "2025 mês inteiro" e dava
         // uma variação AoA% completamente irreal (sempre uma queda enorme). Agora, quando o
         // dia ainda não tem Realizado 2026 (é null/undefined), pulamos os dois lados -- 2025
         // só soma os MESMOS dias que 2026 já realizou, igual a régua diária já faz.
-        if(typeof v26 !== 'number') continue;
-        const wd26 = new Date(2026, mm-1, day).getDay();
+        if(typeof v26 !== 'number') return;
+        const wd26 = new Date(2026, dt.mm-1, dt.dd).getDay();
         if(wd26===0||wd26===6) acc.fds26 += v26; else acc.ds26 += v26;
-        const v25 = r25[day-1];
+        const v25 = r25[i];
         if(typeof v25 === 'number'){
           acc.temDado25 = true;
-          const wd25 = new Date(2025, mm-1, day).getDay();
+          const wd25 = new Date(2025, dt.mm-1, dt.dd).getDay();
           if(wd25===0||wd25===6) acc.fds25 += v25; else acc.ds25 += v25;
         }
-      }
+      });
     }
     rows[p] = acc;
   });
@@ -2694,7 +2746,7 @@ function renderVizImpacto2025(month){
   document.getElementById('impactoRail').textContent = month === 'PERSONALIZADO' ? 'Personalizado' : (mesLabel + ' 2026');
   const rows = computeDSFDS(month);
   if(!rows){
-    tbody.innerHTML = '<tr><td colspan="10">Sem dados para este mês.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10">Sem dados para este período.</td></tr>';
     tfoot.innerHTML = '';
     return;
   }
@@ -2749,12 +2801,12 @@ function renderResumoComparativoBR(month){
   const table = document.getElementById('resumoBRTable');
   if(!table) return;
   const tbody = table.querySelector('tbody');
-  const data = VISITACAO[month];
-  if(!data || !data.monthNumber){
-    tbody.innerHTML = '<tr><td colspan="3">Sem dados para este mês.</td></tr>';
+  const ranges = computeComparisonRanges(month);
+  if(!ranges){
+    tbody.innerHTML = '<tr><td colspan="3">Sem dados para este período.</td></tr>';
     return;
   }
-  const r = resumoComparativoBR(data.monthNumber);
+  const r = resumoComparativoBR(ranges);
   tbody.innerHTML = `
     <tr><td>Feriado Nacional</td><td>${r.feriadoNacional[2025]}</td><td>${r.feriadoNacional[2026]}</td></tr>
     <tr><td>Feriados Prolongados</td><td>${r.feriadosProlongados[2025]}</td><td>${r.feriadosProlongados[2026]}</td></tr>
@@ -2762,35 +2814,45 @@ function renderResumoComparativoBR(month){
   `;
 }
 
+// Formata DD/MM/AAAA a partir de "AAAA-MM-DD", só pra exibição no título do Personalizado.
+function fmtISOToBR(iso){
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
 function renderOportunidades(month){
   const list = document.getElementById('oportunidadesList');
   const titleEl = document.getElementById('oportunidadesTitle');
   if(!list) return;
   const data = VISITACAO[month];
-  if(!data || !data.monthNumber){
+  const ranges = computeComparisonRanges(month);
+  if(!data || !ranges){
     titleEl.textContent = 'Oportunidades';
-    list.innerHTML = '<li class="oportunidades-empty">Sem dados para este mês.</li>';
+    list.innerHTML = '<li class="oportunidades-empty">Sem dados para este período.</li>';
     return;
   }
-  const mesLabel = MONTH_LABEL[month] || (month.charAt(0)+month.slice(1).toLowerCase());
-  titleEl.textContent = `Oportunidades - ${mesLabel} 2026`;
-  const { itens, eventosDoMes } = oportunidadesDoMes(data.monthNumber, mesLabel);
-  const mm = String(data.monthNumber).padStart(2,'0');
+  if(data.monthNumber){
+    const mesLabel = MONTH_LABEL[month] || (month.charAt(0)+month.slice(1).toLowerCase());
+    titleEl.textContent = `Oportunidades - ${mesLabel} 2026`;
+  } else {
+    titleEl.textContent = `Oportunidades - ${fmtISOToBR(ranges.r26start)} a ${fmtISOToBR(ranges.r26end)}`;
+  }
+  const { itens, eventosDoMes } = oportunidadesDoMes(ranges);
 
   const itensHtml = itens.map(it => {
     const tag = it.prolongado ? '<span class="opo-tag">feriado prolongado</span>' : '';
     return `<li class="${it.prolongado?'prolongado':''}">
       <span class="opo-flag">${it.sigla}</span>
-      <span class="opo-txt"><b>${it.dia}/${mm}</b> (${it.weekday}) - ${it.nome}, ${it.pais}${tag}</span>
+      <span class="opo-txt"><b>${it.dia}/${it.mes}</b> (${it.weekday}) - ${it.nome}, ${it.pais}${tag}</span>
     </li>`;
   }).join('');
 
   const eventosHtml = eventosDoMes.map(e => {
-    const d = e.data.slice(8,10);
-    return `<li><span class="opo-flag">EVT</span><span class="opo-txt"><b>${d}/${mm}</b> - ${e.evento}${e.parque?' ('+e.parque+')':''}</span></li>`;
+    const d = e.data.slice(8,10), m = e.data.slice(5,7);
+    return `<li><span class="opo-flag">EVT</span><span class="opo-txt"><b>${d}/${m}</b> - ${e.evento}${e.parque?' ('+e.parque+')':''}</span></li>`;
   }).join('');
 
-  list.innerHTML = (itensHtml + eventosHtml) || '<li class="oportunidades-empty">Nenhum feriado ou data turística relevante neste mês.</li>';
+  list.innerHTML = (itensHtml + eventosHtml) || '<li class="oportunidades-empty">Nenhum feriado ou data turística relevante neste período.</li>';
 }
 
 function renderAtrativos(month){
