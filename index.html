@@ -94,7 +94,10 @@
   /* ── Novos blocos: Visitação mensal / acumulada com OBZ parcial e Captação PNI ── */
   .viz-two-col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
   .viz-two-col .panel{ flex:0 0 auto; min-width:0; }
-  .viz-panel-body{ display:flex; flex-direction:row; align-items:flex-start; gap:14px; flex-wrap:wrap; }
+  /* sem flex-wrap de propósito: a coluna lateral (220px) nunca "cai" pra baixo da tabela
+     em telas/zooms estreitos -- a tabela tem scroll horizontal próprio (.viz2-body) pra
+     absorver isso, então a lateral fica sempre travada do lado direito. */
+  .viz-panel-body{ display:flex; flex-direction:row; align-items:flex-start; gap:14px; }
   .viz2-wrap{ display:flex; align-items:stretch; border-radius:10px; overflow:hidden; border:1px solid var(--line); flex:1 1 auto; min-width:0; }
   .viz2-rail{ flex:0 0 46px; background:#0f3d2e; color:#fff; display:flex; align-items:center; justify-content:center; }
   .viz2-rail span{ writing-mode:vertical-rl; transform:rotate(180deg); font-weight:800; font-size:14px; letter-spacing:.5px; white-space:nowrap; }
@@ -113,10 +116,13 @@
   .viz-table td.down{ color:var(--red); }
   .viz-table td.main-col{ background:#eef4f1; }
   .viz-table .sub-meta{ font-size:10px; font-weight:600; color:#7a8a86; margin-top:2px; }
+  /* Coluna lateral fixa (220px): atrativos (GEX/MDE/MDC) + Captação empilhados juntos,
+     sempre na vertical -- travado assim de propósito (pedido do usuário, 10/08/2026)
+     pra nunca reorganizar os cards de forma diferente dependendo do zoom/monitor,
+     já que essa coluna é usada em prints pra apresentação semanal. */
   .viz-side{ display:flex; flex-direction:column; gap:8px; flex:0 0 220px; min-width:0; }
   .viz-side-row{ display:flex; flex-direction:column; gap:8px; }
-  .viz-captacao-row{ display:flex; flex-direction:row; gap:14px; margin-top:14px; flex-wrap:wrap; }
-  .viz-captacao-row .capta-card{ flex:1 1 0; width:auto; min-width:160px; }
+  .viz-side-row.viz-captacao-row{ margin-top:6px; }
   .capta-card{ width:100%; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:7px 9px; background:#fff; }
   .capta-card .lbl{ font-size:10px; font-weight:700; color:var(--ink); margin-bottom:2px; }
   .capta-card .big{ font-size:14px; font-weight:800; }
@@ -483,11 +489,11 @@
   .viz2-body{ min-width:0; }
   html, body{ overflow-x:hidden; }
   .viz-panel-body{ flex-direction:column; }
-  .viz-side{ flex:0 0 auto; width:100%; flex-direction:row; flex-wrap:wrap; }
-  .viz-side-row{ flex-direction:row; flex-wrap:wrap; flex:1 1 100%; }
-  .capta-card, #vizMesAtrativos .atrativo-card{ flex:1 1 45%; width:auto; }
-  .viz-captacao-row{ flex-direction:column; }
-  .viz-captacao-row .capta-card{ flex:1 1 auto; min-width:0; }
+  /* .viz-side fica travado em coluna (mesmo empilhamento vertical de sempre) mesmo aqui
+     no mobile -- só a largura vira 100% pra caber na tela; pedido do usuário pra nunca
+     mais essa área "realocar" cards de formas diferentes dependendo do tamanho de tela/
+     zoom (ele tira print pra apresentação e precisa do layout sempre igual). */
+  .viz-side{ flex:0 0 auto; width:100%; }
 
   /* Evolução mensal (Share E-commerce): gráfico/tabela e card resumo empilhados */
   .combo-row{ flex-direction:column; }
@@ -592,9 +598,9 @@
       </div>
       <div class="viz-side">
         <div class="viz-side-row" id="vizMesAtrativos"></div>
+        <div class="viz-side-row viz-captacao-row" id="vizMesCaptacao"></div>
       </div>
     </div>
-    <div class="viz-captacao-row" id="vizMesCaptacao"></div>
   </section>
 
   <section class="panel">
@@ -626,9 +632,9 @@
       </div>
       <div class="viz-side">
         <div class="viz-side-row" id="vizAcumAtrativos"></div>
+        <div class="viz-side-row viz-captacao-row" id="vizAcumCaptacao"></div>
       </div>
     </div>
-    <div class="viz-captacao-row" id="vizAcumCaptacao"></div>
   </section>
   </div>
 
