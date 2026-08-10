@@ -124,22 +124,28 @@
      pra nunca reorganizar os cards de forma diferente dependendo do zoom/monitor,
      já que essa coluna é usada em prints pra apresentação semanal. */
   .viz-side{ display:flex; flex-direction:column; gap:8px; flex:0 0 220px; min-width:0; align-self:stretch; }
-  .viz-side-row{ display:flex; flex-direction:column; gap:8px; }
-  /* O grupo de Captação cresce (flex:1) pra absorver toda a altura que sobra depois dos
-     3 cards de atrativos (que têm altura fixa, por causa da logo de 42px) -- assim a
-     coluna lateral sempre termina exatamente na mesma altura da tabela, sem espaço vazio
-     no fim, não importa quantas linhas a tabela tiver (mês x acumulado). */
-  .viz-side-row.viz-captacao-row{ margin-top:6px; flex:1 1 auto; }
-  .viz-captacao-row .capta-card{ flex:1 1 0; display:flex; flex-direction:column; justify-content:center; }
-  .capta-card{ width:100%; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:8px 10px; background:#fff; }
+  /* flex:1 1 0 nos DOIS grupos (atrativos e Captação, 3 cards cada) -- cada grupo fica com
+     metade da altura total da lateral, e dentro de cada grupo os 3 cards (flex:1 1 0
+     também) dividem essa metade em partes iguais. Resultado: os 6 cards juntos preenchem
+     exatamente 100% da altura da tabela, sem sobrar nem faltar espaço -- pedido do
+     usuário, 10/08/2026 ("cards se distribuem uniformemente igual grid 1fr"). */
+  .viz-side-row{ display:flex; flex-direction:column; gap:6px; flex:1 1 0; min-height:0; }
+  .viz-side-row.viz-captacao-row{ margin-top:0; }
+  .viz-captacao-row .capta-card, #vizMesAtrativos .atrativo-card, #vizAcumAtrativos .atrativo-card{ flex:1 1 0; min-height:0; }
+  .capta-card{ width:100%; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:6px 10px; background:#fff; display:flex; flex-direction:column; justify-content:center; }
   .capta-card .lbl{ font-size:10.5px; font-weight:700; color:var(--ink); margin-bottom:2px; }
-  .capta-card .big{ font-size:17px; font-weight:800; line-height:1.15; }
-  .capta-card .sub{ font-size:10.5px; font-weight:700; color:var(--muted); margin-top:3px; }
-  /* Versão compacta dos cards de atrativos, só dentro do bloco mensal novo (não afeta o card acumulado já existente) */
-  #vizMesAtrativos .atrativo-card, #vizAcumAtrativos .atrativo-card{ width:100%; padding:7px 9px; }
-  #vizMesAtrativos .atrativo-card .lbl, #vizAcumAtrativos .atrativo-card .lbl{ font-size:10px; margin-bottom:2px; }
-  #vizMesAtrativos .atrativo-card .big, #vizAcumAtrativos .atrativo-card .big{ font-size:14px; }
-  #vizMesAtrativos .atrativo-card .sub, #vizAcumAtrativos .atrativo-card .sub{ font-size:10px; font-weight:700; margin-top:2px; }
+  .capta-card .big{ font-size:16px; font-weight:800; line-height:1.1; }
+  .capta-card .sub{ font-size:10.5px; font-weight:700; color:var(--muted); margin-top:2px; }
+  /* Versão compacta dos cards de atrativos (só dentro da coluna lateral de Visitação):
+     layout HORIZONTAL -- logo à esquerda, número/captação à direita -- pra caber no
+     espaço reduzido de cada card sem precisar de altura extra (pedido do usuário,
+     10/08/2026, pra aproveitar o espaço lateral em vez de empilhar tudo na vertical). */
+  #vizMesAtrativos .atrativo-card, #vizAcumAtrativos .atrativo-card{ width:100%; padding:6px 9px; display:flex; flex-direction:row; align-items:center; gap:8px; }
+  #vizMesAtrativos .atrativo-card .atrativo-logo, #vizAcumAtrativos .atrativo-card .atrativo-logo{ flex:0 0 auto; width:30px; height:30px; }
+  #vizMesAtrativos .atrativo-card .atrativo-card-info, #vizAcumAtrativos .atrativo-card .atrativo-card-info{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:1px; }
+  #vizMesAtrativos .atrativo-card .lbl, #vizAcumAtrativos .atrativo-card .lbl{ font-size:10px; margin-bottom:0; }
+  #vizMesAtrativos .atrativo-card .big, #vizAcumAtrativos .atrativo-card .big{ font-size:14px; line-height:1.1; }
+  #vizMesAtrativos .atrativo-card .sub, #vizAcumAtrativos .atrativo-card .sub{ font-size:9.5px; font-weight:700; margin-top:0; }
   .logo-banner{ position:relative; padding:22px 20px; border-radius:10px; overflow:hidden; background:#0f3d2e; margin-top:4px; }
   .logo-banner .logo-row{ position:relative; display:flex; gap:16px; flex-wrap:wrap; z-index:1; }
   .logo-shape{ width:88px; height:88px; border:3px solid #d4a017; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.25); }
@@ -2363,12 +2369,12 @@ function renderVizMensal(month){
       const color = ATRATIVO_COLORS[a];
       const logo = ATRATIVO_LOGOS[a];
       return `<div class="atrativo-card" style="border-left-color:${color}">
-        <div class="atrativo-card-top">
-          <img class="atrativo-logo" src="${logo}" alt="${a}">
+        <img class="atrativo-logo" src="${logo}" alt="${a}">
+        <div class="atrativo-card-info">
           <div class="lbl" style="color:${color}">${LABELS[a]}</div>
+          <div class="big">${fmtInt(somaMes)}</div>
+          <div class="sub"><span>Captação</span><span>${captacao!==null?fmtPct(captacao):'-'}</span></div>
         </div>
-        <div class="big">${fmtInt(somaMes)}</div>
-        <div class="sub"><span>Captação</span><span>${captacao!==null?fmtPct(captacao):'-'}</span></div>
       </div>`;
     }).join('');
   } else {
@@ -2425,13 +2431,13 @@ function renderAtrativos(month){
     const color = ATRATIVO_COLORS[a];
     const logo = ATRATIVO_LOGOS[a];
     return `<div class="atrativo-card" style="border-left-color:${color}">
-      <div class="atrativo-card-top">
-        <img class="atrativo-logo" src="${logo}" alt="${a}">
+      <img class="atrativo-logo" src="${logo}" alt="${a}">
+      <div class="atrativo-card-info">
         <div class="lbl" style="color:${color}">${LABELS[a]}</div>
+        <div class="big">${fmtInt(d.realizado2026)}</div>
+        <div class="sub"><span>% do AquaRio</span><span>${fmtPct(d.pctAq2026)}</span></div>
+        <div class="sub"><span>2025</span><span>${d.realizado2025!==null&&d.realizado2025!==undefined?fmtInt(d.realizado2025)+' ('+fmtPct(d.pctAq2025)+')':'sem dado'}</span></div>
       </div>
-      <div class="big">${fmtInt(d.realizado2026)}</div>
-      <div class="sub"><span>% do AquaRio</span><span>${fmtPct(d.pctAq2026)}</span></div>
-      <div class="sub"><span>2025</span><span>${d.realizado2025!==null&&d.realizado2025!==undefined?fmtInt(d.realizado2025)+' ('+fmtPct(d.pctAq2025)+')':'sem dado'}</span></div>
     </div>`;
   }).join('');
 }
