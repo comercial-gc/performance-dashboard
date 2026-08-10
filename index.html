@@ -974,8 +974,8 @@
         <div class="mix-subtitle" id="histSubtitle">Série histórica por parque ou consolidada, com comparativo opcional entre anos</div>
       </div>
       <div class="mix-morador-toggle" id="histViewToggle">
-        <button class="active" data-val="grafico" onclick="setHistView('grafico')">Gráfico</button>
-        <button data-val="regua" onclick="setHistView('regua')">Régua</button>
+        <button data-val="grafico" onclick="setHistView('grafico')">Gráfico</button>
+        <button class="active" data-val="regua" onclick="setHistView('regua')">Régua</button>
       </div>
     </div>
 
@@ -3018,7 +3018,7 @@ let MIX_ORIGEM_DIARIO = {};
 let EVENTOS = [];
 let APOIO_REPORT = { realizadoOntem: {}, resumoMensal: {} };
 let HISTORICO = { parques: {}, parquesComShare: [] };
-let histViewState = 'grafico'; // 'grafico' | 'regua' (régua = tabela)
+let histViewState = 'regua'; // 'grafico' | 'regua' (régua = tabela) -- Régua é o padrão inicial (pedido do usuário, 10/08/2026)
 // legenda clicável: chave de cada série escondida -- 'principal'/'vs' nos modos normal e Vs,
 // ou o próprio ano (ex.: '2024') no modo "Todos os anos".
 let histHiddenSeries = new Set();
@@ -3290,6 +3290,16 @@ function histParquesDisponiveis(){
 function setHistView(view){
   histViewState = view;
   document.querySelectorAll('#histViewToggle button').forEach(b => b.classList.toggle('active', b.dataset.val === view));
+  // Ao entrar no Gráfico, a configuração inicial sempre volta a ser Parque = Todos os
+  // Parques e Ano = Todos os anos (pedido do usuário, 10/08/2026) -- independente do que
+  // estava selecionado na Régua antes de trocar.
+  if(view === 'grafico'){
+    const parqueSel = document.getElementById('histParqueSelect');
+    const anoSel = document.getElementById('histAnoSelect');
+    if(parqueSel) parqueSel.value = 'Todos os Parques';
+    if(anoSel) anoSel.value = HIST_ANO_TODOS;
+    populateHistoricoSelects(true);
+  }
   renderHistorico();
 }
 
