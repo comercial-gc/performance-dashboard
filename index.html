@@ -119,6 +119,17 @@
   .viz-table td.down{ color:var(--red); }
   .viz-table td.main-col{ background:#eef4f1; }
   .viz-table .sub-meta{ font-size:10px; font-weight:600; color:#7a8a86; margin-top:2px; }
+  .viz-table tfoot td{ background:#eef4f1; border-top:2px solid var(--line); }
+  /* ── Impacto Visitação vs 2025 (DS x FDS) + Resumo Comparativo BR + Oportunidades ── */
+  .resumo-br-table{ max-width:380px; }
+  .resumo-br-table td:first-child{ text-align:left; }
+  .oportunidades-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .oportunidades-list li{ display:flex; align-items:flex-start; gap:9px; font-size:13px; padding:8px 10px; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; background:#fff; }
+  .oportunidades-list li.prolongado{ border-left-color:var(--green); }
+  .oportunidades-list .opo-flag{ font-size:16px; line-height:1.3; }
+  .oportunidades-list .opo-txt{ flex:1 1 auto; }
+  .oportunidades-list .opo-tag{ display:inline-block; font-size:10px; font-weight:700; color:var(--green); background:var(--green-soft); border-radius:8px; padding:1px 7px; margin-left:6px; }
+  .oportunidades-empty{ font-size:13px; color:var(--muted); }
   /* Coluna lateral fixa (220px): atrativos (GEX/MDE/MDC) + Captação empilhados juntos,
      sempre na vertical -- travado assim de propósito (pedido do usuário, 10/08/2026)
      pra nunca reorganizar os cards de forma diferente dependendo do zoom/monitor,
@@ -657,6 +668,67 @@
   </section>
   </div>
 
+  <section class="panel">
+    <div class="panel-head">
+      <h2 id="impactoTitle">Impacto Visitação vs 2025 (Dia de Semana x Fim de Semana)</h2>
+      <span class="hint">Comparativo por parque entre dias de semana (DS) e finais de semana (FDS), 2026 vs 2025</span>
+    </div>
+    <div class="panel-body viz-panel-body">
+      <div class="viz2-wrap">
+        <div class="viz2-rail"><span id="impactoRail">Agosto 2026</span></div>
+        <div class="viz2-body">
+          <table class="viz-table" id="impactoTable">
+            <thead>
+              <tr>
+                <th class="grp" rowspan="2">Parque</th>
+                <th class="grp" colspan="2">DS 2026</th>
+                <th class="grp" colspan="2">FDS 2026</th>
+                <th class="grp" colspan="2">DS 2025</th>
+                <th class="grp" colspan="2">FDS 2025</th>
+                <th class="grp" rowspan="2">Total 2026</th>
+              </tr>
+              <tr>
+                <th class="sub-main">Pax</th><th class="sub-light">% total</th>
+                <th class="sub-main">Pax</th><th class="sub-light">% total</th>
+                <th class="sub-plain">Pax</th><th class="sub-light">AoA%</th>
+                <th class="sub-plain">Pax</th><th class="sub-light">AoA%</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="viz-two-col">
+  <section class="panel">
+    <div class="panel-head">
+      <h2 id="resumoBRTitle">Resumo Comparativo 25 x 26 (BR)</h2>
+      <span class="hint">Feriados nacionais e finais de semana no mês selecionado</span>
+    </div>
+    <div class="panel-body">
+      <table class="viz-table resumo-br-table" id="resumoBRTable">
+        <thead>
+          <tr><th class="grp" style="text-align:left;">Indicador</th><th class="grp">2025</th><th class="grp">2026</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
+      <span class="hint">Feriados e datas turísticas relevantes: Brasil, Argentina e Paraguai</span>
+    </div>
+    <div class="panel-body">
+      <ul class="oportunidades-list" id="oportunidadesList"></ul>
+    </div>
+  </section>
+  </div>
+
 
   <section class="panel" id="weatherPanel" style="display:none;">
     <div class="panel-head">
@@ -1078,23 +1150,165 @@ const PARK_COLORS = {
 const ATRATIVO_COLORS = { GEX:'#FF00FF', MDE:'#3C78D8', MDC:'#980000' };
 const ATRATIVOS_LABEL = { GEX:'GEX', MDE:'Mar de Espelhos', MDC:'Museu de Cera' };
 
+// ── Feriados oficiais (referência estática) -- Brasil, Argentina e Paraguai ────────
+// Usado nas novas visões "Impacto Visitação vs 2025" e "Resumo Comparativo (BR) +
+// Oportunidades" da aba Visitação (pedido do usuário, 10/08/2026). Fontes: Brasil =
+// ANBIMA (anbima.com.br/feriados, consultado em 10/08/2026); Argentina = Ley 27.399 +
+// calendariosnacionales.com/ar (inclui os 3 "días no laborables con fines turísticos"
+// de 2026 decretados separadamente: 23/3, 10/7 e 7/12, marcados como "Puente turístico");
+// Paraguai = Ley 7.544 + cobertura ABC Color/imprensa paraguaia (2026 é o 1º ano com o
+// feriado da Constituição, 20/6, e com até 3 feriados extras que o Executivo pode
+// decretar -- esses extras/decretos de última hora NÃO entram aqui, só o calendário
+// oficial fixo). Precisa de checagem manual anual (o usuário pediu "automático com
+// checagem" -- ver Eventos > Calendário Turístico pra notas complementares).
+const HOLIDAYS_BR = {
+  2025: [
+    ['2025-01-01','Confraternização Universal'], ['2025-03-03','Carnaval'], ['2025-03-04','Carnaval'],
+    ['2025-04-18','Paixão de Cristo'], ['2025-04-21','Tiradentes'], ['2025-05-01','Dia do Trabalho'],
+    ['2025-06-19','Corpus Christi'], ['2025-09-07','Independência do Brasil'],
+    ['2025-10-12','Nossa Senhora Aparecida'], ['2025-11-02','Finados'],
+    ['2025-11-15','Proclamação da República'], ['2025-11-20','Consciência Negra'], ['2025-12-25','Natal'],
+  ],
+  2026: [
+    ['2026-01-01','Confraternização Universal'], ['2026-02-16','Carnaval'], ['2026-02-17','Carnaval'],
+    ['2026-04-03','Paixão de Cristo'], ['2026-04-21','Tiradentes'], ['2026-05-01','Dia do Trabalho'],
+    ['2026-06-04','Corpus Christi'], ['2026-09-07','Independência do Brasil'],
+    ['2026-10-12','Nossa Senhora Aparecida'], ['2026-11-02','Finados'],
+    ['2026-11-15','Proclamação da República'], ['2026-11-20','Consciência Negra'], ['2026-12-25','Natal'],
+  ],
+};
+const HOLIDAYS_AR = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-03-03','Carnaval'], ['2025-03-04','Carnaval'],
+    ['2025-03-24','Día de la Memoria'], ['2025-04-02','Día del Veterano (Malvinas)'],
+    ['2025-04-18','Viernes Santo'], ['2025-05-01','Día del Trabajador'], ['2025-05-25','Revolución de Mayo'],
+    ['2025-06-16','Gral. Güemes'], ['2025-06-20','Día de la Bandera'], ['2025-07-09','Día de la Independencia'],
+    ['2025-08-18','Gral. San Martín'], ['2025-10-13','Diversidad Cultural'],
+    ['2025-11-24','Soberanía Nacional'], ['2025-12-08','Inmaculada Concepción'], ['2025-12-25','Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-02-16','Carnaval'], ['2026-02-17','Carnaval'],
+    ['2026-03-23','Puente turístico'], ['2026-03-24','Día de la Memoria'],
+    ['2026-04-02','Día del Veterano (Malvinas)'], ['2026-04-03','Viernes Santo'],
+    ['2026-05-01','Día del Trabajador'], ['2026-05-25','Revolución de Mayo'], ['2026-06-15','Gral. Güemes'],
+    ['2026-06-20','Día de la Bandera'], ['2026-07-09','Día de la Independencia'], ['2026-07-10','Puente turístico'],
+    ['2026-08-17','Gral. San Martín'], ['2026-10-12','Diversidad Cultural'], ['2026-11-23','Soberanía Nacional'],
+    ['2026-12-07','Puente turístico'], ['2026-12-08','Inmaculada Concepción'], ['2026-12-25','Navidad'],
+  ],
+};
+const HOLIDAYS_PY = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-03-03','Día de los Héroes'], ['2025-04-17','Jueves Santo'],
+    ['2025-04-18','Viernes Santo'], ['2025-05-01','Día del Trabajador'], ['2025-05-14','Día de la Independencia'],
+    ['2025-05-15','Independencia / Día de la Madre'], ['2025-06-16','Paz del Chaco'],
+    ['2025-08-15','Fundación de Asunción'], ['2025-09-29','Batalla de Boquerón'],
+    ['2025-12-08','Virgen de Caacupé'], ['2025-12-25','Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-03-02','Día de los Héroes (trasladado)'], ['2026-04-02','Jueves Santo'],
+    ['2026-04-03','Viernes Santo'], ['2026-05-01','Día del Trabajador'], ['2026-05-14','Día de la Independencia'],
+    ['2026-05-15','Independencia / Día de la Madre'], ['2026-06-12','Paz del Chaco'],
+    ['2026-06-22','Día de la Constitución (trasladado)'], ['2026-08-15','Fundación de Asunción'],
+    ['2026-09-29','Batalla de Boquerón'], ['2026-12-08','Virgen de Caacupé'], ['2026-12-25','Navidad'],
+  ],
+};
+const WEEKDAY_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
 
-// Regra de arredondamento padrão do painel inteiro (pedido do usuário, 07/08/2026,
-// detalhada pela segunda casa decimal em 07/08/2026): olhando a casa decimal (frac =
-// parte depois do inteiro), de 0,00 a 0,49 arredonda pra baixo; de 0,50 a 0,59 mantém
-// o número "quebrado" em X,5 (NÃO arredonda pra nenhum lado, mesmo que seja 0,51,
-// 0,55 ou 0,59 -- a faixa inteira vira ",5"); de 0,60 a 0,99 arredonda pra cima.
-// CUIDADO: não é só o ponto exato 0,50 -- é a faixa toda de 0,50 até 0,59 (por isso o
-// teste de "meio" abaixo usa um intervalo, não só uma tolerância em torno de 0,5).
+function holidaysInMonth(list, year, monthNumber){
+  const prefix = year + '-' + String(monthNumber).padStart(2,'0');
+  return list.filter(([d]) => d.startsWith(prefix));
+}
+function countWeekendDays(year, monthNumber){
+  const nDays = new Date(year, monthNumber, 0).getDate();
+  let count = 0;
+  for(let day=1; day<=nDays; day++){
+    const wd = new Date(year, monthNumber-1, day).getDay();
+    if(wd===0 || wd===6) count++;
+  }
+  return count;
+}
+function buildHolidaySet(list){
+  const set = new Set();
+  Object.keys(list).forEach(year => list[year].forEach(([d]) => set.add(d)));
+  return set;
+}
+const HOLIDAY_SET_BR = buildHolidaySet(HOLIDAYS_BR);
+const HOLIDAY_SET_AR = buildHolidaySet(HOLIDAYS_AR);
+const HOLIDAY_SET_PY = buildHolidaySet(HOLIDAYS_PY);
+function addDaysISO(dateStr, n){
+  const d = new Date(dateStr+'T00:00:00');
+  d.setDate(d.getDate()+n);
+  return d.toISOString().slice(0,10);
+}
+function isDayOff(dateStr, holidaySet){
+  const wd = new Date(dateStr+'T00:00:00').getDay();
+  return wd===0 || wd===6 || holidaySet.has(dateStr);
+}
+// Expande o bloco de dias de descanso (fim de semana + feriado) pra tras e pra frente a
+// partir de uma data-feriado -- se o bloco final tiver >=3 dias, é "feriado prolongado"
+// (ex.: feriado numa sexta cria sexta+sábado+domingo = 3 dias, ou numa segunda cria
+// sábado+domingo+segunda). Feriado isolado no meio da semana ou que cai no próprio fim
+// de semana (sem folga extra) não conta. Também deduplica feriados de mais de um dia
+// (ex.: Carnaval) automaticamente, já que o bloco inteiro fica com o mesmo "start".
+function blockLength(dateStr, holidaySet){
+  let start = dateStr, end = dateStr;
+  while(isDayOff(addDaysISO(start,-1), holidaySet)) start = addDaysISO(start,-1);
+  while(isDayOff(addDaysISO(end,1), holidaySet)) end = addDaysISO(end,1);
+  const len = Math.round((new Date(end+'T00:00:00') - new Date(start+'T00:00:00'))/86400000) + 1;
+  return { start, end, len };
+}
+function resumoComparativoBR(monthNumber){
+  const h25 = holidaysInMonth(HOLIDAYS_BR[2025], 2025, monthNumber);
+  const h26 = holidaysInMonth(HOLIDAYS_BR[2026], 2026, monthNumber);
+  function contarProlongados(lista){
+    const vistos = new Set();
+    let count = 0;
+    lista.forEach(([d]) => {
+      const b = blockLength(d, HOLIDAY_SET_BR);
+      if(vistos.has(b.start)) return;
+      vistos.add(b.start);
+      if(b.len >= 3) count++;
+    });
+    return count;
+  }
+  return {
+    feriadoNacional: { 2025: h25.length, 2026: h26.length },
+    feriadosProlongados: { 2025: contarProlongados(h25), 2026: contarProlongados(h26) },
+    diasFinsDeSemana: { 2025: countWeekendDays(2025, monthNumber), 2026: countWeekendDays(2026, monthNumber) },
+  };
+}
+// Oportunidades do mês selecionado: feriados de Brasil/Argentina/Paraguai (só esses 3
+// países, os que mais visitam os parques e têm relevância de feriado prolongado -- pedido
+// do usuário, 10/08/2026, não é lista mundial) + notas manuais da aba Eventos (categoria
+// "Calendário Turístico") no mesmo mês.
+function oportunidadesDoMes(monthNumber, mesLabel){
+  const itens = [];
+  function addCountry(list, holidaySet, year, emoji, pais){
+    holidaysInMonth(list[year], year, monthNumber).forEach(([dateStr, nome]) => {
+      const wd = new Date(dateStr+'T00:00:00').getDay();
+      const b = blockLength(dateStr, holidaySet);
+      itens.push({ pais, emoji, data: dateStr, dia: dateStr.slice(8,10), weekday: WEEKDAY_PT[wd], nome, prolongado: b.len >= 3 });
+    });
+  }
+  addCountry(HOLIDAYS_BR, HOLIDAY_SET_BR, 2026, '🇧🇷', 'Brasil');
+  addCountry(HOLIDAYS_AR, HOLIDAY_SET_AR, 2026, '🇦🇷', 'Argentina');
+  addCountry(HOLIDAYS_PY, HOLIDAY_SET_PY, 2026, '🇵🇾', 'Paraguai');
+  itens.sort((a,b) => a.data.localeCompare(b.data));
+  const eventosDoMes = (typeof EVENTOS !== 'undefined' ? EVENTOS : []).filter(e => e.categoria === 'Calendário Turístico' && e.mes === mesLabel);
+  return { itens, eventosDoMes };
+}
+
+
+// Regra de arredondamento padrão do painel inteiro (SIMPLIFICADA em 10/08/2026,
+// substitui a versão anterior que tinha uma faixa "mantém quebrado" em 0,50-0,59):
+// olhando a segunda casa decimal, de 0,00 a 0,49 arredonda pra baixo; de 0,50 a 0,99
+// arredonda pra cima -- arredondamento padrão pro inteiro mais próximo, sem caso
+// especial nenhum. Só precisa do Math.round no valor absoluto, com o sinal tratado
+// separadamente pra negativos arredondarem por magnitude (ex.: -2,5 -> -3).
 function smartRound(v){
   if(typeof v !== 'number' || isNaN(v)) return v;
   const neg = v < 0;
-  const av = Math.abs(v);
-  const floor = Math.floor(av);
-  const frac = av - floor;
-  const eps = 1e-9;
-  const meio = frac >= (0.5 - eps) && frac < (0.6 - eps);
-  const r = meio ? (floor + 0.5) : Math.round(av);
+  const r = Math.round(Math.abs(v));
   return neg ? -r : r;
 }
 function fmtSmartNumber(r){
@@ -1134,14 +1348,12 @@ function renderKpis(month){
   const soulRow = data.summary['Total Soul Parques'];
   const isClosed = CLOSED_MONTHS.includes(month);
   const cards = [];
-  if(totalRow){
-    cards.push(kpiCardHtml('G. Cataratas, mês', fmtInt(totalRow.realizado), totalRow.pct2025, totalRow.pctObz));
-    cards.push(kpiCardHtml('G. Cataratas, acumulado', fmtInt(totalRow.acumRealizado), totalRow.acumPct2025, totalRow.acumPctObz));
-  }
-  if(soulRow){
-    cards.push(kpiCardHtml('Soul Parques, mês', fmtInt(soulRow.realizado), soulRow.pct2025, soulRow.pctObz));
-    cards.push(kpiCardHtml('Soul Parques, acumulado', fmtInt(soulRow.acumRealizado), soulRow.acumPct2025, soulRow.acumPctObz));
-  }
+  // Ordem agrupada por período (mês / acumulado), não por entidade -- pedido do usuário,
+  // 10/08/2026: G.Cataratas mês, Soul mês, G.Cataratas acumulado, Soul acumulado.
+  if(totalRow) cards.push(kpiCardHtml('G. Cataratas, mês', fmtInt(totalRow.realizado), totalRow.pct2025, totalRow.pctObz));
+  if(soulRow) cards.push(kpiCardHtml('Soul Parques, mês', fmtInt(soulRow.realizado), soulRow.pct2025, soulRow.pctObz));
+  if(totalRow) cards.push(kpiCardHtml('G. Cataratas, acumulado', fmtInt(totalRow.acumRealizado), totalRow.acumPct2025, totalRow.acumPctObz));
+  if(soulRow) cards.push(kpiCardHtml('Soul Parques, acumulado', fmtInt(soulRow.acumRealizado), soulRow.acumPct2025, soulRow.acumPctObz));
   document.getElementById('kpiCards').innerHTML = cards.join('');
 }
 
@@ -2427,6 +2639,147 @@ function renderVizAcumulado(month){
   document.getElementById('vizAcumCaptacao').innerHTML = captacaoCardsHtml('anual', month) + captacaoCV3PCardHtml('anual', month);
 }
 
+// ── Impacto Visitação vs 2025 (Dia de Semana x Fim de Semana) ─────────────────────
+// BioParque sempre excluído (saiu do Grupo Cataratas a partir de Agosto/2026, mesma regra
+// das outras visões). Classificação de dia de semana/fim de semana é feita de forma
+// INDEPENDENTE por ano -- o dia 15 de um mês pode cair numa segunda em 2026 e num sábado
+// em 2025, então nunca reaproveitamos o dia da semana de um ano pro outro.
+const IMPACTO_PARKS = PARKS.filter(p => p !== 'BioParque');
+
+function computeDSFDS(month){
+  const data = VISITACAO[month];
+  if(!data || !data.monthNumber) return null;
+  const mm = data.monthNumber;
+  const rows = {};
+  IMPACTO_PARKS.forEach(p => {
+    const dd = data.daily[p];
+    const acc = { ds26:0, fds26:0, ds25:0, fds25:0, temDado25:false };
+    if(dd){
+      const r26 = dd['Realizado 2026'] || [];
+      const r25 = dd['Realizado 2025'] || [];
+      const nDays = data.nDays || r26.length || 31;
+      for(let day=1; day<=nDays; day++){
+        const v26 = r26[day-1];
+        const v25 = r25[day-1];
+        const wd26 = new Date(2026, mm-1, day).getDay();
+        const wd25 = new Date(2025, mm-1, day).getDay();
+        if(typeof v26 === 'number'){ if(wd26===0||wd26===6) acc.fds26 += v26; else acc.ds26 += v26; }
+        if(typeof v25 === 'number'){ acc.temDado25 = true; if(wd25===0||wd25===6) acc.fds25 += v25; else acc.ds25 += v25; }
+      }
+    }
+    rows[p] = acc;
+  });
+  return rows;
+}
+
+function renderVizImpacto2025(month){
+  const table = document.getElementById('impactoTable');
+  if(!table) return;
+  const tbody = table.querySelector('tbody');
+  const tfoot = table.querySelector('tfoot');
+  const mesLabel = month.charAt(0) + month.slice(1).toLowerCase();
+  document.getElementById('impactoRail').textContent = month === 'PERSONALIZADO' ? 'Personalizado' : (mesLabel + ' 2026');
+  const rows = computeDSFDS(month);
+  if(!rows){
+    tbody.innerHTML = '<tr><td colspan="10">Sem dados para este mês.</td></tr>';
+    tfoot.innerHTML = '';
+    return;
+  }
+  const totalDS26 = IMPACTO_PARKS.reduce((s,p)=>s+rows[p].ds26,0);
+  const totalFDS26 = IMPACTO_PARKS.reduce((s,p)=>s+rows[p].fds26,0);
+  const totalDS25 = IMPACTO_PARKS.reduce((s,p)=>s+rows[p].ds25,0);
+  const totalFDS25 = IMPACTO_PARKS.reduce((s,p)=>s+rows[p].fds25,0);
+  const temDado25Geral = IMPACTO_PARKS.some(p => rows[p].temDado25);
+
+  function aoaCell(v26, v25, temDado25){
+    if(!temDado25 || !v25) return { txt:'-', cls:'' };
+    const delta = (v26-v25)/v25;
+    return { txt: pctArrow(delta)+fmtPct(delta), cls: pctClass(delta) };
+  }
+
+  tbody.innerHTML = IMPACTO_PARKS.map(p => {
+    const r = rows[p];
+    const pctDS = totalDS26>0 ? r.ds26/totalDS26 : null;
+    const pctFDS = totalFDS26>0 ? r.fds26/totalFDS26 : null;
+    const aoaDS = aoaCell(r.ds26, r.ds25, r.temDado25);
+    const aoaFDS = aoaCell(r.fds26, r.fds25, r.temDado25);
+    return `<tr>
+      ${parkBlockTd(p)}
+      <td class="main-col">${fmtInt(r.ds26)}</td>
+      <td>${pctDS!==null?fmtPct(pctDS):'-'}</td>
+      <td class="main-col">${fmtInt(r.fds26)}</td>
+      <td>${pctFDS!==null?fmtPct(pctFDS):'-'}</td>
+      <td>${r.temDado25?fmtInt(r.ds25):'-'}</td>
+      <td class="${aoaDS.cls}">${aoaDS.txt}</td>
+      <td>${r.temDado25?fmtInt(r.fds25):'-'}</td>
+      <td class="${aoaFDS.cls}">${aoaFDS.txt}</td>
+      <td>${fmtInt(r.ds26 + r.fds26)}</td>
+    </tr>`;
+  }).join('');
+
+  const aoaDSTotal = aoaCell(totalDS26, totalDS25, temDado25Geral);
+  const aoaFDSTotal = aoaCell(totalFDS26, totalFDS25, temDado25Geral);
+  tfoot.innerHTML = `<tr style="font-weight:800;">
+    <td>Total Geral</td>
+    <td class="main-col">${fmtInt(totalDS26)}</td><td>100%</td>
+    <td class="main-col">${fmtInt(totalFDS26)}</td><td>100%</td>
+    <td>${temDado25Geral?fmtInt(totalDS25):'-'}</td>
+    <td class="${aoaDSTotal.cls}">${aoaDSTotal.txt}</td>
+    <td>${temDado25Geral?fmtInt(totalFDS25):'-'}</td>
+    <td class="${aoaFDSTotal.cls}">${aoaFDSTotal.txt}</td>
+    <td>${fmtInt(totalDS26+totalFDS26)}</td>
+  </tr>`;
+}
+
+// ── Resumo Comparativo 25x26 (BR) + Oportunidades ─────────────────────────────────
+function renderResumoComparativoBR(month){
+  const table = document.getElementById('resumoBRTable');
+  if(!table) return;
+  const tbody = table.querySelector('tbody');
+  const data = VISITACAO[month];
+  if(!data || !data.monthNumber){
+    tbody.innerHTML = '<tr><td colspan="3">Sem dados para este mês.</td></tr>';
+    return;
+  }
+  const r = resumoComparativoBR(data.monthNumber);
+  tbody.innerHTML = `
+    <tr><td>Feriado Nacional</td><td>${r.feriadoNacional[2025]}</td><td>${r.feriadoNacional[2026]}</td></tr>
+    <tr><td>Feriados Prolongados</td><td>${r.feriadosProlongados[2025]}</td><td>${r.feriadosProlongados[2026]}</td></tr>
+    <tr><td>Dias de Final de Semana</td><td>${r.diasFinsDeSemana[2025]}</td><td>${r.diasFinsDeSemana[2026]}</td></tr>
+  `;
+}
+
+function renderOportunidades(month){
+  const list = document.getElementById('oportunidadesList');
+  const titleEl = document.getElementById('oportunidadesTitle');
+  if(!list) return;
+  const data = VISITACAO[month];
+  if(!data || !data.monthNumber){
+    titleEl.textContent = 'Oportunidades';
+    list.innerHTML = '<li class="oportunidades-empty">Sem dados para este mês.</li>';
+    return;
+  }
+  const mesLabel = MONTH_LABEL[month] || (month.charAt(0)+month.slice(1).toLowerCase());
+  titleEl.textContent = `Oportunidades - ${mesLabel} 2026`;
+  const { itens, eventosDoMes } = oportunidadesDoMes(data.monthNumber, mesLabel);
+  const mm = String(data.monthNumber).padStart(2,'0');
+
+  const itensHtml = itens.map(it => {
+    const tag = it.prolongado ? '<span class="opo-tag">feriado prolongado</span>' : '';
+    return `<li class="${it.prolongado?'prolongado':''}">
+      <span class="opo-flag">${it.emoji}</span>
+      <span class="opo-txt"><b>${it.dia}/${mm}</b> (${it.weekday}) - ${it.nome}, ${it.pais}${tag}</span>
+    </li>`;
+  }).join('');
+
+  const eventosHtml = eventosDoMes.map(e => {
+    const d = e.data.slice(8,10);
+    return `<li><span class="opo-flag">📌</span><span class="opo-txt"><b>${d}/${mm}</b> - ${e.evento}${e.parque?' ('+e.parque+')':''}</span></li>`;
+  }).join('');
+
+  list.innerHTML = (itensHtml + eventosHtml) || '<li class="oportunidades-empty">Nenhum feriado ou data turística relevante neste mês.</li>';
+}
+
 function renderAtrativos(month){
   const data = VISITACAO[month];
   const container = document.getElementById('vizAcumAtrativos');
@@ -2607,6 +2960,7 @@ function refreshVisitacao(){
   const month = document.getElementById('monthSelect').value;
   renderKpis(month); renderRegua(month); renderAtrativos(month);
   renderVizMensal(month); renderVizAcumulado(month);
+  renderVizImpacto2025(month); renderResumoComparativoBR(month); renderOportunidades(month);
   const panel = document.getElementById('weatherPanel');
   if(month === OPEN_MONTH){
     panel.style.display = '';
