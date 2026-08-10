@@ -94,10 +94,12 @@
   /* ── Novos blocos: Visitação mensal / acumulada com OBZ parcial e Captação PNI ── */
   .viz-two-col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
   .viz-two-col .panel{ flex:0 0 auto; min-width:0; }
-  /* sem flex-wrap de propósito: a coluna lateral (220px) nunca "cai" pra baixo da tabela
-     em telas/zooms estreitos -- a tabela tem scroll horizontal próprio (.viz2-body) pra
-     absorver isso, então a lateral fica sempre travada do lado direito. */
-  .viz-panel-body{ display:flex; flex-direction:row; align-items:flex-start; gap:14px; }
+  /* align-items:stretch (em vez de flex-start): a coluna lateral (220px) sempre fica com a
+     MESMA altura da tabela ao lado, em vez de ficar mais baixa e deixar espaço vazio no
+     final -- pedido do usuário, 10/08/2026, pra alinhar visualmente com a tabela nos prints.
+     flex-wrap voltou a ficar livre (usuário pediu pra desfazer o "travamento" de tamanho de
+     tela/zoom, mas mantendo esse alinhamento de altura e a posição dos cards de Captação). */
+  .viz-panel-body{ display:flex; flex-direction:row; align-items:stretch; gap:14px; flex-wrap:wrap; }
   .viz2-wrap{ display:flex; align-items:stretch; border-radius:10px; overflow:hidden; border:1px solid var(--line); flex:1 1 auto; min-width:0; }
   .viz2-rail{ flex:0 0 46px; background:#0f3d2e; color:#fff; display:flex; align-items:center; justify-content:center; }
   .viz2-rail span{ writing-mode:vertical-rl; transform:rotate(180deg); font-weight:800; font-size:14px; letter-spacing:.5px; white-space:nowrap; }
@@ -122,11 +124,16 @@
      já que essa coluna é usada em prints pra apresentação semanal. */
   .viz-side{ display:flex; flex-direction:column; gap:8px; flex:0 0 220px; min-width:0; }
   .viz-side-row{ display:flex; flex-direction:column; gap:8px; }
-  .viz-side-row.viz-captacao-row{ margin-top:6px; }
-  .capta-card{ width:100%; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:7px 9px; background:#fff; }
-  .capta-card .lbl{ font-size:10px; font-weight:700; color:var(--ink); margin-bottom:2px; }
-  .capta-card .big{ font-size:14px; font-weight:800; }
-  .capta-card .sub{ font-size:10px; font-weight:700; color:var(--muted); margin-top:2px; }
+  /* O grupo de Captação cresce (flex:1) pra absorver toda a altura que sobra depois dos
+     3 cards de atrativos (que têm altura fixa, por causa da logo de 42px) -- assim a
+     coluna lateral sempre termina exatamente na mesma altura da tabela, sem espaço vazio
+     no fim, não importa quantas linhas a tabela tiver (mês x acumulado). */
+  .viz-side-row.viz-captacao-row{ margin-top:6px; flex:1 1 auto; }
+  .viz-captacao-row .capta-card{ flex:1 1 0; display:flex; flex-direction:column; justify-content:center; }
+  .capta-card{ width:100%; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:10px 12px; background:#fff; }
+  .capta-card .lbl{ font-size:11px; font-weight:700; color:var(--ink); margin-bottom:3px; }
+  .capta-card .big{ font-size:21px; font-weight:800; line-height:1.1; }
+  .capta-card .sub{ font-size:11px; font-weight:700; color:var(--muted); margin-top:4px; }
   /* Versão compacta dos cards de atrativos, só dentro do bloco mensal novo (não afeta o card acumulado já existente) */
   #vizMesAtrativos .atrativo-card, #vizAcumAtrativos .atrativo-card{ width:100%; padding:7px 9px; }
   #vizMesAtrativos .atrativo-card .lbl, #vizAcumAtrativos .atrativo-card .lbl{ font-size:10px; margin-bottom:2px; }
@@ -489,11 +496,11 @@
   .viz2-body{ min-width:0; }
   html, body{ overflow-x:hidden; }
   .viz-panel-body{ flex-direction:column; }
-  /* .viz-side fica travado em coluna (mesmo empilhamento vertical de sempre) mesmo aqui
-     no mobile -- só a largura vira 100% pra caber na tela; pedido do usuário pra nunca
-     mais essa área "realocar" cards de formas diferentes dependendo do tamanho de tela/
-     zoom (ele tira print pra apresentação e precisa do layout sempre igual). */
-  .viz-side{ flex:0 0 auto; width:100%; }
+  .viz-side{ flex:0 0 auto; width:100%; flex-direction:row; flex-wrap:wrap; }
+  .viz-side-row{ flex-direction:row; flex-wrap:wrap; flex:1 1 100%; }
+  .capta-card, #vizMesAtrativos .atrativo-card{ flex:1 1 45%; width:auto; }
+  .viz-captacao-row{ flex-direction:column; }
+  .viz-captacao-row .capta-card{ flex:1 1 auto; min-width:0; }
 
   /* Evolução mensal (Share E-commerce): gráfico/tabela e card resumo empilhados */
   .combo-row{ flex-direction:column; }
