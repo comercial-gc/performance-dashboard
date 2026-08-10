@@ -668,6 +668,12 @@ CLIMA_LABEL_TO_CODE = {
     "chuvoso": "rain", "sol + chuva": "sun-rain", "tempestade": "storm",
     "calor excessivo": "heat", "frio intenso": "cold", "sol + vento": "wind-sun",
     "chuva + vento": "wind-rain", "ventoso": "wind", "fechado": "closed", "alerta": "alert",
+    # BUG EVITADO (10/08/2026): "Sol + Nuvem" é um rótulo usado na planilha que não tinha
+    # entrada aqui -- por isso os dias com esse texto (ex.: AquaRio 02-04/08, PNI 02/08)
+    # ficavam sem código nenhum, e a aba Clima do painel mostrava esses dias como "sem
+    # dado" mesmo com a planilha preenchida. Novo código "sun-cloud" (ver CODE_LABEL/
+    # CODE_EMOJI/CLIMA_COLORS no index.html).
+    "sol + nuvem": "sun-cloud",
 }
 
 
