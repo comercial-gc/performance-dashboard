@@ -473,10 +473,21 @@
   .clima-day.empty{ opacity:.35; }
   .share-meta-chart-wrap{ margin-top:16px; overflow-x:auto; padding-bottom:4px; }
   .clima-bar-chart{ margin-top:10px; display:flex; flex-direction:column; gap:6px; }
-  .clima-bar-row{ display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:8px; font-size:12px; }
-  .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; }
-  .clima-bar-fill{ height:100%; border-radius:4px; }
+  .clima-bar-row{ display:grid; grid-template-columns:150px 1fr 78px; align-items:center; gap:8px; font-size:12px; }
+  .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; display:flex; }
+  .clima-bar-fill{ height:100%; }
   .clima-bar-count{ text-align:right; color:var(--muted); font-weight:600; }
+  .clima-bar-sub{ font-size:9.5px; color:var(--muted); font-weight:600; margin-top:1px; }
+  .clima-bar-legend{ display:flex; gap:14px; font-size:10.5px; color:var(--muted); margin-top:6px; }
+  .clima-bar-legend span{ display:inline-flex; align-items:center; gap:4px; }
+  .clima-bar-legend .sw{ display:inline-block; width:9px; height:9px; border-radius:2px; }
+  /* Gráfico "Visitação diária x Clima": uma barra por dia do mês, colorida pelo tipo de
+     clima daquele dia (mesma paleta CLIMA_COLORS) -- pedido do usuário, 11/08/2026, pra
+     cruzar visualmente visitação com clima, funcionando pra qualquer mês selecionado
+     (já herda isso do seletor de mês que a aba Clima já tinha). */
+  .clima-visit-title{ font-size:11.5px; font-weight:700; color:var(--muted); margin-top:14px; margin-bottom:5px; }
+  .clima-visit-chart{ display:flex; align-items:flex-end; gap:2px; height:90px; padding:0 1px; }
+  .clima-visit-bar{ flex:1 1 0; min-width:2px; border-radius:2px 2px 0 0; background:#e3e3e3; }
 
 /* ══════════════════════════════════════════════════════════════════
    VISUALIZAÇÃO MOBILE — tudo abaixo de 820px de largura.
@@ -2372,23 +2383,59 @@ const CLIMA_COLORS = {
   'sun-cloud':'#e0b93d'
 };
 
-function buildClimaBarChart(emojiArr){
+// Volume de dias por tipo de clima, quebrado em dia de semana (DS) / fim de semana (FDS) /
+// total -- pedido do usuário, 11/08/2026, pra todos os tipos de clima (não só chuva). A
+// barra fica com dois segmentos empilhados (DS na cor cheia, FDS na versão clara da mesma
+// cor), e o número ao lado mostra os 3 valores.
+function buildClimaBarChart(emojiArr, monthNumber){
   const counts = {};
-  emojiArr.forEach(code => { if(code){ counts[code] = (counts[code]||0) + 1; } });
-  const entries = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  emojiArr.forEach((code, i) => {
+    if(!code) return;
+    if(!counts[code]) counts[code] = { ds:0, fds:0, total:0 };
+    const wd = new Date(2026, monthNumber-1, i+1).getDay();
+    if(wd===0 || wd===6) counts[code].fds++; else counts[code].ds++;
+    counts[code].total++;
+  });
+  const entries = Object.entries(counts).sort((a,b) => b[1].total-a[1].total);
   if(!entries.length) return '<span class="hint">Sem dados de clima suficientes para o gráfico.</span>';
-  const max = Math.max(...entries.map(e=>e[1]));
-  const rows = entries.map(([code,count]) => {
+  const max = Math.max(...entries.map(([,c])=>c.total));
+  const rows = entries.map(([code,c]) => {
     const color = CLIMA_COLORS[code] || '#999';
-    const pct = (count/max*100).toFixed(0);
+    const light = lighten(color, 0.55);
     const label = CODE_LABEL[code] || code;
+    const pctDs = max>0 ? (c.ds/max*100) : 0;
+    const pctFds = max>0 ? (c.fds/max*100) : 0;
     return `<div class="clima-bar-row">
       <div class="clima-bar-label">${CODE_EMOJI[code]||''} ${label}</div>
-      <div class="clima-bar-track"><div class="clima-bar-fill" style="width:${pct}%;background:${color}"></div></div>
-      <div class="clima-bar-count">${count} dia${count>1?'s':''}</div>
+      <div class="clima-bar-track">
+        <div class="clima-bar-fill" style="width:${pctDs}%;background:${color}" data-tip="${label} - dia de semana: ${c.ds} dia${c.ds!==1?'s':''}"></div>
+        <div class="clima-bar-fill" style="width:${pctFds}%;background:${light}" data-tip="${label} - fim de semana: ${c.fds} dia${c.fds!==1?'s':''}"></div>
+      </div>
+      <div class="clima-bar-count">${c.total} dia${c.total!==1?'s':''}<div class="clima-bar-sub">${c.ds} sem · ${c.fds} fds</div></div>
     </div>`;
   }).join('');
-  return `<div class="clima-bar-chart">${rows}</div>`;
+  return `<div class="clima-bar-chart">${rows}</div>
+    <div class="clima-bar-legend"><span><span class="sw" style="background:#8a8f8c"></span>Dia de semana</span><span><span class="sw" style="background:#d6d9d8"></span>Fim de semana</span></div>`;
+}
+
+// Gráfico "Visitação diária x Clima": uma barra por dia do mês (Realizado 2026 daquele
+// parque/região), colorida pelo tipo de clima do próprio dia -- pra ver de cara se os dias
+// de chuva/tempestade tiveram queda de visitação. Funciona pra qualquer mês (fechado ou
+// parcial) e não precisa de nenhum dado novo do backend.
+function buildClimaVisitChart(realizadoArr, emojiArr, nDays){
+  const vals = [];
+  for(let i=0; i<nDays; i++) vals.push(typeof realizadoArr[i] === 'number' ? realizadoArr[i] : null);
+  const validVals = vals.filter(v => v!==null);
+  if(!validVals.length) return '';
+  const max = Math.max(...validVals, 1);
+  const bars = vals.map((v,i) => {
+    const code = emojiArr[i];
+    const color = (v!==null && code) ? (CLIMA_COLORS[code]||'#999') : '#e3e3e3';
+    const h = v!==null ? Math.max(2, Math.round(v/max*100)) : 2;
+    const tip = `Dia ${i+1}: ${v!==null?fmtInt(v)+' pax':'sem dado'}${(v!==null && code)?' | '+(CODE_LABEL[code]||code):''}`;
+    return `<div class="clima-visit-bar" style="height:${h}%;background:${color}" data-tip="${tip}"></div>`;
+  }).join('');
+  return `<div class="clima-visit-title">Visitação diária x Clima</div><div class="clima-visit-chart">${bars}</div>`;
 }
 
 function renderClimaTab(){
@@ -2398,9 +2445,11 @@ function renderClimaTab(){
   const container = document.getElementById('climaHistoricoBlock');
   if(!data){ container.innerHTML = '<span class="hint">Sem dados para este mês.</span>'; return; }
   const n = data.nDays;
+  const mm = data.monthNumber;
   container.innerHTML = CLIMA_REGIOES.map(r => {
     const dd = data.daily[r.park];
     const emojiArr = dd ? (dd['Emoji']||[]) : [];
+    const realizadoArr = dd ? (dd['Realizado 2026']||[]) : [];
     const days = Array.from({length:n}, (_,i) => {
       const code = emojiArr[i];
       const cls = code ? '' : 'empty';
@@ -2409,11 +2458,13 @@ function renderClimaTab(){
         <div class="cd-emoji">${code ? CODE_EMOJI[code]||'' : '-'}</div>
       </div>`;
     }).join('');
-    const chart = buildClimaBarChart(emojiArr);
+    const chart = buildClimaBarChart(emojiArr, mm);
+    const visitChart = buildClimaVisitChart(realizadoArr, emojiArr, n);
     return `<div class="clima-strip-block">
       <div class="clima-strip-title">${r.titulo}</div>
       <div class="clima-strip">${days}</div>
       ${chart}
+      ${visitChart}
     </div>`;
   }).join('');
 }
