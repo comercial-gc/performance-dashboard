@@ -491,11 +491,14 @@
   .clima-regua-table-wrap{ flex:0 0 calc(30% - 8px); min-width:0; overflow-x:auto; }
   .clima-regua-table{ border-collapse:collapse; font-size:11px; white-space:nowrap; }
   .clima-regua-table th, .clima-regua-table td{ border:1px solid var(--line); padding:4px 9px; text-align:center; }
-  .clima-regua-table thead th{ background:#eef2f0; font-size:14px; }
+  .clima-regua-table thead th{ background:#eef2f0; font-size:14px; padding:6px 9px; }
+  .regua-th-emoji{ display:block; font-size:14px; line-height:1.2; }
+  .regua-th-label{ display:block; font-size:9px; font-weight:700; color:var(--muted); text-transform:none; margin-top:2px; }
   .clima-regua-table tbody th{ background:#f7f8f8; font-weight:800; color:var(--ink); font-size:10px; }
   .clima-regua-table tbody td{ font-weight:700; }
+  .clima-regua-table tbody tr.regua-total-row th, .clima-regua-table tbody tr.regua-total-row td{ background:#eef2f0; font-weight:800; }
   /* BUG EVITADO (11/08/2026): a regra global "table tr:last-child td{ border-bottom:none; }"
-     (linha 229) tirava a borda de baixo da última linha (FDS) desta tabela também,
+     (linha 229) tirava a borda de baixo da última linha (FDS/Total) desta tabela também,
      deixando a grade "aberta" só nessa régua. Sobrescreve de volta pra essa tabela. */
   .clima-regua-table tr:last-child td{ border-bottom:1px solid var(--line); }
   .clima-bar-legend{ display:flex; gap:14px; font-size:10.5px; color:var(--muted); margin-top:6px; }
@@ -2467,14 +2470,16 @@ function buildClimaBarChart(emojiArr, monthNumber){
       </div>
     </div>`;
   }).join('');
-  const reguaHead = entries.map(([code]) => `<th data-tip="${CODE_LABEL[code]||code}">${CODE_EMOJI[code]||''}</th>`).join('');
+  const reguaHead = entries.map(([code]) => `<th data-tip="${CODE_LABEL[code]||code}"><span class="regua-th-emoji">${CODE_EMOJI[code]||''}</span><span class="regua-th-label">${CODE_LABEL[code]||code}</span></th>`).join('');
   const reguaDs = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - dia de semana">${c.ds}</td>`).join('');
   const reguaFds = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - fim de semana">${c.fds}</td>`).join('');
+  const reguaTotal = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - total">${c.total}</td>`).join('');
   const regua = `<div class="clima-regua-table-wrap"><table class="clima-regua-table">
     <thead><tr><th></th>${reguaHead}</tr></thead>
     <tbody>
       <tr><th>DDS</th>${reguaDs}</tr>
       <tr><th>FDS</th>${reguaFds}</tr>
+      <tr class="regua-total-row"><th>Total</th>${reguaTotal}</tr>
     </tbody>
   </table></div>`;
   return `<div class="clima-bar-chart-wrap">
