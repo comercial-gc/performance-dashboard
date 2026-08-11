@@ -472,12 +472,20 @@
   .clima-day .cd-emoji{ font-size:18px; margin:3px 0; }
   .clima-day.empty{ opacity:.35; }
   .share-meta-chart-wrap{ margin-top:16px; overflow-x:auto; padding-bottom:4px; }
-  .clima-bar-chart{ margin-top:10px; display:flex; flex-direction:column; gap:6px; }
-  .clima-bar-row{ display:grid; grid-template-columns:150px 1fr 78px; align-items:center; gap:8px; font-size:12px; }
+  /* Barra de volume de clima ENCURTADA (~55%) + mini tabela "régua" DDS/FDS à direita,
+     uma coluna por tipo de clima que aparece no mês (dinâmico, não fixo) -- redesenho a
+     partir do rascunho do usuário, 11/08/2026, substitui o texto "X dias (Y sem, Z fds)"
+     que ficava ao lado de cada barra. */
+  .clima-bar-chart-wrap{ margin-top:10px; display:flex; gap:16px; align-items:flex-start; }
+  .clima-bar-chart{ flex:0 1 55%; min-width:0; display:flex; flex-direction:column; gap:6px; }
+  .clima-bar-row{ display:grid; grid-template-columns:150px 1fr; align-items:center; gap:8px; font-size:12px; }
   .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; display:flex; }
   .clima-bar-fill{ height:100%; }
-  .clima-bar-count{ text-align:right; color:var(--muted); font-weight:600; }
-  .clima-bar-sub{ font-size:9.5px; color:var(--muted); font-weight:600; margin-top:1px; }
+  .clima-regua-table{ flex:0 0 auto; border-collapse:collapse; font-size:11px; }
+  .clima-regua-table th, .clima-regua-table td{ border:1px solid var(--line); padding:4px 9px; text-align:center; }
+  .clima-regua-table thead th{ background:#eef2f0; font-size:14px; }
+  .clima-regua-table tbody th{ background:#f7f8f8; font-weight:800; color:var(--ink); font-size:10px; }
+  .clima-regua-table tbody td{ font-weight:700; }
   .clima-bar-legend{ display:flex; gap:14px; font-size:10.5px; color:var(--muted); margin-top:6px; }
   .clima-bar-legend span{ display:inline-flex; align-items:center; gap:4px; }
   .clima-bar-legend .sw{ display:inline-block; width:9px; height:9px; border-radius:2px; }
@@ -496,9 +504,9 @@
   .clima-park-chart{ border:1px solid var(--line); border-radius:8px; padding:10px 12px 8px; background:#fff; }
   .clima-park-chart-title{ font-size:12px; font-weight:800; margin-bottom:8px; }
   .clima-park-bars{ display:flex; align-items:flex-end; gap:3px; overflow-x:auto; padding-bottom:2px; }
-  .cdc-col{ flex:1 1 0; min-width:16px; display:flex; flex-direction:column; align-items:center; }
+  .cdc-col{ flex:1 1 0; min-width:30px; display:flex; flex-direction:column; align-items:center; }
   .cdc-emoji{ font-size:11px; height:14px; line-height:14px; }
-  .cdc-val{ font-size:8px; font-weight:700; color:var(--muted); writing-mode:vertical-rl; transform:rotate(180deg); height:34px; display:flex; align-items:flex-end; justify-content:center; white-space:nowrap; }
+  .cdc-val{ font-size:8px; font-weight:700; color:var(--muted); white-space:nowrap; height:12px; line-height:12px; }
   .cdc-bar-wrap{ width:100%; height:70px; display:flex; align-items:flex-end; }
   .cdc-bar{ width:100%; border-radius:2px 2px 0 0; min-height:2px; }
   .cdc-daynum{ font-size:9px; color:var(--muted); font-weight:700; margin-top:3px; }
@@ -2408,10 +2416,12 @@ const CLIMA_COLORS = {
   'sun-cloud':'#e0b93d'
 };
 
-// Volume de dias por tipo de clima, quebrado em dia de semana (DS) / fim de semana (FDS) /
-// total -- pedido do usuário, 11/08/2026, pra todos os tipos de clima (não só chuva). A
-// barra fica com dois segmentos empilhados (DS na cor cheia, FDS na versão clara da mesma
-// cor), e o número ao lado mostra os 3 valores.
+// Volume de dias por tipo de clima, quebrado em dia de semana (DDS) / fim de semana (FDS)
+// -- pedido do usuário, 11/08/2026, pra todos os tipos de clima (não só chuva). Redesenhado
+// numa segunda rodada a partir do rascunho do usuário: a barra fica ENCURTADA (~55% da
+// largura) e a contagem de DDS/FDS sai do texto ao lado de cada barra e vira uma mini
+// tabela "régua" única à direita, com uma coluna por tipo de clima que aparece NESSE mês
+// (dinâmico -- um mês com só 3 tipos mostra só 3 colunas, nunca uma lista fixa).
 function buildClimaBarChart(emojiArr, monthNumber){
   const counts = {};
   emojiArr.forEach((code, i) => {
@@ -2436,11 +2446,23 @@ function buildClimaBarChart(emojiArr, monthNumber){
         <div class="clima-bar-fill" style="width:${pctDs}%;background:${color}" data-tip="${label} - dia de semana: ${c.ds} dia${c.ds!==1?'s':''}"></div>
         <div class="clima-bar-fill" style="width:${pctFds}%;background:${light}" data-tip="${label} - fim de semana: ${c.fds} dia${c.fds!==1?'s':''}"></div>
       </div>
-      <div class="clima-bar-count">${c.total} dia${c.total!==1?'s':''}<div class="clima-bar-sub">${c.ds} sem · ${c.fds} fds</div></div>
     </div>`;
   }).join('');
-  return `<div class="clima-bar-chart">${rows}</div>
-    <div class="clima-bar-legend"><span><span class="sw" style="background:#8a8f8c"></span>Dia de semana</span><span><span class="sw" style="background:#d6d9d8"></span>Fim de semana</span></div>`;
+  const reguaHead = entries.map(([code]) => `<th data-tip="${CODE_LABEL[code]||code}">${CODE_EMOJI[code]||''}</th>`).join('');
+  const reguaDs = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - dia de semana">${c.ds}</td>`).join('');
+  const reguaFds = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - fim de semana">${c.fds}</td>`).join('');
+  const regua = `<table class="clima-regua-table">
+    <thead><tr><th></th>${reguaHead}</tr></thead>
+    <tbody>
+      <tr><th>DDS</th>${reguaDs}</tr>
+      <tr><th>FDS</th>${reguaFds}</tr>
+    </tbody>
+  </table>`;
+  return `<div class="clima-bar-chart-wrap">
+    <div class="clima-bar-chart">${rows}</div>
+    ${regua}
+  </div>
+  <div class="clima-bar-legend"><span><span class="sw" style="background:#8a8f8c"></span>Dia de semana</span><span><span class="sw" style="background:#d6d9d8"></span>Fim de semana</span></div>`;
 }
 
 // Gráfico de visitação diária de UM parque (Realizado 2026): uma barra por dia, com
