@@ -40,7 +40,8 @@
     padding:20px 28px 0 28px; border-bottom:1px solid var(--line);
   }
   h1{ font-size:27px; margin:0; font-weight:800; color:#0f3d2e; letter-spacing:.2px; }
-  .header-title-row{ display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+  .header-title-row{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .header-logo{ height:48px; width:48px; flex-shrink:0; }
   .header-title-bar{ width:5px; align-self:stretch; min-height:44px; background:linear-gradient(180deg,#0f3d2e,#d4a017); border-radius:3px; }
   .subtitle{ color:var(--muted); font-size:13px; margin-top:4px; margin-bottom:14px; }
   .subtitle-dot{ color:#d4a017; margin:0 6px; font-weight:800; }
@@ -49,8 +50,20 @@
   nav.tabs button{
     background:none; border:none; padding:10px 16px; font-size:13.5px; font-weight:600;
     color:var(--muted); cursor:pointer; border-bottom:2.5px solid transparent;
+    position:relative; border-radius:6px 6px 0 0;
+    transition:transform .16s ease, box-shadow .16s ease, color .16s ease, background .16s ease;
   }
   nav.tabs button.active{ color:var(--accent); border-bottom-color:var(--accent); }
+  /* Pedido do usuário (11/08/2026): ao passar o mouse, a aba "pula pra frente", crescendo e
+     ficando por cima das vizinhas -- transform não afeta o layout das outras abas, só o
+     empilhamento visual (z-index), então ela realmente parece avançar sobre as ao lado. */
+  nav.tabs button:hover{
+    transform:scale(1.14);
+    z-index:5;
+    color:var(--accent);
+    background:#fff;
+    box-shadow:0 6px 14px rgba(15,61,46,.18);
+  }
   .toolbar{
     display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     padding:14px 28px; border-bottom:1px solid var(--line); background:var(--panel);
@@ -543,6 +556,7 @@
   /* Cabeçalho e navegação */
   header{ padding:12px 12px 0 12px; }
   h1{ font-size:20px; }
+  .header-logo{ height:36px; width:36px; }
   .header-title-bar{ min-height:34px; }
   .subtitle{ font-size:11.5px; }
   nav.tabs{ overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; padding-bottom:2px; }
@@ -613,10 +627,11 @@
 
 <header>
   <div class="header-title-row">
+    <img src="icon-192.png" alt="Grupo Cataratas + Soul Parques" class="header-logo">
     <div class="header-title-bar"></div>
     <div>
       <h1>Dashboard Performance</h1>
-      <div class="subtitle">Visitação e Share E-commerce <span class="subtitle-dot">•</span> dados <b class="subtitle-year">2026</b></div>
+      <div class="subtitle">Visitação, Clima, Marketing, E-commerce e Operações dos Parques <span class="subtitle-dot">•</span> dados <b class="subtitle-year">2026</b></div>
     </div>
   </div>
   <div class="logo-banner" id="logoBanner"><div class="logo-row" id="logoRow"></div></div>
