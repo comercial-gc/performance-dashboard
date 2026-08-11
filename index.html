@@ -481,12 +481,16 @@
   .clima-bar-legend{ display:flex; gap:14px; font-size:10.5px; color:var(--muted); margin-top:6px; }
   .clima-bar-legend span{ display:inline-flex; align-items:center; gap:4px; }
   .clima-bar-legend .sw{ display:inline-block; width:9px; height:9px; border-radius:2px; }
-  /* Gráfico "Visitação diária x Clima": uma barra por dia do mês, colorida pelo tipo de
-     clima daquele dia (mesma paleta CLIMA_COLORS) -- pedido do usuário, 11/08/2026, pra
-     cruzar visualmente visitação com clima, funcionando pra qualquer mês selecionado
-     (já herda isso do seletor de mês que a aba Clima já tinha). */
-  .clima-visit-title{ font-size:11.5px; font-weight:700; color:var(--muted); margin-top:14px; margin-bottom:5px; }
-  .clima-visit-chart{ display:flex; align-items:flex-end; gap:2px; height:90px; padding:0 1px; }
+  /* Gráfico de visitação diária POR PARQUE (não por região) -- pedido do usuário,
+     11/08/2026, no mesmo padrão dos gráficos nativos que a equipe já mantém na aba "Mapa
+     Clima" da planilha (barra por dia, sábado/domingo numa cor mais forte que os dias de
+     semana). Vem alinhado ABAIXO do bloco de clima existente (complementa, não
+     substitui) -- um card por parque da região, lado a lado. Só usa Realizado 2026 (2025
+     fica de fora por enquanto, pedido explícito do usuário). */
+  .clima-park-charts-row{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+  .clima-park-chart{ flex:1 1 220px; min-width:180px; border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:#fff; }
+  .clima-park-chart-title{ font-size:11.5px; font-weight:800; margin-bottom:6px; }
+  .clima-visit-chart{ display:flex; align-items:flex-end; gap:2px; height:80px; padding:0 1px; }
   .clima-visit-bar{ flex:1 1 0; min-width:2px; border-radius:2px 2px 0 0; background:#e3e3e3; }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1547,6 +1551,13 @@ function lighten(hex, amt){
   const b = Math.round(c.b + (255-c.b)*amt);
   return `rgb(${r},${g},${b})`;
 }
+function darken(hex, amt){
+  const c = hexToRgb(hex);
+  const r = Math.round(c.r * (1-amt));
+  const g = Math.round(c.g * (1-amt));
+  const b = Math.round(c.b * (1-amt));
+  return `rgb(${r},${g},${b})`;
+}
 
 // items: [{label, color, v2026, v2025}]  fmt: function(v)->string  metaLine: opcional (mesma escala dos valores)
 function renderBarChart(container, items, fmt, metaLine, opts){
@@ -2362,11 +2373,15 @@ function wmoEmoji(code){
 
 // ── Aba Clima ─────────────────────────────────────────────────────────────
 let climaForecastLoaded = false;
+// "park" = parque-representante da região pra fins de CLIMA (emoji/dia-a-dia só existe pra
+// esses 4 na aba Mapa Clima). "parks" = todos os parques da região, usado só pros gráficos
+// de visitação por parque abaixo (pedido do usuário, 11/08/2026 -- "temos gráfico de
+// visitação por parque", um gráfico por parque, não por região).
 const CLIMA_REGIOES = [
-  { titulo: 'Parques Rio (AquaRio, BioParque, Paineiras)', park: 'AquaRio' },
-  { titulo: 'Parques Foz (PNI, M3F, AquaFoz)', park: 'PNI' },
-  { titulo: 'Vila Velha', park: 'Vila Velha' },
-  { titulo: 'Três Pescadores', park: 'Três Pescadores' },
+  { titulo: 'Parques Rio (AquaRio, BioParque, Paineiras)', park: 'AquaRio', parks: ['AquaRio','BioParque','Paineiras'] },
+  { titulo: 'Parques Foz (PNI, M3F, AquaFoz)', park: 'PNI', parks: ['PNI','M3F','AquaFoz'] },
+  { titulo: 'Vila Velha', park: 'Vila Velha', parks: ['Vila Velha'] },
+  { titulo: 'Três Pescadores', park: 'Três Pescadores', parks: ['Três Pescadores'] },
 ];
 
 function populateClimaMonthSelect(){
@@ -2418,24 +2433,34 @@ function buildClimaBarChart(emojiArr, monthNumber){
     <div class="clima-bar-legend"><span><span class="sw" style="background:#8a8f8c"></span>Dia de semana</span><span><span class="sw" style="background:#d6d9d8"></span>Fim de semana</span></div>`;
 }
 
-// Gráfico "Visitação diária x Clima": uma barra por dia do mês (Realizado 2026 daquele
-// parque/região), colorida pelo tipo de clima do próprio dia -- pra ver de cara se os dias
-// de chuva/tempestade tiveram queda de visitação. Funciona pra qualquer mês (fechado ou
-// parcial) e não precisa de nenhum dado novo do backend.
-function buildClimaVisitChart(realizadoArr, emojiArr, nDays){
+// Gráfico de visitação diária de UM parque (Realizado 2026): uma barra por dia, com
+// sábado/domingo numa versão mais escura da cor do parque -- mesmo padrão dos 8 gráficos
+// nativos que a equipe já mantém na aba "Mapa Clima" da planilha (um por parque, com fim
+// de semana destacado). Só usa 2026 por enquanto (pedido explícito do usuário, 11/08/2026
+// -- ignorar 2025 nesta primeira versão) e não precisa de nenhum dado novo do backend,
+// já que Realizado 2026 por parque já vem no data.daily normal (não só os 4 parques
+// representantes de região que a aba Clima usa pra clima/emoji).
+function buildParkDailyChart(park, realizadoArr, nDays, monthNumber){
   const vals = [];
   for(let i=0; i<nDays; i++) vals.push(typeof realizadoArr[i] === 'number' ? realizadoArr[i] : null);
   const validVals = vals.filter(v => v!==null);
   if(!validVals.length) return '';
   const max = Math.max(...validVals, 1);
+  const baseColor = PARK_COLORS[park] || '#999';
+  const weekendColor = darken(baseColor, 0.35);
   const bars = vals.map((v,i) => {
-    const code = emojiArr[i];
-    const color = (v!==null && code) ? (CLIMA_COLORS[code]||'#999') : '#e3e3e3';
+    const wd = new Date(2026, monthNumber-1, i+1).getDay();
+    const isWeekend = wd===0 || wd===6;
+    const color = v!==null ? (isWeekend ? weekendColor : baseColor) : '#e3e3e3';
     const h = v!==null ? Math.max(2, Math.round(v/max*100)) : 2;
-    const tip = `Dia ${i+1}: ${v!==null?fmtInt(v)+' pax':'sem dado'}${(v!==null && code)?' | '+(CODE_LABEL[code]||code):''}`;
+    const tip = `Dia ${i+1} (${WEEKDAY_PT[wd]}): ${v!==null?fmtInt(v)+' pax':'sem dado'}`;
     return `<div class="clima-visit-bar" style="height:${h}%;background:${color}" data-tip="${tip}"></div>`;
   }).join('');
-  return `<div class="clima-visit-title">Visitação diária x Clima</div><div class="clima-visit-chart">${bars}</div>`;
+  const displayName = park === '3P' ? 'Três Pescadores' : park;
+  return `<div class="clima-park-chart">
+    <div class="clima-park-chart-title" style="color:${baseColor}">${displayName}</div>
+    <div class="clima-visit-chart">${bars}</div>
+  </div>`;
 }
 
 function renderClimaTab(){
@@ -2449,7 +2474,6 @@ function renderClimaTab(){
   container.innerHTML = CLIMA_REGIOES.map(r => {
     const dd = data.daily[r.park];
     const emojiArr = dd ? (dd['Emoji']||[]) : [];
-    const realizadoArr = dd ? (dd['Realizado 2026']||[]) : [];
     const days = Array.from({length:n}, (_,i) => {
       const code = emojiArr[i];
       const cls = code ? '' : 'empty';
@@ -2459,12 +2483,18 @@ function renderClimaTab(){
       </div>`;
     }).join('');
     const chart = buildClimaBarChart(emojiArr, mm);
-    const visitChart = buildClimaVisitChart(realizadoArr, emojiArr, n);
+    // Gráficos de visitação por parque (não por região) alinhados ABAIXO do bloco de
+    // clima -- complementa o que já existe, não substitui (pedido do usuário, 11/08/2026).
+    const parkCharts = r.parks.map(p => {
+      const pd = data.daily[p];
+      const realizadoArr = pd ? (pd['Realizado 2026']||[]) : [];
+      return buildParkDailyChart(p, realizadoArr, n, mm);
+    }).filter(Boolean).join('');
     return `<div class="clima-strip-block">
       <div class="clima-strip-title">${r.titulo}</div>
       <div class="clima-strip">${days}</div>
       ${chart}
-      ${visitChart}
+      ${parkCharts ? `<div class="clima-park-charts-row">${parkCharts}</div>` : ''}
     </div>`;
   }).join('');
 }
