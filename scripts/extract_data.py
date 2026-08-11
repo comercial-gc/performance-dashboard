@@ -674,6 +674,15 @@ CLIMA_LABEL_TO_CODE = {
     # dado" mesmo com a planilha preenchida. Novo código "sun-cloud" (ver CODE_LABEL/
     # CODE_EMOJI/CLIMA_COLORS no index.html).
     "sol + nuvem": "sun-cloud",
+    # BUG EVITADO (11/08/2026): a fórmula da planilha passou a gerar 3 novos rótulos
+    # combinados com "+ Alerta" que não tinham entrada aqui -- por isso dias como
+    # AquaRio 06-07/08/2026 ("Dia de Sol + Alerta" e "Nublado + Alerta") e AquaRio
+    # 29/07/2026 ("Ventoso + Alerta") ficavam sem código, e a aba Clima mostrava esses
+    # dias como "sem dado". Novos códigos "sun-alert"/"cloud-alert"/"wind-alert" (ver
+    # CODE_LABEL/CODE_EMOJI/CLIMA_COLORS no index.html).
+    "ventoso + alerta": "wind-alert",
+    "dia de sol + alerta": "sun-alert",
+    "nublado + alerta": "cloud-alert",
 }
 
 
