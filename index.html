@@ -472,16 +472,24 @@
   .clima-day .cd-emoji{ font-size:18px; margin:3px 0; }
   .clima-day.empty{ opacity:.35; }
   .share-meta-chart-wrap{ margin-top:16px; overflow-x:auto; padding-bottom:4px; }
-  /* Barra de volume de clima ENCURTADA (~55%) + mini tabela "régua" DDS/FDS à direita,
-     uma coluna por tipo de clima que aparece no mês (dinâmico, não fixo) -- redesenho a
-     partir do rascunho do usuário, 11/08/2026, substitui o texto "X dias (Y sem, Z fds)"
-     que ficava ao lado de cada barra. */
+  /* Barra de volume de clima com 70% da largura fixos + mini tabela "régua" DDS/FDS à
+     direita com os 30% restantes, uma coluna por tipo de clima que aparece no mês
+     (dinâmico, não fixo) -- redesenho a partir do rascunho do usuário, 11/08/2026,
+     substitui o texto "X dias (Y sem, Z fds)" que ficava ao lado de cada barra.
+     BUG EVITADO: a primeira versão usava flex:0 0 auto na tabela (nunca encolhe, sempre
+     no tamanho natural do conteúdo) contra flex:0 1 55% na barra (pode encolher) -- com 5+
+     colunas de clima, a tabela sozinha já passava de 55% da largura e "comia" o espaço da
+     barra, que colapsava quase a zero (ficava só os emojis empilhados, sem barra nenhuma
+     visível). Agora as DUAS proporções são fixas (flex-shrink:0 nas duas, 70/30) e quem
+     rola por dentro se a tabela não couber é o WRAPPER da tabela (overflow-x), nunca a
+     barra. */
   .clima-bar-chart-wrap{ margin-top:10px; display:flex; gap:16px; align-items:flex-start; }
-  .clima-bar-chart{ flex:0 1 55%; min-width:0; display:flex; flex-direction:column; gap:6px; }
+  .clima-bar-chart{ flex:0 0 calc(70% - 8px); min-width:0; display:flex; flex-direction:column; gap:6px; }
   .clima-bar-row{ display:grid; grid-template-columns:150px 1fr; align-items:center; gap:8px; font-size:12px; }
   .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; display:flex; }
   .clima-bar-fill{ height:100%; }
-  .clima-regua-table{ flex:0 0 auto; border-collapse:collapse; font-size:11px; }
+  .clima-regua-table-wrap{ flex:0 0 calc(30% - 8px); min-width:0; overflow-x:auto; }
+  .clima-regua-table{ border-collapse:collapse; font-size:11px; white-space:nowrap; }
   .clima-regua-table th, .clima-regua-table td{ border:1px solid var(--line); padding:4px 9px; text-align:center; }
   .clima-regua-table thead th{ background:#eef2f0; font-size:14px; }
   .clima-regua-table tbody th{ background:#f7f8f8; font-weight:800; color:var(--ink); font-size:10px; }
@@ -2451,13 +2459,13 @@ function buildClimaBarChart(emojiArr, monthNumber){
   const reguaHead = entries.map(([code]) => `<th data-tip="${CODE_LABEL[code]||code}">${CODE_EMOJI[code]||''}</th>`).join('');
   const reguaDs = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - dia de semana">${c.ds}</td>`).join('');
   const reguaFds = entries.map(([code,c]) => `<td data-tip="${CODE_LABEL[code]||code} - fim de semana">${c.fds}</td>`).join('');
-  const regua = `<table class="clima-regua-table">
+  const regua = `<div class="clima-regua-table-wrap"><table class="clima-regua-table">
     <thead><tr><th></th>${reguaHead}</tr></thead>
     <tbody>
       <tr><th>DDS</th>${reguaDs}</tr>
       <tr><th>FDS</th>${reguaFds}</tr>
     </tbody>
-  </table>`;
+  </table></div>`;
   return `<div class="clima-bar-chart-wrap">
     <div class="clima-bar-chart">${rows}</div>
     ${regua}
