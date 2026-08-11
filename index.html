@@ -485,13 +485,23 @@
      11/08/2026, no mesmo padrão dos gráficos nativos que a equipe já mantém na aba "Mapa
      Clima" da planilha (barra por dia, sábado/domingo numa cor mais forte que os dias de
      semana). Vem alinhado ABAIXO do bloco de clima existente (complementa, não
-     substitui) -- um card por parque da região, lado a lado. Só usa Realizado 2026 (2025
-     fica de fora por enquanto, pedido explícito do usuário). */
-  .clima-park-charts-row{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
-  .clima-park-chart{ flex:1 1 220px; min-width:180px; border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:#fff; }
-  .clima-park-chart-title{ font-size:11.5px; font-weight:800; margin-bottom:6px; }
-  .clima-visit-chart{ display:flex; align-items:flex-end; gap:2px; height:80px; padding:0 1px; }
-  .clima-visit-bar{ flex:1 1 0; min-width:2px; border-radius:2px 2px 0 0; background:#e3e3e3; }
+     substitui) -- um card por parque da região, empilhado (largura total, pra caber
+     número do dia + valor + emoji de clima de cada barra). Só usa Realizado 2026 (2025
+     fica de fora por enquanto, pedido explícito do usuário). Segunda rodada (11/08/2026):
+     adicionado eixo com o número do dia, valor de visitação por barra, emoji de clima
+     (da região, já que só os 4 parques-representante têm dado de clima próprio) nos dias
+     de fim de semana, e mais contraste entre a cor de dia de semana (clara) e fim de
+     semana (cor cheia do parque) -- as cores antes ficavam parecidas demais. */
+  .clima-park-charts{ display:flex; flex-direction:column; gap:14px; margin-top:14px; }
+  .clima-park-chart{ border:1px solid var(--line); border-radius:8px; padding:10px 12px 8px; background:#fff; }
+  .clima-park-chart-title{ font-size:12px; font-weight:800; margin-bottom:8px; }
+  .clima-park-bars{ display:flex; align-items:flex-end; gap:3px; overflow-x:auto; padding-bottom:2px; }
+  .cdc-col{ flex:1 1 0; min-width:16px; display:flex; flex-direction:column; align-items:center; }
+  .cdc-emoji{ font-size:11px; height:14px; line-height:14px; }
+  .cdc-val{ font-size:8px; font-weight:700; color:var(--muted); writing-mode:vertical-rl; transform:rotate(180deg); height:34px; display:flex; align-items:flex-end; justify-content:center; white-space:nowrap; }
+  .cdc-bar-wrap{ width:100%; height:70px; display:flex; align-items:flex-end; }
+  .cdc-bar{ width:100%; border-radius:2px 2px 0 0; min-height:2px; }
+  .cdc-daynum{ font-size:9px; color:var(--muted); font-weight:700; margin-top:3px; }
 
 /* ══════════════════════════════════════════════════════════════════
    VISUALIZAÇÃO MOBILE — tudo abaixo de 820px de largura.
@@ -2440,26 +2450,40 @@ function buildClimaBarChart(emojiArr, monthNumber){
 // -- ignorar 2025 nesta primeira versão) e não precisa de nenhum dado novo do backend,
 // já que Realizado 2026 por parque já vem no data.daily normal (não só os 4 parques
 // representantes de região que a aba Clima usa pra clima/emoji).
-function buildParkDailyChart(park, realizadoArr, nDays, monthNumber){
+function buildParkDailyChart(park, realizadoArr, nDays, monthNumber, regionEmojiArr){
   const vals = [];
   for(let i=0; i<nDays; i++) vals.push(typeof realizadoArr[i] === 'number' ? realizadoArr[i] : null);
   const validVals = vals.filter(v => v!==null);
   if(!validVals.length) return '';
   const max = Math.max(...validVals, 1);
   const baseColor = PARK_COLORS[park] || '#999';
-  const weekendColor = darken(baseColor, 0.35);
-  const bars = vals.map((v,i) => {
+  // Dia de semana = versão bem mais clara da cor do parque; fim de semana = cor cheia --
+  // contraste bem maior que a versão anterior (só um "darken" sutil), pedido do usuário.
+  const weekdayColor = lighten(baseColor, 0.55);
+  const weekendColor = baseColor;
+  const cols = vals.map((v,i) => {
     const wd = new Date(2026, monthNumber-1, i+1).getDay();
     const isWeekend = wd===0 || wd===6;
-    const color = v!==null ? (isWeekend ? weekendColor : baseColor) : '#e3e3e3';
+    const color = v!==null ? (isWeekend ? weekendColor : weekdayColor) : '#e9e9e9';
     const h = v!==null ? Math.max(2, Math.round(v/max*100)) : 2;
-    const tip = `Dia ${i+1} (${WEEKDAY_PT[wd]}): ${v!==null?fmtInt(v)+' pax':'sem dado'}`;
-    return `<div class="clima-visit-bar" style="height:${h}%;background:${color}" data-tip="${tip}"></div>`;
+    // Emoji de clima só nos dias de fim de semana, usando o dado da REGIÃO (só os 4
+    // parques-representante têm clima próprio na aba Mapa Clima -- os outros parques da
+    // mesma região compartilham o mesmo clima, então reaproveitamos aqui).
+    const code = (isWeekend && regionEmojiArr) ? regionEmojiArr[i] : null;
+    const emojiHtml = code ? (CODE_EMOJI[code]||'') : '';
+    const valHtml = v!==null ? fmtInt(v) : '';
+    const tip = `Dia ${i+1} (${WEEKDAY_PT[wd]}): ${v!==null?fmtInt(v)+' pax':'sem dado'}${code?' | '+(CODE_LABEL[code]||code):''}`;
+    return `<div class="cdc-col" data-tip="${tip}">
+      <div class="cdc-emoji">${emojiHtml}</div>
+      <div class="cdc-val">${valHtml}</div>
+      <div class="cdc-bar-wrap"><div class="cdc-bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="cdc-daynum">${i+1}</div>
+    </div>`;
   }).join('');
   const displayName = park === '3P' ? 'Três Pescadores' : park;
   return `<div class="clima-park-chart">
     <div class="clima-park-chart-title" style="color:${baseColor}">${displayName}</div>
-    <div class="clima-visit-chart">${bars}</div>
+    <div class="clima-park-bars">${cols}</div>
   </div>`;
 }
 
@@ -2488,13 +2512,13 @@ function renderClimaTab(){
     const parkCharts = r.parks.map(p => {
       const pd = data.daily[p];
       const realizadoArr = pd ? (pd['Realizado 2026']||[]) : [];
-      return buildParkDailyChart(p, realizadoArr, n, mm);
+      return buildParkDailyChart(p, realizadoArr, n, mm, emojiArr);
     }).filter(Boolean).join('');
     return `<div class="clima-strip-block">
       <div class="clima-strip-title">${r.titulo}</div>
       <div class="clima-strip">${days}</div>
       ${chart}
-      ${parkCharts ? `<div class="clima-park-charts-row">${parkCharts}</div>` : ''}
+      ${parkCharts ? `<div class="clima-park-charts">${parkCharts}</div>` : ''}
     </div>`;
   }).join('');
 }
