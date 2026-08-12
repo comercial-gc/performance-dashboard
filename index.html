@@ -1094,28 +1094,6 @@
       <span id="reportOficialCopyFeedback" class="report-copy-feedback"></span>
     </div>
     <textarea id="reportOficialArea" class="report-textarea" readonly style="min-height:380px;"></textarea>
-
-    <div class="hint" style="margin-top:22px; padding-top:14px; border-top:1px solid var(--line);">Dados brutos (aba de apoio "APOIO REPORT", preenchida manualmente -- mantida como referência secundária, não alimenta o Report Oficial acima)</div>
-    <div id="reportRealizadoWrap"></div>
-    <div id="reportResumoMensalWrap"></div>
-
-    <div class="imt-filter-row">
-      <div class="imt-select-wrap">
-        <label>Eventos de</label>
-        <input type="date" id="reportEventosDe" onchange="renderReport()">
-      </div>
-      <div class="imt-select-wrap">
-        <label>até</label>
-        <input type="date" id="reportEventosAte" onchange="renderReport()">
-      </div>
-    </div>
-    <div id="reportEventosWrap"></div>
-
-    <div class="report-copy-row">
-      <button class="action" onclick="copiarReportTexto()">Copiar texto para o Gemini/Claude</button>
-      <span id="reportCopyFeedback" class="report-copy-feedback"></span>
-    </div>
-    <textarea id="reportTextoArea" class="report-textarea" readonly></textarea>
   </div>
 </section>
 
@@ -3750,7 +3728,6 @@ let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
 let MIX_ORIGEM_DIARIO = {};
 let EVENTOS = [];
-let APOIO_REPORT = { realizadoOntem: {}, resumoMensal: {} };
 let HISTORICO = { parques: {}, parquesComShare: [] };
 let histViewState = 'regua'; // 'grafico' | 'regua' (régua = tabela) -- Régua é o padrão inicial (pedido do usuário, 10/08/2026)
 // legenda clicável: chave de cada série escondida -- 'principal'/'vs' nos modos normal e Vs,
@@ -3825,167 +3802,15 @@ function renderEventosTab(){
   </table>`;
 }
 
-// ── Aba Report ───────────────────────────────────────────────────────────
-// Não gera o texto final do report (isso continua no Gemini/Claude já calibrado com os
-// Gold Standards da equipe) -- só automatiza a coleta dos dados da aba "APOIO REPORT" +
-// "Eventos", que hoje é feita copiando célula por célula. O botão "Copiar" monta um bloco
-// de texto puro, já rotulado, pronto para colar como entrada nesse agente.
-
+// Ordem oficial dos parques dentro de cada região (Documento 02, Guia Editorial) -- usada
+// pelo motor do Report Oficial abaixo. BioParque saiu do Grupo Cataratas a partir de
+// Agosto/2026 -- removido daqui.
 const REPORT_ORDEM_REGIOES = ['Parques Rio', 'Parques Foz', 'Soul Parques'];
-// Ordem oficial dos parques dentro de cada região (Documento 02, Guia Editorial).
-// BioParque saiu do Grupo Cataratas a partir de Agosto/2026 -- removido daqui (o backend
-// também já não manda mais dado dele em APOIO_REPORT, ver build_apoio_report).
 const REPORT_ORDEM_PARQUES = {
   'Parques Rio': ['AquaRio', 'Paineiras'],
   'Parques Foz': ['PNI', 'M3F', 'AquaFoz'],
   'Soul Parques': ['Vila Velha', 'Três Pescadores'],
 };
-
-// Formata pelo NOME do rótulo (não pela magnitude do número) -- rótulos de "%" ou que
-// contêm "Share"/"Captação" são sempre proporção (ex.: 0.29 -> "29,0%"); o resto é pax
-// (número inteiro). Strings (ex.: " ", "0%", "-%" -- já vêm assim da própria planilha
-// quando não há base de comparação, como em AquaFoz) passam direto, sem reformatar.
-function apoioFmtByLabel(label, v){
-  if(typeof v === 'string'){
-    const t = v.trim();
-    return t === '' ? '-' : t;
-  }
-  if(v === null || v === undefined) return '-';
-  const l = (label || '').toLowerCase();
-  if(l.startsWith('%') || l.includes('share') || l.includes('captação') || l.includes('captacao')){
-    return fmtPct(v);
-  }
-  return fmtInt(v);
-}
-
-function initReportEventosRange(){
-  const de = document.getElementById('reportEventosDe');
-  const ate = document.getElementById('reportEventosAte');
-  if(!de || !ate || de.value) return; // não sobrescreve se o usuário já mexeu no filtro
-  const hoje = new Date();
-  const seteDiasAtras = new Date(hoje.getTime() - 7*24*60*60*1000);
-  const iso = d => d.toISOString().slice(0,10);
-  de.value = iso(seteDiasAtras);
-  ate.value = iso(hoje);
-}
-
-function renderReport(){
-  renderReportRealizadoOntem();
-  renderReportResumoMensal();
-  renderReportEventos();
-  const area = document.getElementById('reportTextoArea');
-  if(area) area.value = buildReportTexto();
-  const fb = document.getElementById('reportCopyFeedback');
-  if(fb) fb.textContent = '';
-}
-
-function renderReportRealizadoOntem(){
-  const wrap = document.getElementById('reportRealizadoWrap');
-  if(!wrap) return;
-  const dados = APOIO_REPORT.realizadoOntem || {};
-  if(!Object.keys(dados).length){
-    wrap.innerHTML = '<div class="imt-detail-empty">Sem dados de "Realizado ontem" -- confira se a aba APOIO REPORT está acessível.</div>';
-    return;
-  }
-  const html = REPORT_ORDEM_REGIOES.filter(r => dados[r]).map(regiao => {
-    const parquesOrdem = REPORT_ORDEM_PARQUES[regiao] || Object.keys(dados[regiao]);
-    const linhas = parquesOrdem.filter(p => dados[regiao][p]).map(parque => {
-      const info = dados[regiao][parque];
-      const partes = Object.entries(info.metricas || {}).map(([k,v]) => `${k}: <b>${apoioFmtByLabel(k,v)}</b>`);
-      Object.entries(info.extras || {}).forEach(([k,v]) => partes.push(`${k}: <b>${apoioFmtByLabel(k,v)}</b>`));
-      return `<div class="report-park-row"><div class="report-park-nome">${parque}</div><div class="report-park-metricas">${partes.join(' &nbsp;|&nbsp; ')}</div></div>`;
-    }).join('');
-    return `<div class="report-secao-titulo">${regiao}</div>${linhas}`;
-  }).join('');
-  wrap.innerHTML = `<div class="report-secao-titulo" style="margin-top:0;">Realizado ontem</div>${html}`;
-}
-
-function renderReportResumoMensal(){
-  const wrap = document.getElementById('reportResumoMensalWrap');
-  if(!wrap) return;
-  const resumo = APOIO_REPORT.resumoMensal || {};
-  const parques = resumo.parques || {};
-  if(!Object.keys(parques).length){
-    wrap.innerHTML = '';
-    return;
-  }
-  const linhas = Object.entries(parques).map(([nome, valores]) => {
-    const partes = Object.entries(valores).map(([k,v]) => `${k}: <b>${apoioFmtByLabel(k,v)}</b>`);
-    return `<div class="report-park-row"><div class="report-park-nome">${nome}</div><div class="report-park-metricas">${partes.join(' &nbsp;|&nbsp; ')}</div></div>`;
-  }).join('');
-  wrap.innerHTML = `<div class="report-secao-titulo">Resumo do mês${resumo.titulo ? ' -- ' + resumo.titulo : ''}</div>${linhas}`;
-}
-
-// Um evento "entra" no período do report se o intervalo [data, dataFim] dele cruza com
-// [de, ate] -- não só o dia de início, pra pegar eventos plurianuais/multi-dia que
-// começaram antes mas seguem ativos dentro da janela do report.
-function reportEventosNoPeriodo(de, ate){
-  if(!de || !ate) return [];
-  return EVENTOS.filter(e => e.data <= ate && (e.dataFim || e.data) >= de)
-    .sort((a,b) => a.data.localeCompare(b.data));
-}
-
-function renderReportEventos(){
-  const wrap = document.getElementById('reportEventosWrap');
-  if(!wrap) return;
-  const de = document.getElementById('reportEventosDe') ? document.getElementById('reportEventosDe').value : '';
-  const ate = document.getElementById('reportEventosAte') ? document.getElementById('reportEventosAte').value : '';
-  const lista = reportEventosNoPeriodo(de, ate);
-  if(!lista.length){
-    wrap.innerHTML = '<div class="imt-detail-empty">Nenhum evento no período selecionado.</div>';
-    return;
-  }
-  const rows = lista.map(e => {
-    const periodo = e.dataFim && e.dataFim !== e.data ? `${fmtDataBr(e.data)} a ${fmtDataBr(e.dataFim)}` : fmtDataBr(e.data);
-    return `<tr><td>${periodo}</td><td>${e.parque || '-'}</td><td>${e.categoria || '-'}</td><td>${e.evento}</td></tr>`;
-  }).join('');
-  wrap.innerHTML = `<div class="report-secao-titulo">Eventos no período</div><table class="eventos-table">
-    <thead><tr><th>Período</th><th>Parque</th><th>Categoria</th><th>Evento</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
-}
-
-function buildReportTexto(){
-  const linhas = [];
-  const dados = APOIO_REPORT.realizadoOntem || {};
-  linhas.push('=== APOIO REPORT (Realizado ontem) ===', '');
-  REPORT_ORDEM_REGIOES.filter(r => dados[r]).forEach(regiao => {
-    linhas.push(regiao);
-    const parquesOrdem = REPORT_ORDEM_PARQUES[regiao] || Object.keys(dados[regiao]);
-    parquesOrdem.filter(p => dados[regiao][p]).forEach(parque => {
-      const info = dados[regiao][parque];
-      const partes = Object.entries(info.metricas || {}).map(([k,v]) => `${k} = ${apoioFmtByLabel(k,v)}`);
-      Object.entries(info.extras || {}).forEach(([k,v]) => partes.push(`${k} = ${apoioFmtByLabel(k,v)}`));
-      linhas.push(`${parque}: ${partes.join(' | ')}`);
-    });
-    linhas.push('');
-  });
-
-  const resumo = APOIO_REPORT.resumoMensal || {};
-  const parquesResumo = resumo.parques || {};
-  if(Object.keys(parquesResumo).length){
-    linhas.push(`=== Resumo do mês${resumo.titulo ? ' (' + resumo.titulo + ')' : ''} ===`, '');
-    Object.entries(parquesResumo).forEach(([nome, valores]) => {
-      const partes = Object.entries(valores).map(([k,v]) => `${k} = ${apoioFmtByLabel(k,v)}`);
-      linhas.push(`${nome}: ${partes.join(' | ')}`);
-    });
-    linhas.push('');
-  }
-
-  const de = document.getElementById('reportEventosDe') ? document.getElementById('reportEventosDe').value : '';
-  const ate = document.getElementById('reportEventosAte') ? document.getElementById('reportEventosAte').value : '';
-  const eventosLista = reportEventosNoPeriodo(de, ate);
-  linhas.push(`=== Eventos no período (${de ? fmtDataBr(de) : '?'} a ${ate ? fmtDataBr(ate) : '?'}) ===`, '');
-  if(!eventosLista.length){
-    linhas.push('Nenhum evento registrado no período.');
-  } else {
-    eventosLista.forEach(e => {
-      const periodo = e.dataFim && e.dataFim !== e.data ? `${fmtDataBr(e.data)} a ${fmtDataBr(e.dataFim)}` : fmtDataBr(e.data);
-      linhas.push(`${periodo} | ${e.parque || '-'} | ${e.categoria || '-'} | ${e.evento}`);
-    });
-  }
-  return linhas.join('\n');
-}
 
 // ── Report Oficial (motor de regras, Fase 1: dia útil comum) ───────────────
 // Substitui a dependência da aba "APOIO REPORT" (preenchida manualmente, só cobre "ontem")
@@ -4277,19 +4102,9 @@ function copiarReportOficial(){
   const area = document.getElementById('reportOficialArea');
   const fb = document.getElementById('reportOficialCopyFeedback');
   if(!area) return;
-  navigator.clipboard.writeText(area.value).then(() => {
-    if(fb){ fb.textContent = 'Copiado!'; setTimeout(() => fb.textContent = '', 2000); }
-  });
-}
-
-function copiarReportTexto(){
-  const area = document.getElementById('reportTextoArea');
-  const fb = document.getElementById('reportCopyFeedback');
-  if(!area) return;
-  const texto = area.value;
   const marcarSucesso = () => { if(fb){ fb.textContent = 'Copiado!'; setTimeout(() => fb.textContent = '', 2500); } };
   if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(texto).then(marcarSucesso).catch(() => {
+    navigator.clipboard.writeText(area.value).then(marcarSucesso).catch(() => {
       area.select();
       document.execCommand('copy');
       marcarSucesso();
@@ -4300,6 +4115,7 @@ function copiarReportTexto(){
     marcarSucesso();
   }
 }
+
 
 // ── Aba Histórico ────────────────────────────────────────────────────────
 
@@ -5306,7 +5122,6 @@ async function carregarDados(){
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
     MIX_ORIGEM_DIARIO = data.MIX_ORIGEM_DIARIO || {};
     EVENTOS = data.EVENTOS || [];
-    APOIO_REPORT = data.APOIO_REPORT || { realizadoOntem: {}, resumoMensal: {} };
     HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
     PLANO_MIDIA = data.PLANO_MIDIA || { resumo: {}, detail: {} };
   } catch(e) {
@@ -5328,8 +5143,6 @@ async function carregarDados(){
   renderComboCharts('comboGrid','investimento', v=>fmtMoney(v));
   populateEventosSelects();
   renderEventosTab();
-  initReportEventosRange();
-  renderReport();
   renderReportOficial();
   populateHistoricoSelects(false);
   renderHistorico();
