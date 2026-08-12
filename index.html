@@ -1280,6 +1280,115 @@ const HOLIDAYS_PY = {
     ['2026-09-29','Batalla de Boquerón'], ['2026-12-08','Virgen de Caacupé'], ['2026-12-25','Navidad'],
   ],
 };
+// Chile/Uruguai/Colômbia/Peru/Bolívia adicionados em 12/08/2026 -- os 5 países extras
+// aprovados pelo usuário (junto com Argentina/Paraguai já existentes) por relevância de
+// turismo receptivo ao Brasil (dados Embratur 2025). Fontes cruzadas (officeholidays.com +
+// publicholidays.cl/.pe, mesma metodologia/editor pros 5 países, both anos 2025 e 2026):
+// Chile = calendário fixo de feriados civis/religiosos (16/ano, sem "irrenunciables" que
+// mudam de ano a ano); Peru = D.L. 713 (15 feriados nacionais fixos/ano, NÃO inclui pontes
+// facultativas decretadas ano a ano como 24/6 São João, que variam e não são estáveis);
+// Colômbia = Ley 51/1983 "Ley Emiliani" (feriados fixos + os que sempre pulam pra segunda-
+// feira seguinte); Uruguai = feriados nacionais + "no laborables" bancários/governo (Lei
+// 16.805 e 17.414, datas fixas ou vinculadas à Páscoa); Bolívia = calendário nacional do
+// officeholidays.com (SEM feriados regionais só-de-1-departamento, ex.: Oruro/Tarija/
+// Potosí/Beni/Cochabamba/Santa Cruz/Chuquisaca, que não afetam turismo nacional). BUG
+// EVITADO: em 2026 o decreto boliviano DS 5521 anuncia mudanças (Corpus Christi +1 dia,
+// Independência +1 dia) que NÃO aparecem ainda refletidas no calendário consolidado da
+// fonte usada aqui -- se a Bolívia parecer com poucos feriados em 2026 comparado a 2025,
+// é esse o motivo; checar novamente mais perto da data se for crítico.
+const HOLIDAYS_CL = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-04-18','Viernes Santo'], ['2025-04-19','Sábado Santo'],
+    ['2025-05-01','Día del Trabajo'], ['2025-05-21','Día de las Glorias Navales'],
+    ['2025-06-20','Día Nac. de los Pueblos Indígenas'], ['2025-06-29','San Pedro y San Pablo'],
+    ['2025-07-16','Virgen del Carmen'], ['2025-08-15','Asunción de la Virgen'],
+    ['2025-09-18','Fiestas Patrias'], ['2025-09-19','Día de las Glorias del Ejército'],
+    ['2025-10-13','Encuentro de Dos Mundos'], ['2025-10-31','Iglesias Evangélicas y Protestantes'],
+    ['2025-11-01','Día de Todos los Santos'], ['2025-12-08','Inmaculada Concepción'], ['2025-12-25','Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-04-03','Viernes Santo'], ['2026-04-04','Sábado Santo'],
+    ['2026-05-01','Día del Trabajo'], ['2026-05-21','Día de las Glorias Navales'],
+    ['2026-06-21','Día Nac. de los Pueblos Indígenas'], ['2026-06-29','San Pedro y San Pablo'],
+    ['2026-07-16','Virgen del Carmen'], ['2026-08-15','Asunción de la Virgen'],
+    ['2026-09-18','Fiestas Patrias'], ['2026-09-19','Día de las Glorias del Ejército'],
+    ['2026-10-12','Encuentro de Dos Mundos'], ['2026-10-31','Iglesias Evangélicas y Protestantes'],
+    ['2026-11-01','Día de Todos los Santos'], ['2026-12-08','Inmaculada Concepción'], ['2026-12-25','Navidad'],
+  ],
+};
+const HOLIDAYS_UY = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-01-06','Día de los Niños'], ['2025-03-03','Carnaval'],
+    ['2025-03-04','Carnaval'], ['2025-04-14','Semana de Turismo'], ['2025-04-15','Semana de Turismo'],
+    ['2025-04-16','Semana de Turismo'], ['2025-04-17','Jueves Santo'], ['2025-04-18','Viernes Santo'],
+    ['2025-04-19','Desembarco de los 33 Orientales'], ['2025-05-01','Día del Trabajador'],
+    ['2025-05-18','Batalla de las Piedras'], ['2025-06-19','Natalicio de Artigas'],
+    ['2025-07-18','Jura de la Constitución'], ['2025-08-25','Día de la Independencia'],
+    ['2025-10-12','Día de la Raza'], ['2025-11-02','Día de los Difuntos'], ['2025-12-25','Día de la Familia'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-01-06','Día de los Niños'], ['2026-02-16','Carnaval'],
+    ['2026-02-17','Carnaval'], ['2026-03-30','Semana de Turismo'], ['2026-03-31','Semana de Turismo'],
+    ['2026-04-01','Semana de Turismo'], ['2026-04-02','Jueves Santo'], ['2026-04-03','Viernes Santo'],
+    ['2026-04-19','Desembarco de los 33 Orientales'], ['2026-05-01','Día del Trabajador'],
+    ['2026-05-18','Batalla de las Piedras'], ['2026-06-19','Natalicio de Artigas'],
+    ['2026-07-18','Jura de la Constitución'], ['2026-08-25','Día de la Independencia'],
+    ['2026-10-12','Día de la Raza'], ['2026-11-02','Día de los Difuntos'], ['2026-12-25','Día de la Familia'],
+  ],
+};
+const HOLIDAYS_CO = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-01-06','Reyes Magos'], ['2025-03-24','San José'],
+    ['2025-04-17','Jueves Santo'], ['2025-04-18','Viernes Santo'], ['2025-05-01','Día del Trabajo'],
+    ['2025-06-02','Ascensión del Señor'], ['2025-06-23','Corpus Christi'],
+    ['2025-06-30','Sagrado Corazón / San Pedro y San Pablo'], ['2025-07-20','Día de la Independencia'],
+    ['2025-08-07','Batalla de Boyacá'], ['2025-08-18','Asunción de la Virgen'], ['2025-10-13','Día de la Raza'],
+    ['2025-11-03','Todos los Santos'], ['2025-11-17','Independencia de Cartagena'],
+    ['2025-12-08','Inmaculada Concepción'], ['2025-12-25','Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-01-12','Reyes Magos'], ['2026-03-23','San José'],
+    ['2026-04-02','Jueves Santo'], ['2026-04-03','Viernes Santo'], ['2026-05-01','Día del Trabajo'],
+    ['2026-05-18','Ascensión del Señor'], ['2026-06-08','Corpus Christi'], ['2026-06-15','Sagrado Corazón'],
+    ['2026-06-29','San Pedro y San Pablo'], ['2026-07-13','Ntra. Sra. del Rosario de Chiquinquirá'],
+    ['2026-07-20','Día de la Independencia'], ['2026-08-07','Batalla de Boyacá'],
+    ['2026-08-17','Asunción de la Virgen'], ['2026-10-12','Día de la Raza'], ['2026-11-02','Todos los Santos'],
+    ['2026-11-16','Independencia de Cartagena'], ['2026-12-08','Inmaculada Concepción'], ['2026-12-25','Navidad'],
+  ],
+};
+const HOLIDAYS_PE = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-04-17','Jueves Santo'], ['2025-04-18','Viernes Santo'],
+    ['2025-05-01','Día del Trabajo'], ['2025-06-29','San Pedro y San Pablo'],
+    ['2025-07-23','Día de la Fuerza Aérea'], ['2025-07-28','Fiestas Patrias'],
+    ['2025-07-29','Fiestas Patrias'], ['2025-08-06','Batalla de Junín'], ['2025-08-30','Santa Rosa de Lima'],
+    ['2025-10-08','Combate de Angamos'], ['2025-11-01','Todos los Santos'],
+    ['2025-12-08','Inmaculada Concepción'], ['2025-12-09','Batalla de Ayacucho'], ['2025-12-25','Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-04-02','Jueves Santo'], ['2026-04-03','Viernes Santo'],
+    ['2026-05-01','Día del Trabajo'], ['2026-06-29','San Pedro y San Pablo'],
+    ['2026-07-23','Día de la Fuerza Aérea'], ['2026-07-28','Fiestas Patrias'],
+    ['2026-07-29','Fiestas Patrias'], ['2026-08-06','Batalla de Junín'], ['2026-08-30','Santa Rosa de Lima'],
+    ['2026-10-08','Combate de Angamos'], ['2026-11-01','Todos los Santos'],
+    ['2026-12-08','Inmaculada Concepción'], ['2026-12-09','Batalla de Ayacucho'], ['2026-12-25','Navidad'],
+  ],
+};
+const HOLIDAYS_BO = {
+  2025: [
+    ['2025-01-01','Año Nuevo'], ['2025-01-22','Día del Estado Plurinacional'], ['2025-03-03','Carnaval'],
+    ['2025-03-04','Carnaval'], ['2025-04-18','Viernes Santo'], ['2025-05-01','Día del Trabajo'],
+    ['2025-06-19','Corpus Christi'], ['2025-06-21','Año Nuevo Andino Amazónico'],
+    ['2025-08-06','Día de la Independencia'], ['2025-08-07','Feriado por Independencia'],
+    ['2025-11-02','Todos los Santos'], ['2025-12-25','Navidad'], ['2025-12-26','Feriado de Navidad'],
+  ],
+  2026: [
+    ['2026-01-01','Año Nuevo'], ['2026-01-22','Día del Estado Plurinacional'], ['2026-02-16','Carnaval'],
+    ['2026-02-17','Carnaval'], ['2026-04-03','Viernes Santo'], ['2026-05-01','Día del Trabajo'],
+    ['2026-06-04','Corpus Christi'], ['2026-06-21','Año Nuevo Andino Amazónico'],
+    ['2026-08-06','Día de la Independencia'], ['2026-11-02','Todos los Santos'], ['2026-12-25','Navidad'],
+  ],
+};
 const WEEKDAY_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
 
 // Tudo baseado em INTERVALO DE DATAS (não mais "mês fixo") pra funcionar igual tanto no
@@ -1332,6 +1441,11 @@ function buildHolidaySet(list){
 const HOLIDAY_SET_BR = buildHolidaySet(HOLIDAYS_BR);
 const HOLIDAY_SET_AR = buildHolidaySet(HOLIDAYS_AR);
 const HOLIDAY_SET_PY = buildHolidaySet(HOLIDAYS_PY);
+const HOLIDAY_SET_CL = buildHolidaySet(HOLIDAYS_CL);
+const HOLIDAY_SET_UY = buildHolidaySet(HOLIDAYS_UY);
+const HOLIDAY_SET_CO = buildHolidaySet(HOLIDAYS_CO);
+const HOLIDAY_SET_PE = buildHolidaySet(HOLIDAYS_PE);
+const HOLIDAY_SET_BO = buildHolidaySet(HOLIDAYS_BO);
 function addDaysISO(dateStr, n){
   const d = new Date(dateStr+'T00:00:00');
   d.setDate(d.getDate()+n);
@@ -1375,14 +1489,15 @@ function resumoComparativoBR(ranges){
   };
 }
 // Oportunidades do período selecionado (mês ou range Personalizado): feriados de
-// Brasil/Argentina/Paraguai (só esses 3 países, os que mais visitam os parques e têm
-// relevância de feriado prolongado -- pedido do usuário, 10/08/2026, não é lista mundial)
+// Brasil/Argentina/Paraguai/Chile/Uruguai/Colômbia/Peru/Bolívia (8 países -- os 3
+// originais + os 5 aprovados pelo usuário em 12/08/2026 por relevância de turismo
+// receptivo ao Brasil, ver dados Embratur citados na conversa; não é lista mundial)
 // + notas manuais da aba Eventos (categoria "Calendário Turístico") no mesmo período.
 function oportunidadesDoMes(ranges){
   const itens = [];
-  // Sigla em português (BRA/ARG/PAR) em vez de emoji de bandeira -- no Windows sem fonte
-  // de emoji de bandeira, 🇦🇷/🇵🇾 aparecem como o texto crú "AR"/"PY" (código ISO em
-  // inglês) em vez do desenho da bandeira, o que confundia. Pedido do usuário, 10/08/2026.
+  // Sigla em português (BRA/ARG/PAR/CHI/URU/COL/PER/BOL) em vez de emoji de bandeira -- no
+  // Windows sem fonte de emoji de bandeira, as bandeiras aparecem como texto crú (código
+  // ISO em inglês) em vez do desenho da bandeira, o que confundia. Pedido do usuário, 10/08/2026.
   function addCountry(list, holidaySet, sigla, pais){
     holidaysInRange(list[2026], ranges.r26start, ranges.r26end).forEach(([dateStr, nome]) => {
       const wd = new Date(dateStr+'T00:00:00').getDay();
@@ -1393,6 +1508,11 @@ function oportunidadesDoMes(ranges){
   addCountry(HOLIDAYS_BR, HOLIDAY_SET_BR, 'BRA', 'Brasil');
   addCountry(HOLIDAYS_AR, HOLIDAY_SET_AR, 'ARG', 'Argentina');
   addCountry(HOLIDAYS_PY, HOLIDAY_SET_PY, 'PAR', 'Paraguai');
+  addCountry(HOLIDAYS_CL, HOLIDAY_SET_CL, 'CHI', 'Chile');
+  addCountry(HOLIDAYS_UY, HOLIDAY_SET_UY, 'URU', 'Uruguai');
+  addCountry(HOLIDAYS_CO, HOLIDAY_SET_CO, 'COL', 'Colômbia');
+  addCountry(HOLIDAYS_PE, HOLIDAY_SET_PE, 'PER', 'Peru');
+  addCountry(HOLIDAYS_BO, HOLIDAY_SET_BO, 'BOL', 'Bolívia');
   itens.sort((a,b) => a.data.localeCompare(b.data));
   const eventosDoMes = (typeof EVENTOS !== 'undefined' ? EVENTOS : [])
     .filter(e => e.categoria === 'Calendário Turístico' && e.data >= ranges.r26start && e.data <= ranges.r26end);
