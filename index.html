@@ -789,7 +789,7 @@
   <section class="panel">
     <div class="panel-head">
       <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
-      <span class="hint">Feriados e datas turísticas relevantes</span>
+      <span class="hint">Feriados e datas turísticas relevantes: Brasil, Argentina e Paraguai</span>
     </div>
     <div class="panel-body">
       <ul class="oportunidades-list" id="oportunidadesList"></ul>
@@ -1077,11 +1077,25 @@
       <div class="mix-title-bar"></div>
       <div>
         <div class="mix-title">Report</div>
-        <div class="mix-subtitle">Dados da aba "APOIO REPORT" e eventos do período, já formatados para colar no Gemini/Claude configurado com os Gold Standards da equipe</div>
+        <div class="mix-subtitle">Report Oficial gerado por regra/mapeamento a partir das abas primárias (Visitação, Eventos) -- sem IA, sem depender de preenchimento manual de aba de apoio</div>
       </div>
     </div>
-    <div class="hint" style="margin:-6px 0 10px 0;">Isto não gera o texto final do report -- só automatiza a coleta dos dados, que hoje é feita copiando célula por célula. A redação continua no agente já calibrado.</div>
+    <div class="hint" style="margin:-6px 0 10px 0;">Fase 1 (dia útil comum): cobre resumo do mês, clima, eventos, desempenho por parque e bloco final de percentuais. Ainda não cobre segunda-feira (médias de fim de semana), Meta Batida, recordes históricos e Expurgo -- fases seguintes do plano.</div>
 
+    <div class="imt-filter-row">
+      <div class="imt-select-wrap">
+        <label>Data do report</label>
+        <select id="reportDataSelect" onchange="renderReportOficial()"></select>
+      </div>
+    </div>
+
+    <div class="report-copy-row">
+      <button class="action" onclick="copiarReportOficial()">Copiar Report Oficial</button>
+      <span id="reportOficialCopyFeedback" class="report-copy-feedback"></span>
+    </div>
+    <textarea id="reportOficialArea" class="report-textarea" readonly style="min-height:380px;"></textarea>
+
+    <div class="hint" style="margin-top:22px; padding-top:14px; border-top:1px solid var(--line);">Dados brutos (aba de apoio "APOIO REPORT", preenchida manualmente -- mantida como referência secundária, não alimenta o Report Oficial acima)</div>
     <div id="reportRealizadoWrap"></div>
     <div id="reportResumoMensalWrap"></div>
 
@@ -3973,6 +3987,301 @@ function buildReportTexto(){
   return linhas.join('\n');
 }
 
+// ── Report Oficial (motor de regras, Fase 1: dia útil comum) ───────────────
+// Substitui a dependência da aba "APOIO REPORT" (preenchida manualmente, só cobre "ontem")
+// por leitura direta de VISITACAO (abas mensais, tem Realizado/OBZ/2025 por dia de QUALQUER
+// mês/dia) + EVENTOS -- já lidos hoje pro resto do painel. Sem chamada de IA: o texto é
+// 100% montado por regra, a partir dos Gold Standards / Guia Editorial / Manual de Operação
+// da equipe (documentos anexados pelo usuário, 12/08/2026). Fase 1 cobre só "dia útil
+// comum": sem segunda-feira (médias de fim de semana), sem Meta Batida, sem recordes
+// históricos, sem Expurgo (decisão adiada pelo usuário) -- ver plano-report-fechamento.md.
+
+const REPORT_PARK_REGIAO = {
+  'AquaRio':'Parques Rio', 'BioParque':'Parques Rio', 'Paineiras':'Parques Rio',
+  'PNI':'Parques Foz', 'M3F':'Parques Foz', 'AquaFoz':'Parques Foz',
+  'Três Pescadores':'Soul Parques', 'Vila Velha':'Soul Parques',
+};
+// Só Rio e Foz têm frase de clima no corpo do report (padrão dos Gold Standards -- Soul
+// Parques nunca aparece com clima próprio nos exemplos aprovados). Parque-representante
+// pra fins de clima é o mesmo já usado na aba Clima (CLIMA_REGIOES).
+const REPORT_REGIAO_CLIMA_PARK = { 'Parques Rio':'AquaRio', 'Parques Foz':'PNI' };
+// O rótulo exato do agregado na planilha já mudou de nome ao longo do projeto -- tenta cada
+// alias, na ordem, até achar um que exista no summary do mês (mesma lista de
+// RESUMO_MENSAL_AGREGADOS do extract_data.py).
+const REPORT_GC_TOTAL_ALIASES = ['Total Grupo Cataratas'];
+const REPORT_GC_SSS_ALIASES = ['Grupo Cataratas (SSS)', 'Grupo Cataratas SSS'];
+const REPORT_SOUL_TOTAL_ALIASES = ['Total Soul Parques'];
+
+function reportFindAggregate(summary, aliases){
+  for(const a of aliases) if(summary && summary[a]) return summary[a];
+  return null;
+}
+
+function reportMonthKeyForDate(dateISO){
+  const mm = Number(dateISO.slice(5,7));
+  return Object.keys(VISITACAO).find(k => VISITACAO[k].monthNumber === mm) || null;
+}
+
+// Popula o seletor de data com todo dia de todo mês que já tem aba (não só "ontem") --
+// e seleciona por padrão o último dia com pelo menos um pax real lançado em algum parque.
+function populateReportDataSelect(){
+  const sel = document.getElementById('reportDataSelect');
+  if(!sel) return;
+  const opts = [];
+  let lastComDado = null;
+  Object.keys(VISITACAO).sort((a,b) => VISITACAO[a].monthNumber - VISITACAO[b].monthNumber).forEach(mesKey => {
+    const data = VISITACAO[mesKey];
+    for(let d = 1; d <= data.nDays; d++){
+      const iso = `2026-${String(data.monthNumber).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      opts.push(iso);
+      const temDado = PARKS.some(p => {
+        const arr = data.daily[p] && data.daily[p]['Realizado 2026'];
+        return arr && typeof arr[d-1] === 'number' && arr[d-1] > 0;
+      });
+      if(temDado) lastComDado = iso;
+    }
+  });
+  if(!opts.length) return;
+  const valorAnterior = sel.value;
+  sel.innerHTML = opts.map(iso => `<option value="${iso}">${fmtDataBr(iso)}</option>`).join('');
+  sel.value = opts.includes(valorAnterior) ? valorAnterior : (lastComDado || opts[opts.length-1]);
+}
+
+function reportParkDayData(park, monthData, dayIdx){
+  const dd = monthData.daily[park];
+  if(!dd) return null;
+  return {
+    realizado: dd['Realizado 2026'] ? dd['Realizado 2026'][dayIdx] : null,
+    obz: dd['OBZ 2026'] ? dd['OBZ 2026'][dayIdx] : null,
+    real2025: dd['Realizado 2025'] ? dd['Realizado 2025'][dayIdx] : null,
+  };
+}
+
+// "Em linha" com a OBZ: de 0% a <10% ACIMA da OBZ. Abaixo da OBZ (mesmo perto de zero)
+// sempre mostra o percentual real -- nunca "em linha" pro lado negativo. >=10% acima também
+// mostra o percentual real (já é destaque). Regra definida pelo usuário, 12/08/2026.
+function reportClassifyObz(realizado, obz){
+  if(typeof realizado !== 'number' || typeof obz !== 'number' || obz === 0) return null;
+  const pct = (realizado - obz) / obz;
+  if(pct < 0) return { tipo:'abaixo', pct };
+  if(pct < 0.10) return { tipo:'emLinha', pct };
+  return { tipo:'acima', pct };
+}
+
+// Vs 2025: regra ASSIMÉTRICA pedida pelo usuário, 12/08/2026. Variação positiva pequena
+// (0% a <10% -- mesmo corte numérico do "em linha" da OBZ, por consistência; o usuário não
+// confirmou um número diferente pra essa banda especificamente, ajustar se ele indicar outro
+// valor) pode ser "estável". A partir do momento que fica NEGATIVO vs 2025, mesmo pouco,
+// sempre mostra o percentual real com linguagem neutra ("ponto de atenção") -- nunca reduz
+// uma queda a "estável". AquaFoz nunca entra aqui (nunca tem comparação vs 2025, regra
+// permanente dos Gold Standards -- parque iniciou em nov/2025).
+function reportClassifyVs2025(realizado, real2025, park){
+  if(park === 'AquaFoz') return null;
+  if(typeof realizado !== 'number') return null;
+  if(typeof real2025 !== 'number' || real2025 === 0) return { tipo:'semBase' };
+  const pct = (realizado - real2025) / real2025;
+  if(pct < 0) return { tipo:'atencao', pct };
+  if(pct < 0.10) return { tipo:'estavel', pct };
+  return { tipo:'acima', pct };
+}
+
+// Frases pro CORPO do texto (narrativa) -- aqui "em linha"/"estável" substituem o número
+// pequeno. No BLOCO FINAL de percentuais isso não vale -- lá é sempre o número real (ver
+// reportFmtPctSigned).
+function reportFmtObzFraseCorpo(cls){
+  if(!cls) return null;
+  if(cls.tipo === 'emLinha') return 'em linha com a OBZ';
+  const sinal = cls.pct >= 0 ? '+' : '';
+  return `${sinal}${fmtPct(cls.pct)} da OBZ`;
+}
+function reportFmtVs2025FraseCorpo(cls){
+  if(!cls) return null;
+  if(cls.tipo === 'semBase') return 'sem base de comparação em 2025';
+  if(cls.tipo === 'estavel') return 'estável vs 2025';
+  const sinal = cls.pct >= 0 ? '+' : '';
+  const base = `${sinal}${fmtPct(cls.pct)} vs 2025`;
+  return cls.tipo === 'atencao' ? `${base} (ponto de atenção)` : base;
+}
+// Bloco final: sempre número real, nunca "em linha"/"estável" (padrão dos Gold Standards).
+function reportFmtPctSignedOuTexto(cls, rotulo){
+  if(!cls) return `sem dado ${rotulo}`;
+  if(cls.tipo === 'semBase') return `sem comparativo ${rotulo}`;
+  const sinal = cls.pct >= 0 ? '+' : '';
+  return `${sinal}${fmtPct(cls.pct)} ${rotulo}`;
+}
+
+// Normaliza o campo livre "parque" da aba Eventos (ex.: "Aquario" sem acento, "Todos os
+// Parques", "Parques Foz") pra decidir se um evento se aplica a um parque/região específico.
+function reportNormTxt(s){
+  return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+function reportEventoAplicaA(evento, park, regiao){
+  const v = reportNormTxt(evento.parque);
+  if(!v) return false;
+  if(v.includes('todos os parques') || v.includes('grupo cataratas')) return true;
+  if(regiao && v.includes(reportNormTxt(regiao))) return true;
+  if(park && v.includes(reportNormTxt(park))) return true;
+  return false;
+}
+
+function reportEventosAtivos(dateISO, park, regiao){
+  return EVENTOS.filter(e => e.data <= dateISO && (e.dataFim || e.data) >= dateISO && reportEventoAplicaA(e, park, regiao));
+}
+// Evento espelhado: mesma janela de datas um ano antes (2025), mesmo parque/região --
+// pedido do usuário, 12/08/2026: "caso identifique queda ou aumento vs 2025 que se
+// justifique com evento no ano anterior, essa informação tem que vir" -- sem limiar de
+// magnitude, e sem cravar causalidade, só apontando o que ocorreu.
+function reportEventoEspelhado(dateISO, park, regiao){
+  const d = new Date(dateISO+'T00:00:00');
+  d.setFullYear(d.getFullYear()-1);
+  const espelhada = d.toISOString().slice(0,10);
+  return reportEventosAtivos(espelhada, park, regiao);
+}
+
+function reportClimaFraseRegiao(monthData, dayIdx, regiao){
+  const park = REPORT_REGIAO_CLIMA_PARK[regiao];
+  if(!park) return null; // Soul Parques nunca tem frase de clima própria (padrão dos GS)
+  const dd = monthData.daily[park];
+  const code = dd && dd['Emoji'] ? dd['Emoji'][dayIdx] : null;
+  if(!code) return null; // "clima de Foz deve ser omitido quando não fornecido" (Gold Standards)
+  const label = (CODE_LABEL[code] || code).toLowerCase();
+  return `Em ${regiao === 'Parques Rio' ? 'no estado do RJ' : 'Foz'}, ontem foi dia ${label}.`;
+}
+
+// Heurística simples de parque fechado (Fase 1): 0 pax no dia com OBZ também zerada/ausente
+// sugere que o dia não é operacional pra esse parque -- nunca inventa o motivo; só cita o
+// motivo se houver um Evento categorizado pra esse parque/dia mencionando fechamento.
+function reportParkFechado(dayData){
+  return (!dayData.realizado || dayData.realizado === 0) && (!dayData.obz || dayData.obz === 0);
+}
+
+function reportSentencaParque(park, dayData, dateISO, regiao){
+  if(!dayData || reportParkFechado(dayData)){
+    const eventosFechamento = reportEventosAtivos(dateISO, park, regiao).filter(e => /fechad/i.test(e.evento));
+    if(eventosFechamento.length) return `*${park}* esteve fechado (${eventosFechamento[0].evento}).`;
+    return `*${park}* esteve fechado.`;
+  }
+  const obzCls = reportClassifyObz(dayData.realizado, dayData.obz);
+  const vs2025Cls = reportClassifyVs2025(dayData.realizado, dayData.real2025, park);
+  const obzFrase = reportFmtObzFraseCorpo(obzCls) || 'sem meta OBZ definida';
+  const partes = [`*${park}* fez *${fmtInt(dayData.realizado)} pax*, ficando *${obzFrase}*`];
+  const vs2025Frase = reportFmtVs2025FraseCorpo(vs2025Cls);
+  if(vs2025Frase) partes.push(`e *${vs2025Frase}*`);
+  let frase = partes.join(' ') + '.';
+  // Evento espelhado (-1 ano): só quando existe variação vs 2025 pra reportar (positiva ou
+  // negativa) e há evento na mesma janela do ano anterior -- nunca crava causalidade.
+  if(vs2025Cls && (vs2025Cls.tipo === 'atencao' || vs2025Cls.tipo === 'acima' || vs2025Cls.tipo === 'estavel')){
+    const espelhados = reportEventoEspelhado(dateISO, park, regiao);
+    if(espelhados.length) frase += ` (em 2025, nesse mesmo período, ocorreu: ${espelhados.map(e=>e.evento).join('; ')})`;
+  }
+  return frase;
+}
+
+// Garante ponto final antes de juntar frases -- alguns eventos vêm sem pontuação na
+// planilha e coincidiam com a frase seguinte sem nenhuma separação.
+function reportEnsurePeriod(s){
+  if(!s) return s;
+  const t = s.trim();
+  return /[.!?]$/.test(t) ? t : t + '.';
+}
+
+function reportBlocoRegiao(regiao, monthData, dayIdx, dateISO){
+  const linhas = [];
+  const climaFrase = reportClimaFraseRegiao(monthData, dayIdx, regiao);
+  if(climaFrase) linhas.push(reportEnsurePeriod(climaFrase));
+  const parques = REPORT_ORDEM_PARQUES[regiao] || [];
+  const eventosRegiao = reportEventosAtivos(dateISO, '', regiao).filter(e => {
+    // eventos "de região" (não de um parque específico dela) -- pra não duplicar quando o
+    // mesmo evento já vai aparecer citado junto ao parque individual mais abaixo.
+    const v = (e.parque||'').toLowerCase();
+    return !parques.some(p => v.includes(p.toLowerCase()));
+  });
+  eventosRegiao.forEach(e => linhas.push(reportEnsurePeriod(e.evento)));
+  parques.forEach(park => {
+    const eventosParque = reportEventosAtivos(dateISO, park, regiao).filter(e => (e.parque||'').toLowerCase().includes(park.toLowerCase()));
+    eventosParque.forEach(e => linhas.push(reportEnsurePeriod(e.evento)));
+    const dayData = reportParkDayData(park, monthData, dayIdx);
+    linhas.push(reportEnsurePeriod(reportSentencaParque(park, dayData, dateISO, regiao)));
+  });
+  return linhas.join(' ');
+}
+
+function reportResumoDoMes(monthData){
+  const gc = reportFindAggregate(monthData.summary, REPORT_GC_TOTAL_ALIASES);
+  const sss = reportFindAggregate(monthData.summary, REPORT_GC_SSS_ALIASES);
+  const soul = reportFindAggregate(monthData.summary, REPORT_SOUL_TOTAL_ALIASES);
+  // Retorna só o fragmento "está X e Y" -- quem chama monta a frase completa com o sujeito.
+  function estaFrase(agg){
+    if(!agg) return null;
+    const obzCls = reportClassifyObz(agg.acumRealizado, agg.acumObzParcial);
+    const vsCls = reportClassifyVs2025(agg.acumRealizado, agg.acum2025, null);
+    const obzFrase = reportFmtObzFraseCorpo(obzCls) || 'sem meta OBZ definida';
+    const vsFrase = reportFmtVs2025FraseCorpo(vsCls);
+    return `está ${obzFrase}${vsFrase ? ' e ' + vsFrase : ''}`;
+  }
+  const partes = [];
+  const gcFrase = estaFrase(gc);
+  if(gcFrase) partes.push(`Na visão geral do mês, o total do *Grupo Cataratas* ${gcFrase}.`);
+  const sssFrase = estaFrase(sss);
+  if(sssFrase) partes.push(`Sem *AquaFoz*, ${sssFrase}.`);
+  const soulFrase = estaFrase(soul);
+  if(soulFrase) partes.push(`*Soul Parques* ${soulFrase}.`);
+  return partes.join(' ');
+}
+
+function reportBlocoFinal(monthData){
+  return REPORT_ORDEM_REGIOES.filter(r => REPORT_ORDEM_PARQUES[r]).map(regiao => {
+    const linhas = (REPORT_ORDEM_PARQUES[regiao] || []).map(park => {
+      const agg = monthData.summary[park];
+      if(!agg) return null;
+      const obzCls = reportClassifyObz(agg.acumRealizado, agg.acumObzParcial);
+      const vsCls = reportClassifyVs2025(agg.acumRealizado, agg.acum2025, park);
+      const obzTxt = reportFmtPctSignedOuTexto(obzCls, 'vs OBZ');
+      const vsTxt = park === 'AquaFoz' ? null : reportFmtPctSignedOuTexto(vsCls, 'vs 2025');
+      return `*${park}:* ${obzTxt}${vsTxt ? ' e ' + vsTxt : ''}`;
+    }).filter(Boolean);
+    if(!linhas.length) return null;
+    return `*${regiao}*\n${linhas.join('\n')}`;
+  }).filter(Boolean).join('\n\n');
+}
+
+function buildReportOficial(dateISO){
+  const mesKey = reportMonthKeyForDate(dateISO);
+  if(!mesKey) return 'Sem dados de Visitação para essa data.';
+  const monthData = VISITACAO[mesKey];
+  const dayIdx = Number(dateISO.slice(8,10)) - 1;
+
+  const blocos = [];
+  const resumo = reportResumoDoMes(monthData);
+  if(resumo) blocos.push(resumo);
+  ['Parques Rio', 'Parques Foz', 'Soul Parques'].forEach(regiao => {
+    const texto = reportBlocoRegiao(regiao, monthData, dayIdx, dateISO);
+    if(texto) blocos.push(texto);
+  });
+  const final = reportBlocoFinal(monthData);
+  if(final) blocos.push(final);
+  return blocos.join('\n\n');
+}
+
+function renderReportOficial(){
+  populateReportDataSelect();
+  const sel = document.getElementById('reportDataSelect');
+  const area = document.getElementById('reportOficialArea');
+  if(!sel || !area || !sel.value) return;
+  area.value = buildReportOficial(sel.value);
+  const fb = document.getElementById('reportOficialCopyFeedback');
+  if(fb) fb.textContent = '';
+}
+
+function copiarReportOficial(){
+  const area = document.getElementById('reportOficialArea');
+  const fb = document.getElementById('reportOficialCopyFeedback');
+  if(!area) return;
+  navigator.clipboard.writeText(area.value).then(() => {
+    if(fb){ fb.textContent = 'Copiado!'; setTimeout(() => fb.textContent = '', 2000); }
+  });
+}
+
 function copiarReportTexto(){
   const area = document.getElementById('reportTextoArea');
   const fb = document.getElementById('reportCopyFeedback');
@@ -5021,6 +5330,7 @@ async function carregarDados(){
   renderEventosTab();
   initReportEventosRange();
   renderReport();
+  renderReportOficial();
   populateHistoricoSelects(false);
   renderHistorico();
   initPlanoMidiaTab();
