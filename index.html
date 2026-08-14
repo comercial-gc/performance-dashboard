@@ -141,6 +141,13 @@
   /* ── Impacto Visitação vs 2025 (DS x FDS) + Resumo Comparativo BR + Oportunidades ── */
   .resumo-br-table{ max-width:380px; }
   .resumo-br-table td:first-child{ text-align:left; }
+  /* Resumo Semanal 25x26 -- ocupa o gap em branco que sobrava embaixo do Resumo
+     Comparativo mensal (pedido do usuário, 14/08/2026), na mesma coluna esquerda do
+     .viz-two-col. 5 colunas (Semana + DS/FDS x 2 anos) numa tabela mais estreita que a
+     mensal, por isso fonte/padding um pouco menores pra não ficar apertado. */
+  .resumo-semanal-table td:first-child{ text-align:left; }
+  .resumo-semanal-table th, .resumo-semanal-table td{ font-size:12px; padding:7px 6px; }
+  .resumo-semanal-table .sub-meta{ margin-top:1px; }
   .oportunidades-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
   .oportunidades-list li{ display:flex; align-items:flex-start; gap:9px; font-size:13px; padding:8px 10px; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; background:#fff; }
   .oportunidades-list li.prolongado{ border-left-color:var(--green); }
@@ -793,6 +800,35 @@
     </div>
     <div class="panel-body">
       <ul class="oportunidades-list" id="oportunidadesList"></ul>
+    </div>
+  </section>
+
+  <!-- Resumo Semanal 25x26 (BR) -- pedido do usuário, 14/08/2026: aproveitar o gap em
+       branco que sobrava embaixo do Resumo Comparativo mensal (a lista de Oportunidades,
+       ao lado, costuma ser mais alta que a tabela mensal). Como é o 3º item dentro do
+       grid de 2 colunas (.viz-two-col), o auto-flow do CSS Grid encaixa ele sozinho na
+       2ª linha, coluna 1 -- direto embaixo do Resumo Comparativo, sem precisar de nenhuma
+       regra de posicionamento manual. -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2 id="resumoSemanalTitle">Resumo Semanal 25 x 26 (BR)</h2>
+      <span class="hint">Dias de semana (seg-sex) e fim de semana (sáb-dom) por semana do mês, 2026 vs 2025</span>
+    </div>
+    <div class="panel-body">
+      <table class="viz-table resumo-semanal-table" id="resumoSemanalTable">
+        <thead>
+          <tr>
+            <th class="grp" style="text-align:left;" rowspan="2">Semana</th>
+            <th class="grp" colspan="2">2026</th>
+            <th class="grp" colspan="2">2025</th>
+          </tr>
+          <tr>
+            <th class="sub-main">Dias Semana</th><th class="sub-main">Fim de Semana</th>
+            <th class="sub-plain">Dias Semana</th><th class="sub-plain">Fim de Semana</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </section>
   </div>
@@ -3097,6 +3133,71 @@ function renderResumoComparativoBR(month){
   `;
 }
 
+// ── Resumo Semanal 25x26 (BR) ──────────────────────────────────────────────────────
+// Quebra um intervalo de datas em semanas SEGUNDA-A-DOMINGO e conta dias de semana (DS)
+// x fim de semana (FDS) em cada uma -- pedido do usuário, 14/08/2026. A 1ª e a última
+// semana do período costumam ficar parciais (o mês raramente começa numa segunda ou
+// termina num domingo); isso é esperado e intencional, não um bug -- cada semana só
+// conta os dias que realmente caem DENTRO do mês/período selecionado.
+// IMPORTANTE: 2026 e 2025 são quebrados em semanas de forma INDEPENDENTE (cada um a
+// partir do próprio dia 1 do período) -- "Semana 3 de 2026" e "Semana 3 de 2025" são a
+// mesma POSIÇÃO dentro do mês, não necessariamente as mesmas datas do calendário (já que
+// o dia da semana em que o mês começa muda de ano pra ano). Mesma lógica de comparação
+// "por posição" que o Resumo Comparativo (mensal) já usa.
+function splitWeeksSegDom(startISO, endISO){
+  const weeks = [];
+  let cur = new Date(startISO+'T00:00:00');
+  const end = new Date(endISO+'T00:00:00');
+  while(cur <= end){
+    let weekEnd = new Date(cur);
+    // getDay()===0 é Domingo -- avança até o próximo Domingo (fim da semana) ou até o
+    // fim do período, o que vier primeiro.
+    while(weekEnd.getDay() !== 0 && weekEnd < end) weekEnd.setDate(weekEnd.getDate()+1);
+    if(weekEnd > end) weekEnd = new Date(end);
+    let ds = 0, fds = 0;
+    let d = new Date(cur);
+    while(d <= weekEnd){
+      const wd = d.getDay();
+      if(wd===0 || wd===6) fds++; else ds++;
+      d.setDate(d.getDate()+1);
+    }
+    weeks.push({ start: new Date(cur), end: new Date(weekEnd), ds, fds });
+    cur = new Date(weekEnd);
+    cur.setDate(cur.getDate()+1);
+  }
+  return weeks;
+}
+function fmtDDMM(d){
+  const pad = n => String(n).padStart(2,'0');
+  return `${pad(d.getDate())}/${pad(d.getMonth()+1)}`;
+}
+function renderResumoSemanal(month){
+  const table = document.getElementById('resumoSemanalTable');
+  if(!table) return;
+  const tbody = table.querySelector('tbody');
+  const ranges = computeComparisonRanges(month);
+  if(!ranges){
+    tbody.innerHTML = '<tr><td colspan="5">Sem dados para este período.</td></tr>';
+    return;
+  }
+  const w26 = splitWeeksSegDom(ranges.r26start, ranges.r26end);
+  const w25 = splitWeeksSegDom(ranges.r25start, ranges.r25end);
+  const nRows = Math.max(w26.length, w25.length);
+  const rows = [];
+  for(let i=0; i<nRows; i++){
+    const a = w26[i], b = w25[i];
+    const periodo = a ? `${fmtDDMM(a.start)} - ${fmtDDMM(a.end)}` : '';
+    rows.push(`<tr>
+      <td>Semana ${i+1}${periodo ? `<div class="sub-meta">${periodo}</div>` : ''}</td>
+      <td>${a ? a.ds : '-'}</td>
+      <td>${a ? a.fds : '-'}</td>
+      <td>${b ? b.ds : '-'}</td>
+      <td>${b ? b.fds : '-'}</td>
+    </tr>`);
+  }
+  tbody.innerHTML = rows.join('');
+}
+
 // Formata DD/MM/AAAA a partir de "AAAA-MM-DD", só pra exibição no título do Personalizado.
 function fmtISOToBR(iso){
   const [y,m,d] = iso.split('-');
@@ -3319,6 +3420,7 @@ function refreshVisitacao(){
   renderKpis(month); renderRegua(month); renderAtrativos(month);
   renderVizMensal(month); renderVizAcumulado(month);
   renderVizImpacto2025(month); renderResumoComparativoBR(month); renderOportunidades(month);
+  renderResumoSemanal(month);
   const panel = document.getElementById('weatherPanel');
   if(month === OPEN_MONTH){
     panel.style.display = '';
