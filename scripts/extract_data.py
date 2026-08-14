@@ -657,10 +657,10 @@ def build_visitacao_meta(service, spreadsheet_id, sheet_name, meses_meta):
 
 # (coluna da Data, coluna do texto "Clima") por parque-representante, 0-indexed
 CLIMA_REGIAO_COLS = {
-    "AquaRio": (6, 7),
-    "PNI": (15, 16),
-    "Vila Velha": (24, 25),
-    "Três Pescadores": (30, 31),
+    "AquaRio": (8, 9),
+    "PNI": (17, 18),
+    "Vila Velha": (26, 27),
+    "Três Pescadores": (32, 33),
 }
 
 CLIMA_LABEL_TO_CODE = {
