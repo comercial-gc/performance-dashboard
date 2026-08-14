@@ -655,13 +655,64 @@ def build_visitacao_meta(service, spreadsheet_id, sheet_name, meses_meta):
 # data.json em vez dos numeros fixos.
 # ---------------------------------------------------------------------------
 
-# (coluna da Data, coluna do texto "Clima") por parque-representante, 0-indexed
+# (coluna da Data, coluna do texto "Clima") por parque-representante, 0-indexed.
+# Mantido só como FALLBACK/documentação -- a leitura de verdade usa
+# _find_clima_region_cols() (ver comentário logo abaixo), que acha essas colunas pelo
+# próprio rótulo da aba em vez de confiar em offsets fixos.
 CLIMA_REGIAO_COLS = {
-    "AquaRio": (8, 9),
-    "PNI": (17, 18),
-    "Vila Velha": (26, 27),
-    "Três Pescadores": (32, 33),
+    "AquaRio": (7, 8),
+    "PNI": (16, 17),
+    "Vila Velha": (25, 26),
+    "Três Pescadores": (31, 32),
 }
+
+# Título de cada bloco (linha acima do cabeçalho "Dia da Semana | Data | Clima | Emoji"),
+# na própria aba -- usado por _find_clima_region_cols() para localizar as colunas de
+# cada região dinamicamente, em vez de por offset fixo.
+CLIMA_REGIAO_TITULOS = {
+    "Parques Rio": "AquaRio",
+    "Parques Foz": "PNI",
+    "Vila Velha": "Vila Velha",
+    "Três Pescadores": "Três Pescadores",
+}
+
+
+def _find_clima_region_cols(rows):
+    """Acha, para cada região representante de clima, as colunas (data, clima) pelo
+    próprio rótulo da aba, em vez de confiar em offsets fixos (ver CLIMA_REGIAO_COLS,
+    mantido só como fallback).
+
+    BUG EVITADO (14/08/2026): a aba "Mapa Clima" ganhou uma coluna nova ("Dia da
+    Semana") na frente de cada bloco de região -- isso empurrou Data/Clima de todos os
+    4 blocos (AquaRio/PNI/Vila Velha/Três Pescadores) uma coluna inteira para a direita.
+    Os offsets fixos antigos (6/7, 15/16, 24/25, 30/31) passaram a ler "Dia da Semana"
+    no lugar de "Data" e "Data" no lugar de "Clima" -- como "Dia da Semana" nunca é uma
+    data de verdade, TODO o resultado ficava vazio (nenhum dia validava
+    isinstance(..., datetime)), e a aba Clima do painel sumia inteira, não só uns dias.
+    Agora cada bloco é achado pelo título da região (ex.: "Parques Rio", uma linha acima
+    do cabeçalho) e as colunas de Data/Clima são lidas relativas a onde esse título
+    aparece -- confirmado pelo cabeçalho ("Data"/"Clima") na linha seguinte, para não
+    aceitar por engano um título que não seja realmente o início de um bloco de clima.
+    Funciona com qualquer coluna nova inserida/removida antes ou entre os blocos.
+    """
+    result = {}
+    for i, row in enumerate(rows[:200]):
+        for j, v in enumerate(row):
+            if not isinstance(v, str):
+                continue
+            park = CLIMA_REGIAO_TITULOS.get(v.strip())
+            if park is None or park in result:
+                continue
+            header_row = rows[i + 1] if i + 1 < len(rows) else []
+            # o título pode estar alinhado com a coluna "Dia da Semana" (r+1) OU já com
+            # a própria coluna "Data" -- testamos as duas hipóteses pelo rótulo real do
+            # cabeçalho, em vez de assumir uma das duas.
+            for date_col in (j + 1, j):
+                if (_norm_label(cell(header_row, date_col)) == "data"
+                        and _norm_label(cell(header_row, date_col + 1)) == "clima"):
+                    result[park] = (date_col, date_col + 1)
+                    break
+    return result
 
 CLIMA_LABEL_TO_CODE = {
     "dia de sol": "sun", "nublado": "cloud", "nublado com chuva": "cloud-rain",
@@ -688,15 +739,22 @@ CLIMA_LABEL_TO_CODE = {
 
 def build_clima_emoji(service, spreadsheet_id, sheet_name, meses_com_dados):
     rows = get_values(service, spreadsheet_id, sheet_name)
+    regiao_cols = _find_clima_region_cols(rows)
+    if len(regiao_cols) < len(CLIMA_REGIAO_TITULOS):
+        # não achou (ou não achou todos) os blocos pelo rótulo -- cai pro offset fixo
+        # documentado em CLIMA_REGIAO_COLS pras regiões que faltaram, em vez de deixar
+        # a região inteira sem coluna nenhuma.
+        for park, cols in CLIMA_REGIAO_COLS.items():
+            regiao_cols.setdefault(park, cols)
     result = {mes: {} for mes in meses_com_dados}
     for mes in meses_com_dados:
         month_number = MONTH_NUMBER[mes]
         n_days = calendar.monthrange(2026, month_number)[1]
-        for park in CLIMA_REGIAO_COLS:
+        for park in regiao_cols:
             result[mes][park] = [None] * n_days
 
     for row in rows:
-        for park, (date_col, clima_col) in CLIMA_REGIAO_COLS.items():
+        for park, (date_col, clima_col) in regiao_cols.items():
             date_val = cell(row, date_col)
             dt = None
             if isinstance(date_val, datetime.datetime):
