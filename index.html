@@ -141,10 +141,28 @@
   /* ── Impacto Visitação vs 2025 (DS x FDS) + Resumo Comparativo BR + Oportunidades ── */
   .resumo-br-table{ max-width:380px; }
   .resumo-br-table td:first-child{ text-align:left; }
-  /* Resumo Semanal 25x26 -- ocupa o gap em branco que sobrava embaixo do Resumo
-     Comparativo mensal (pedido do usuário, 14/08/2026), na mesma coluna esquerda do
-     .viz-two-col. 5 colunas (Semana + DS/FDS x 2 anos) numa tabela mais estreita que a
-     mensal, por isso fonte/padding um pouco menores pra não ficar apertado. */
+  /* Resumo Comparativo + Resumo Semanal (coluna esquerda) x Oportunidades (direita):
+     as duas colunas precisam terminar niveladas, não importa qual conteúdo for mais alto
+     naquele mês (testei os 12 meses -- em 7 deles o Oportunidades é MAIS CURTO que a
+     soma dos dois blocos da esquerda, não só mais alto como eu supus na 1ª tentativa).
+     Solução: align-items:stretch SÓ nesse .viz-two-col específico (classe
+     .resumo-oportunidades-row -- não no .viz-two-col genérico usado em Visitação Mensal/
+     Acumulado, que não deve mudar). Isso faz os DOIS lados esticarem até a altura da
+     linha do grid (que já é sempre a maior altura natural dos dois) -- automaticamente,
+     sem JS: se a esquerda for maior, o Oportunidades estica (sobra espaço em branco
+     embaixo da lista, dentro da própria caixa dele); se o Oportunidades for maior, a
+     esquerda estica (é o que o flex:1 do Resumo Semanal abaixo usa). */
+  .resumo-oportunidades-row{ align-items:stretch; }
+  .resumo-oportunidades-row > .resumo-col-left{ display:flex; flex-direction:column; gap:16px; min-width:0; }
+  .resumo-oportunidades-row > .resumo-col-left > .panel{ flex:0 0 auto; }
+  /* O painel do Resumo Semanal cresce (flex:1) pra preencher o que sobra da altura do
+     wrapper -- especificidade (4 classes) maior que a regra genérica ".viz-two-col
+     .panel{flex:0 0 auto}" (2 classes) de propósito, pra ganhar dela sem !important. */
+  .resumo-oportunidades-row > .resumo-col-left > .panel.resumo-semanal-panel{ flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
+  .resumo-semanal-panel .panel-body{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+  /* Resumo Semanal 25x26 -- 5 colunas (Semana + DS/FDS x 2 anos) numa tabela mais
+     estreita que a mensal, por isso fonte/padding um pouco menores pra não ficar
+     apertado. */
   .resumo-semanal-table td:first-child{ text-align:left; }
   .resumo-semanal-table th, .resumo-semanal-table td{ font-size:12px; padding:7px 6px; }
   .resumo-semanal-table .sub-meta{ margin-top:1px; }
@@ -777,7 +795,16 @@
     </div>
   </section>
 
-  <div class="viz-two-col">
+  <div class="viz-two-col resumo-oportunidades-row">
+  <!-- Coluna esquerda (Resumo Comparativo mensal + Resumo Semanal) num wrapper flex só,
+       que é o item de grid de verdade agora -- pedido do usuário, 14/08/2026: a 1ª versão
+       colocava o Resumo Semanal como um 3º item solto no grid, e como o grid tem
+       align-items:start, isso criava uma LINHA NOVA (mais um gap embaixo, além do que já
+       existia) em vez de preencher o gap que já tinha. Com os dois dentro do mesmo
+       wrapper (align-self:stretch, esticando até a altura do Oportunidades ao lado) e o
+       Resumo Semanal com flex:1, ele cresce pra ocupar exatamente o espaço que sobra --
+       termina rente ao rodapé do Oportunidades, sem segundo gap. -->
+  <div class="resumo-col-left">
   <section class="panel">
     <div class="panel-head">
       <h2 id="resumoBRTitle">Resumo Comparativo 25 x 26 (BR)</h2>
@@ -793,26 +820,13 @@
     </div>
   </section>
 
-  <section class="panel">
-    <div class="panel-head">
-      <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
-      <span class="hint">Feriados e datas turísticas relevantes: Brasil, Argentina e Paraguai</span>
-    </div>
-    <div class="panel-body">
-      <ul class="oportunidades-list" id="oportunidadesList"></ul>
-    </div>
-  </section>
-
-  <!-- Resumo Semanal 25x26 (BR) -- pedido do usuário, 14/08/2026: aproveitar o gap em
-       branco que sobrava embaixo do Resumo Comparativo mensal (a lista de Oportunidades,
-       ao lado, costuma ser mais alta que a tabela mensal). Como é o 3º item dentro do
-       grid de 2 colunas (.viz-two-col), o auto-flow do CSS Grid encaixa ele sozinho na
-       2ª linha, coluna 1 -- direto embaixo do Resumo Comparativo, sem precisar de nenhuma
-       regra de posicionamento manual. -->
-  <section class="panel">
+  <!-- Resumo Semanal 25x26 (BR): quebra o mês em blocos de 7 dias corridos a partir do
+       dia 1 (ex.: Agosto -> Semana 1 = 01-07/08, Semana 2 = 08-14/08...), NÃO por
+       semana de calendário (seg-dom) -- pedido explícito do usuário, 14/08/2026. -->
+  <section class="panel resumo-semanal-panel">
     <div class="panel-head">
       <h2 id="resumoSemanalTitle">Resumo Semanal 25 x 26 (BR)</h2>
-      <span class="hint">Dias de semana (seg-sex) e fim de semana (sáb-dom) por semana do mês, 2026 vs 2025</span>
+      <span class="hint">Dias de semana e fim de semana a cada 7 dias corridos do mês (a partir do dia 1), 2026 vs 2025</span>
     </div>
     <div class="panel-body">
       <table class="viz-table resumo-semanal-table" id="resumoSemanalTable">
@@ -829,6 +843,17 @@
         </thead>
         <tbody></tbody>
       </table>
+    </div>
+  </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
+      <span class="hint">Feriados e datas turísticas relevantes: Brasil, Argentina e Paraguai</span>
+    </div>
+    <div class="panel-body">
+      <ul class="oportunidades-list" id="oportunidadesList"></ul>
     </div>
   </section>
   </div>
@@ -3134,25 +3159,22 @@ function renderResumoComparativoBR(month){
 }
 
 // ── Resumo Semanal 25x26 (BR) ──────────────────────────────────────────────────────
-// Quebra um intervalo de datas em semanas SEGUNDA-A-DOMINGO e conta dias de semana (DS)
-// x fim de semana (FDS) em cada uma -- pedido do usuário, 14/08/2026. A 1ª e a última
-// semana do período costumam ficar parciais (o mês raramente começa numa segunda ou
-// termina num domingo); isso é esperado e intencional, não um bug -- cada semana só
-// conta os dias que realmente caem DENTRO do mês/período selecionado.
-// IMPORTANTE: 2026 e 2025 são quebrados em semanas de forma INDEPENDENTE (cada um a
-// partir do próprio dia 1 do período) -- "Semana 3 de 2026" e "Semana 3 de 2025" são a
-// mesma POSIÇÃO dentro do mês, não necessariamente as mesmas datas do calendário (já que
-// o dia da semana em que o mês começa muda de ano pra ano). Mesma lógica de comparação
-// "por posição" que o Resumo Comparativo (mensal) já usa.
-function splitWeeksSegDom(startISO, endISO){
+// Quebra um intervalo de datas em blocos de 7 DIAS CORRIDOS a partir do dia 1 do período
+// (ex.: Agosto -> Semana 1 = 01-07/08, Semana 2 = 08-14/08, ...) -- NÃO por semana de
+// calendário (seg-dom) -- pedido explícito do usuário, 14/08/2026. Só a ÚLTIMA semana do
+// período pode ficar parcial (menos de 7 dias, quando o mês não é múltiplo de 7); isso é
+// esperado, não um bug.
+// IMPORTANTE: 2026 e 2025 são quebrados em blocos de forma INDEPENDENTE (cada um a partir
+// do próprio dia 1 do período) -- "Semana 3 de 2026" e "Semana 3 de 2025" são a mesma
+// POSIÇÃO dentro do mês (dias 15-21, por ex.), não as mesmas datas do calendário. Mesma
+// lógica de comparação "por posição" que o Resumo Comparativo (mensal) já usa.
+function splitWeeksCorridas(startISO, endISO){
   const weeks = [];
   let cur = new Date(startISO+'T00:00:00');
   const end = new Date(endISO+'T00:00:00');
   while(cur <= end){
     let weekEnd = new Date(cur);
-    // getDay()===0 é Domingo -- avança até o próximo Domingo (fim da semana) ou até o
-    // fim do período, o que vier primeiro.
-    while(weekEnd.getDay() !== 0 && weekEnd < end) weekEnd.setDate(weekEnd.getDate()+1);
+    weekEnd.setDate(weekEnd.getDate()+6); // 7 dias corridos, inclusive
     if(weekEnd > end) weekEnd = new Date(end);
     let ds = 0, fds = 0;
     let d = new Date(cur);
@@ -3180,8 +3202,8 @@ function renderResumoSemanal(month){
     tbody.innerHTML = '<tr><td colspan="5">Sem dados para este período.</td></tr>';
     return;
   }
-  const w26 = splitWeeksSegDom(ranges.r26start, ranges.r26end);
-  const w25 = splitWeeksSegDom(ranges.r25start, ranges.r25end);
+  const w26 = splitWeeksCorridas(ranges.r26start, ranges.r26end);
+  const w25 = splitWeeksCorridas(ranges.r25start, ranges.r25end);
   const nRows = Math.max(w26.length, w25.length);
   const rows = [];
   for(let i=0; i<nRows; i++){
