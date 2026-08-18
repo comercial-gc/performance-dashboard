@@ -570,13 +570,16 @@
   .cdc-daynum{ font-size:9px; color:var(--muted); font-weight:700; margin-top:3px; }
 
 /* ══════════════════════════════════════════════════════════════════
-   REFINO INTERATIVO — hover/transições em cards, painéis e tabelas.
-   Objetivo: dar um acabamento mais "tech" ao painel sem chamar mais
-   atenção que o próprio dado (nada de glow forte, nada de movimento
-   brusco). Só cards de verdade (KPI/resumo) recebem elevação --
-   os grandes painéis de seção (section.panel) só ganham uma borda
-   levemente mais escura, pra não "flutuar" um bloco inteiro cheio de
-   filtro/gráfico por baixo do mouse.
+   REFINO INTERATIVO — hover/transições em cards, painéis, células e
+   tabelas. Objetivo: dar um acabamento mais "tech" ao painel sem
+   chamar mais atenção que o próprio dado (nada de glow forte, nada de
+   movimento brusco). Cards de verdade (KPI/resumo/célula) recebem
+   elevação -- os grandes painéis de seção (section.panel) só ganham
+   uma borda levemente mais escura, pra não "flutuar" um bloco inteiro
+   cheio de filtro/gráfico por baixo do mouse.
+   18/08/2026: ampliado pra cobrir TODOS os blocos com cara de card --
+   inclusive as "células" pequenas (régua, dia a dia, Plano de Mídia,
+   Oportunidades) que tinham ficado de fora da primeira leva.
    ══════════════════════════════════════════════════════════════════ */
   .kpi-card, .imt-card, .mix-card, .atrativo-card, .capta-card, .combo-card,
   .combo-summary-card, .hist-chart-card, .clima-park-chart{
@@ -584,24 +587,38 @@
   }
   .kpi-card:hover, .imt-card:hover, .combo-card:hover, .combo-summary-card:hover,
   .hist-chart-card:hover, .clima-park-chart:hover{
-    box-shadow: 0 10px 22px -10px rgba(15,31,56,.22);
-    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -10px rgba(15,31,56,.25);
+    transform: translateY(-4px);
     border-color:#b9c6da;
   }
   .mix-card:hover, .atrativo-card:hover, .capta-card:hover{
-    box-shadow: 0 10px 22px -10px rgba(15,31,56,.20);
-    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -10px rgba(15,31,56,.22);
+    transform: translateY(-4px);
   }
   .imt-ps-area-card{ transition: box-shadow .25s ease, transform .25s ease, filter .25s ease; }
-  .imt-ps-area-card:hover{ transform: translateY(-3px); box-shadow: 0 12px 26px -10px rgba(0,0,0,.5); filter: brightness(1.08); }
+  .imt-ps-area-card:hover{ transform: translateY(-4px); box-shadow: 0 12px 26px -10px rgba(0,0,0,.5); filter: brightness(1.08); }
 
   .imt-ps-kpi{ transition: box-shadow .25s ease, transform .25s ease, filter .25s ease; }
-  .imt-ps-kpi:hover{ transform: translateY(-3px); box-shadow: 0 12px 26px -10px rgba(0,0,0,.5); filter: brightness(1.1); }
+  .imt-ps-kpi:hover{ transform: translateY(-4px); box-shadow: 0 12px 26px -10px rgba(0,0,0,.5); filter: brightness(1.1); }
   .imt-ps-kpi .bar{ transition: width .3s ease; }
   .imt-ps-kpi:hover .bar{ width:100%; }
 
-  section.panel, .placeholder-panel{ transition: border-color .25s ease, box-shadow .25s ease; }
-  section.panel:hover, .placeholder-panel:hover{ border-color:#c3cfe0; box-shadow:0 4px 14px -8px rgba(15,31,56,.12); }
+  /* Células menores (régua de clima/visitação, dia a dia do Plano de Mídia, itens de
+     Oportunidades) -- mesmo tratamento, elevação um pouco mais discreta porque aparecem
+     em grade, muitas ao mesmo tempo, e um salto de 4px em dezenas de células vizinhas
+     ficaria "nervoso" em vez de refinado. */
+  .regua-cell, .invest-cell, .clima-day, .oportunidades-list li{
+    transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .regua-cell:hover, .invest-cell:hover, .clima-day:hover, .oportunidades-list li:hover{
+    box-shadow: 0 8px 16px -8px rgba(15,31,56,.22);
+    transform: translateY(-2px);
+    border-color:#b9c6da;
+    z-index:1;
+  }
+
+  section.panel, .placeholder-panel, .imt-park-summary{ transition: border-color .25s ease, box-shadow .25s ease; }
+  section.panel:hover, .placeholder-panel:hover, .imt-park-summary:hover{ border-color:#c3cfe0; box-shadow:0 4px 14px -8px rgba(15,31,56,.12); }
 
   /* Linhas de tabela: destaque suave ao passar o mouse, em todas as tabelas do painel
      (algumas já tinham hover instantâneo -- isso só adiciona a transição e cobre as
@@ -611,6 +628,31 @@
 
   button.action, .imt-filter-clear, nav.tabs button{ transition: background-color .2s ease, opacity .2s ease, transform .15s ease; }
   button.action:active, .imt-filter-clear:active{ transform:scale(.97); }
+
+  /* ── Repaginada das barras de gráfico: cantos arredondados + um leve efeito de
+     "gloss" (um brilho diagonal muito sutil, tipo vidro) que dá sensação de
+     profundidade/tecnologia sem virar um gráfico 3D de verdade -- um 3D isométrico
+     de verdade distorce a leitura da altura/comprimento da barra (o que é grave
+     num painel de dado), então a profundidade aqui é só sombra + brilho, a barra
+     continua 100% proporcional ao valor real. Usa ::after em vez de background-image
+     pra não brigar com o "background:${cor}" que já vem embutido no style inline de
+     cada barra (gerado nas funções de render). */
+  .bar-rect, .cdc-bar{
+    position:relative; overflow:hidden;
+    border-radius:5px 5px 2px 2px;
+    box-shadow:0 3px 6px -2px rgba(15,31,56,.28);
+  }
+  .clima-bar-fill, .mix-evo-bar-fill, .progress-fill, .imt-ps-progress-fill{
+    position:relative; overflow:hidden;
+    border-radius:0 4px 4px 0;
+  }
+  .bar-rect::after, .cdc-bar::after, .clima-bar-fill::after, .mix-evo-bar-fill::after,
+  .progress-fill::after, .imt-ps-progress-fill::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(155deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,0) 45%, rgba(0,0,0,.08) 100%);
+    pointer-events:none;
+  }
 
 /* ══════════════════════════════════════════════════════════════════
    VISUALIZAÇÃO MOBILE — tudo abaixo de 820px de largura.
@@ -1966,7 +2008,7 @@ function renderShareMetaChart(accShare, accVisit, accEcom){
     const h = minH + (share/maxShare)*(plotH-minH);
     const y = padT + plotH - h;
     const tip = `${label}: Share ${fmtPct(share)}`;
-    return `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${gcColor}"></rect>
+    return `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3" ry="3" fill="${gcColor}"></rect>
       <text x="${(x+barW/2).toFixed(1)}" y="${(padT+plotH-6).toFixed(1)}" font-size="9" font-weight="800" text-anchor="middle" fill="#ffffff">${fmtSmartNumber(smartRound(share*100))}%</text>
       <text x="${(x+barW/2).toFixed(1)}" y="${H-5}" font-size="9.5" font-weight="${labelBold?'700':'400'}" text-anchor="middle" fill="#8a938d">${label}</text>`;
   }
@@ -2423,7 +2465,7 @@ function renderComboCharts(containerId, barField, barFmt){
       const h = minH + (shareV/maxShare)*(plotH-minH);
       const yBar = padT + plotH - h;
       const tip = labels[i] + ': Share ' + fmtSmartNumber(smartRound(shareV*100)) + '%' + (v!==null&&v!==undefined ? ' | Investimento ' + barFmt(v) : '');
-      bars += `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${yBar.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}"></rect>`;
+      bars += `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${yBar.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3" ry="3" fill="${color}"></rect>`;
       // share % sempre em branco, dentro da barra
       shareLabels += `<text x="${cx.toFixed(1)}" y="${(padT+plotH-6).toFixed(1)}" font-size="9" font-weight="800" text-anchor="middle" fill="#ffffff">${fmtSmartNumber(smartRound(shareV*100))}%</text>`;
       // ponto da linha (investimento) tem escala própria, independente da barra
