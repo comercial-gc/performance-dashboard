@@ -623,15 +623,25 @@
      vira aqui um contorno + glow na cor de destaque do próprio painel (var(--accent)),
      bem mais discreto que o azul neon do vídeo e sem fundo escuro -- só um "acendendo"
      na borda, condizente com um painel de dado sério. */
+  /* 18/08/2026: usuário pediu pra aproximar mais do vídeo de referência (glow mais forte).
+     Testei ADICIONAR translateY aqui também (como nos cards pequenos), mas descartei --
+     esses blocos grandes têm dezenas de cards/células com hover próprio lá dentro
+     (kpi, imt-ps-kpi, regua-cell etc.), e como :hover de um elemento sempre "sobe" pros
+     ancestrais em CSS, qualquer hover num card pequeno lá dentro TAMBÉM ativa o hover
+     do bloco grande -- resultado: o painel inteiro (cabeçalho, linha divisória, tudo)
+     ficava "pulando" 2px toda vez que o mouse passava sobre uma célula qualquer lá
+     dentro, o que small na prática lia como se linhas/bordas estivessem "sumindo" do
+     lugar (na verdade só se moviam junto). Por isso aqui só o glow ficou mais forte --
+     mais perto do vídeo em intensidade, sem o efeito colateral do movimento em cascata. */
   section.panel, .placeholder-panel, .imt-park-summary{
     transition: border-color .3s ease, box-shadow .35s ease;
   }
   section.panel:hover, .placeholder-panel:hover, .imt-park-summary:hover{
-    border-color: rgba(15,92,146,.55);
+    border-color: rgba(15,92,146,.75);
     box-shadow:
-      0 0 0 1px rgba(15,92,146,.14),
-      0 0 22px rgba(15,92,146,.16),
-      0 12px 28px -16px rgba(15,92,146,.4);
+      0 0 0 1.5px rgba(15,92,146,.3),
+      0 0 42px rgba(15,92,146,.32),
+      0 20px 40px -16px rgba(15,92,146,.55);
   }
 
   /* Linhas de tabela: destaque suave ao passar o mouse, em todas as tabelas do painel
@@ -4880,6 +4890,26 @@ function getMixVsLabel(){
   return '2025';
 }
 
+// Rótulo curto da coluna PRIMÁRIA (a primeira selecionada, esquerda pra direita no filtro:
+// Mensal/Acumulado/mês específico/Personalizado) -- espelha getMixVsLabel(), mas pro outro
+// lado da comparação. BUG EVITADO: antes essa coluna vinha com o texto fixo "2026" mesmo
+// quando o período principal era Personalizado ou um mês específico, então mudar o filtro
+// "Outro período" não tinha efeito nenhum no cabeçalho -- parecia que a seleção "travava".
+function getMixPrimaryLabel(){
+  if(mixPeriodoState === 'mensal' || mixPeriodoState === 'acumulado') return '2026';
+  if(mixPeriodoState.startsWith('mes:')){
+    const mes = mixPeriodoState.slice(4);
+    return (MES_CAP[mes] || mes).slice(0,3) + '/26';
+  }
+  if(mixPeriodoState === 'custom'){
+    const r = getMixPrimaryRange();
+    if(!r) return 'Período A';
+    const fmt = s => s.slice(8,10) + '/' + s.slice(5,7);
+    return fmt(r.ini) + '–' + fmt(r.fim);
+  }
+  return '2026';
+}
+
 // Combina o período principal (fonteA, já no formato {parque:{formato,categorias}}) com
 // o período de comparação (fonteB, no MESMO formato) quando o "Vs" é mês específico ou
 // Personalizado -- os dois são 2026 contra 2026, então usamos só o campo v2026 de fonteB
@@ -5130,21 +5160,12 @@ function renderMixOrigem() {
 
   updateMixOrigemHeader();
 
-  // Aviso: comparar um período de vários meses (Acumulado ou Personalizado longo) com um
-  // "Vs" bem mais curto (mês específico ou Personalizado curto) não é uma comparação
-  // válida -- em vez de mostrar um % que não quer dizer nada, avisa e pede pra revisar.
-  if(mixVsMode.startsWith('mes:') || mixVsMode === 'custom'){
-    const primaryRange = getMixPrimaryRange();
-    const vsRange = getMixVsRange();
-    if(primaryRange && vsRange){
-      const spanPrimario = mixMonthsSpan(primaryRange.ini, primaryRange.fim);
-      const spanVs = mixMonthsSpan(vsRange.ini, vsRange.fim);
-      if(spanPrimario > 1 && spanVs < spanPrimario){
-        grid.innerHTML = '<div class="hist-empty">Períodos muito diferentes para comparar (período principal cobre ' + spanPrimario + ' meses, a comparação escolhida é mais curta). Revise os filtros de período antes de comparar.</div>';
-        return;
-      }
-    }
-  }
+  // 18/08/2026: removida a trava que bloqueava comparar períodos de tamanhos muito
+  // diferentes (ex.: Personalizado de vários meses vs um Personalizado mais curto).
+  // Pedido explícito do usuário -- essa "análise de descasamento" (comparar períodos de
+  // durações diferentes de propósito) é exatamente um dos usos que ele quer fazer com o
+  // "Vs" Personalizado livre, então bloquear a renderização aqui atrapalhava mais do que
+  // ajudava.
 
   const fonte = getMixFonte();
   const parquesOrdem = Object.keys(MIX_ORIGEM).length ? Object.keys(MIX_ORIGEM) : Object.keys(fonte);
@@ -5157,6 +5178,7 @@ function renderMixOrigem() {
   }
 
   const vsLabel = getMixVsLabel();
+  const primaryLabel = getMixPrimaryLabel();
 
   grid.innerHTML = parquesFiltrados.map(parque => {
     const d = fonte[parque];
@@ -5185,18 +5207,20 @@ function renderMixOrigem() {
       badgeHtml = `<span class="mix-badge novo">Novo</span>`;
     }
 
-    // Tabela
+    // Tabela -- primeira pesquisa (esquerda p/ direita no filtro) sempre na 1ª coluna,
+    // "Vs" sempre na 2ª -- e em Personalizado, ambos os cabeçalhos mostram o período real
+    // selecionado (evita a trava onde a coluna ficava presa em "2026" fixo)
     const theadCols = showVs
-      ? `<th>Origem</th><th>${vsLabel}</th><th>2026</th><th>Δ%</th><th>Sh Comp.</th><th>Sh26</th>`
-      : '<th>Origem</th><th>2026</th><th>Sh26</th>';
+      ? `<th>Origem</th><th>${primaryLabel}</th><th>${vsLabel}</th><th>Δ%</th><th>Sh ${primaryLabel}</th><th>Sh Comp.</th>`
+      : `<th>Origem</th><th>${primaryLabel}</th><th>Sh ${primaryLabel}</th>`;
 
     const bodyRows = cats.map(c => {
       if (showVs) {
         const dcls = (c.delta !== null && c.delta !== undefined) ? (c.delta >= 0 ? 'up' : 'down') : '';
         return `<tr>
-          <td>${c.label}</td><td>${fmtMixInt(c.v2025)}</td><td>${fmtMixInt(c.v2026)}</td>
+          <td>${c.label}</td><td>${fmtMixInt(c.v2026)}</td><td>${fmtMixInt(c.v2025)}</td>
           <td class="${dcls}">${fmtMixDelta(c.delta)}</td>
-          <td>${fmtMixPct(c.share25)}</td><td>${fmtMixPct(c.share26)}</td>
+          <td>${fmtMixPct(c.share26)}</td><td>${fmtMixPct(c.share25)}</td>
         </tr>`;
       } else {
         return `<tr><td>${c.label}</td><td>${fmtMixInt(c.v2026)}</td><td>${fmtMixPct(c.share26)}</td></tr>`;
@@ -5204,7 +5228,7 @@ function renderMixOrigem() {
     }).join('');
 
     const totalTr = totalRow ? (showVs
-      ? `<tr class="total-row"><td>${totalRow.label}</td><td>${fmtMixInt(totalRow.v2025)}</td><td>${fmtMixInt(totalRow.v2026)}</td><td>${fmtMixDelta(totalRow.delta)}</td><td>${fmtMixPct(totalRow.share25)}</td><td>${fmtMixPct(totalRow.share26)}</td></tr>`
+      ? `<tr class="total-row"><td>${totalRow.label}</td><td>${fmtMixInt(totalRow.v2026)}</td><td>${fmtMixInt(totalRow.v2025)}</td><td>${fmtMixDelta(totalRow.delta)}</td><td>${fmtMixPct(totalRow.share26)}</td><td>${fmtMixPct(totalRow.share25)}</td></tr>`
       : `<tr class="total-row"><td>${totalRow.label}</td><td>${fmtMixInt(totalRow.v2026)}</td><td>${fmtMixPct(totalRow.share26)}</td></tr>`
     ) : '';
 
@@ -5216,23 +5240,25 @@ function renderMixOrigem() {
         const w25 = (c.v2025||0) / maxVal * 100;
         const w26 = (c.v2026||0) / maxVal * 100;
         const tip25 = `${c.label} ${vsLabel}: ${fmtMixInt(c.v2025)} (${fmtMixPct(c.share25)})`;
-        const tip26 = `${c.label} 2026: ${fmtMixInt(c.v2026)} (${fmtMixPct(c.share26)})`;
+        const tip26 = `${c.label} ${primaryLabel}: ${fmtMixInt(c.v2026)} (${fmtMixPct(c.share26)})`;
+        // Barra escura (primária) sempre primeiro no DOM -- .mix-evo-bars é column-flex,
+        // então o 1º filho renderiza visualmente em cima; a clara ("Vs") vem depois/embaixo
         return `<div class="mix-evo-row">
           <div class="mix-evo-label">${c.label}</div>
           <div class="mix-evo-bars">
-            <div class="mix-evo-bar-track" data-tip="${tip25}">
-              <div class="mix-evo-bar-fill" style="width:${w25}%;background:${catColor};opacity:.45"></div>
-              <span class="mix-evo-bar-val" style="left:calc(${w25}% + 6px)">${fmtMixShort(c.v2025)}</span>
-            </div>
             <div class="mix-evo-bar-track" data-tip="${tip26}">
               <div class="mix-evo-bar-fill" style="width:${w26}%;background:${catColor}"></div>
               <span class="mix-evo-bar-val" style="left:calc(${w26}% + 6px)">${fmtMixShort(c.v2026)}</span>
+            </div>
+            <div class="mix-evo-bar-track" data-tip="${tip25}">
+              <div class="mix-evo-bar-fill" style="width:${w25}%;background:${catColor};opacity:.45"></div>
+              <span class="mix-evo-bar-val" style="left:calc(${w25}% + 6px)">${fmtMixShort(c.v2025)}</span>
             </div>
           </div>
         </div>`;
       } else {
         const w26 = (c.v2026||0) / maxVal * 100;
-        const tip26 = `${c.label} 2026: ${fmtMixInt(c.v2026)} (${fmtMixPct(c.share26)})`;
+        const tip26 = `${c.label} ${primaryLabel}: ${fmtMixInt(c.v2026)} (${fmtMixPct(c.share26)})`;
         return `<div class="mix-evo-row">
           <div class="mix-evo-label">${c.label}</div>
           <div class="mix-evo-bars">
@@ -5316,12 +5342,12 @@ function renderMixOrigem() {
     let donutsHtml = '';
     if (showVs) {
       donutsHtml = `<div class="mix-donuts">
+        <div class="mix-donut-block"><div class="mix-donut-label">SHARE ${primaryLabel.toUpperCase()}</div>${buildDonutSvg('share26','v2026')}</div>
         <div class="mix-donut-block"><div class="mix-donut-label">SHARE ${vsLabel.toUpperCase()}</div>${buildDonutSvg('share25','v2025')}</div>
-        <div class="mix-donut-block"><div class="mix-donut-label">SHARE 26</div>${buildDonutSvg('share26','v2026')}</div>
       </div>`;
     } else {
       donutsHtml = `<div class="mix-donuts">
-        <div class="mix-donut-block"><div class="mix-donut-label">SHARE 26</div>${buildDonutSvg('share26','v2026')}</div>
+        <div class="mix-donut-block"><div class="mix-donut-label">SHARE ${primaryLabel.toUpperCase()}</div>${buildDonutSvg('share26','v2026')}</div>
       </div>`;
     }
 
@@ -5334,7 +5360,7 @@ function renderMixOrigem() {
         <thead><tr>${theadCols}</tr></thead>
         <tbody>${bodyRows}${totalTr}</tbody>
       </table>
-      <div class="mix-evo-title">${showVs ? `EVOLUÇÃO (${vsLabel.toUpperCase()} VS 2026)` : 'EVOLUÇÃO (2026)'}</div>
+      <div class="mix-evo-title">${showVs ? `EVOLUÇÃO (${primaryLabel.toUpperCase()} VS ${vsLabel.toUpperCase()})` : `EVOLUÇÃO (${primaryLabel.toUpperCase()})`}</div>
       ${evoRows}
       ${donutsHtml}
     </div>`;
