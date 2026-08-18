@@ -212,7 +212,7 @@
   .logo-banner{
     position:relative; padding:22px 24px; border-radius:10px; overflow:hidden;
     background:#0f3d2e url('banner-bg.jpg') center/cover no-repeat;
-    margin-top:4px; display:flex; align-items:center; justify-content:space-between;
+    margin-top:4px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;
     gap:24px; flex-wrap:wrap;
     transform-style:preserve-3d; will-change:transform;
     transition:transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease;
@@ -5524,19 +5524,27 @@ function renderMixOrigem() {
 (function(){
   const banner = document.getElementById('logoBanner');
   if(!banner) return;
-  const MAX_TILT = 10; // graus -- proposital bem mais brusco que qualquer hover do painel
+  // 18/08/2026: usuário achou o tilt exagerado -- estava cobrindo o menu de abas
+  // logo abaixo. O banner é bem largo (~1384px) e baixo (~132px), então mesmo um
+  // ângulo de rotateX moderado, com a perspective curta de antes, empurrava a
+  // borda de baixo visualmente por cima das abas. Reduzido o ângulo (principalmente
+  // o eixo X, que é o que "empurra" pra cima/baixo), aumentada a perspective
+  // (efeito mais contido) e tirado o scale -- mantém uma interação boa e nítida,
+  // só que sem se sobrepor aos itens vizinhos.
+  const MAX_TILT_X = 1.5; // graus -- eixo que inclina a borda de cima/baixo (o que colidia com as abas)
+  const MAX_TILT_Y = 4;   // graus -- eixo esquerda/direita, pode ser um pouco mais vivo
   let raf = null;
 
   function onMove(e){
     const rect = banner.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;   // 0..1
     const py = (e.clientY - rect.top) / rect.height;    // 0..1
-    const rotY = (px - 0.5) * 2 * MAX_TILT;  // esquerda/direita
-    const rotX = (0.5 - py) * 2 * MAX_TILT;  // cima/baixo
+    const rotY = (px - 0.5) * 2 * MAX_TILT_Y;  // esquerda/direita
+    const rotX = (0.5 - py) * 2 * MAX_TILT_X;  // cima/baixo
     if(raf) cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => {
-      banner.style.transition = 'transform .05s linear'; // resposta quase instantânea
-      banner.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.015,1.015,1.015)`;
+      banner.style.transition = 'transform .08s linear'; // resposta quase instantânea
+      banner.style.transform = `perspective(2600px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
       banner.style.setProperty('--mx', (px*100).toFixed(1)+'%');
       banner.style.setProperty('--my', (py*100).toFixed(1)+'%');
     });
@@ -5546,7 +5554,7 @@ function renderMixOrigem() {
     banner.classList.remove('tilting');
     if(raf) cancelAnimationFrame(raf);
     banner.style.transition = 'transform .5s cubic-bezier(.22,.61,.36,1)'; // volta suave ao soltar
-    banner.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+    banner.style.transform = 'perspective(2600px) rotateX(0deg) rotateY(0deg)';
   }
   banner.addEventListener('mouseenter', onEnter);
   banner.addEventListener('mousemove', onMove);
