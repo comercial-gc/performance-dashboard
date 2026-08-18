@@ -433,14 +433,14 @@
   .imt-ps-month{ font-size:12px; font-weight:800; letter-spacing:1px; color:var(--muted); text-transform:uppercase; }
   .imt-ps-parkname{ font-size:24px; font-weight:800; color:var(--ink); line-height:1.1; }
   .imt-ps-subtitle{ font-size:13px; color:var(--muted); margin-top:2px; }
-  .imt-ps-kpis{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-bottom:18px; }
-  .imt-ps-kpi{ background:#0f1f38; border-radius:8px; padding:14px 16px; color:#fff; }
-  .imt-ps-kpi .bar{ width:34px; height:3px; border-radius:2px; margin-bottom:10px; }
-  .imt-ps-kpi .lbl{ font-size:10.5px; letter-spacing:.5px; color:#9fb0c9; font-weight:700; text-transform:uppercase; }
-  .imt-ps-kpi .val{ font-size:22px; font-weight:800; margin-top:4px; }
+  .imt-ps-kpis{ display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:18px; }
+  .imt-ps-kpi{ background:#0f1f38; border-radius:8px; padding:11px 12px; color:#fff; min-width:0; }
+  .imt-ps-kpi .bar{ width:28px; height:3px; border-radius:2px; margin-bottom:8px; }
+  .imt-ps-kpi .lbl{ font-size:9.5px; letter-spacing:.3px; color:#9fb0c9; font-weight:700; text-transform:uppercase; line-height:1.25; }
+  .imt-ps-kpi .val{ font-size:18px; font-weight:800; margin-top:4px; word-break:break-word; }
   .imt-ps-kpi .val.pos{ color:#3ddc84; }
   .imt-ps-kpi .val.neg{ color:#ff6b5e; }
-  .imt-ps-kpi .sub{ font-size:11px; color:#7e93b3; margin-top:4px; }
+  .imt-ps-kpi .sub{ font-size:10px; color:#7e93b3; margin-top:4px; line-height:1.3; }
   .imt-ps-progress-wrap{ margin-bottom:22px; }
   .imt-ps-progress-track{ width:100%; height:10px; background:#0f1f38; border-radius:6px; overflow:hidden; }
   .imt-ps-progress-fill{ height:100%; background:#f39c12; border-radius:6px; }
@@ -625,6 +625,7 @@
   /* Investimento Marketing */
   .imt-grid{ grid-template-columns:1fr 1fr; }
   .imt-ps-kpis{ grid-template-columns:1fr 1fr; }
+  .imt-ps-kpi .val{ font-size:16px; }
   .imt-ps-body{ grid-template-columns:1fr; }
   .imt-ps-area-grid{ grid-template-columns:1fr; }
   .imt-ps-header{ flex-wrap:wrap; }
@@ -3702,6 +3703,15 @@ function renderParkSummary() {
   const pctUtilizado = (disponivel && disponivel !== 0 && realizado !== null && realizado !== undefined)
     ? (realizado / disponivel * 100) : null;
 
+  // KPI anual (5º card): usa a linha "TOTAL" que já vem pronta em INVEST_MKT_RESUMO[parque],
+  // agregado direto da planilha -- não precisa somar mês a mês aqui.
+  const resumoAnual = resumoParque["TOTAL"] || {};
+  const disponivelAnual = resumoAnual.disponivel;
+  const realizadoAnual = resumoAnual.realizado;
+  const saldoAnual = resumoAnual.saldo;
+  const pctUtilizadoAnual = (disponivelAnual && disponivelAnual !== 0 && realizadoAnual !== null && realizadoAnual !== undefined)
+    ? (realizadoAnual / disponivelAnual * 100) : null;
+
   const mesLabelCap = mes.charAt(0) + mes.slice(1).toLowerCase();
   const parkUpperKey = Object.keys(PARK_LABEL_MAP).find(k => PARK_LABEL_MAP[k] === parque) || parque.toUpperCase();
   const logoSrc = PARK_LOGOS[parque] || "";
@@ -3759,6 +3769,11 @@ function renderParkSummary() {
       <div class="lbl">% Utilizado</div>
       <div class="val">${pctUtilizado !== null ? fmtSmartNumber(smartRound(pctUtilizado)) + '%' : '-'}</div>
       <div class="sub">Do orçamento</div>
+    </div>
+    <div class="imt-ps-kpi"><div class="bar" style="background:#5b7fdb"></div>
+      <div class="lbl">Saldo Anual Disponível</div>
+      <div class="val${saldoAnual!==null && saldoAnual!==undefined && saldoAnual>0 ? ' pos' : (saldoAnual!==null && saldoAnual!==undefined && saldoAnual<0 ? ' neg' : '')}">${saldoAnual !== null && saldoAnual !== undefined ? fmtPsMoney(saldoAnual) : '-'}</div>
+      <div class="sub">${pctUtilizadoAnual !== null ? fmtSmartNumber(smartRound(pctUtilizadoAnual)) + '% utilizado no ano' : 'Sem dados no ano'}</div>
     </div>
     </div>`;
 
