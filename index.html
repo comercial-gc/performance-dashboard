@@ -205,8 +205,27 @@
   #vizMesAtrativos .atrativo-card .lbl, #vizAcumAtrativos .atrativo-card .lbl{ font-size:10px; margin-bottom:0; }
   #vizMesAtrativos .atrativo-card .big, #vizAcumAtrativos .atrativo-card .big{ font-size:14px; line-height:1.1; }
   #vizMesAtrativos .atrativo-card .sub, #vizAcumAtrativos .atrativo-card .sub{ font-size:9.5px; font-weight:700; margin-top:0; }
-  .logo-banner{ position:relative; padding:22px 20px; border-radius:10px; overflow:hidden; background:#0f3d2e; margin-top:4px; }
-  .logo-banner .logo-row{ position:relative; display:flex; gap:16px; flex-wrap:wrap; z-index:1; }
+  /* 18/08/2026: fundo com foto das Cataratas (antes era verde liso #0f3d2e) -- os logos
+     dos parques continuam do jeito que sempre foram (esquerda), e entrou um bloco novo
+     na direita com a marca Grupo Cataratas + frase + selo Great Place To Work. O tilt 3D
+     no mousemove (perspective/rotateX/rotateY) é aplicado via JS lá no fim do arquivo. */
+  .logo-banner{
+    position:relative; padding:22px 24px; border-radius:10px; overflow:hidden;
+    background:#0f3d2e url('banner-bg.jpg') center/cover no-repeat;
+    margin-top:4px; display:flex; align-items:center; justify-content:space-between;
+    gap:24px; flex-wrap:wrap;
+    transform-style:preserve-3d; will-change:transform;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease;
+  }
+  /* brilho suave que acompanha o cursor -- atualizado via --mx/--my (JS) */
+  .logo-banner::after{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
+    background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.20), transparent 55%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .logo-banner.tilting::after{ opacity:1; }
+  .logo-banner.tilting{ box-shadow:0 22px 40px -18px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08); }
+  .logo-banner .logo-row{ position:relative; display:flex; gap:16px; flex-wrap:wrap; z-index:2; }
   .logo-shape{ width:88px; height:88px; border:3px solid #d4a017; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.25); }
   .logo-shape.circle{ border-radius:50%; }
   .logo-shape.teardrop{ border-radius:50% 50% 50% 0; transform:rotate(45deg); }
@@ -214,6 +233,13 @@
   .logo-shape.teardrop .inner{ transform:rotate(-45deg); padding:9px; }
   .logo-shape .inner img{ width:100%; height:100%; object-fit:contain; }
   .logo-shape .inner span{ color:#333; font-weight:800; font-size:14px; }
+
+  .banner-right{ position:relative; z-index:2; display:flex; align-items:center; gap:20px; flex-shrink:0; margin-left:auto; }
+  .banner-brand{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .banner-brand-logo{ height:32px; width:auto; object-fit:contain; display:block; }
+  .banner-tagline{ color:#fff; font-size:14.5px; font-weight:800; letter-spacing:.01em; white-space:nowrap; text-align:right; text-shadow:0 1px 4px rgba(0,0,0,.35); }
+  .banner-tagline .thin{ font-weight:400; }
+  .banner-badge{ height:82px; width:auto; object-fit:contain; flex-shrink:0; filter:drop-shadow(0 4px 10px rgba(0,0,0,.35)); }
   .weather-day .wt{ font-size:10px; font-weight:700; }
   .combo-grid{ display:flex; flex-direction:column; gap:20px; }
   .combo-row{ display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; }
@@ -698,7 +724,13 @@
 
   /* Banner de logos: já quebra linha (flex-wrap:wrap); só reduz o tamanho */
   .logo-shape{ width:56px; height:56px; }
+  .logo-banner{ justify-content:center; }
   .logo-banner .logo-row{ justify-content:center; gap:10px; }
+  .banner-right{ margin-left:0; width:100%; justify-content:center; }
+  .banner-brand{ align-items:center; }
+  .banner-tagline{ white-space:normal; text-align:center; font-size:12.5px; }
+  .banner-badge{ height:60px; }
+  .banner-brand-logo{ height:24px; }
 
   /* Painéis: menos respiro lateral */
   section.panel{ margin:0 0 14px 0; }
@@ -768,7 +800,16 @@
       <div class="subtitle">Visitação, Clima, Marketing, E-commerce e Operações dos Parques <span class="subtitle-dot">•</span> dados <b class="subtitle-year">2026</b></div>
     </div>
   </div>
-  <div class="logo-banner" id="logoBanner"><div class="logo-row" id="logoRow"></div></div>
+  <div class="logo-banner" id="logoBanner">
+    <div class="logo-row" id="logoRow"></div>
+    <div class="banner-right">
+      <div class="banner-brand">
+        <img src="cataratas-logo-white.png" alt="Grupo Cataratas" class="banner-brand-logo">
+        <div class="banner-tagline">IMPACTO POSITIVO <span class="thin">É O</span> NOSSO LEGADO</div>
+      </div>
+      <img src="gptw-badge.png" alt="Great Place To Work - Certificado" class="banner-badge">
+    </div>
+  </div>
   <nav class="tabs">
     <button class="active" data-tab="visitacao">Visitação</button>
     <button data-tab="clima">Clima</button>
@@ -5469,6 +5510,47 @@ function renderMixOrigem() {
     mutations.forEach(mut => mut.addedNodes.forEach(processNode));
   });
   observer.observe(document.body, { childList:true, subtree:true });
+})();
+
+// ══════════════════════════════════════════════════════════════════
+// TILT 3D DO CABEÇALHO (banner de logos) — 18/08/2026
+// Pedido do usuário: reação ao mouse "bem brusca", parecida com o vídeo
+// de referência (cartão com glow + tilt 3D). Diferente dos painéis de
+// dado (section.panel etc. — ver comentário no CSS "REFINO INTERATIVO"),
+// esse banner é só decorativo, sem cards/células com hover próprio lá
+// dentro, então dá pra usar um efeito bem mais vivo aqui sem o problema
+// de "bubbling" que apareceu nos blocos grandes de dado.
+// ══════════════════════════════════════════════════════════════════
+(function(){
+  const banner = document.getElementById('logoBanner');
+  if(!banner) return;
+  const MAX_TILT = 10; // graus -- proposital bem mais brusco que qualquer hover do painel
+  let raf = null;
+
+  function onMove(e){
+    const rect = banner.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;   // 0..1
+    const py = (e.clientY - rect.top) / rect.height;    // 0..1
+    const rotY = (px - 0.5) * 2 * MAX_TILT;  // esquerda/direita
+    const rotX = (0.5 - py) * 2 * MAX_TILT;  // cima/baixo
+    if(raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      banner.style.transition = 'transform .05s linear'; // resposta quase instantânea
+      banner.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.015,1.015,1.015)`;
+      banner.style.setProperty('--mx', (px*100).toFixed(1)+'%');
+      banner.style.setProperty('--my', (py*100).toFixed(1)+'%');
+    });
+  }
+  function onEnter(){ banner.classList.add('tilting'); }
+  function onLeave(){
+    banner.classList.remove('tilting');
+    if(raf) cancelAnimationFrame(raf);
+    banner.style.transition = 'transform .5s cubic-bezier(.22,.61,.36,1)'; // volta suave ao soltar
+    banner.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+  }
+  banner.addEventListener('mouseenter', onEnter);
+  banner.addEventListener('mousemove', onMove);
+  banner.addEventListener('mouseleave', onLeave);
 })();
 
 async function carregarDados(){
