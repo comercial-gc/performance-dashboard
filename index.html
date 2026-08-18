@@ -617,8 +617,22 @@
     z-index:1;
   }
 
-  section.panel, .placeholder-panel, .imt-park-summary{ transition: border-color .25s ease, box-shadow .25s ease; }
-  section.panel:hover, .placeholder-panel:hover, .imt-park-summary:hover{ border-color:#c3cfe0; box-shadow:0 4px 14px -8px rgba(15,31,56,.12); }
+  /* Blocos grandes (painéis de seção inteiros): não sobem/tremem como os cards pequenos --
+     um bloco gigante "flutuando" ao passar o mouse por cima de um filtro ou gráfico lá
+     dentro ficaria estranho. Em vez de movimento, a referência do vídeo (borda brilhando)
+     vira aqui um contorno + glow na cor de destaque do próprio painel (var(--accent)),
+     bem mais discreto que o azul neon do vídeo e sem fundo escuro -- só um "acendendo"
+     na borda, condizente com um painel de dado sério. */
+  section.panel, .placeholder-panel, .imt-park-summary{
+    transition: border-color .3s ease, box-shadow .35s ease;
+  }
+  section.panel:hover, .placeholder-panel:hover, .imt-park-summary:hover{
+    border-color: rgba(15,92,146,.55);
+    box-shadow:
+      0 0 0 1px rgba(15,92,146,.14),
+      0 0 22px rgba(15,92,146,.16),
+      0 12px 28px -16px rgba(15,92,146,.4);
+  }
 
   /* Linhas de tabela: destaque suave ao passar o mouse, em todas as tabelas do painel
      (algumas já tinham hover instantâneo -- isso só adiciona a transição e cobre as
