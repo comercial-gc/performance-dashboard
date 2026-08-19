@@ -1529,6 +1529,10 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
           <option value="">Todos os Parques</option>
         </select>
       </div>
+      <div class="mix-morador-toggle" id="mixTop5Toggle" style="margin-left:0;">
+        <button class="active" data-val="on" onclick="setMixTop5Toggle('on')">Exibir Top 5</button>
+        <button data-val="off" onclick="setMixTop5Toggle('off')">Ocultar Top 5</button>
+      </div>
       <div class="mix-morador-toggle" id="mixPeriodoToggle">
         <button class="active" data-val="mensal" onclick="setMixPeriodo('mensal')">Mensal</button>
         <button data-val="acumulado" onclick="setMixPeriodo('acumulado')">Acumulado</button>
@@ -1562,10 +1566,6 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
         <input type="date" id="mixVsDataIni" onchange="renderMixOrigem()">
         <label for="mixVsDataFim">Até</label>
         <input type="date" id="mixVsDataFim" onchange="renderMixOrigem()">
-      </div>
-      <div class="mix-morador-toggle" id="mixTop5Toggle" style="margin-left:8px;">
-        <button class="active" data-val="on" onclick="setMixTop5Toggle('on')">Exibir Top 5</button>
-        <button data-val="off" onclick="setMixTop5Toggle('off')">Ocultar Top 5</button>
       </div>
     </div>
     <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | O menu "Outro período" (mês específico ou Personalizado) é calculado a partir do lançamento diário por parque</div>
