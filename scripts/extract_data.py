@@ -867,6 +867,16 @@ SHARE_ECOMMERCE_BLOCKS = {
 MESES_PT = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
             "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
+# SOUL PARQUES (Três Pescadores / "3P" e Vila Velha) ainda não têm integração com a base
+# TI -- a linha "Ecommerce (base TI)" existe no bloco desses dois parques na aba, mas vem
+# sempre vazia (só zeros/traço). Pedido do usuário (18/08/2026): pra esses dois parques,
+# extrair da linha "Ecommerce" tradicional em vez de "Ecommerce (base TI)"; os demais
+# parques (AquaRio, BioParque, Paineiras, M3F, AquaFoz) continuam usando "base TI" como
+# já era. Chaveado pelo NOME do parque (resolvido via _find_share_ecommerce_blocks, que já
+# acha cada bloco pelo próprio rótulo) -- não por número de linha fixo, que muda se alguém
+# inserir/remover linhas na planilha.
+SOUL_PARQUES_ECOMMERCE_TRADICIONAL = {"3P", "Vila Velha"}
+
 
 def _find_share_ecommerce_blocks(rows):
     """Acha a linha de título (r0) de cada bloco de parque na aba Share_Ecommerce_2026
@@ -1073,7 +1083,11 @@ def build_investimento_midia(service, spreadsheet_id, sheet_name, meses_com_dado
             # varia por bloco (BioParque tem uma linha extra "Historico Investimento em
             # midia (Pareto)" que empurra o resto do bloco pra baixo), entao procuramos
             # pelo rotulo em vez de usar um indice fixo.
-            ecom_ti_idx = _find_labeled_row_idx(rows, r0, "Ecommerce (base TI)")
+            # Soul Parques (3P/Vila Velha) sao excecao: "Ecommerce (base TI)" existe no
+            # bloco deles mas vem sempre vazia -- usam a linha "Ecommerce" tradicional em
+            # vez disso (ver SOUL_PARQUES_ECOMMERCE_TRADICIONAL).
+            label_ecom = "Ecommerce" if park in SOUL_PARQUES_ECOMMERCE_TRADICIONAL else "Ecommerce (base TI)"
+            ecom_ti_idx = _find_labeled_row_idx(rows, r0, label_ecom)
             ecom_row = rows[ecom_ti_idx] if ecom_ti_idx is not None else rows[r0 + 2]
             share_row = rows[ecom_ti_idx + 1] if ecom_ti_idx is not None else rows[r0 + 3]
 
@@ -1140,7 +1154,10 @@ def build_evolucao_mensal(service, spreadsheet_id, sheet_name, meses_com_dados, 
         vis_row, inv_row = rows[r0 + 1], rows[r0 + 4]
         # mesma logica de build_investimento_midia: usa a Share de "Ecommerce (base TI)",
         # cujo deslocamento varia por bloco -- procura pelo rotulo em vez de indice fixo.
-        ecom_ti_idx = _find_labeled_row_idx(rows, r0, "Ecommerce (base TI)")
+        # Soul Parques (3P/Vila Velha) usam a linha "Ecommerce" tradicional em vez de
+        # "base TI" (ver SOUL_PARQUES_ECOMMERCE_TRADICIONAL) -- mesma excecao aplicada la.
+        label_ecom = "Ecommerce" if park in SOUL_PARQUES_ECOMMERCE_TRADICIONAL else "Ecommerce (base TI)"
+        ecom_ti_idx = _find_labeled_row_idx(rows, r0, label_ecom)
         ecom_row = rows[ecom_ti_idx] if ecom_ti_idx is not None else rows[r0 + 2]
         share_row = rows[ecom_ti_idx + 1] if ecom_ti_idx is not None else rows[r0 + 3]
 
