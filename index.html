@@ -551,6 +551,31 @@
   .mix-table tr.total-row td{ font-weight:800; border-top:1.5px solid var(--line); border-bottom:none; }
   .mix-table td.up{ color:var(--green); }
   .mix-table td.down{ color:var(--red); }
+
+  /* ── Top 5 Países/Estados (por parque) ──
+     19/08/2026, pedido do usuário: ranking dos 5 principais países (parques
+     Grupo Cataratas) ou estados (parques Soul: Três Pescadores e Vila Velha)
+     de onde vêm os visitantes, com medalha nos 3 primeiros. Layout: a tabela
+     de números recua (fica mais estreita, com rolagem própria via
+     .mix-table-scroll) e o Top 5 ocupa o vão que sobra no canto superior
+     direito do card. Some do DOM inteiro (não só display:none) quando o
+     botão ON/OFF global (setMixTop5Toggle) está desligado ou quando o
+     parque não tem dado -- por isso a tabela SÓ recua quando .has-top5 está
+     presente, senão ela volta a ocupar a largura toda sozinha. */
+  .mix-top-row{ display:flex; align-items:flex-start; gap:18px; }
+  .mix-top-row .mix-table-scroll{ flex:1 1 auto; min-width:0; margin-bottom:0; }
+  .mix-top-row.has-top5 .mix-table-scroll{ flex:1 1 260px; max-width:min(100%, 320px); }
+  .mix-top5-box{ flex:0 0 190px; border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fafafa; }
+  .mix-top5-title{ font-size:11px; font-weight:800; color:var(--muted); letter-spacing:.3px; margin-bottom:8px; white-space:nowrap; }
+  .mix-top5-list{ display:flex; flex-direction:column; gap:6px; }
+  .mix-top5-item{ display:flex; align-items:center; gap:8px; font-size:12.5px; }
+  .mix-top5-rank{ flex:0 0 20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:800; background:#e2e5e2; color:var(--muted); }
+  .mix-top5-rank.gold{ background:#f4c430; color:#5a4200; }
+  .mix-top5-rank.silver{ background:#c9ccd1; color:#3d4046; }
+  .mix-top5-rank.bronze{ background:#d69257; color:#4a2c0f; }
+  .mix-top5-label{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink); font-weight:600; }
+  .mix-top5-val{ flex:0 0 auto; color:var(--muted); font-weight:700; font-size:11.5px; }
+
   .mix-evo-title{ font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.3px; margin-bottom:10px; margin-top:4px; }
   .mix-evo-row{ display:grid; grid-template-columns:110px 1fr; align-items:center; gap:10px; margin-bottom:7px; font-size:12px; }
   .mix-evo-label{ color:var(--ink); font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -837,6 +862,13 @@
      1 coluna a partir do tablet, não só no mobile. */
   .mix-grid{ grid-template-columns:1fr; }
 
+  /* Top 5 Países/Estados: a partir do tablet não sobra vão nenhum ao lado
+     da tabela -- empilha (tabela em cima, Top 5 embaixo, largura total)
+     em vez de espremer os dois lado a lado. */
+  .mix-top-row{ flex-direction:column; }
+  .mix-top-row.has-top5 .mix-table-scroll{ max-width:100%; }
+  .mix-top5-box{ flex:0 0 auto; width:100%; }
+
   /* Previsão do tempo: a régua de 16 dias (aba Clima) já fica espremida
      demais em qualquer largura de tablet com flex:1 -- adota aqui (não só
      no Mobile) o mesmo padrão de largura fixa + rolagem horizontal que a
@@ -948,6 +980,8 @@
   .combo-monthly-table{ font-size:11px; }
   .mix-table{ font-size:12px; }
   .mix-table th, .mix-table td{ padding:4px 5px; }
+  .mix-top5-box{ padding:10px; }
+  .mix-top5-item{ font-size:12px; }
   .eventos-table{ font-size:11.5px; }
   .hist-table{ font-size:12.5px; }
   .hist-table th, .hist-table td{ padding:7px 8px; }
@@ -1071,6 +1105,8 @@ html[data-theme="dark"] .mix-morador-toggle{ background:#1a2026; }
 html[data-theme="dark"] .mix-card{ background:#171d22; }
 html[data-theme="dark"] .mix-badge{ background:#183226; }
 html[data-theme="dark"] .mix-badge.novo{ background:#20262c; }
+html[data-theme="dark"] .mix-top5-box{ background:#171d22; border-color:#242b31; }
+html[data-theme="dark"] .mix-top5-rank{ background:#242b31; color:#96a29c; }
 html[data-theme="dark"] .mix-evo-bar-track{ background:#242b31; }
 html[data-theme="dark"] .clima-day{ background:#171d22; }
 html[data-theme="dark"] .clima-bar-track{ background:#242b31; }
@@ -1526,6 +1562,10 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
         <input type="date" id="mixVsDataIni" onchange="renderMixOrigem()">
         <label for="mixVsDataFim">Até</label>
         <input type="date" id="mixVsDataFim" onchange="renderMixOrigem()">
+      </div>
+      <div class="mix-morador-toggle" id="mixTop5Toggle" style="margin-left:8px;">
+        <button class="active" data-val="on" onclick="setMixTop5Toggle('on')">Exibir Top 5</button>
+        <button data-val="off" onclick="setMixTop5Toggle('off')">Ocultar Top 5</button>
       </div>
     </div>
     <div class="hint" style="margin:-6px 0 10px 0;">Filtro "Sem Morador" recalcula participação apenas para M3F, AquaFoz e PNI (parques com categoria Morador própria) | O menu "Outro período" (mês específico ou Personalizado) é calculado a partir do lançamento diário por parque</div>
@@ -4390,6 +4430,10 @@ function renderParkSummary() {
 let MIX_ORIGEM = {};
 let MIX_ORIGEM_ACUMULADO = {};
 let MIX_ORIGEM_DIARIO = {};
+// Ranking diário de país (parques Grupo Cataratas) / estado (parques Soul: Três
+// Pescadores e Vila Velha) por parque -- {parque: {tipo:'pais'|'estado', daily:{'YYYY-MM-DD':
+// {label:qtd}}, total:int}}. Alimenta o bloco "Top 5" da aba Mix de Origem (ver getMixTop5).
+let MIX_ORIGEM_TOP5 = {};
 let EVENTOS = [];
 let HISTORICO = { parques: {}, parquesComShare: [] };
 let histViewState = 'regua'; // 'grafico' | 'regua' (régua = tabela) -- Régua é o padrão inicial (pedido do usuário, 10/08/2026)
@@ -5218,6 +5262,20 @@ function setMixMorador(val){
   renderMixOrigem();
 }
 
+// Botão único (global -- vale pra todos os cards ao mesmo tempo) que liga/desliga o
+// bloco "Top 5 Países/Estados" na aba Mix de Origem. Persiste em localStorage igual a
+// chavinha clara/escura, então a escolha do usuário sobrevive a um F5.
+let mixTop5Enabled = (function(){
+  try{ return localStorage.getItem('mixTop5Enabled') !== 'off'; }catch(e){ return true; }
+})();
+
+function setMixTop5Toggle(val){
+  mixTop5Enabled = (val === 'on');
+  document.querySelectorAll('#mixTop5Toggle button').forEach(b => b.classList.toggle('active', b.dataset.val === val));
+  try{ localStorage.setItem('mixTop5Enabled', val); }catch(e){ /* localStorage bloqueado -- só não persiste entre sessões */ }
+  renderMixOrigem();
+}
+
 function setMixParque(val){
   mixParqueState = val;
   renderMixOrigem();
@@ -5279,6 +5337,48 @@ function getMixPrimaryRange(){
     return { ini: `2026-${mm}-01`, fim: `2026-${mm}-${String(ultimoDia).padStart(2,'0')}` };
   }
   return null;
+}
+
+// Soma o país/estado diário (MIX_ORIGEM_TOP5) de um parque dentro de [ini,fim] (o mesmo
+// intervalo do período PRINCIPAL -- getMixPrimaryRange) e devolve os 5 maiores, com posição
+// (1..5) pra decidir a medalha. Sempre segue Mensal/Acumulado/mês específico/Personalizado;
+// NÃO é afetado por "Vs" nem por Com/Sem Morador -- nenhum dos dois faz sentido pra essa
+// quebra (não existe "país Vs" nem "país Morador"), conforme confirmado com o usuário.
+function getMixTop5(parque, ini, fim){
+  const src = MIX_ORIGEM_TOP5[parque];
+  if(!src || !src.daily || !ini || !fim) return null;
+  const soma = {};
+  Object.keys(src.daily).forEach(dia => {
+    if(dia < ini || dia > fim) return;
+    const porLabel = src.daily[dia];
+    Object.keys(porLabel).forEach(label => {
+      soma[label] = (soma[label] || 0) + porLabel[label];
+    });
+  });
+  const ranking = Object.keys(soma)
+    .map(label => ({ label, valor: soma[label] }))
+    .sort((a,b) => b.valor - a.valor)
+    .slice(0, 5);
+  if(!ranking.length) return null;
+  return { tipo: src.tipo, ranking };
+}
+
+// Markup do mini-bloco "Top 5" (medalha ouro/prata/bronze nos 3 primeiros) inserido no
+// vão superior direito de cada card (ver .mix-top-row/.has-top5 no CSS).
+function buildMixTop5Html(top5Data){
+  if(!top5Data) return '';
+  const titulo = top5Data.tipo === 'estado' ? 'TOP 5 ESTADOS' : 'TOP 5 PAÍSES';
+  const medalClass = i => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+  const itemsHtml = top5Data.ranking.map((r, i) => `
+    <div class="mix-top5-item">
+      <span class="mix-top5-rank ${medalClass(i)}">${i+1}</span>
+      <span class="mix-top5-label" title="${r.label}">${r.label}</span>
+      <span class="mix-top5-val">${fmtMixInt(r.valor)}</span>
+    </div>`).join('');
+  return `<div class="mix-top5-box">
+    <div class="mix-top5-title">${titulo}</div>
+    <div class="mix-top5-list">${itemsHtml}</div>
+  </div>`;
 }
 
 // Quantos meses de calendário um intervalo [ini,fim] ('YYYY-MM-DD') atravessa.
@@ -5394,6 +5494,10 @@ function populateMixOrigemFiltros(){
       parques.map(p => `<option value="${p}">${p}</option>`).join('');
     parqueSel.value = mixParqueState;
   }
+
+  // Sincroniza o botão ON/OFF do Top 5 com o valor carregado do localStorage (só precisa
+  // rodar 1x -- populateMixOrigemFiltros roda toda vez que a aba é (re)carregada).
+  document.querySelectorAll('#mixTop5Toggle button').forEach(b => b.classList.toggle('active', b.dataset.val === (mixTop5Enabled ? 'on' : 'off')));
 
   let minData = null, maxData = null;
   const mesesComDado = new Set();
@@ -5594,9 +5698,14 @@ function renderMixOrigem() {
 
   const vsLabel = getMixVsLabel();
   const primaryLabel = getMixPrimaryLabel();
+  // Top 5 país/estado: sempre o período PRINCIPAL (Mensal/Acumulado/mês/Personalizado),
+  // nunca o "Vs" -- calculado 1x fora do map porque é o mesmo intervalo pra todos os cards.
+  const mixTop5Range = mixTop5Enabled ? getMixPrimaryRange() : null;
 
   grid.innerHTML = parquesFiltrados.map(parque => {
     const d = fonte[parque];
+    const top5Data = mixTop5Range ? getMixTop5(parque, mixTop5Range.ini, mixTop5Range.fim) : null;
+    const top5Html = buildMixTop5Html(top5Data);
     // temHistorico2025: fato do parque (tem ou não série 2025) -- não muda com o "Vs"
     // escolhido. Usado só pra decidir o badge "Novo" quando o modo é 2025/Nenhum.
     const temHistorico2025 = d.formato === "full";
@@ -5771,11 +5880,14 @@ function renderMixOrigem() {
         <span class="name">${parque}</span>
         ${badgeHtml}
       </div>
-      <div class="mix-table-scroll">
-        <table class="mix-table">
-          <thead><tr>${theadCols}</tr></thead>
-          <tbody>${bodyRows}${totalTr}</tbody>
-        </table>
+      <div class="mix-top-row${top5Html ? ' has-top5' : ''}">
+        <div class="mix-table-scroll">
+          <table class="mix-table">
+            <thead><tr>${theadCols}</tr></thead>
+            <tbody>${bodyRows}${totalTr}</tbody>
+          </table>
+        </div>
+        ${top5Html}
       </div>
       <div class="mix-evo-title">${showVs ? `EVOLUÇÃO (${primaryLabel.toUpperCase()} VS ${vsLabel.toUpperCase()})` : `EVOLUÇÃO (${primaryLabel.toUpperCase()})`}</div>
       ${evoRows}
@@ -5976,6 +6088,7 @@ async function carregarDados(){
     MIX_ORIGEM = data.MIX_ORIGEM || {};
     MIX_ORIGEM_ACUMULADO = data.MIX_ORIGEM_ACUMULADO || {};
     MIX_ORIGEM_DIARIO = data.MIX_ORIGEM_DIARIO || {};
+    MIX_ORIGEM_TOP5 = data.MIX_ORIGEM_TOP5 || {};
     EVENTOS = data.EVENTOS || [];
     HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
     PLANO_MIDIA = data.PLANO_MIDIA || { resumo: {}, detail: {} };
