@@ -37,6 +37,12 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 
+# Extensão do Top 5 País/Estado (Mix de Origem) -- ver scripts/top5_origem_extension.py
+# (já enviado/commitado separadamente). Mantido em arquivo próprio, em vez de colado
+# aqui dentro, só pra não inchar ainda mais este arquivo -- toda a lógica de
+# leitura/normalização de país-estado vive lá.
+from top5_origem_extension import build_mix_origem_top5
+
 # O runner do GitHub Actions as vezes tem uma conexao mais lenta/instavel com a API do
 # Google, e o timeout padrao do socket (ilimitado, mas o cliente HTTP interno usa um valor
 # curto) estourava no meio do download de planilhas maiores. Aumenta a margem e deixa o
@@ -2414,6 +2420,22 @@ def main():
         print(f"AVISO: falha ao ler Mix de Origem diário ({e}) -- filtro por período fica vazio neste ciclo.", file=sys.stderr)
         mix_origem_diario = {}
 
+    print("Lendo Top 5 País/Estado (Mix de Origem)...", file=sys.stderr)
+    try:
+        top5_folders = cfg.get("top5_origem_folders", {})
+        if top5_folders:
+            meses_num_top5 = [(MONTH_NUMBER[m], m) for m in cfg["meses_com_dados"]]
+            mix_origem_top5 = build_mix_origem_top5(service, top5_folders, meses_num_top5)
+        else:
+            print("AVISO: 'top5_origem_folders' ainda não configurado no config.json -- bloco Top 5 fica vazio.", file=sys.stderr)
+            mix_origem_top5 = {}
+    except Exception as e:
+        # Mesmo padrão defensivo das demais abas: se der erro (pasta não compartilhada com a
+        # service account, arquivo de algum mês com schema diferente do esperado etc.), o
+        # bloco Top 5 fica vazio neste ciclo em vez de derrubar o resto do pipeline.
+        print(f"AVISO: falha ao ler Top 5 País/Estado ({e}) -- bloco Top 5 fica vazio neste ciclo.", file=sys.stderr)
+        mix_origem_top5 = {}
+
     print("Lendo Eventos...", file=sys.stderr)
     eventos = build_eventos(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
@@ -2484,6 +2506,7 @@ def main():
         "MIX_ORIGEM": mix_origem,
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
         "MIX_ORIGEM_DIARIO": mix_origem_diario,
+        "MIX_ORIGEM_TOP5": mix_origem_top5,
         "EVENTOS": eventos,
         "APOIO_REPORT": apoio_report,
         "HISTORICO": historico,
