@@ -1268,7 +1268,7 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
   <section class="panel">
     <div class="panel-head">
       <h2 id="resumoBRTitle">Resumo Comparativo 25 x 26 (BR)</h2>
-      <span class="hint">Feriados nacionais e finais de semana no mês selecionado</span>
+      <span class="hint">Feriados nacionais, estaduais (RJ) e municipais (Foz do Iguaçu, Aparecida-SP, Ponta Grossa) e finais de semana no mês selecionado</span>
     </div>
     <div class="panel-body">
       <table class="viz-table resumo-br-table" id="resumoBRTable">
@@ -1310,7 +1310,7 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
   <section class="panel">
     <div class="panel-head">
       <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
-      <span class="hint">Feriados e datas turísticas relevantes: Brasil, Argentina e Paraguai</span>
+      <span class="hint">Feriados nacionais e internacionais, feriados estaduais/municipais (RJ, Foz do Iguaçu, Aparecida-SP, Ponta Grossa) e datas turísticas relevantes</span>
     </div>
     <div class="panel-body">
       <ul class="oportunidades-list" id="oportunidadesList"></ul>
@@ -1902,6 +1902,35 @@ const HOLIDAYS_BO = {
     ['2026-08-06','Día de la Independencia'], ['2026-11-02','Todos los Santos'], ['2026-12-25','Navidad'],
   ],
 };
+// ── Feriados estaduais/municipais das localidades dos parques (RJ, Foz do Iguaçu,
+// Aparecida-SP e Ponta Grossa) -- pedido do usuário, 19/08/2026, pra aparecerem tanto no
+// Resumo Comparativo (BR) quanto no Bloco Oportunidades, junto com os feriados nacionais.
+// Fontes: RJ = Lei estadual 5198/2008 (institui feriado estadual do Dia de São Jorge, 23/04
+// -- STF manteve a validade dessa lei, ver Migalhas 392513); Foz do Iguaçu = decreto/calendário
+// oficial da Prefeitura (foz.pr.gov.br) -- aniversário da cidade (10/06) e Dia de São João
+// Batista, padroeiro (24/06), ambos fixos; Aparecida-SP = decretos oficiais da Prefeitura
+// (aparecida.sp.gov.br) -- aniversário/emancipação da cidade é fixo (17/12), mas o feriado da
+// Festa de São Benedito É MÓVEL ano a ano (2025 = 28/04, "Dia da Grandiosa Festa"; 2026 =
+// 13/04, conforme decreto/comunicado oficial -- não usar a mesma data nos dois anos); Ponta
+// Grossa = decreto municipal 2026 (26.252/2026) -- Dia de Sant'Ana, padroeira (26/07) e
+// aniversário/emancipação política (15/09), ambos fixos. Precisa de checagem manual anual
+// igual aos feriados internacionais acima (datas móveis tipo São Benedito mudam todo ano).
+const HOLIDAYS_RJ_EST = {
+  2025: [ ['2025-04-23','Dia de São Jorge'] ],
+  2026: [ ['2026-04-23','Dia de São Jorge'] ],
+};
+const HOLIDAYS_FOZ = {
+  2025: [ ['2025-06-10','Aniversário de Foz do Iguaçu'], ['2025-06-24','Dia de São João Batista (padroeiro)'] ],
+  2026: [ ['2026-06-10','Aniversário de Foz do Iguaçu'], ['2026-06-24','Dia de São João Batista (padroeiro)'] ],
+};
+const HOLIDAYS_APARECIDA = {
+  2025: [ ['2025-04-28','Dia de São Benedito (Grandiosa Festa)'], ['2025-12-17','Aniversário de Aparecida'] ],
+  2026: [ ['2026-04-13','Dia de São Benedito'], ['2026-12-17','Aniversário de Aparecida'] ],
+};
+const HOLIDAYS_PONTA_GROSSA = {
+  2025: [ ['2025-07-26','Dia de Sant’Ana (padroeira)'], ['2025-09-15','Aniversário de Ponta Grossa'] ],
+  2026: [ ['2026-07-26','Dia de Sant’Ana (padroeira)'], ['2026-09-15','Aniversário de Ponta Grossa'] ],
+};
 const WEEKDAY_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
 
 // Tudo baseado em INTERVALO DE DATAS (não mais "mês fixo") pra funcionar igual tanto no
@@ -1959,6 +1988,10 @@ const HOLIDAY_SET_UY = buildHolidaySet(HOLIDAYS_UY);
 const HOLIDAY_SET_CO = buildHolidaySet(HOLIDAYS_CO);
 const HOLIDAY_SET_PE = buildHolidaySet(HOLIDAYS_PE);
 const HOLIDAY_SET_BO = buildHolidaySet(HOLIDAYS_BO);
+const HOLIDAY_SET_RJ_EST = buildHolidaySet(HOLIDAYS_RJ_EST);
+const HOLIDAY_SET_FOZ = buildHolidaySet(HOLIDAYS_FOZ);
+const HOLIDAY_SET_APARECIDA = buildHolidaySet(HOLIDAYS_APARECIDA);
+const HOLIDAY_SET_PONTA_GROSSA = buildHolidaySet(HOLIDAYS_PONTA_GROSSA);
 function addDaysISO(dateStr, n){
   const d = new Date(dateStr+'T00:00:00');
   d.setDate(d.getDate()+n);
@@ -1995,16 +2028,31 @@ function resumoComparativoBR(ranges){
     });
     return count;
   }
+  // Contagem simples (sem "prolongado") de feriados estaduais/municipais das localidades dos
+  // parques -- pedido do usuário, 19/08/2026. Mesma lógica de contagem do feriado nacional,
+  // só que aplicada a cada calendário estadual/municipal individualmente.
+  function contarRegional(list){
+    return {
+      2025: holidaysInRange(list[2025], ranges.r25start, ranges.r25end).length,
+      2026: holidaysInRange(list[2026], ranges.r26start, ranges.r26end).length,
+    };
+  }
   return {
     feriadoNacional: { 2025: h25.length, 2026: h26.length },
     feriadosProlongados: { 2025: contarProlongados(h25), 2026: contarProlongados(h26) },
     diasFinsDeSemana: { 2025: countWeekendDaysInRange(ranges.r25start, ranges.r25end), 2026: countWeekendDaysInRange(ranges.r26start, ranges.r26end) },
+    feriadoRJ: contarRegional(HOLIDAYS_RJ_EST),
+    feriadoFoz: contarRegional(HOLIDAYS_FOZ),
+    feriadoAparecida: contarRegional(HOLIDAYS_APARECIDA),
+    feriadoPontaGrossa: contarRegional(HOLIDAYS_PONTA_GROSSA),
   };
 }
 // Oportunidades do período selecionado (mês ou range Personalizado): feriados de
 // Brasil/Argentina/Paraguai/Chile/Uruguai/Colômbia/Peru/Bolívia (8 países -- os 3
 // originais + os 5 aprovados pelo usuário em 12/08/2026 por relevância de turismo
 // receptivo ao Brasil, ver dados Embratur citados na conversa; não é lista mundial)
+// + feriados estaduais/municipais das localidades dos parques (RJ estadual, Foz do Iguaçu,
+// Aparecida-SP e Ponta Grossa, todos municipais exceto RJ -- pedido do usuário, 19/08/2026)
 // + notas manuais da aba Eventos (categoria "Calendário Turístico") no mesmo período.
 function oportunidadesDoMes(ranges){
   const itens = [];
@@ -2026,6 +2074,11 @@ function oportunidadesDoMes(ranges){
   addCountry(HOLIDAYS_CO, HOLIDAY_SET_CO, 'COL', 'Colômbia');
   addCountry(HOLIDAYS_PE, HOLIDAY_SET_PE, 'PER', 'Peru');
   addCountry(HOLIDAYS_BO, HOLIDAY_SET_BO, 'BOL', 'Bolívia');
+  // Feriados estaduais/municipais das localidades dos parques -- pedido do usuário, 19/08/2026.
+  addCountry(HOLIDAYS_RJ_EST, HOLIDAY_SET_RJ_EST, 'RJ', 'Rio de Janeiro (estadual)');
+  addCountry(HOLIDAYS_FOZ, HOLIDAY_SET_FOZ, 'FOZ', 'Foz do Iguaçu (municipal)');
+  addCountry(HOLIDAYS_APARECIDA, HOLIDAY_SET_APARECIDA, 'APA', 'Aparecida-SP (municipal)');
+  addCountry(HOLIDAYS_PONTA_GROSSA, HOLIDAY_SET_PONTA_GROSSA, 'PG', 'Ponta Grossa (municipal)');
   itens.sort((a,b) => a.data.localeCompare(b.data));
   const eventosDoMes = (typeof EVENTOS !== 'undefined' ? EVENTOS : [])
     .filter(e => e.categoria === 'Calendário Turístico' && e.data >= ranges.r26start && e.data <= ranges.r26end);
@@ -3622,6 +3675,10 @@ function renderResumoComparativoBR(month){
     <tr><td>Feriado Nacional</td><td>${r.feriadoNacional[2025]}</td><td>${r.feriadoNacional[2026]}</td></tr>
     <tr><td>Feriados Prolongados</td><td>${r.feriadosProlongados[2025]}</td><td>${r.feriadosProlongados[2026]}</td></tr>
     <tr><td>Dias de Final de Semana</td><td>${r.diasFinsDeSemana[2025]}</td><td>${r.diasFinsDeSemana[2026]}</td></tr>
+    <tr><td>Feriado Estadual (RJ)</td><td>${r.feriadoRJ[2025]}</td><td>${r.feriadoRJ[2026]}</td></tr>
+    <tr><td>Feriado Municipal (Foz do Iguaçu)</td><td>${r.feriadoFoz[2025]}</td><td>${r.feriadoFoz[2026]}</td></tr>
+    <tr><td>Feriado Municipal (Aparecida-SP)</td><td>${r.feriadoAparecida[2025]}</td><td>${r.feriadoAparecida[2026]}</td></tr>
+    <tr><td>Feriado Municipal (Ponta Grossa)</td><td>${r.feriadoPontaGrossa[2025]}</td><td>${r.feriadoPontaGrossa[2026]}</td></tr>
   `;
 }
 
