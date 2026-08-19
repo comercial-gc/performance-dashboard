@@ -516,11 +516,16 @@
 
   /* ── Aba Mix de Origem ── */
   .mix-container{ padding:16px 24px; }
-  .mix-title-row{ display:flex; align-items:flex-start; flex-wrap:wrap; row-gap:10px; gap:10px; margin-bottom:4px; }
+  /* 19/08/2026: removido o "empurra pra direita" (margin-left:auto) que cada toggle desse
+     header tinha individualmente -- com Parque + Top5 + Mensal/Acumulado + Outro período +
+     Com/Sem Morador + Vs, cada auto-margin brigava por espaço e sobrava vão em branco em
+     vez de aproveitado (pedido do usuário: tudo alinhado numa linha só, sem gap ocioso).
+     Agora é fluxo normal com o mesmo espaçamento (gap) entre todos os campos/toggles. */
+  .mix-title-row{ display:flex; align-items:center; flex-wrap:wrap; row-gap:10px; gap:14px; margin-bottom:4px; }
   .mix-filter-field{ display:flex; align-items:center; gap:6px; }
   .mix-filter-field label{ font-size:12.5px; font-weight:700; color:var(--muted); }
   .mix-filter-field select, .mix-filter-field input[type=date]{ font-size:12.5px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink); cursor:pointer; }
-  .mix-morador-toggle{ margin-left:auto; display:flex; background:#eef1ee; border-radius:20px; padding:3px; gap:2px; }
+  .mix-morador-toggle{ display:flex; background:#eef1ee; border-radius:20px; padding:3px; gap:2px; }
   .mix-morador-toggle button{ border:none; background:transparent; padding:7px 16px; border-radius:16px; font-size:12.5px; font-weight:700; color:var(--muted); cursor:pointer; }
   .mix-morador-toggle button.active{ background:#0f3d2e; color:#fff; }
   .mix-title-bar{ width:4px; align-self:stretch; background:var(--ink); border-radius:2px; }
@@ -562,10 +567,13 @@
      botão ON/OFF global (setMixTop5Toggle) está desligado ou quando o
      parque não tem dado -- por isso a tabela SÓ recua quando .has-top5 está
      presente, senão ela volta a ocupar a largura toda sozinha. */
-  .mix-top-row{ display:flex; align-items:flex-start; gap:18px; }
+  .mix-top-row{ display:flex; align-items:flex-start; gap:14px; }
   .mix-top-row .mix-table-scroll{ flex:1 1 auto; min-width:0; margin-bottom:0; }
-  .mix-top-row.has-top5 .mix-table-scroll{ flex:1 1 260px; max-width:min(100%, 320px); }
-  .mix-top5-box{ flex:0 0 190px; border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fafafa; }
+  /* 19/08/2026: removido o max-width fixo que sobrava aqui -- a tabela agora ocupa TODO o
+     espaço que restar do card depois do bloco Top 5 (largura fixa, só o essencial pro
+     conteúdo dele), em vez de um teto arbitrário que deixava vão em branco à direita do
+     Top 5 e forçava rolagem interna na tabela sem necessidade (pedido do usuário). */
+  .mix-top5-box{ flex:0 0 175px; border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fafafa; }
   .mix-top5-title{ font-size:11px; font-weight:800; color:var(--muted); letter-spacing:.3px; margin-bottom:8px; white-space:nowrap; }
   .mix-top5-list{ display:flex; flex-direction:column; gap:6px; }
   .mix-top5-item{ display:flex; align-items:center; gap:8px; font-size:12.5px; }
@@ -601,23 +609,27 @@
   .clima-day .cd-emoji{ font-size:18px; margin:3px 0; }
   .clima-day.empty{ opacity:.35; }
   .share-meta-chart-wrap{ margin-top:16px; overflow-x:auto; padding-bottom:4px; }
-  /* Barra de volume de clima com 70% da largura fixos + mini tabela "régua" DDS/FDS à
-     direita com os 30% restantes, uma coluna por tipo de clima que aparece no mês
-     (dinâmico, não fixo) -- redesenho a partir do rascunho do usuário, 11/08/2026,
-     substitui o texto "X dias (Y sem, Z fds)" que ficava ao lado de cada barra.
-     BUG EVITADO: a primeira versão usava flex:0 0 auto na tabela (nunca encolhe, sempre
-     no tamanho natural do conteúdo) contra flex:0 1 55% na barra (pode encolher) -- com 5+
-     colunas de clima, a tabela sozinha já passava de 55% da largura e "comia" o espaço da
-     barra, que colapsava quase a zero (ficava só os emojis empilhados, sem barra nenhuma
-     visível). Agora as DUAS proporções são fixas (flex-shrink:0 nas duas, 70/30) e quem
-     rola por dentro se a tabela não couber é o WRAPPER da tabela (overflow-x), nunca a
-     barra. */
-  .clima-bar-chart-wrap{ margin-top:10px; display:flex; gap:16px; align-items:flex-start; }
-  .clima-bar-chart{ flex:0 0 calc(70% - 8px); min-width:0; display:flex; flex-direction:column; gap:6px; }
+  /* Barra de volume de clima + mini tabela "régua" DDS/FDS à direita, uma coluna por tipo
+     de clima que aparece no mês (dinâmico, não fixo) -- redesenho a partir do rascunho do
+     usuário, 11/08/2026, substitui o texto "X dias (Y sem, Z fds)" que ficava ao lado de
+     cada barra.
+     BUG EVITADO (11/08/2026): a primeira versão usava flex:0 0 auto na tabela (nunca
+     encolhe, sempre no tamanho natural do conteúdo) contra flex:0 1 55% na barra (pode
+     encolher) -- com 5+ colunas de clima, a tabela sozinha já passava de 55% da largura e
+     "comia" o espaço da barra, que colapsava quase a zero.
+     REVISADO 19/08/2026 (pedido do usuário): a correção acima (70/30 fixos) trocou aquele
+     bug por outro -- em meses com poucos tipos de clima a régua sobrava vão em branco à
+     direita dentro do seu próprio "30%", e em meses com muitos tipos ela ainda estourava e
+     rolava por dentro sem necessidade, mesmo tendo espaço de sobra do lado da barra. Agora
+     a régua fica com o tamanho NATURAL do conteúdo dela (nem fixo nem esticado) e é a barra
+     de volume que cresce pra ocupar todo o resto -- então a régua só rola por dentro no
+     caso extremo de o viewport ser mais estreito que o mínimo dos dois somados. */
+  .clima-bar-chart-wrap{ margin-top:10px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+  .clima-bar-chart{ flex:1 1 320px; min-width:220px; display:flex; flex-direction:column; gap:6px; }
   .clima-bar-row{ display:grid; grid-template-columns:150px 1fr; align-items:center; gap:8px; font-size:12px; }
   .clima-bar-track{ height:14px; background:#f0f0f0; border-radius:4px; overflow:hidden; display:flex; }
   .clima-bar-fill{ height:100%; }
-  .clima-regua-table-wrap{ flex:0 0 calc(30% - 8px); min-width:0; overflow-x:auto; }
+  .clima-regua-table-wrap{ flex:0 1 auto; min-width:0; overflow-x:auto; }
   .clima-regua-table{ border-collapse:collapse; font-size:11px; white-space:nowrap; }
   .clima-regua-table th, .clima-regua-table td{ border:1px solid var(--line); padding:4px 9px; text-align:center; }
   .clima-regua-table thead th{ background:#eef2f0; font-size:14px; padding:6px 9px; }
@@ -1529,7 +1541,7 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
           <option value="">Todos os Parques</option>
         </select>
       </div>
-      <div class="mix-morador-toggle" id="mixTop5Toggle" style="margin-left:0;">
+      <div class="mix-morador-toggle" id="mixTop5Toggle">
         <button class="active" data-val="on" onclick="setMixTop5Toggle('on')">Exibir Top 5</button>
         <button data-val="off" onclick="setMixTop5Toggle('off')">Ocultar Top 5</button>
       </div>
@@ -1549,11 +1561,11 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
         <label for="mixDataFim">Até</label>
         <input type="date" id="mixDataFim" onchange="renderMixOrigem()">
       </div>
-      <div class="mix-morador-toggle" id="mixMoradorToggle" style="margin-left:8px;">
+      <div class="mix-morador-toggle" id="mixMoradorToggle">
         <button class="active" data-val="com" onclick="setMixMorador('com')">Com Morador</button>
         <button data-val="sem" onclick="setMixMorador('sem')">Sem Morador</button>
       </div>
-      <div class="mix-filter-field" style="margin-left:8px;">
+      <div class="mix-filter-field">
         <label for="mixVsSelect">Vs</label>
         <select id="mixVsSelect" onchange="setMixVs(this.value)">
           <option value="nenhum">Nenhum</option>
