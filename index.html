@@ -2493,8 +2493,15 @@ function renderComboCharts(containerId, barField, barFmt){
     const allInv = d[barField];
     const allShare = d.share;
     const allVisit = d.visitacaoTotal;
-    // recorta a partir do primeiro mês com dado (parque ainda não existia antes disso)
-    let startIdx = allInv.findIndex(v => v !== null);
+    // recorta a partir do primeiro mês com QUALQUER dado (investimento OU share/visitação) --
+    // antes olhava só pra "investimento" (assumindo que o parque simplesmente não existia
+    // antes do 1º mês com R$ em mídia), o que funciona pros parques cuja fonte é a mesma
+    // pro share e pro investimento (Ecommerce base TI). Mas 3P/Vila Velha (Soul Parques)
+    // têm share/visitação com histórico desde 01/25 (linha "Ecommerce" tradicional -- ver
+    // SOUL_PARQUES_ECOMMERCE_TRADICIONAL no extract_data.py) e só passaram a ter "R$ em
+    // mídia" rastreado a partir de 2026 -- com o critério antigo, os 12 meses de 2025 com
+    // share real ficavam cortados do gráfico junto, como se o parque não existisse ainda.
+    let startIdx = allInv.findIndex((v, i) => v !== null || allShare[i] !== null || allVisit[i] !== null);
     if(startIdx < 0) startIdx = 0;
     const labels = allLabels.slice(startIdx);
     const invVals = allInv.slice(startIdx);
