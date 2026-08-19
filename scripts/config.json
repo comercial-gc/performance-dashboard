@@ -1,6 +1,13 @@
 {
-  "_comentario": "IDs sao a parte da URL entre /d/ e /edit. Nao sao segredo (o acesso e' controlado pelo compartilhamento da planilha com a service account) mas troque pelos IDs reais antes de rodar.",
 
+"top5_origem_folders": {
+  "AquaRio": "1A5qKFeQ_cqEACsqiZ_XAw7CR34-6RQr2", "BioParque": "1K_CX8cQr0kQp5yEMhDjkFJGT_ofaWXK6", "Paineiras": "1n7e_VX-iOpnhZkiA9jd8OR1CNPK3WqBn",
+  "M3F": "1e2QFsr_vCilSZuV7_3xOYqNKa9QRg2ch", "AquaFoz": "1u0r5OPe4jekzYnm_3pB5GL2KSXWvyf_5", "PNI": "1e97MkzBOK7jBC46ImDZ-3XqQQCWHuagn",
+  "Três Pescadores": "1HMqevDigbO3KlNHRzf6SxKmCpPsHM4IJ", "Vila Velha": "1fjs9K-3-X5H4WR8l4Gy7RtukOjNn5RBS"
+}
+  
+  "_comentario": "IDs sao a parte da URL entre /d/ e /edit. Nao sao segredo (o acesso e' controlado pelo compartilhamento da planilha com a service account) mas troque pelos IDs reais antes de rodar.",
+  
   "visitacao_parques_id": "1Ut5PCIe0oMUwfeRGLaM16HoTelGw0qfd",
   "mix_obz_visitacao_id": "1tvJ4eBvO-iMnr83J30Mzb8-ria5Kc6UJ9YR-54hhRkk",
   "share_ecommerce_id": "17YNZaRMm9mjHstJzLEp_E32SowCSMcm1iLH-Aw6Rfac",
