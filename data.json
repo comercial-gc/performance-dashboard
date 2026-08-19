@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-19T12:00:48.840186Z",
+  "geradoEm": "2026-08-19T13:31:05.297055Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -7213,16 +7213,16 @@
           "acumPct2025": "-%"
         },
         "Três Pescadores": {
-          "realizado": 22162,
+          "realizado": 22163,
           "obz": 23916.22,
-          "pctObz": -0.07334854755,
+          "pctObz": -0.07330673493,
           "y2025": 21708,
-          "pct2025": 0.02091394877,
-          "acumRealizado": 87485,
+          "pct2025": 0.02096001474,
+          "acumRealizado": 87486,
           "acumObzParcial": 103071.072,
-          "acumPctObz": -0.1512167449,
+          "acumPctObz": -0.1512070428,
           "acum2025": 93567,
-          "acumPct2025": -0.06500154969
+          "acumPct2025": -0.06499086216
         },
         "Vila Velha": {
           "realizado": 8940,
@@ -7261,28 +7261,28 @@
           "acumPct2025": 0.2066197564
         },
         "Total Soul Parques": {
-          "realizado": 31102,
+          "realizado": 31103,
           "obz": 32401.93,
-          "pctObz": -0.0401189065,
+          "pctObz": -0.04008804414,
           "y2025": 29620,
-          "pct2025": 0.05003376097,
-          "acumRealizado": 130065,
+          "pct2025": 0.05006752194,
+          "acumRealizado": 130066,
           "acumObzParcial": 146174.794,
-          "acumPctObz": -0.1102091103,
+          "acumPctObz": -0.1102022692,
           "acum2025": 133186,
-          "acumPct2025": -0.0234333939
+          "acumPct2025": -0.0234258856
         },
         "Total Geral": {
-          "realizado": 805428,
+          "realizado": 805429,
           "obz": 794314.699,
-          "pctObz": 0.01399105545,
+          "pctObz": 0.0139923144,
           "y2025": 621622,
-          "pct2025": 0.2956877331,
-          "acumRealizado": 4117124,
+          "pct2025": 0.2956893418,
+          "acumRealizado": 4117125,
           "acumObzParcial": 4016582.737,
-          "acumPctObz": 0.02503154288,
+          "acumPctObz": 0.02503179184,
           "acum2025": 3437507,
-          "acumPct2025": 0.197706361
+          "acumPct2025": 0.1977066519
         }
       },
       "daily": {
@@ -7990,7 +7990,7 @@
             492.0,
             528.0,
             579.0,
-            514.0
+            515.0
           ],
           "OBZ 2026": [
             521.54,
@@ -8421,11 +8421,11 @@
           "pctObz": -0.2860162172,
           "y2025": 8618,
           "pct2025": -0.2277790671,
-          "acumRealizado": 94140,
+          "acumRealizado": 94141,
           "acumObzParcial": 112392.012,
-          "acumPctObz": -0.1623959895,
+          "acumPctObz": -0.1623870921,
           "acum2025": 102185,
-          "acumPct2025": -0.07872975486
+          "acumPct2025": -0.07871996868
         },
         "Vila Velha": {
           "realizado": 2310,
@@ -8469,11 +8469,11 @@
           "pctObz": -0.2769543203,
           "y2025": 11405,
           "pct2025": -0.2139412538,
-          "acumRealizado": 139030,
+          "acumRealizado": 139031,
           "acumObzParcial": 158573.734,
-          "acumPctObz": -0.1232469811,
+          "acumPctObz": -0.1232406749,
           "acum2025": 144591,
-          "acumPct2025": -0.03846020845
+          "acumPct2025": -0.03845329239
         },
         "Total Geral": {
           "realizado": 277905,
@@ -8481,11 +8481,11 @@
           "pctObz": 0.04620100906,
           "y2025": 242370,
           "pct2025": 0.14661468,
-          "acumRealizado": 4395029,
+          "acumRealizado": 4395030,
           "acumObzParcial": 4282215.247,
-          "acumPctObz": 0.02634471798,
+          "acumPctObz": 0.0263449515,
           "acum2025": 3679877,
-          "acumPct2025": 0.1943412783
+          "acumPct2025": 0.19434155
         },
         "BioParque": {
           "realizado": null,
@@ -12323,17 +12323,33 @@
       "cv": 50390
     },
     "JULHO": {
-      "visitacao": 22162,
-      "cv": 92123
+      "visitacao": 22163,
+      "cv": 97130
     },
     "AGOSTO": {
       "visitacao": 6655,
       "cv": 38691
+    },
+    "SETEMBRO": {
+      "visitacao": 0,
+      "cv": 0
+    },
+    "OUTUBRO": {
+      "visitacao": 0,
+      "cv": 0
+    },
+    "NOVEMBRO": {
+      "visitacao": 0,
+      "cv": 0
+    },
+    "DEZEMBRO": {
+      "visitacao": 0,
+      "cv": 0
     }
   },
   "CAPTACAO_CV_3P_ANUAL": {
-    "visitacao": 92434,
-    "cv": 431140
+    "visitacao": 92435,
+    "cv": 436147
   },
   "CAPTACAO_CV_3P_DIARIO": {
     "2026-01-01": {
@@ -13178,11 +13194,11 @@
     },
     "2026-07-30": {
       "visitacao": 579,
-      "cv": null
+      "cv": 2252.0
     },
     "2026-07-31": {
-      "visitacao": 514,
-      "cv": null
+      "visitacao": 515,
+      "cv": 2755.0
     },
     "2026-08-01": {
       "visitacao": 1154,
@@ -13307,6 +13323,494 @@
     "2026-08-31": {
       "visitacao": null,
       "cv": null
+    },
+    "2026-09-01": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-02": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-03": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-04": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-05": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-06": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-07": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-08": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-09": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-10": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-11": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-12": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-13": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-14": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-15": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-16": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-17": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-18": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-19": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-20": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-21": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-22": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-23": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-24": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-25": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-26": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-27": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-28": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-29": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-09-30": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-01": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-02": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-03": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-04": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-05": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-06": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-07": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-08": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-09": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-10": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-11": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-12": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-13": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-14": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-15": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-16": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-17": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-18": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-19": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-20": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-21": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-22": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-23": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-24": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-25": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-26": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-27": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-28": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-29": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-30": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-10-31": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-01": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-02": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-03": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-04": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-05": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-06": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-07": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-08": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-09": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-10": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-11": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-12": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-13": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-14": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-15": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-16": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-17": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-18": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-19": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-20": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-21": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-22": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-23": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-24": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-25": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-26": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-27": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-28": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-29": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-11-30": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-01": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-02": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-03": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-04": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-05": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-06": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-07": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-08": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-09": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-10": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-11": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-12": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-13": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-14": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-15": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-16": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-17": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-18": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-19": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-20": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-21": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-22": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-23": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-24": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-25": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-26": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-27": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-28": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-29": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-30": {
+      "visitacao": null,
+      "cv": null
+    },
+    "2026-12-31": {
+      "visitacao": null,
+      "cv": null
     }
   },
   "CAPTACAO_PNI_SEMMORADOR": {
@@ -13317,13 +13821,13 @@
           "semMorador": 0.2902983089
         },
         "Agosto": {
-          "captacao": 0.2651905847,
-          "semMorador": 0.2524814352
+          "captacao": 0.254279974,
+          "semMorador": 0.2423479253
         }
       },
       "ano": {
-        "captacao": 0.2749662438,
-        "semMorador": 0.2615826043
+        "captacao": 0.2740851637,
+        "semMorador": 0.2607641143
       }
     },
     "AquaFoz": {
@@ -13333,13 +13837,13 @@
           "semMorador": 0.2518069542
         },
         "Agosto": {
-          "captacao": 0.2299095655,
-          "semMorador": 0.207369206
+          "captacao": 0.216069121,
+          "semMorador": 0.1954309215
         }
       },
       "ano": {
-        "captacao": 0.2497728487,
-        "semMorador": 0.2193725562
+        "captacao": 0.2485988679,
+        "semMorador": 0.2183986264
       }
     }
   },
@@ -13362,7 +13866,7 @@
       314764,
       286231,
       511705,
-      154626
+      162923
     ],
     "ecommerce": [
       138935.0,
@@ -13382,7 +13886,7 @@
       0.25765652997166133,
       0.24890036369226254,
       0.2734778827644834,
-      0.28532717654210804
+      0.27079663399274506
     ]
   },
   "SHARE": {
@@ -13393,13 +13897,13 @@
           "parque": "Aquario",
           "metaAnual": 0.25,
           "ecommerce2026": 196635,
-          "visitacao2026": 710000,
-          "share2026": 0.2769507042,
+          "visitacao2026": 711653,
+          "share2026": 0.2763074139,
           "ecommerce2025": 107864,
           "visitacao2025": 447945,
           "share2025": 0.2407974193,
-          "deltaPP": 0.0361532849,
-          "gapMeta": 0.02695070423
+          "deltaPP": 0.03550999454,
+          "gapMeta": 0.02630741387
         },
         {
           "parque": "Bioparque",
@@ -13417,49 +13921,49 @@
           "parque": "Paineiras",
           "metaAnual": 0.25,
           "ecommerce2026": 215917,
-          "visitacao2026": 1013081,
-          "share2026": 0.2131290588,
+          "visitacao2026": 1016997,
+          "share2026": 0.2123083942,
           "ecommerce2025": 139623,
           "visitacao2025": 959961,
           "share2025": 0.1454465338,
-          "deltaPP": 0.06768252502,
-          "gapMeta": -0.03687094122
+          "deltaPP": 0.06686186046,
+          "gapMeta": -0.03769160578
         },
         {
           "parque": "Marco",
           "metaAnual": 0.25,
           "ecommerce2026": 60217,
-          "visitacao2026": 390124,
-          "share2026": 0.1543534876,
+          "visitacao2026": 391834,
+          "share2026": 0.1536798746,
           "ecommerce2025": 32704,
           "visitacao2025": 312092,
           "share2025": 0.1047896133,
-          "deltaPP": 0.04956387429,
-          "gapMeta": -0.09564651239
+          "deltaPP": 0.04889026132,
+          "gapMeta": -0.09632012536
         },
         {
           "parque": "Aquafoz",
           "metaAnual": 0.25,
           "ecommerce2026": 68701,
-          "visitacao2026": 353951,
-          "share2026": 0.1940974881,
+          "visitacao2026": 354969,
+          "share2026": 0.1935408444,
           "ecommerce2025": 0,
           "visitacao2025": 0,
           "share2025": 0,
-          "deltaPP": 0.1940974881,
-          "gapMeta": -0.05590251193
+          "deltaPP": 0.1935408444,
+          "gapMeta": -0.05645915559
         },
         {
           "parque": "Grupo Cataratas",
           "metaAnual": 0.25,
           "ecommerce2026": 423505,
-          "visitacao2026": 1767737,
-          "share2026": 0.2395746652,
+          "visitacao2026": 1773363,
+          "share2026": 0.2388146138,
           "ecommerce2025": 300124,
           "visitacao2025": 1593457,
           "share2025": 0.1883477245,
-          "deltaPP": 0.05122694076,
-          "gapMeta": -0.01042533476
+          "deltaPP": 0.05046688934,
+          "gapMeta": -0.01118538618
         }
       ]
     },
@@ -13518,21 +14022,21 @@
           },
           "3P": {
             "visitacao2026": 14838.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 288.0,
+            "share2026": 0.01940962393853619,
             "visitacao2025": 16062.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 173.0,
+            "share2025": 0.010770763292242561,
             "investimento2026": 2876.75,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 7836,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1831.0,
+            "share2026": 0.2336651352730985,
             "visitacao2025": 6128.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1400.0,
+            "share2025": 0.22845953002610966,
             "investimento2026": 7350.6,
             "investimento2025": null
           }
@@ -13590,21 +14094,21 @@
           },
           "3P": {
             "visitacao2026": 7717.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 200.0,
+            "share2026": 0.025916807049371517,
             "visitacao2025": 7133.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 128.0,
+            "share2025": 0.01794476377400813,
             "investimento2026": 1594.41,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 4812,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1588.0,
+            "share2026": 0.33000831255195345,
             "visitacao2025": 2483.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 672.0,
+            "share2025": 0.2706403544099879,
             "investimento2026": 7075.15,
             "investimento2025": null
           }
@@ -13662,21 +14166,21 @@
           },
           "3P": {
             "visitacao2026": 8358.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 107.0,
+            "share2026": 0.012802105766929887,
             "visitacao2025": 11451.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 181.0,
+            "share2025": 0.015806479783425028,
             "investimento2026": 4134.88,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 3971,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1119.0,
+            "share2026": 0.2817929992445228,
             "visitacao2025": 5828.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1675.0,
+            "share2025": 0.2874056280027454,
             "investimento2026": 6878.96,
             "investimento2025": null
           }
@@ -13734,21 +14238,21 @@
           },
           "3P": {
             "visitacao2026": 10680.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 214.0,
+            "share2026": 0.020037453183520598,
             "visitacao2025": 11261.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 137.0,
+            "share2025": 0.012165882248468164,
             "investimento2026": 6648.45,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 7668,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1729.0,
+            "share2026": 0.22548252477829941,
             "visitacao2025": 7238.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1895.0,
+            "share2025": 0.2618126554296767,
             "investimento2026": 6839.36,
             "investimento2025": null
           }
@@ -13806,21 +14310,21 @@
           },
           "3P": {
             "visitacao2026": 13163.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 223.0,
+            "share2026": 0.016941426726430144,
             "visitacao2025": 13507.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 159.0,
+            "share2025": 0.011771673946842379,
             "investimento2026": 7031.72,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 4187,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 949.0,
+            "share2026": 0.22665392882732266,
             "visitacao2025": 5592.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1436.0,
+            "share2025": 0.25679542203147354,
             "investimento2026": 6834.81,
             "investimento2025": null
           }
@@ -13878,21 +14382,21 @@
           },
           "3P": {
             "visitacao2026": 10631.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 206.0,
+            "share2026": 0.019377292822876493,
             "visitacao2025": 12445.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 136.0,
+            "share2025": 0.010928083567697871,
             "investimento2026": 5970.37,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 5166,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 840.0,
+            "share2026": 0.16260162601626016,
             "visitacao2025": 4438.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 961.0,
+            "share2025": 0.21653898152320866,
             "investimento2026": 6361.09,
             "investimento2025": null
           }
@@ -13905,7 +14409,7 @@
             "visitacao2025": 52258,
             "ecommerce2025": 15486.0,
             "share2025": 0.29633740288568255,
-            "investimento2026": 33959.83,
+            "investimento2026": 35111.21,
             "investimento2025": 45578.0
           },
           "AquaRio": {
@@ -13950,30 +14454,30 @@
           },
           "3P": {
             "visitacao2026": 22460.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1543.0,
+            "share2026": 0.06869991095280499,
             "visitacao2025": 21714.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 203.0,
+            "share2025": 0.009348807221147646,
             "investimento2026": 7583.84,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 8940,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 2341.0,
+            "share2026": 0.26185682326621923,
             "visitacao2025": 7912.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1496.0,
+            "share2025": 0.1890798786653185,
             "investimento2026": 7167.52,
             "investimento2025": null
           }
         },
         "Agosto": {
           "AquaRio": {
-            "visitacao2026": 45854,
+            "visitacao2026": 47507,
             "ecommerce2026": 12432,
-            "share2026": 0.27112138526627994,
+            "share2026": 0.26168775127875893,
             "visitacao2025": 49720.619965585174,
             "ecommerce2025": 15772.182429188671,
             "share2025": 0.3172161256256581,
@@ -13981,19 +14485,19 @@
             "investimento2025": 29636.0
           },
           "Paineiras": {
-            "visitacao2026": 61660,
+            "visitacao2026": 65576,
             "ecommerce2026": 23195,
-            "share2026": 0.37617580278949075,
+            "share2026": 0.35371172380139076,
             "visitacao2025": 64884.0,
             "ecommerce2025": 11445.34494302831,
             "share2025": 0.17639703074761592,
-            "investimento2026": 24928.5,
+            "investimento2026": 24927.98,
             "investimento2025": 32393.32
           },
           "M3F": {
-            "visitacao2026": 25244,
+            "visitacao2026": 26954,
             "ecommerce2026": 3756,
-            "share2026": 0.14878783077166852,
+            "share2026": 0.13934851970023002,
             "visitacao2025": 21737.0,
             "ecommerce2025": 1558.0,
             "share2025": 0.07167502415236693,
@@ -14001,9 +14505,9 @@
             "investimento2025": 2014.21
           },
           "AquaFoz": {
-            "visitacao2026": 21868,
+            "visitacao2026": 22886,
             "ecommerce2026": 4736.0,
-            "share2026": 0.21657216023413206,
+            "share2026": 0.2069387398409508,
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
@@ -14012,21 +14516,21 @@
           },
           "3P": {
             "visitacao2026": 5575.0,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 1813.0,
+            "share2026": 0.3252017937219731,
             "visitacao2025": 14782.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 160.0,
+            "share2025": 0.01082397510485726,
             "investimento2026": 3553.77,
             "investimento2025": null
           },
           "Vila Velha": {
             "visitacao2026": 2310,
-            "ecommerce2026": null,
-            "share2026": 0,
+            "ecommerce2026": 494.0,
+            "share2026": 0.21385281385281385,
             "visitacao2025": 5160.0,
-            "ecommerce2025": null,
-            "share2025": null,
+            "ecommerce2025": 1239.0,
+            "share2025": 0.24011627906976743,
             "investimento2026": 4123.19,
             "investimento2025": null
           }
@@ -14077,7 +14581,7 @@
             41409.85,
             29066.42,
             30015.84,
-            33959.83,
+            35111.21,
             null
           ],
           "share": [
@@ -14168,7 +14672,7 @@
             0.2648099518,
             0.2458279427,
             0.3207593547,
-            0.2711213853
+            0.2616877513
           ],
           "visitacaoTotal": [
             127823,
@@ -14190,7 +14694,7 @@
             81111,
             76521,
             122051,
-            45854
+            47507
           ]
         },
         "Paineiras": {
@@ -14214,7 +14718,7 @@
             40765.67,
             31278.29,
             54918.27,
-            24928.5
+            24927.98
           ],
           "share": [
             0.1429418743,
@@ -14236,7 +14740,7 @@
             0.2401266395,
             0.2195908453,
             0.2264315746,
-            0.3761758028
+            0.3537117238
           ],
           "visitacaoTotal": [
             183774,
@@ -14258,7 +14762,7 @@
             110550,
             95514,
             135096,
-            61660
+            65576
           ]
         },
         "M3F": {
@@ -14304,7 +14808,7 @@
             0.1399023332,
             0.1341773959,
             0.1538261709,
-            0.1487878308
+            0.1393485197
           ],
           "visitacaoTotal": [
             61517.0,
@@ -14326,7 +14830,7 @@
             46075,
             42019,
             80838,
-            25244
+            26954
           ]
         },
         "AquaFoz": {
@@ -14372,7 +14876,7 @@
             0.2680102666,
             0.2478315097,
             0.2868167113,
-            0.2165721602
+            0.2069387398
           ],
           "visitacaoTotal": [
             null,
@@ -14394,7 +14898,7 @@
             34286,
             35278,
             71401,
-            21868
+            22886
           ]
         },
         "3P": {
@@ -14421,26 +14925,26 @@
             3553.77
           ],
           "share": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            0.01077076329,
+            0.01794476377,
+            0.01580647978,
+            0.01216588225,
+            0.01177167395,
+            0.01092808357,
+            0.009348807221,
+            0.0108239751,
+            0.02296832198,
+            0.0106688862,
+            0.02147468569,
+            0.02977220799,
+            0.01940962394,
+            0.02591680705,
+            0.01280210577,
+            0.02003745318,
+            0.01694142673,
+            0.01937729282,
+            0.06869991095,
+            0.3252017937
           ],
           "visitacaoTotal": [
             16062.0,
@@ -14489,26 +14993,26 @@
             4123.19
           ],
           "share": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            0.22845953,
+            0.2706403544,
+            0.287405628,
+            0.2618126554,
+            0.256795422,
+            0.2165389815,
+            0.1890798787,
+            0.2401162791,
+            0.363138061,
+            0.2250988142,
+            0.2877616747,
+            0.2919945262,
+            0.2336651353,
+            0.3300083126,
+            0.2817929992,
+            0.2254825248,
+            0.2266539288,
+            0.162601626,
+            0.2618568233,
+            0.2138528139
           ],
           "visitacaoTotal": [
             6128.0,
@@ -20595,32 +21099,32 @@
         {
           "label": "Local",
           "v2025": 11484,
-          "v2026": 21109,
-          "delta": 0.8381226054,
+          "v2026": 23199,
+          "delta": 1.020114943,
           "share25": 0.1769927871,
-          "share26": 0.3476277523
+          "share26": 0.3589120782
         },
         {
           "label": "Brasileiros",
           "v2025": 24130,
-          "v2026": 22738,
-          "delta": -0.0576875259,
+          "v2026": 23822,
+          "delta": -0.01276419395,
           "share25": 0.3718944578,
-          "share26": 0.3744544901
+          "share26": 0.3685505206
         },
         {
           "label": "Estrangeiros",
           "v2025": 29270,
-          "v2026": 16876,
-          "delta": -0.4234369662,
+          "v2026": 17616,
+          "delta": -0.3981551076,
           "share25": 0.4511127551,
-          "share26": 0.2779177577
+          "share26": 0.2725374012
         },
         {
           "label": "Total Mês",
           "v2025": 64884,
-          "v2026": 60723,
-          "delta": -0.0641298317,
+          "v2026": 64637,
+          "delta": -0.003806793663,
           "share25": 1,
           "share26": 1
         }
@@ -20632,48 +21136,48 @@
         {
           "label": "Morador",
           "v2025": 1964,
-          "v2026": 1210,
-          "delta": -0.383910387,
+          "v2026": 1265,
+          "delta": -0.3559063136,
           "share25": 0.09044855853,
-          "share26": 0.04792458809
+          "share26": 0.04692484606
         },
         {
           "label": "Estado",
           "v2025": 5499,
-          "v2026": 4987,
-          "delta": -0.09310783779,
+          "v2026": 5182,
+          "delta": -0.05764684488,
           "share25": 0.2532467532,
-          "share26": 0.1975205957
+          "share26": 0.1922249425
         },
         {
           "label": "Brasileiros",
           "v2025": 10727,
-          "v2026": 15881,
-          "delta": 0.4804698425,
+          "v2026": 17173,
+          "delta": 0.6009135825,
           "share25": 0.4940130791,
-          "share26": 0.6290003169
+          "share26": 0.6370279694
         },
         {
           "label": "Mercosul",
           "v2025": 578,
-          "v2026": 299,
-          "delta": -0.4826989619,
+          "v2026": 306,
+          "delta": -0.4705882353,
           "share25": 0.0266187713,
-          "share26": 0.01184252218
+          "share26": 0.01135099043
         },
         {
           "label": "Estrangeiros",
           "v2025": 2946,
-          "v2026": 2871,
-          "delta": -0.02545824847,
+          "v2026": 3032,
+          "delta": 0.02919212492,
           "share25": 0.1356728378,
-          "share26": 0.1137119772
+          "share26": 0.1124712516
         },
         {
           "label": "Total Mês",
           "v2025": 21714,
-          "v2026": 25248,
-          "delta": 0.1627521415,
+          "v2026": 26958,
+          "delta": 0.2415031777,
           "share25": 1,
           "share26": 1
         }
@@ -20685,47 +21189,47 @@
         {
           "label": "Morador",
           "v2025": null,
-          "v2026": 2146,
+          "v2026": 2188,
           "delta": null,
           "share25": null,
-          "share26": 0.09804011147
+          "share26": 0.0955166543
         },
         {
           "label": "Estado",
           "v2025": null,
-          "v2026": 5718,
+          "v2026": 5933,
           "delta": null,
           "share25": null,
-          "share26": 0.2612271004
+          "share26": 0.259003798
         },
         {
           "label": "Brasileiros",
           "v2025": null,
-          "v2026": 7798,
+          "v2026": 8210,
           "delta": null,
           "share25": null,
-          "share26": 0.3562519987
+          "share26": 0.3584057275
         },
         {
           "label": "Mercosul",
           "v2025": null,
-          "v2026": 4468,
+          "v2026": 4750,
           "delta": null,
           "share25": null,
-          "share26": 0.2041207913
+          "share26": 0.2073601956
         },
         {
           "label": "Estrangeiros",
           "v2025": null,
-          "v2026": 1759,
+          "v2026": 1826,
           "delta": null,
           "share25": null,
-          "share26": 0.08035999817
+          "share26": 0.07971362466
         },
         {
           "label": "Total Mês",
           "v2025": null,
-          "v2026": 21889,
+          "v2026": 22907,
           "delta": null,
           "share25": null,
           "share26": 1
@@ -20933,32 +21437,32 @@
         {
           "label": "Local",
           "v2025": 170973,
-          "v2026": 241598,
-          "delta": 0.4130769186,
+          "v2026": 243688,
+          "delta": 0.4253010709,
           "share25": 0.1786540523,
-          "share26": 0.2391763396
+          "share26": 0.2403142285
         },
         {
           "label": "Brasileiros",
           "v2025": 475977,
-          "v2026": 404245,
-          "delta": -0.1507047609,
+          "v2026": 405329,
+          "delta": -0.14842734,
           "share25": 0.4973605181,
-          "share26": 0.4001930454
+          "share26": 0.3997173679
         },
         {
           "label": "Estrangeiros",
           "v2025": 310056,
-          "v2026": 364282,
-          "delta": 0.1748909874,
+          "v2026": 365022,
+          "delta": 0.1772776531,
           "share25": 0.3239854296,
-          "share26": 0.360630615
+          "share26": 0.3599684036
         },
         {
           "label": "Total acumulado",
           "v2025": 957006,
-          "v2026": 1010125,
-          "delta": 0.05550539913,
+          "v2026": 1014039,
+          "delta": 0.05959523765,
           "share25": 1,
           "share26": 1
         }
@@ -20970,48 +21474,48 @@
         {
           "label": "Morador",
           "v2025": 21626,
-          "v2026": 19031,
-          "delta": -0.1199944511,
+          "v2026": 19086,
+          "delta": -0.1174512161,
           "share25": 0.06824773176,
-          "share26": 0.04867375464
+          "share26": 0.04860186249
         },
         {
           "label": "Estado",
           "v2025": 106055,
-          "v2026": 97113,
-          "delta": -0.08431474235,
+          "v2026": 97308,
+          "delta": -0.08247607374,
           "share25": 0.3346903353,
-          "share26": 0.2483765611
+          "share26": 0.2477915768
         },
         {
           "label": "Brasileiros",
           "v2025": 154924,
-          "v2026": 233332,
-          "delta": 0.5061062198,
+          "v2026": 234624,
+          "delta": 0.5144457928,
           "share25": 0.4889120316,
-          "share26": 0.5967707697
+          "share26": 0.5974621913
         },
         {
           "label": "Mercosul",
           "v2025": 6925,
-          "v2026": 5342,
-          "delta": -0.2285920578,
+          "v2026": 5349,
+          "delta": -0.2275812274,
           "share25": 0.02185404339,
-          "share26": 0.01366271858
+          "share26": 0.01362105011
         },
         {
           "label": "Estrangeiros",
           "v2025": 27345,
-          "v2026": 36173,
-          "delta": 0.3228378131,
+          "v2026": 36334,
+          "delta": 0.328725544,
           "share25": 0.08629585799,
-          "share26": 0.09251619602
+          "share26": 0.09252331927
         },
         {
           "label": "Total acumulado",
           "v2025": 316875,
-          "v2026": 390991,
-          "delta": 0.2338966469,
+          "v2026": 392701,
+          "delta": 0.2392930966,
           "share25": 1,
           "share26": 1
         }
@@ -21023,47 +21527,47 @@
         {
           "label": "Morador",
           "v2025": null,
-          "v2026": 43228,
+          "v2026": 43270,
           "delta": null,
           "share25": null,
-          "share26": 0.1217117581
+          "share26": 0.1214818142
         },
         {
           "label": "Estado",
           "v2025": null,
-          "v2026": 104066,
+          "v2026": 104281,
           "delta": null,
           "share25": null,
-          "share26": 0.2930058254
+          "share26": 0.2927720145
         },
         {
           "label": "Brasileiros",
           "v2025": null,
-          "v2026": 118110,
+          "v2026": 118522,
           "delta": null,
           "share25": null,
-          "share26": 0.3325477874
+          "share26": 0.3327540464
         },
         {
           "label": "Mercosul",
           "v2025": null,
-          "v2026": 73760,
+          "v2026": 74042,
           "delta": null,
           "share25": null,
-          "share26": 0.207676952
+          "share26": 0.2078751211
         },
         {
           "label": "Estrangeiros",
           "v2025": null,
-          "v2026": 16003,
+          "v2026": 16070,
           "delta": null,
           "share25": null,
-          "share26": 0.04505767709
+          "share26": 0.0451170038
         },
         {
           "label": "Total acumulado",
           "v2025": null,
-          "v2026": 355167,
+          "v2026": 356185,
           "delta": null,
           "share25": null,
           "share26": 1
@@ -29925,6 +30429,19 @@
             "Brasileiros": 2332.0,
             "Estrangeiros": 2169.0
           }
+        },
+        {
+          "data": "2026-08-18",
+          "v26": {
+            "Local": 2090.0,
+            "Brasileiros": 1084.0,
+            "Estrangeiros": 740.0
+          },
+          "v25": {
+            "Local": 602.0,
+            "Brasileiros": 1519.0,
+            "Estrangeiros": 2146.0
+          }
         }
       ]
     },
@@ -33829,6 +34346,23 @@
             "Mercosul": 53.0,
             "Estrangeiros": 224.0
           }
+        },
+        {
+          "data": "2026-08-18",
+          "v26": {
+            "Morador": 55.0,
+            "Estado": 195.0,
+            "Brasileiros": 1292.0,
+            "Mercosul": 7.0,
+            "Estrangeiros": 161.0
+          },
+          "v25": {
+            "Morador": 0.0,
+            "Estado": 0.0,
+            "Brasileiros": 0.0,
+            "Mercosul": 0.0,
+            "Estrangeiros": 0.0
+          }
         }
       ]
     },
@@ -37725,6 +38259,23 @@
             "Brasileiros": 335.0,
             "Mercosul": 183.0,
             "Estrangeiros": 60.0
+          },
+          "v25": {
+            "Morador": null,
+            "Estado": null,
+            "Brasileiros": null,
+            "Mercosul": null,
+            "Estrangeiros": null
+          }
+        },
+        {
+          "data": "2026-08-18",
+          "v26": {
+            "Morador": 42.0,
+            "Estado": 215.0,
+            "Brasileiros": 412.0,
+            "Mercosul": 282.0,
+            "Estrangeiros": 67.0
           },
           "v25": {
             "Morador": null,
@@ -50221,33 +50772,19 @@
       },
       "Consolidado": {
         "anos": {
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
           ],
           "2025": [
             666687.0,
@@ -50263,6 +50800,34 @@
             500148.0,
             520889.0
           ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
+          ],
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
+          ],
           "2012": [
             null,
             null,
@@ -50271,6 +50836,118 @@
             null,
             null,
             null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
+          ],
+          "2013": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
+          ],
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
+          "2015": [
+            189451.0,
+            115349.0,
+            111054.0,
+            108663.0,
+            102143.0,
+            84400.0,
+            137042.0,
+            104524.0,
+            93861.0,
+            103315.0,
+            84938.0,
+            122376.0
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
+          ],
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            470681.0,
+            422910.0,
+            717481.0,
             null,
             null,
             null,
@@ -50291,118 +50968,6 @@
             90379.0,
             79635.0
           ],
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
-          ],
-          "2013": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2015": [
-            189451.0,
-            115349.0,
-            111054.0,
-            108663.0,
-            102143.0,
-            84400.0,
-            137042.0,
-            104524.0,
-            93861.0,
-            103315.0,
-            84938.0,
-            122376.0
-          ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
-          ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
-          ],
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
-          ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
-          ],
           "2018": [
             321385.0,
             168024.0,
@@ -50416,75 +50981,61 @@
             149282.0,
             162033.0,
             182819.0
-          ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            470681.0,
-            422910.0,
-            717481.0,
-            null,
-            null,
-            null,
-            null,
-            null
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2023": [
-            1486747,
-            1503931
-          ],
-          "2014": [
-            717316,
-            673740
+          "2024": [
+            2410556,
+            2803391
           ],
           "2025": [
             2704477,
             2940308
           ],
-          "2020": [
-            575832,
-            365664
-          ],
-          "2021": [
-            726490,
-            1392943
-          ],
-          "2015": [
-            711060,
-            646056
-          ],
-          "2019": [
-            1015073,
-            1044424
-          ],
-          "2016": [
-            635485,
-            584255
+          "2017": [
+            1300881,
+            1170345
           ],
           "2022": [
             1195615,
             1502267
           ],
-          "2017": [
-            1300881,
-            1170345
+          "2015": [
+            711060,
+            646056
           ],
-          "2024": [
-            2410556,
-            2803391
+          "2023": [
+            1486747,
+            1503931
           ],
-          "2018": [
-            992762,
-            968837
+          "2016": [
+            635485,
+            584255
+          ],
+          "2014": [
+            717316,
+            673740
+          ],
+          "2019": [
+            1015073,
+            1044424
+          ],
+          "2021": [
+            726490,
+            1392943
           ],
           "2026": [
             3213884,
             717481
+          ],
+          "2020": [
+            575832,
+            365664
+          ],
+          "2018": [
+            992762,
+            968837
           ]
         }
       }
