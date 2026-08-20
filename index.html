@@ -1781,17 +1781,27 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
         <button data-val="mensal" onclick="setCrossAquafozView('mensal')">Mensal</button>
       </div>
     </div>
-    <div class="hint" style="margin:-6px 0 10px 0;">Fonte: planilha "Vendas Cross para AquaFoz 2026" (aba do mês vigente + aba "Venda mes a mes"), atualizada automaticamente todo dia junto com o resto do painel</div>
+    <div class="hint" style="margin:-6px 0 10px 0;">Fonte: planilha "Vendas Cross para AquaFoz 2026", aba "Geral data" (uma linha por dia, ano inteiro), atualizada automaticamente todo dia junto com o resto do painel</div>
 
     <div id="crossAquafozDiariaWrap">
-      <div class="mix-card" style="border-top-color:#45818E; max-width:820px;">
+      <div class="mix-card" style="border-top-color:#45818E;">
         <div class="mix-card-head"><span class="name" id="crossAquafozDiariaTitle">Cross AquaFoz</span></div>
+        <div class="kpi-row" id="crossAquafozKpisGeral" style="margin-bottom:14px;"></div>
+        <div class="kpi-row" id="crossAquafozKpisCanais"></div>
+      </div>
+      <div class="mix-card" style="border-top-color:#45818E; margin-top:16px; max-width:820px;">
+        <div class="mix-card-head"><span class="name">Régua diária por local de venda</span></div>
         <div class="mix-table-scroll"><table class="mix-table" id="crossAquafozTabelaCanal"></table></div>
         <div id="crossAquafozVisitacaoFoot" class="hint" style="margin-top:2px;"></div>
       </div>
       <div class="mix-card" style="border-top-color:#45818E; margin-top:16px;">
-        <div class="mix-card-head"><span class="name">Total cross por dia</span></div>
+        <div class="mix-card-head"><span class="name">Venda diária por local</span></div>
         <div id="crossAquafozChart"></div>
+        <div id="crossAquafozChartLegenda" class="hint" style="margin-top:6px;"></div>
+      </div>
+      <div class="mix-card" style="border-top-color:#45818E; margin-top:16px;">
+        <div class="mix-card-head"><span class="name">Total cross x Captação diária PNI | ano inteiro</span></div>
+        <div id="crossAquafozAnualChart" style="overflow-x:auto;"></div>
       </div>
     </div>
 
@@ -6134,17 +6144,32 @@ function renderMixOrigem() {
   });
 })();
 
-// ── Cross AquaFoz (20/08/2026) ──────────────────────────────────────────────────────────
+// ── Cross AquaFoz (20/08/2026, revisado 20/08/2026) ────────────────────────────────────
 // Relatório de vendas cruzadas (Marco das 3 Fronteiras + Aeroporto + PNI) que o supervisor
 // de Foz hoje monta na mão a partir da planilha "Vendas Cross para AquaFoz 2026" pra mandar
-// pra Camila. Automatizado aqui em 2 visões: Diária (mês vigente, canal a canal, com o
-// mesmo agrupamento visual que ele já usa) e Mensal (série Jan..mês vigente). Ver
-// cross_aquafoz_extension.py pro lado da extração -- o front-end aqui NUNCA usa o "painel
-// resumo" datado à mão que existe na planilha (ver nota no módulo Python), sempre soma as
-// colunas diárias, então o número em tela é sempre o mais atual possível.
-let CROSS_AQUAFOZ = { mensal:{}, diaria:{}, mesAtual:null };
+// pra Camila -- e que alimenta o dashboard Looker Studio real dele ("Vendas Cross AQF").
+// 2 visões: Diária (mês vigente, canal a canal) e Mensal (série Jan..mês vigente). Ver
+// cross_aquafoz_extension.py pro lado da extração -- desde a revisão de 20/08, tudo vem da
+// aba "Geral data" (única fonte, um dia por linha, ano inteiro, com Combo MF3 já separado --
+// ver docstring do módulo Python pra entender por que essa troca de fonte foi necessária).
+let CROSS_AQUAFOZ = { mensal:{}, diaria:{}, anual:[], mesAtual:null };
 let crossAquafozView = 'diaria';
 const CROSS_MESES_ORDER = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+// Cores por canal -- mesma ordem/paleta do dashboard Looker Studio real do usuário (prints
+// de referência de 20/08/2026), pra manter familiaridade com o que a equipe já reconhece,
+// com ajuste de tom pra garantir contraste em fundo branco (ex.: amarelo do Totem PNI ficou
+// mais escuro que o original, senão o texto/tooltip fica ilegível).
+const CROSS_CHANNEL_COLORS = {
+  bilheteriaMf3: { label:'Bilheteria MF3', color:'#3d85c6' },
+  tradeMf3:      { label:'Trade balcão MF3', color:'#e69138' },
+  crossMf3:      { label:'Cross MF3', color:'#8e63ce' },
+  comboMf3:      { label:'Combo MF3', color:'#7f9f4a' },
+  aeroporto:     { label:'Aeroporto', color:'#45818E' },
+  totemPni:      { label:'Totem PNI', color:'#bf9000' },
+  comboPni:      { label:'Combo PNI', color:'#c27ba0' },
+  crossPni:      { label:'Cross PNI', color:'#3c4bb0' },
+};
 
 function setCrossAquafozView(val){
   crossAquafozView = val;
@@ -6158,18 +6183,34 @@ function renderCrossAquafozTab(){
   renderCrossAquafozMensal();
 }
 
-// Soma as colunas diárias (A-O da aba do mês vigente) em 3 blocos de canal -- Marco das 3
-// Fronteiras (Bilheteria/Trade balcão/Cross), Aeroporto, PNI (Cross/Totem/Combo) -- e monta
-// a tabela + as 2 linhas de referência (*Visitação AquaFoz/PNI) igual ao relatório que já
-// existe, mas sempre recalculado a partir do dado diário (nunca do painel datado à mão).
+function caKpiCard(label, value, color, highlight){
+  const top = color ? `border-top:3px solid ${color};` : '';
+  const bg = highlight ? 'background:#f2f8f7;' : '';
+  const valStyle = highlight ? `color:${color||'#1d5c60'};font-size:22px;` : '';
+  return `<div class="kpi-card" style="${top}${bg}">
+    <div class="label">${label}</div>
+    <div class="value" style="${valStyle}">${value}</div>
+  </div>`;
+}
+
+// Soma as colunas diárias (aba "Geral data", já filtrada pro mês vigente em
+// cross_aquafoz_extension.py) nos 8 canais -- Marco das 3 Fronteiras (Bilheteria/Trade
+// balcão/Cross/Combo), Aeroporto, PNI (Cross/Totem/Combo) -- monta os cartões de KPI, a
+// régua (tabela) e os 2 gráficos diários, sempre recalculado a partir do dado diário (nunca
+// de painel datado à mão -- ver nota no módulo Python).
 function renderCrossAquafozDiaria(){
   const diaria = CROSS_AQUAFOZ.diaria || {};
   const dias = Object.keys(diaria).sort();
   const titleEl = document.getElementById('crossAquafozDiariaTitle');
+  const kpiGeralEl = document.getElementById('crossAquafozKpisGeral');
+  const kpiCanaisEl = document.getElementById('crossAquafozKpisCanais');
   const footEl = document.getElementById('crossAquafozVisitacaoFoot');
   const tabelaEl = document.getElementById('crossAquafozTabelaCanal');
   const chartEl = document.getElementById('crossAquafozChart');
+  const legendaEl = document.getElementById('crossAquafozChartLegenda');
+  const anualChartEl = document.getElementById('crossAquafozAnualChart');
   if(titleEl) titleEl.textContent = CROSS_AQUAFOZ.mesAtual ? `Cross AquaFoz | ${CROSS_AQUAFOZ.mesAtual}` : 'Cross AquaFoz';
+  if(anualChartEl) anualChartEl.innerHTML = buildCrossAquafozAnualChart(CROSS_AQUAFOZ.anual || []);
 
   // Só entram na soma os dias que já têm Visitação AQF lançada (dias futuros do mês vêm
   // com tudo em branco na planilha, exceto "Total cross", que a própria planilha calcula
@@ -6177,36 +6218,63 @@ function renderCrossAquafozDiaria(){
   // dado" pra decidir o período de referência).
   const diasComDado = dias.filter(d => diaria[d] && diaria[d].visitacaoAqf!==null && diaria[d].visitacaoAqf!==undefined);
   if(!diasComDado.length){
+    if(kpiGeralEl) kpiGeralEl.innerHTML = '';
+    if(kpiCanaisEl) kpiCanaisEl.innerHTML = '';
     if(tabelaEl) tabelaEl.innerHTML = '<tr><td class="hint">Sem dados ainda para este mês.</td></tr>';
     if(footEl) footEl.innerHTML = '';
     if(chartEl) chartEl.innerHTML = '<span class="hint">Sem dados ainda para este mês.</span>';
+    if(legendaEl) legendaEl.innerHTML = '';
     return;
   }
   const sum = (key) => diasComDado.reduce((a,d) => a + (diaria[d][key]||0), 0);
   const bilheteria = sum('bilheteriaMf3'), trade = sum('tradeMf3'), crossMf3 = sum('crossMf3'),
-        aeroporto = sum('aeroporto'), crossPni = sum('crossPni'), totem = sum('totemPni'),
-        combo = sum('comboPni');
-  const total = bilheteria+trade+crossMf3+aeroporto+crossPni+totem+combo;
+        comboMf3 = sum('comboMf3'), aeroporto = sum('aeroporto'), crossPni = sum('crossPni'),
+        totem = sum('totemPni'), combo = sum('comboPni');
+  const total = bilheteria+trade+crossMf3+comboMf3+aeroporto+crossPni+totem+combo;
   const visitacaoAqf = sum('visitacaoAqf'), visitacaoPni = sum('visitacaoPni');
   const shareAqf = (v) => visitacaoAqf>0 ? v/visitacaoAqf : null;
   const sharePni = (v) => visitacaoPni>0 ? v/visitacaoPni : null;
   const captAqfPni = visitacaoPni>0 ? visitacaoAqf/visitacaoPni : null;
+  const captDiariaPniPeriodo = visitacaoPni>0 ? total/visitacaoPni : null; // mesma fórmula da coluna "Capt. Diária PNI" da planilha, só que somada no período
   const diaFim = diasComDado[diasComDado.length-1].slice(8,10);
   const mesNum = diasComDado[0].slice(5,7);
   const periodoTxt = `01/${mesNum} a ${diaFim}/${mesNum}`;
+  const C = CROSS_CHANNEL_COLORS;
+
+  if(kpiGeralEl){
+    kpiGeralEl.innerHTML = [
+      caKpiCard('Visitação PNI', fmtInt(visitacaoPni)),
+      caKpiCard('Visitação AQF', fmtInt(visitacaoAqf)),
+      caKpiCard('Captação total AQF x PNI', fmtPct(captAqfPni), '#45818E', true),
+    ].join('');
+  }
+  if(kpiCanaisEl){
+    kpiCanaisEl.innerHTML = [
+      caKpiCard(C.bilheteriaMf3.label, fmtInt(bilheteria), C.bilheteriaMf3.color),
+      caKpiCard(C.tradeMf3.label, fmtInt(trade), C.tradeMf3.color),
+      caKpiCard(C.crossMf3.label, fmtInt(crossMf3), C.crossMf3.color),
+      caKpiCard(C.comboMf3.label, fmtInt(comboMf3), C.comboMf3.color),
+      caKpiCard('Total cross', fmtInt(total), '#1d5c60', true),
+      caKpiCard('Capt. diária PNI (período)', fmtPct(captDiariaPniPeriodo), '#45818E'),
+      caKpiCard(C.totemPni.label, fmtInt(totem), C.totemPni.color),
+      caKpiCard(C.comboPni.label, fmtInt(combo), C.comboPni.color),
+      caKpiCard(C.crossPni.label, fmtInt(crossPni), C.crossPni.color),
+      caKpiCard(C.aeroporto.label, fmtInt(aeroporto), C.aeroporto.color),
+    ].join('');
+  }
 
   if(tabelaEl){
     tabelaEl.innerHTML = `
       <thead>
         <tr>
           <th></th>
-          <th colspan="3" style="text-align:center;">Marco das 3 Fronteiras</th>
+          <th colspan="4" style="text-align:center;">Marco das 3 Fronteiras</th>
           <th style="text-align:center;">Aeroporto</th>
           <th colspan="3" style="text-align:center;">PNI</th>
           <th></th>
         </tr>
         <tr>
-          <th>Canal</th><th>Bilheteria</th><th>Trade balcão</th><th>Cross</th>
+          <th>Canal</th><th>Bilheteria</th><th>Trade balcão</th><th>Cross</th><th>Combo</th>
           <th></th>
           <th>Cross</th><th>Totem</th><th>Combo</th>
           <th>Total</th>
@@ -6215,21 +6283,21 @@ function renderCrossAquafozDiaria(){
       <tbody>
         <tr class="total-row">
           <td>Total bilhetes</td>
-          <td>${fmtInt(bilheteria)}</td><td>${fmtInt(trade)}</td><td>${fmtInt(crossMf3)}</td>
+          <td>${fmtInt(bilheteria)}</td><td>${fmtInt(trade)}</td><td>${fmtInt(crossMf3)}</td><td>${fmtInt(comboMf3)}</td>
           <td>${fmtInt(aeroporto)}</td>
           <td>${fmtInt(crossPni)}</td><td>${fmtInt(totem)}</td><td>${fmtInt(combo)}</td>
           <td>${fmtInt(total)}</td>
         </tr>
         <tr>
           <td>Share visitação AQF</td>
-          <td>${fmtPct(shareAqf(bilheteria))}</td><td>${fmtPct(shareAqf(trade))}</td><td>${fmtPct(shareAqf(crossMf3))}</td>
+          <td>${fmtPct(shareAqf(bilheteria))}</td><td>${fmtPct(shareAqf(trade))}</td><td>${fmtPct(shareAqf(crossMf3))}</td><td>${fmtPct(shareAqf(comboMf3))}</td>
           <td>${fmtPct(shareAqf(aeroporto))}</td>
           <td>${fmtPct(shareAqf(crossPni))}</td><td>${fmtPct(shareAqf(totem))}</td><td>${fmtPct(shareAqf(combo))}</td>
           <td>${fmtPct(shareAqf(total))}</td>
         </tr>
         <tr>
           <td>Share visitação PNI</td>
-          <td>${fmtPct(sharePni(bilheteria))}</td><td>${fmtPct(sharePni(trade))}</td><td>${fmtPct(sharePni(crossMf3))}</td>
+          <td>${fmtPct(sharePni(bilheteria))}</td><td>${fmtPct(sharePni(trade))}</td><td>${fmtPct(sharePni(crossMf3))}</td><td>${fmtPct(sharePni(comboMf3))}</td>
           <td>${fmtPct(sharePni(aeroporto))}</td>
           <td>${fmtPct(sharePni(crossPni))}</td><td>${fmtPct(sharePni(totem))}</td><td>${fmtPct(sharePni(combo))}</td>
           <td>${fmtPct(sharePni(total))}</td>
@@ -6242,38 +6310,119 @@ function renderCrossAquafozDiaria(){
       `Captação AQF x PNI: <b>${fmtPct(captAqfPni)}</b>`;
   }
   if(chartEl) chartEl.innerHTML = buildCrossAquafozDailyChart(diaria, dias);
+  if(legendaEl){
+    legendaEl.innerHTML = Object.values(C).map(c =>
+      `<span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;">`+
+      `<span style="width:9px;height:9px;border-radius:2px;background:${c.color};display:inline-block;"></span>${c.label}</span>`
+    ).join('');
+  }
 }
 
-// Uma barra por dia do mês (Total cross) -- mesmo padrão visual de buildParkDailyChart
-// (Clima/Visitação), fim de semana em cor cheia e dia de semana em versão clara.
+// Uma barra EMPILHADA por dia do mês (8 canais, mesma paleta do dashboard real) -- cada
+// segmento colorido é proporcional ao valor do canal naquele dia; tooltip mostra o
+// detalhamento completo. Substitui a barra única (só "Total cross") da versão anterior.
 function buildCrossAquafozDailyChart(diaria, dias){
   if(!dias.length) return '<span class="hint">Sem dados.</span>';
-  const vals = dias.map(d => (diaria[d] && diaria[d].totalCross!==null && diaria[d].totalCross!==undefined) ? diaria[d].totalCross : null);
-  const validVals = vals.filter(v => v!==null);
-  if(!validVals.length) return '<span class="hint">Sem dados.</span>';
-  const max = Math.max(...validVals, 1);
-  const baseColor = '#45818E';
-  const weekdayColor = lighten(baseColor, 0.55);
-  const anoMes = dias[0].slice(0,7).split('-');
+  const keys = Object.keys(CROSS_CHANNEL_COLORS);
+  const totals = dias.map(d => {
+    const e = diaria[d];
+    if(!e) return null;
+    let t = 0, any = false;
+    keys.forEach(k => { if(e[k]!==null && e[k]!==undefined){ t += e[k]; any = true; } });
+    return any ? t : null;
+  });
+  const validTotals = totals.filter(v => v!==null);
+  if(!validTotals.length) return '<span class="hint">Sem dados.</span>';
+  const max = Math.max(...validTotals, 1);
+  const BAR_H = 90; // px, altura fixa da área de barras
   const cols = dias.map((d,i) => {
-    const v = vals[i];
-    const dt = new Date(Number(anoMes[0]), Number(anoMes[1])-1, Number(d.slice(8,10)));
-    const wd = dt.getDay();
-    const isWeekend = wd===0 || wd===6;
-    const color = v!==null ? (isWeekend ? baseColor : weekdayColor) : '#e9e9e9';
-    const h = v!==null ? Math.max(2, Math.round(v/max*100)) : 2;
-    const tip = `${d.slice(8,10)}/${d.slice(5,7)} (${WEEKDAY_PT[wd]}): ${v!==null?fmtInt(v)+' vendas':'sem dado'}`;
+    const e = diaria[d];
+    const t = totals[i];
+    if(t===null){
+      const tip = `${d.slice(8,10)}/${d.slice(5,7)}: sem dado`;
+      return `<div class="cdc-col" data-tip="${tip}">
+        <div class="cdc-val"></div>
+        <div class="cdc-bar-wrap" style="height:${BAR_H}px;"><div class="cdc-bar" style="height:2px;background:#e9e9e9;"></div></div>
+        <div class="cdc-daynum">${Number(d.slice(8,10))}</div>
+      </div>`;
+    }
+    const segs = keys.map(k => {
+      const v = e[k] || 0;
+      if(!v) return '';
+      const h = Math.max(1, Math.round(v/max*BAR_H));
+      return `<div style="width:100%;height:${h}px;background:${CROSS_CHANNEL_COLORS[k].color};"></div>`;
+    }).join('');
+    const detalhe = keys.map(k => `${CROSS_CHANNEL_COLORS[k].label}: ${fmtInt(e[k]||0)}`).join(' | ');
+    const tip = `${d.slice(8,10)}/${d.slice(5,7)}: Total ${fmtInt(t)} | ${detalhe}`;
     return `<div class="cdc-col" data-tip="${tip}">
-      <div class="cdc-val">${v!==null?fmtInt(v):''}</div>
-      <div class="cdc-bar-wrap"><div class="cdc-bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="cdc-val">${fmtInt(t)}</div>
+      <div class="cdc-bar-wrap" style="height:${BAR_H}px;"><div style="width:100%;display:flex;flex-direction:column-reverse;">${segs}</div></div>
       <div class="cdc-daynum">${Number(d.slice(8,10))}</div>
     </div>`;
   }).join('');
   return `<div class="clima-park-chart"><div class="clima-park-bars">${cols}</div></div>`;
 }
 
-// Tabela Métrica x Mês (Jan..mês vigente) -- direto da aba "Venda mes a mes" (já vem uma
-// linha por métrica, uma coluna por mês, sem cálculo adicional necessário aqui).
+// Gráfico combo (barra + linha, 2 eixos) com o PERÍODO INTEIRO disponível (não só o mês
+// vigente) -- réplica melhorada do gráfico "Total cross por Data x Captação PNI" do
+// dashboard real: barra = Total cross (eixo esquerdo), linha = Capt. Diária PNI % (eixo
+// direito). Rolagem horizontal pra caber o ano inteiro sem espremer os dias.
+function buildCrossAquafozAnualChart(anual){
+  if(!anual || !anual.length) return '<span class="hint">Sem dados ainda.</span>';
+  const MESES_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const n = anual.length;
+  const COLW = 6, padL = 8, padR = 10, padT = 16, padB = 20;
+  const plotH = 150;
+  const H = padT + plotH + padB;
+  const W = padL + n*COLW + padR;
+  const maxBar = Math.max(...anual.map(a => a.totalCross||0), 1) * 1.15;
+  const pctVals = anual.filter(a => a.captDiariaPni!==null && a.captDiariaPni!==undefined).map(a => a.captDiariaPni);
+  const maxPct = Math.max(...pctVals, 0.01) * 1.15;
+
+  let bars = '', ticks = '', lastMes = null;
+  const points = [];
+  anual.forEach((a, i) => {
+    const x = padL + i*COLW;
+    const mesLabel = MESES_ABREV[Number(a.data.slice(5,7))-1];
+    if(mesLabel !== lastMes){
+      lastMes = mesLabel;
+      ticks += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+plotH}" stroke="#eee" stroke-width="1"></line>`;
+      ticks += `<text x="${x+2}" y="${padT+plotH+13}" font-size="9" fill="#8a8f92">${mesLabel}</text>`;
+    }
+    const dataFmt = `${a.data.slice(8,10)}/${a.data.slice(5,7)}/${a.data.slice(0,4)}`;
+    if(a.totalCross!==null && a.totalCross!==undefined){
+      const h = Math.max(1, (a.totalCross/maxBar)*plotH);
+      const y = padT + plotH - h;
+      const tip = `${dataFmt}: Total cross ${fmtInt(a.totalCross)}`+(a.captDiariaPni!==null&&a.captDiariaPni!==undefined?` | Capt. diária PNI ${fmtPct(a.captDiariaPni)}`:'');
+      bars += `<rect data-tip="${tip}" x="${x}" y="${y.toFixed(1)}" width="${COLW-1}" height="${h.toFixed(1)}" fill="#a9c6c9"></rect>`;
+    }
+    if(a.captDiariaPni!==null && a.captDiariaPni!==undefined){
+      const y = padT + plotH - (a.captDiariaPni/maxPct)*plotH;
+      points.push([x+(COLW-1)/2, y]);
+    } else {
+      points.push(null);
+    }
+  });
+  let line = '';
+  for(let i=1;i<points.length;i++){
+    if(points[i] && points[i-1]) line += `<line x1="${points[i-1][0].toFixed(1)}" y1="${points[i-1][1].toFixed(1)}" x2="${points[i][0].toFixed(1)}" y2="${points[i][1].toFixed(1)}" stroke="#45818E" stroke-width="1.6"></line>`;
+  }
+  return `<div class="hint" style="margin-bottom:4px;">
+      <span style="display:inline-flex;align-items:center;gap:4px;margin-right:14px;"><span style="width:9px;height:9px;border-radius:2px;background:#a9c6c9;display:inline-block;"></span>Total cross (eixo esq.)</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="width:14px;height:2px;background:#45818E;display:inline-block;"></span>Capt. diária PNI % (eixo dir.)</span>
+    </div>
+    <svg width="${W}" height="${H}" style="min-width:${W}px;display:block;">
+      ${ticks}
+      ${bars}
+      <line x1="${padL}" y1="${padT+plotH}" x2="${padL+n*COLW}" y2="${padT+plotH}" stroke="#ccc" stroke-width="1"></line>
+      ${line}
+    </svg>`;
+}
+
+// Tabela Métrica x Mês (Jan..mês vigente) -- agregada a partir dos dias reais da aba "Geral
+// data" em cross_aquafoz_extension.py (ver _aggregate_mes). Rótulos "Share AQF"/"Share PNI"
+// alinhados com o dashboard Looker Studio real do usuário (mesma métrica que ele já chama
+// assim lá -- só o nome mudou aqui, o valor sempre foi o mesmo).
 function renderCrossAquafozMensal(){
   const mensal = CROSS_AQUAFOZ.mensal || {};
   const mesesDisponiveis = CROSS_MESES_ORDER.filter(m => mensal[m]);
@@ -6288,9 +6437,9 @@ function renderCrossAquafozMensal(){
     { key:'vendasTotemPni', label:'Vendas Totem PNI', fmt:fmtInt },
     { key:'vendasComboPni', label:'Vendas Combo PNI', fmt:fmtInt },
     { key:'visitacaoAqf', label:'Visitação AQF', fmt:fmtInt },
-    { key:'shareVisitacaoAqf', label:'Share visitação AQF', fmt:fmtPct },
+    { key:'shareVisitacaoAqf', label:'Share AQF', fmt:fmtPct },
     { key:'visitacaoPni', label:'Visitação PNI', fmt:fmtInt },
-    { key:'captacaoPni', label:'Captação PNI', fmt:fmtPct },
+    { key:'captacaoPni', label:'Share PNI', fmt:fmtPct },
     { key:'captacaoAqfPni', label:'Captação AQF x PNI', fmt:fmtPct },
   ];
   const head = `<tr><th>Métrica</th>${mesesDisponiveis.map(m=>`<th>${m}</th>`).join('')}</tr>`;
@@ -6326,7 +6475,7 @@ async function carregarDados(){
     EVENTOS = data.EVENTOS || [];
     HISTORICO = data.HISTORICO || { parques: {}, parquesComShare: [] };
     PLANO_MIDIA = data.PLANO_MIDIA || { resumo: {}, detail: {} };
-    CROSS_AQUAFOZ = data.CROSS_AQUAFOZ || { mensal: {}, diaria: {}, mesAtual: null };
+    CROSS_AQUAFOZ = data.CROSS_AQUAFOZ || { mensal: {}, diaria: {}, anual: [], mesAtual: null };
   } catch(e) {
     console.error('Falha ao carregar data.json -- o painel vai renderizar com os dados vazios/zerados ate isso ser corrigido:', e);
   }
