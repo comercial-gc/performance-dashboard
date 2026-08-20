@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-20T13:59:01.769791Z",
+  "geradoEm": "2026-08-20T12:43:28.164736Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -9326,7 +9326,7 @@
             "sun",
             "sun",
             "closed",
-            "sun",
+            null,
             null,
             null,
             null,
@@ -13876,7 +13876,7 @@
       81101.0,
       71243.0,
       139940.0,
-      50076.0
+      47538.0
     ],
     "share": [
       0.26408126103625307,
@@ -13886,7 +13886,7 @@
       0.25765652997166133,
       0.24890036369226254,
       0.2734778827644834,
-      0.29395259283609426
+      0.2790542047735891
     ]
   },
   "SHARE": {
@@ -13896,14 +13896,14 @@
         {
           "parque": "Aquario",
           "metaAnual": 0.25,
-          "ecommerce2026": 197472,
+          "ecommerce2026": 197023,
           "visitacao2026": 713314,
-          "share2026": 0.2768374096,
+          "share2026": 0.2762079533,
           "ecommerce2025": 107864,
           "visitacao2025": 447945,
           "share2025": 0.2407974193,
-          "deltaPP": 0.03603999029,
-          "gapMeta": 0.02683740961
+          "deltaPP": 0.03541053397,
+          "gapMeta": 0.0262079533
         },
         {
           "parque": "Bioparque",
@@ -13920,50 +13920,50 @@
         {
           "parque": "Paineiras",
           "metaAnual": 0.25,
-          "ecommerce2026": 220084,
+          "ecommerce2026": 218733,
           "visitacao2026": 1020896,
-          "share2026": 0.2155792559,
+          "share2026": 0.2142559085,
           "ecommerce2025": 140023,
           "visitacao2025": 963273,
           "share2025": 0.1453616991,
-          "deltaPP": 0.07021755675,
-          "gapMeta": -0.03442074413
+          "deltaPP": 0.06889420941,
+          "gapMeta": -0.03574409146
         },
         {
           "parque": "Marco",
           "metaAnual": 0.25,
-          "ecommerce2026": 60591,
+          "ecommerce2026": 60432,
           "visitacao2026": 392938,
-          "share2026": 0.1541998992,
+          "share2026": 0.1537952552,
           "ecommerce2025": 32754,
           "visitacao2025": 312611,
           "share2025": 0.1047755837,
-          "deltaPP": 0.04942431551,
-          "gapMeta": -0.09580010078
+          "deltaPP": 0.04901967152,
+          "gapMeta": -0.09620474477
         },
         {
           "parque": "Aquafoz",
           "metaAnual": 0.25,
-          "ecommerce2026": 68883,
+          "ecommerce2026": 68811,
           "visitacao2026": 355736,
-          "share2026": 0.1936351677,
+          "share2026": 0.1934327704,
           "ecommerce2025": 0,
           "visitacao2025": 0,
           "share2025": 0,
-          "deltaPP": 0.1936351677,
-          "gapMeta": -0.05636483235
+          "deltaPP": 0.1934327704,
+          "gapMeta": -0.05656722963
         },
         {
           "parque": "Grupo Cataratas",
           "metaAnual": 0.25,
-          "ecommerce2026": 428046,
+          "ecommerce2026": 426536,
           "visitacao2026": 1778366,
-          "share2026": 0.2406962346,
+          "share2026": 0.2398471406,
           "ecommerce2025": 300574,
           "visitacao2025": 1597288,
           "share2025": 0.1881777112,
-          "deltaPP": 0.05251852341,
-          "gapMeta": -0.009303765367
+          "deltaPP": 0.05166942936,
+          "gapMeta": -0.01015285942
         }
       ]
     },
@@ -14476,8 +14476,8 @@
         "Agosto": {
           "AquaRio": {
             "visitacao2026": 49168,
-            "ecommerce2026": 13269,
-            "share2026": 0.269870647575659,
+            "ecommerce2026": 12820,
+            "share2026": 0.2607386918320859,
             "visitacao2025": 51732.645053492604,
             "ecommerce2025": 16244.454414524505,
             "share2025": 0.314007806825408,
@@ -14486,8 +14486,8 @@
           },
           "Paineiras": {
             "visitacao2026": 69475,
-            "ecommerce2026": 27362,
-            "share2026": 0.39383951061532924,
+            "ecommerce2026": 26011,
+            "share2026": 0.3743936667866139,
             "visitacao2025": 68196.0,
             "ecommerce2025": 11903.021437801011,
             "share2025": 0.17454134315503858,
@@ -14496,8 +14496,8 @@
           },
           "M3F": {
             "visitacao2026": 28058,
-            "ecommerce2026": 4130,
-            "share2026": 0.14719509587283483,
+            "ecommerce2026": 3971,
+            "share2026": 0.14152826288402595,
             "visitacao2025": 22256.0,
             "ecommerce2025": 1608.0,
             "share2025": 0.07225017972681524,
@@ -14506,8 +14506,8 @@
           },
           "AquaFoz": {
             "visitacao2026": 23653,
-            "ecommerce2026": 5315.0,
-            "share2026": 0.22470722529911638,
+            "ecommerce2026": 4736.0,
+            "share2026": 0.2002283008497865,
             "visitacao2025": null,
             "ecommerce2025": null,
             "share2025": null,
@@ -14515,9 +14515,9 @@
             "investimento2025": null
           },
           "3P": {
-            "visitacao2026": 8400.0,
-            "ecommerce2026": 2795.0,
-            "share2026": 0.3327380952380952,
+            "visitacao2026": 8067.0,
+            "ecommerce2026": 2757.0,
+            "share2026": 0.3417627370769803,
             "visitacao2025": 14782.0,
             "ecommerce2025": 160.0,
             "share2025": 0.01082397510485726,
@@ -14526,8 +14526,8 @@
           },
           "Vila Velha": {
             "visitacao2026": 2437,
-            "ecommerce2026": 671.0,
-            "share2026": 0.275338530980714,
+            "ecommerce2026": 625.0,
+            "share2026": 0.25646286417726716,
             "visitacao2025": 5160.0,
             "ecommerce2025": 1239.0,
             "share2025": 0.24011627906976743,
@@ -14672,7 +14672,7 @@
             0.2648099518,
             0.2458279427,
             0.3207593547,
-            0.2698706476
+            0.2607386918
           ],
           "visitacaoTotal": [
             127823,
@@ -14740,7 +14740,7 @@
             0.2401266395,
             0.2195908453,
             0.2264315746,
-            0.3938395106
+            0.3743936668
           ],
           "visitacaoTotal": [
             183774,
@@ -14808,7 +14808,7 @@
             0.1399023332,
             0.1341773959,
             0.1538261709,
-            0.1471950959
+            0.1415282629
           ],
           "visitacaoTotal": [
             61517.0,
@@ -14876,7 +14876,7 @@
             0.2680102666,
             0.2478315097,
             0.2868167113,
-            0.2247072253
+            0.2002283008
           ],
           "visitacaoTotal": [
             null,
@@ -14944,7 +14944,7 @@
             0.01694142673,
             0.01937729282,
             0.06869991095,
-            0.3327380952
+            0.3417627371
           ],
           "visitacaoTotal": [
             16062.0,
@@ -14966,7 +14966,7 @@
             13163.0,
             10631.0,
             22460.0,
-            8400.0
+            8067.0
           ]
         },
         "Vila Velha": {
@@ -15012,7 +15012,7 @@
             0.2266539288,
             0.162601626,
             0.2618568233,
-            0.275338531
+            0.2564628642
           ],
           "visitacaoTotal": [
             6128.0,
@@ -15213,8 +15213,8 @@
       },
       "AGOSTO": {
         "disponivel": 90322.0,
-        "realizado": 60021.27,
-        "saldo": 30300.73
+        "realizado": 58571.27,
+        "saldo": 31750.73
       },
       "SETEMBRO": {
         "disponivel": 74394.0,
@@ -15238,8 +15238,8 @@
       },
       "TOTAL": {
         "disponivel": 1142275,
-        "realizado": 672100.89,
-        "saldo": 470174.11
+        "realizado": 670650.89,
+        "saldo": 471624.11
       }
     },
     "AquaFoz": {
@@ -19576,24 +19576,6 @@
         "descricao": "Verba extra",
         "valor": 800.0,
         "observacao": "-"
-      },
-      {
-        "parque": "PAINEIRAS",
-        "setor": "Marca & experiência",
-        "custo": "Eventos",
-        "fornecedor": "Nathalie Ferreira",
-        "descricao": "Shiatsu - 10 anos Paineiras",
-        "valor": 900.0,
-        "observacao": null
-      },
-      {
-        "parque": "PAINEIRAS",
-        "setor": "Marca & experiência",
-        "custo": "Eventos",
-        "fornecedor": "Renata Mansano",
-        "descricao": "Bolo Fake - 10 anos Paineiras",
-        "valor": 550.0,
-        "observacao": null
       }
     ],
     "SETEMBRO": [
@@ -21333,41 +21315,41 @@
       "categorias": [
         {
           "label": "Morador/Estado",
-          "v2025": 3577,
-          "v2026": 3375,
-          "delta": -0.05647190383,
-          "share25": 0.03620298773,
-          "share26": 0.03055985657
+          "v2025": 8142,
+          "v2026": 7595,
+          "delta": -0.06718251044,
+          "share25": 0.03714144953,
+          "share26": 0.02886186586
         },
         {
           "label": "Brasileiros",
-          "v2025": 44335,
-          "v2026": 55381,
-          "delta": 0.2491485283,
-          "share25": 0.4487166511,
-          "share26": 0.5014623457
+          "v2025": 116462,
+          "v2026": 166413,
+          "delta": 0.4289038485,
+          "share25": 0.531265966,
+          "share26": 0.6323883717
         },
         {
           "label": "Mercosul",
-          "v2025": 26623,
-          "v2026": 20846,
-          "delta": -0.2169928258,
-          "share25": 0.2694526537,
-          "share26": 0.1887557837
+          "v2025": 68052,
+          "v2026": 56023,
+          "delta": -0.176761888,
+          "share25": 0.310433545,
+          "share26": 0.2128937868
         },
         {
           "label": "Estrangeiros",
-          "v2025": 24269,
-          "v2026": 30837,
-          "delta": 0.2706333182,
-          "share25": 0.2456277074,
-          "share26": 0.279222014
+          "v2025": 26560,
+          "v2026": 33119,
+          "delta": 0.2469503012,
+          "share25": 0.1211590395,
+          "share26": 0.1258559757
         },
         {
           "label": "Total Mês",
-          "v2025": 98804,
-          "v2026": 110439,
-          "delta": 0.1177583903,
+          "v2025": 219216,
+          "v2026": 263150,
+          "delta": 0.2004142033,
           "share25": 1,
           "share26": 1
         }
@@ -47567,527 +47549,6 @@
     }
   },
   "MIX_ORIGEM_TOP5": {},
-  "CROSS_AQUAFOZ": {
-    "mensal": {
-      "Janeiro": {
-        "vendasTotal": 116,
-        "vendasTotemPni": null,
-        "vendasComboPni": null,
-        "visitacaoAqf": 81985,
-        "shareVisitacaoAqf": 0.001414892968,
-        "visitacaoPni": 252808.0,
-        "captacaoPni": 0.000458846239,
-        "captacaoAqfPni": 0.3242974906
-      },
-      "Fevereiro": {
-        "vendasTotal": 1004,
-        "vendasTotemPni": 454,
-        "vendasComboPni": null,
-        "visitacaoAqf": 39581,
-        "shareVisitacaoAqf": 0.02536570577,
-        "visitacaoPni": 169008.0,
-        "captacaoPni": 0.005940547193,
-        "captacaoAqfPni": 0.2341960144
-      },
-      "Março": {
-        "vendasTotal": 1460,
-        "vendasTotemPni": 836,
-        "vendasComboPni": null,
-        "visitacaoAqf": 31733,
-        "shareVisitacaoAqf": 0.04600888665,
-        "visitacaoPni": 168062.0,
-        "captacaoPni": 0.008687270174,
-        "captacaoAqfPni": 0.1888172222
-      },
-      "Abril": {
-        "vendasTotal": 2718,
-        "vendasTotemPni": 1146,
-        "vendasComboPni": 1129,
-        "visitacaoAqf": 37819,
-        "shareVisitacaoAqf": 0.07186863746,
-        "visitacaoPni": 181129.0,
-        "captacaoPni": 0.01500587979,
-        "captacaoAqfPni": 0.208795941
-      },
-      "Maio": {
-        "vendasTotal": 4212,
-        "vendasTotemPni": 1372,
-        "vendasComboPni": 2453,
-        "visitacaoAqf": 34286,
-        "shareVisitacaoAqf": 0.1228489763,
-        "visitacaoPni": 155917,
-        "captacaoPni": 0.02701437303,
-        "captacaoAqfPni": 0.2198990489
-      },
-      "Junho": {
-        "vendasTotal": 5310,
-        "vendasTotemPni": 1748,
-        "vendasComboPni": 3451,
-        "visitacaoAqf": 35278,
-        "shareVisitacaoAqf": 0.1505187369,
-        "visitacaoPni": 136679,
-        "captacaoPni": 0.03885015255,
-        "captacaoAqfPni": 0.2581084146
-      },
-      "Julho": {
-        "vendasTotal": 15275,
-        "vendasTotemPni": 3921,
-        "vendasComboPni": 9675,
-        "visitacaoAqf": 71401,
-        "shareVisitacaoAqf": 0.213932578,
-        "visitacaoPni": 263150,
-        "captacaoPni": 0.0580467414,
-        "captacaoAqfPni": 0.27133194
-      },
-      "Agosto": {
-        "vendasTotal": 4821,
-        "vendasTotemPni": 1586,
-        "vendasComboPni": 2745,
-        "visitacaoAqf": 23653,
-        "shareVisitacaoAqf": 0.2038219253,
-        "visitacaoPni": 110439,
-        "captacaoPni": 0.04365305734,
-        "captacaoAqfPni": 0.2141725296
-      }
-    },
-    "diaria": {
-      "2026-08-01": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 8.0,
-        "crossMf3": 0.0,
-        "crossPni": 0.0,
-        "totemPni": 82.0,
-        "comboPni": 130.0,
-        "totalCross": 220,
-        "visitacaoPni": 7282.0,
-        "captDiariaPni": 0.03021148036,
-        "visitacaoAqf": 1838.0,
-        "captTotalAqfPni": 0.2524031859
-      },
-      "2026-08-02": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 2.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 5.0,
-        "totemPni": 61.0,
-        "comboPni": 177.0,
-        "totalCross": 245,
-        "visitacaoPni": 6482.0,
-        "captDiariaPni": 0.03779697624,
-        "visitacaoAqf": 1913.0,
-        "captTotalAqfPni": 0.2951249614
-      },
-      "2026-08-03": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 3.0,
-        "crossMf3": 0.0,
-        "crossPni": 15,
-        "totemPni": 54.0,
-        "comboPni": 147.0,
-        "totalCross": 219,
-        "visitacaoPni": 5214.0,
-        "captDiariaPni": 0.0420023015,
-        "visitacaoAqf": 1047.0,
-        "captTotalAqfPni": 0.2008055236
-      },
-      "2026-08-04": {
-        "bilheteriaMf3": 3.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 8.0,
-        "totemPni": 97.0,
-        "comboPni": 101.0,
-        "totalCross": 209,
-        "visitacaoPni": 5267.0,
-        "captDiariaPni": 0.03968103285,
-        "visitacaoAqf": 912.0,
-        "captTotalAqfPni": 0.1731535979
-      },
-      "2026-08-05": {
-        "bilheteriaMf3": 2.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 11.0,
-        "crossMf3": 0.0,
-        "crossPni": 0.0,
-        "totemPni": 80.0,
-        "comboPni": 136.0,
-        "totalCross": 229,
-        "visitacaoPni": 4908.0,
-        "captDiariaPni": 0.04665851671,
-        "visitacaoAqf": 957.0,
-        "captTotalAqfPni": 0.1949877751
-      },
-      "2026-08-06": {
-        "bilheteriaMf3": 13.0,
-        "tradeMf3": 45.0,
-        "aeroporto": 1.0,
-        "crossMf3": 0.0,
-        "crossPni": 18.0,
-        "totemPni": 57.0,
-        "comboPni": 90.0,
-        "totalCross": 224,
-        "visitacaoPni": 4836.0,
-        "captDiariaPni": 0.04631927213,
-        "visitacaoAqf": 980.0,
-        "captTotalAqfPni": 0.2026468156
-      },
-      "2026-08-07": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 12.0,
-        "crossMf3": 0.0,
-        "crossPni": 6.0,
-        "totemPni": 99.0,
-        "comboPni": 110.0,
-        "totalCross": 227,
-        "visitacaoPni": 6071.0,
-        "captDiariaPni": 0.03739087465,
-        "visitacaoAqf": 1304.0,
-        "captTotalAqfPni": 0.2147916324
-      },
-      "2026-08-08": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 9.0,
-        "crossMf3": 0.0,
-        "crossPni": 0.0,
-        "totemPni": 82.0,
-        "comboPni": 110.0,
-        "totalCross": 201,
-        "visitacaoPni": 5216.0,
-        "captDiariaPni": 0.03853527607,
-        "visitacaoAqf": 1545.0,
-        "captTotalAqfPni": 0.2962039877
-      },
-      "2026-08-09": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 0.0,
-        "totemPni": 101.0,
-        "comboPni": 164.0,
-        "totalCross": 265,
-        "visitacaoPni": 7151.0,
-        "captDiariaPni": 0.03705775416,
-        "visitacaoAqf": 1802.0,
-        "captTotalAqfPni": 0.2519927283
-      },
-      "2026-08-10": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 13.0,
-        "crossMf3": 0.0,
-        "crossPni": 25.0,
-        "totemPni": 51.0,
-        "comboPni": 176.0,
-        "totalCross": 265,
-        "visitacaoPni": 4500.0,
-        "captDiariaPni": 0.05888888889,
-        "visitacaoAqf": 822.0,
-        "captTotalAqfPni": 0.1826666667
-      },
-      "2026-08-11": {
-        "bilheteriaMf3": 12.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 4.0,
-        "crossMf3": 0.0,
-        "crossPni": 43.0,
-        "totemPni": 65.0,
-        "comboPni": 199.0,
-        "totalCross": 323,
-        "visitacaoPni": 4639.0,
-        "captDiariaPni": 0.0696270748,
-        "visitacaoAqf": 899.0,
-        "captTotalAqfPni": 0.1937917655
-      },
-      "2026-08-12": {
-        "bilheteriaMf3": 4.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 31.0,
-        "totemPni": 80.0,
-        "comboPni": 177.0,
-        "totalCross": 292,
-        "visitacaoPni": 6345.0,
-        "captDiariaPni": 0.04602048857,
-        "visitacaoAqf": 827.0,
-        "captTotalAqfPni": 0.1303388495
-      },
-      "2026-08-13": {
-        "bilheteriaMf3": 2.0,
-        "tradeMf3": 29.0,
-        "aeroporto": 3.0,
-        "crossMf3": 0.0,
-        "crossPni": 22.0,
-        "totemPni": 64.0,
-        "comboPni": 156.0,
-        "totalCross": 276,
-        "visitacaoPni": 4580.0,
-        "captDiariaPni": 0.06026200873,
-        "visitacaoAqf": 792.0,
-        "captTotalAqfPni": 0.1729257642
-      },
-      "2026-08-14": {
-        "bilheteriaMf3": 6.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 2.0,
-        "totemPni": 155.0,
-        "comboPni": 132.0,
-        "totalCross": 295,
-        "visitacaoPni": 5242.0,
-        "captDiariaPni": 0.05627623045,
-        "visitacaoAqf": 1124.0,
-        "captTotalAqfPni": 0.2144219763
-      },
-      "2026-08-15": {
-        "bilheteriaMf3": 14.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 22.0,
-        "crossMf3": 0.0,
-        "crossPni": 17.0,
-        "totemPni": 92.0,
-        "comboPni": 195.0,
-        "totalCross": 340,
-        "visitacaoPni": 7495.0,
-        "captDiariaPni": 0.04536357572,
-        "visitacaoAqf": 1709.0,
-        "captTotalAqfPni": 0.2280186791
-      },
-      "2026-08-16": {
-        "bilheteriaMf3": 8.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 4.0,
-        "crossMf3": 0.0,
-        "crossPni": 26.0,
-        "totemPni": 95.0,
-        "comboPni": 232.0,
-        "totalCross": 365,
-        "visitacaoPni": 9979.0,
-        "captDiariaPni": 0.0365768113,
-        "visitacaoAqf": 2488.0,
-        "captTotalAqfPni": 0.2493235795
-      },
-      "2026-08-17": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 0.0,
-        "totemPni": 73.0,
-        "comboPni": 128.0,
-        "totalCross": 201,
-        "visitacaoPni": 5168.0,
-        "captDiariaPni": 0.03889318885,
-        "visitacaoAqf": 909.0,
-        "captTotalAqfPni": 0.1758900929
-      },
-      "2026-08-18": {
-        "bilheteriaMf3": 4.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 25.0,
-        "totemPni": 98.0,
-        "comboPni": 89.0,
-        "totalCross": 216,
-        "visitacaoPni": 5642.0,
-        "captDiariaPni": 0.03828429635,
-        "visitacaoAqf": 1018.0,
-        "captTotalAqfPni": 0.1804324708
-      },
-      "2026-08-19": {
-        "bilheteriaMf3": 0.0,
-        "tradeMf3": 0.0,
-        "aeroporto": 0.0,
-        "crossMf3": 0.0,
-        "crossPni": 13.0,
-        "totemPni": 100.0,
-        "comboPni": 96.0,
-        "totalCross": 209,
-        "visitacaoPni": 4422.0,
-        "captDiariaPni": 0.04726368159,
-        "visitacaoAqf": 767.0,
-        "captTotalAqfPni": 0.1734509272
-      },
-      "2026-08-20": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-21": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-22": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-23": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-24": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-25": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-26": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-27": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-28": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-29": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-30": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      },
-      "2026-08-31": {
-        "bilheteriaMf3": null,
-        "tradeMf3": null,
-        "aeroporto": null,
-        "crossMf3": null,
-        "crossPni": null,
-        "totemPni": null,
-        "comboPni": null,
-        "totalCross": 0,
-        "visitacaoPni": null,
-        "captDiariaPni": null,
-        "visitacaoAqf": null,
-        "captTotalAqfPni": null
-      }
-    },
-    "mesAtual": "Agosto"
-  },
   "EVENTOS": [
     {
       "data": "2025-04-08",
@@ -51456,20 +50917,6 @@
       },
       "Consolidado": {
         "anos": {
-          "2025": [
-            666687.0,
-            398191.0,
-            451956.0,
-            421569.0,
-            402290.0,
-            363784.0,
-            590652.0,
-            422967.0,
-            413960.0,
-            491692.0,
-            500148.0,
-            520889.0
-          ],
           "2026": [
             780085.0,
             496780.0,
@@ -51498,19 +50945,19 @@
             null,
             null
           ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
           ],
           "2016": [
             176296.0,
@@ -51526,20 +50973,6 @@
             173665.0,
             241981.0
           ],
-          "2020": [
-            319895.0,
-            178103.0,
-            77834.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            26514.0,
-            84167.0,
-            84969.0,
-            90379.0,
-            79635.0
-          ],
           "2014": [
             173675.0,
             104836.0,
@@ -51553,20 +50986,6 @@
             107064.0,
             105700.0,
             132312.0
-          ],
-          "2018": [
-            321385.0,
-            168024.0,
-            166856.0,
-            130740.00000000001,
-            108655.0,
-            97102.0,
-            190341.99999999994,
-            133243.0,
-            151118.0,
-            149282.0,
-            162033.0,
-            182819.0
           ],
           "2022": [
             292287.0,
@@ -51582,47 +51001,19 @@
             202561.0,
             212826.0
           ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
-          ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "2015": [
             189451.0,
@@ -51638,19 +51029,33 @@
             84938.0,
             122376.0
           ],
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
+          "2025": [
+            666687.0,
+            398191.0,
+            451956.0,
+            421569.0,
+            402290.0,
+            363784.0,
+            590652.0,
+            422967.0,
+            413960.0,
+            491692.0,
+            500148.0,
+            520889.0
           ],
           "2023": [
             366579.0,
@@ -51665,61 +51070,117 @@
             243418.0,
             249211.0,
             188895.0
+          ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
+          ],
+          "2020": [
+            319895.0,
+            178103.0,
+            77834.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            26514.0,
+            84167.0,
+            84969.0,
+            90379.0,
+            79635.0
+          ],
+          "2018": [
+            321385.0,
+            168024.0,
+            166856.0,
+            130740.00000000001,
+            108655.0,
+            97102.0,
+            190341.99999999994,
+            133243.0,
+            151118.0,
+            149282.0,
+            162033.0,
+            182819.0
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2025": [
-            2704477,
-            2940308
-          ],
           "2026": [
             3213884,
             717481
-          ],
-          "2016": [
-            635485,
-            584255
-          ],
-          "2020": [
-            575832,
-            365664
-          ],
-          "2014": [
-            717316,
-            673740
-          ],
-          "2018": [
-            992762,
-            968837
-          ],
-          "2022": [
-            1195615,
-            1502267
           ],
           "2019": [
             1015073,
             1044424
           ],
-          "2021": [
-            726490,
-            1392943
+          "2016": [
+            635485,
+            584255
           ],
-          "2024": [
-            2410556,
-            2803391
+          "2014": [
+            717316,
+            673740
+          ],
+          "2022": [
+            1195615,
+            1502267
           ],
           "2015": [
             711060,
             646056
           ],
-          "2017": [
-            1300881,
-            1170345
+          "2024": [
+            2410556,
+            2803391
+          ],
+          "2025": [
+            2704477,
+            2940308
           ],
           "2023": [
             1486747,
             1503931
+          ],
+          "2017": [
+            1300881,
+            1170345
+          ],
+          "2020": [
+            575832,
+            365664
+          ],
+          "2018": [
+            992762,
+            968837
+          ],
+          "2021": [
+            726490,
+            1392943
           ]
         }
       }
@@ -54403,5 +53864,1487 @@
         }
       ]
     }
+  },
+  "CROSS_AQUAFOZ": {
+    "mensal": {
+      "Janeiro": {
+        "vendasTotal": 239.0,
+        "vendasTotemPni": 0.0,
+        "vendasComboPni": 0.0,
+        "vendasComboMf3": 129.0,
+        "visitacaoAqf": 81985.0,
+        "shareVisitacaoAqf": 0.002915167408672318,
+        "visitacaoPni": 252808.0,
+        "captacaoPni": 0.00094538147526977,
+        "captacaoAqfPni": 0.324297490585741
+      },
+      "Fevereiro": {
+        "vendasTotal": 1058.0,
+        "vendasTotemPni": 0.0,
+        "vendasComboPni": 0.0,
+        "vendasComboMf3": 54.0,
+        "visitacaoAqf": 39581.0,
+        "shareVisitacaoAqf": 0.026729996715595866,
+        "visitacaoPni": 169008.0,
+        "captacaoPni": 0.0062600586954463695,
+        "captacaoAqfPni": 0.23419601438985138
+      },
+      "Março": {
+        "vendasTotal": 1694.0,
+        "vendasTotemPni": 836.0,
+        "vendasComboPni": 0.0,
+        "vendasComboMf3": 234.0,
+        "visitacaoAqf": 31733.0,
+        "shareVisitacaoAqf": 0.05338291368606813,
+        "visitacaoPni": 168062.0,
+        "captacaoPni": 0.010079613475979103,
+        "captacaoAqfPni": 0.1888172222156109
+      },
+      "Abril": {
+        "vendasTotal": 3559.0,
+        "vendasTotemPni": 1146.0,
+        "vendasComboPni": 943.0,
+        "vendasComboMf3": 1027.0,
+        "visitacaoAqf": 37819.0,
+        "shareVisitacaoAqf": 0.094106137126841,
+        "visitacaoPni": 181129.0,
+        "captacaoPni": 0.01964897945663036,
+        "captacaoAqfPni": 0.20879594101441515
+      },
+      "Maio": {
+        "vendasTotal": 4976.0,
+        "vendasTotemPni": 1372.0,
+        "vendasComboPni": 2453.0,
+        "vendasComboMf3": 764.0,
+        "visitacaoAqf": 34286.0,
+        "shareVisitacaoAqf": 0.1451321238989675,
+        "visitacaoPni": 155917.0,
+        "captacaoPni": 0.03191441600338642,
+        "captacaoAqfPni": 0.21989904885291534
+      },
+      "Junho": {
+        "vendasTotal": 5593.0,
+        "vendasTotemPni": 1748.0,
+        "vendasComboPni": 3451.0,
+        "vendasComboMf3": 283.0,
+        "visitacaoAqf": 35278.0,
+        "shareVisitacaoAqf": 0.1585407336016781,
+        "visitacaoPni": 136679.0,
+        "captacaoPni": 0.040920697400478497,
+        "captacaoAqfPni": 0.25810841460648676
+      },
+      "Julho": {
+        "vendasTotal": 15275.0,
+        "vendasTotemPni": 3921.0,
+        "vendasComboPni": 9675.0,
+        "vendasComboMf3": 0.0,
+        "visitacaoAqf": 71401.0,
+        "shareVisitacaoAqf": 0.21393257797509838,
+        "visitacaoPni": 263150.0,
+        "captacaoPni": 0.058046741402242065,
+        "captacaoAqfPni": 0.27133193995819876
+      },
+      "Agosto": {
+        "vendasTotal": 4806.0,
+        "vendasTotemPni": 1486.0,
+        "vendasComboPni": 2649.0,
+        "vendasComboMf3": 194.0,
+        "visitacaoAqf": 22886.0,
+        "shareVisitacaoAqf": 0.20999737830988377,
+        "visitacaoPni": 106017.0,
+        "captacaoPni": 0.045332352358584,
+        "captacaoAqfPni": 0.2158710395502608
+      }
+    },
+    "diaria": {
+      "2026-08-01": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 8.0,
+        "crossMf3": 0.0,
+        "crossPni": 0.0,
+        "totemPni": 82.0,
+        "comboPni": 130.0,
+        "comboMf3": 0.0,
+        "totalCross": 220,
+        "visitacaoPni": 7282.0,
+        "captDiariaPni": 0.03021148036,
+        "visitacaoAqf": 1838.0,
+        "captTotalAqfPni": 0.2524031859
+      },
+      "2026-08-02": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 2.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 5.0,
+        "totemPni": 61.0,
+        "comboPni": 177.0,
+        "comboMf3": 0.0,
+        "totalCross": 245,
+        "visitacaoPni": 6482.0,
+        "captDiariaPni": 0.03779697624,
+        "visitacaoAqf": 1913.0,
+        "captTotalAqfPni": 0.2951249614
+      },
+      "2026-08-03": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 3.0,
+        "crossMf3": 0.0,
+        "crossPni": 15,
+        "totemPni": 54.0,
+        "comboPni": 147.0,
+        "comboMf3": 0.0,
+        "totalCross": 219,
+        "visitacaoPni": 5214.0,
+        "captDiariaPni": 0.0420023015,
+        "visitacaoAqf": 1047.0,
+        "captTotalAqfPni": 0.2008055236
+      },
+      "2026-08-04": {
+        "bilheteriaMf3": 3.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 8.0,
+        "totemPni": 97.0,
+        "comboPni": 101.0,
+        "comboMf3": 0.0,
+        "totalCross": 209,
+        "visitacaoPni": 5267.0,
+        "captDiariaPni": 0.03968103285,
+        "visitacaoAqf": 912.0,
+        "captTotalAqfPni": 0.1731535979
+      },
+      "2026-08-05": {
+        "bilheteriaMf3": 2.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 11.0,
+        "crossMf3": 0.0,
+        "crossPni": 0.0,
+        "totemPni": 80.0,
+        "comboPni": 136.0,
+        "comboMf3": 0.0,
+        "totalCross": 229,
+        "visitacaoPni": 4908.0,
+        "captDiariaPni": 0.04665851671,
+        "visitacaoAqf": 957.0,
+        "captTotalAqfPni": 0.1949877751
+      },
+      "2026-08-06": {
+        "bilheteriaMf3": 13.0,
+        "tradeMf3": 45.0,
+        "aeroporto": 1.0,
+        "crossMf3": 0.0,
+        "crossPni": 18.0,
+        "totemPni": 57.0,
+        "comboPni": 90.0,
+        "comboMf3": 0.0,
+        "totalCross": 224,
+        "visitacaoPni": 4836.0,
+        "captDiariaPni": 0.04631927213,
+        "visitacaoAqf": 980.0,
+        "captTotalAqfPni": 0.2026468156
+      },
+      "2026-08-07": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 12.0,
+        "crossMf3": 0.0,
+        "crossPni": 6.0,
+        "totemPni": 99.0,
+        "comboPni": 110.0,
+        "comboMf3": 0.0,
+        "totalCross": 227,
+        "visitacaoPni": 6071.0,
+        "captDiariaPni": 0.03739087465,
+        "visitacaoAqf": 1304.0,
+        "captTotalAqfPni": 0.2147916324
+      },
+      "2026-08-08": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 9.0,
+        "crossMf3": 0.0,
+        "crossPni": 0.0,
+        "totemPni": 82.0,
+        "comboPni": 110.0,
+        "comboMf3": 0.0,
+        "totalCross": 201,
+        "visitacaoPni": 5216.0,
+        "captDiariaPni": 0.03853527607,
+        "visitacaoAqf": 1545.0,
+        "captTotalAqfPni": 0.2962039877
+      },
+      "2026-08-09": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 0.0,
+        "totemPni": 101.0,
+        "comboPni": 164.0,
+        "comboMf3": 0.0,
+        "totalCross": 265,
+        "visitacaoPni": 7151.0,
+        "captDiariaPni": 0.03705775416,
+        "visitacaoAqf": 1802.0,
+        "captTotalAqfPni": 0.2519927283
+      },
+      "2026-08-10": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 13.0,
+        "crossMf3": 0.0,
+        "crossPni": 25.0,
+        "totemPni": 51.0,
+        "comboPni": 176.0,
+        "comboMf3": 0.0,
+        "totalCross": 265,
+        "visitacaoPni": 4500.0,
+        "captDiariaPni": 0.05888888889,
+        "visitacaoAqf": 822.0,
+        "captTotalAqfPni": 0.1826666667
+      },
+      "2026-08-11": {
+        "bilheteriaMf3": 12.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 4.0,
+        "crossMf3": 0.0,
+        "crossPni": 43.0,
+        "totemPni": 65.0,
+        "comboPni": 199.0,
+        "comboMf3": 0.0,
+        "totalCross": 323,
+        "visitacaoPni": 4639.0,
+        "captDiariaPni": 0.0696270748,
+        "visitacaoAqf": 899.0,
+        "captTotalAqfPni": 0.1937917655
+      },
+      "2026-08-12": {
+        "bilheteriaMf3": 4.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 31.0,
+        "totemPni": 80.0,
+        "comboPni": 177.0,
+        "comboMf3": 12.0,
+        "totalCross": 304,
+        "visitacaoPni": 6345.0,
+        "captDiariaPni": 0.04791174153,
+        "visitacaoAqf": 827.0,
+        "captTotalAqfPni": 0.1303388495
+      },
+      "2026-08-13": {
+        "bilheteriaMf3": 2.0,
+        "tradeMf3": 29.0,
+        "aeroporto": 3.0,
+        "crossMf3": 0.0,
+        "crossPni": 22.0,
+        "totemPni": 64.0,
+        "comboPni": 156.0,
+        "comboMf3": 27.0,
+        "totalCross": 303,
+        "visitacaoPni": 4580.0,
+        "captDiariaPni": 0.06615720524,
+        "visitacaoAqf": 792.0,
+        "captTotalAqfPni": 0.1729257642
+      },
+      "2026-08-14": {
+        "bilheteriaMf3": 6.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 2.0,
+        "totemPni": 155.0,
+        "comboPni": 132.0,
+        "comboMf3": 29.0,
+        "totalCross": 324,
+        "visitacaoPni": 5242.0,
+        "captDiariaPni": 0.06180847005,
+        "visitacaoAqf": 1124.0,
+        "captTotalAqfPni": 0.2144219763
+      },
+      "2026-08-15": {
+        "bilheteriaMf3": 14.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 22.0,
+        "crossMf3": 0.0,
+        "crossPni": 17.0,
+        "totemPni": 92.0,
+        "comboPni": 195.0,
+        "comboMf3": 41.0,
+        "totalCross": 381,
+        "visitacaoPni": 7495.0,
+        "captDiariaPni": 0.05083388926,
+        "visitacaoAqf": 1709.0,
+        "captTotalAqfPni": 0.2280186791
+      },
+      "2026-08-16": {
+        "bilheteriaMf3": 8.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 4.0,
+        "crossMf3": 0.0,
+        "crossPni": 26.0,
+        "totemPni": 95.0,
+        "comboPni": 232.0,
+        "comboMf3": 47.0,
+        "totalCross": 412,
+        "visitacaoPni": 9979.0,
+        "captDiariaPni": 0.04128670207,
+        "visitacaoAqf": 2488.0,
+        "captTotalAqfPni": 0.2493235795
+      },
+      "2026-08-17": {
+        "bilheteriaMf3": 0.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 0.0,
+        "totemPni": 73.0,
+        "comboPni": 128.0,
+        "comboMf3": 14.0,
+        "totalCross": 215,
+        "visitacaoPni": 5168.0,
+        "captDiariaPni": 0.04160216718,
+        "visitacaoAqf": 909.0,
+        "captTotalAqfPni": 0.1758900929
+      },
+      "2026-08-18": {
+        "bilheteriaMf3": 4.0,
+        "tradeMf3": 0.0,
+        "aeroporto": 0.0,
+        "crossMf3": 0.0,
+        "crossPni": 25.0,
+        "totemPni": 98.0,
+        "comboPni": 89.0,
+        "comboMf3": 24.0,
+        "totalCross": 240,
+        "visitacaoPni": 5642.0,
+        "captDiariaPni": 0.04253810705,
+        "visitacaoAqf": 1018.0,
+        "captTotalAqfPni": 0.1804324708
+      }
+    },
+    "anual": [
+      {
+        "data": "2026-01-08",
+        "totalCross": 69,
+        "captDiariaPni": 0.0008564832055
+      },
+      {
+        "data": "2026-01-09",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-10",
+        "totalCross": 12,
+        "captDiariaPni": 0.002625246117
+      },
+      {
+        "data": "2026-01-11",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-12",
+        "totalCross": 23,
+        "captDiariaPni": 0.002806589384
+      },
+      {
+        "data": "2026-01-13",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-14",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-15",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-16",
+        "totalCross": 6,
+        "captDiariaPni": 0.0007855459544
+      },
+      {
+        "data": "2026-01-17",
+        "totalCross": 10,
+        "captDiariaPni": 0.001206709304
+      },
+      {
+        "data": "2026-01-18",
+        "totalCross": 16,
+        "captDiariaPni": 0.00174272955
+      },
+      {
+        "data": "2026-01-19",
+        "totalCross": 2,
+        "captDiariaPni": 0.0002877697842
+      },
+      {
+        "data": "2026-01-20",
+        "totalCross": 9,
+        "captDiariaPni": 0.001132075472
+      },
+      {
+        "data": "2026-01-21",
+        "totalCross": 5,
+        "captDiariaPni": 0.0006855889209
+      },
+      {
+        "data": "2026-01-22",
+        "totalCross": 12,
+        "captDiariaPni": 0.001699235344
+      },
+      {
+        "data": "2026-01-23",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-01-24",
+        "totalCross": 8,
+        "captDiariaPni": 0.0009668842156
+      },
+      {
+        "data": "2026-01-25",
+        "totalCross": 13,
+        "captDiariaPni": 0.001343947069
+      },
+      {
+        "data": "2026-01-26",
+        "totalCross": 29,
+        "captDiariaPni": 0.004881333109
+      },
+      {
+        "data": "2026-01-27",
+        "totalCross": 11,
+        "captDiariaPni": 0.001686340641
+      },
+      {
+        "data": "2026-01-28",
+        "totalCross": 2,
+        "captDiariaPni": 0.0003383522247
+      },
+      {
+        "data": "2026-01-29",
+        "totalCross": 11,
+        "captDiariaPni": 0.002069614299
+      },
+      {
+        "data": "2026-01-30",
+        "totalCross": 1,
+        "captDiariaPni": 0.0001843317972
+      },
+      {
+        "data": "2026-01-31",
+        "totalCross": 0,
+        "captDiariaPni": 0
+      },
+      {
+        "data": "2026-02-01",
+        "totalCross": 33,
+        "captDiariaPni": 0.004562422231
+      },
+      {
+        "data": "2026-02-02",
+        "totalCross": 20,
+        "captDiariaPni": 0.004429678848
+      },
+      {
+        "data": "2026-02-03",
+        "totalCross": 23,
+        "captDiariaPni": 0.005215419501
+      },
+      {
+        "data": "2026-02-04",
+        "totalCross": 27,
+        "captDiariaPni": 0.005065666041
+      },
+      {
+        "data": "2026-02-05",
+        "totalCross": 24,
+        "captDiariaPni": 0.004060226696
+      },
+      {
+        "data": "2026-02-06",
+        "totalCross": 19,
+        "captDiariaPni": 0.003421573924
+      },
+      {
+        "data": "2026-02-07",
+        "totalCross": 43,
+        "captDiariaPni": 0.007085187016
+      },
+      {
+        "data": "2026-02-08",
+        "totalCross": 40,
+        "captDiariaPni": 0.005151983514
+      },
+      {
+        "data": "2026-02-09",
+        "totalCross": 16,
+        "captDiariaPni": 0.003518803607
+      },
+      {
+        "data": "2026-02-10",
+        "totalCross": 22,
+        "captDiariaPni": 0.00454263886
+      },
+      {
+        "data": "2026-02-11",
+        "totalCross": 17,
+        "captDiariaPni": 0.003412969283
+      },
+      {
+        "data": "2026-02-12",
+        "totalCross": 12,
+        "captDiariaPni": 0.002306361714
+      },
+      {
+        "data": "2026-02-13",
+        "totalCross": 14,
+        "captDiariaPni": 0.003323836657
+      },
+      {
+        "data": "2026-02-14",
+        "totalCross": 60,
+        "captDiariaPni": 0.009414718343
+      },
+      {
+        "data": "2026-02-15",
+        "totalCross": 113,
+        "captDiariaPni": 0.007335280753
+      },
+      {
+        "data": "2026-02-16",
+        "totalCross": 90,
+        "captDiariaPni": 0.009324492333
+      },
+      {
+        "data": "2026-02-17",
+        "totalCross": 71,
+        "captDiariaPni": 0.0095532831
+      },
+      {
+        "data": "2026-02-18",
+        "totalCross": 13,
+        "captDiariaPni": 0.002290748899
+      },
+      {
+        "data": "2026-02-19",
+        "totalCross": 46,
+        "captDiariaPni": 0.007500407631
+      },
+      {
+        "data": "2026-02-20",
+        "totalCross": 23,
+        "captDiariaPni": 0.004756980352
+      },
+      {
+        "data": "2026-02-21",
+        "totalCross": 76,
+        "captDiariaPni": 0.0129076087
+      },
+      {
+        "data": "2026-02-22",
+        "totalCross": 59,
+        "captDiariaPni": 0.00851002452
+      },
+      {
+        "data": "2026-02-23",
+        "totalCross": 23,
+        "captDiariaPni": 0.004825849769
+      },
+      {
+        "data": "2026-02-24",
+        "totalCross": 49,
+        "captDiariaPni": 0.009925055702
+      },
+      {
+        "data": "2026-02-25",
+        "totalCross": 27,
+        "captDiariaPni": 0.005325443787
+      },
+      {
+        "data": "2026-02-26",
+        "totalCross": 37,
+        "captDiariaPni": 0.007633587786
+      },
+      {
+        "data": "2026-02-27",
+        "totalCross": 22,
+        "captDiariaPni": 0.004770164788
+      },
+      {
+        "data": "2026-02-28",
+        "totalCross": 39,
+        "captDiariaPni": 0.006633781255
+      },
+      {
+        "data": "2026-03-01",
+        "totalCross": 71,
+        "captDiariaPni": 0.009848800111
+      },
+      {
+        "data": "2026-03-02",
+        "totalCross": 34,
+        "captDiariaPni": 0.007462686567
+      },
+      {
+        "data": "2026-03-03",
+        "totalCross": 31,
+        "captDiariaPni": 0.006942889138
+      },
+      {
+        "data": "2026-03-04",
+        "totalCross": 84,
+        "captDiariaPni": 0.01832061069
+      },
+      {
+        "data": "2026-03-05",
+        "totalCross": 76,
+        "captDiariaPni": 0.01550387597
+      },
+      {
+        "data": "2026-03-06",
+        "totalCross": 50,
+        "captDiariaPni": 0.01060895396
+      },
+      {
+        "data": "2026-03-07",
+        "totalCross": 60,
+        "captDiariaPni": 0.00947567909
+      },
+      {
+        "data": "2026-03-08",
+        "totalCross": 59,
+        "captDiariaPni": 0.008091058694
+      },
+      {
+        "data": "2026-03-09",
+        "totalCross": 35,
+        "captDiariaPni": 0.008276188224
+      },
+      {
+        "data": "2026-03-10",
+        "totalCross": 38,
+        "captDiariaPni": 0.008147512864
+      },
+      {
+        "data": "2026-03-11",
+        "totalCross": 82,
+        "captDiariaPni": 0.01938534279
+      },
+      {
+        "data": "2026-03-12",
+        "totalCross": 50,
+        "captDiariaPni": 0.01182033097
+      },
+      {
+        "data": "2026-03-13",
+        "totalCross": 53,
+        "captDiariaPni": 0.009308043555
+      },
+      {
+        "data": "2026-03-14",
+        "totalCross": 85,
+        "captDiariaPni": 0.01338582677
+      },
+      {
+        "data": "2026-03-15",
+        "totalCross": 52,
+        "captDiariaPni": 0.006475716065
+      },
+      {
+        "data": "2026-03-16",
+        "totalCross": 39,
+        "captDiariaPni": 0.009059233449
+      },
+      {
+        "data": "2026-03-17",
+        "totalCross": 38,
+        "captDiariaPni": 0.007794871795
+      },
+      {
+        "data": "2026-03-18",
+        "totalCross": 86,
+        "captDiariaPni": 0.01919214461
+      },
+      {
+        "data": "2026-03-19",
+        "totalCross": 77,
+        "captDiariaPni": 0.0144384024
+      },
+      {
+        "data": "2026-03-20",
+        "totalCross": 39,
+        "captDiariaPni": 0.006788511749
+      },
+      {
+        "data": "2026-03-21",
+        "totalCross": 90,
+        "captDiariaPni": 0.01355625847
+      },
+      {
+        "data": "2026-03-22",
+        "totalCross": 65,
+        "captDiariaPni": 0.007608568419
+      },
+      {
+        "data": "2026-03-23",
+        "totalCross": 34,
+        "captDiariaPni": 0.007081857946
+      },
+      {
+        "data": "2026-03-24",
+        "totalCross": 55,
+        "captDiariaPni": 0.01177226027
+      },
+      {
+        "data": "2026-03-25",
+        "totalCross": 25,
+        "captDiariaPni": 0.006137981832
+      },
+      {
+        "data": "2026-03-26",
+        "totalCross": 23,
+        "captDiariaPni": 0.005064963664
+      },
+      {
+        "data": "2026-03-27",
+        "totalCross": 51,
+        "captDiariaPni": 0.01035322777
+      },
+      {
+        "data": "2026-03-28",
+        "totalCross": 80,
+        "captDiariaPni": 0.01371977362
+      },
+      {
+        "data": "2026-03-29",
+        "totalCross": 56,
+        "captDiariaPni": 0.007547169811
+      },
+      {
+        "data": "2026-03-30",
+        "totalCross": 52,
+        "captDiariaPni": 0.01033591731
+      },
+      {
+        "data": "2026-03-31",
+        "totalCross": 24,
+        "captDiariaPni": 0.004473438956
+      },
+      {
+        "data": "2026-04-01",
+        "totalCross": 78,
+        "captDiariaPni": 0.01529711708
+      },
+      {
+        "data": "2026-04-02",
+        "totalCross": 100,
+        "captDiariaPni": 0.01666388935
+      },
+      {
+        "data": "2026-04-03",
+        "totalCross": 127,
+        "captDiariaPni": 0.008137895681
+      },
+      {
+        "data": "2026-04-04",
+        "totalCross": 69,
+        "captDiariaPni": 0.008241758242
+      },
+      {
+        "data": "2026-04-05",
+        "totalCross": 112,
+        "captDiariaPni": 0.0182887002
+      },
+      {
+        "data": "2026-04-06",
+        "totalCross": 52,
+        "captDiariaPni": 0.0130949383
+      },
+      {
+        "data": "2026-04-07",
+        "totalCross": 117,
+        "captDiariaPni": 0.03730867347
+      },
+      {
+        "data": "2026-04-08",
+        "totalCross": 67,
+        "captDiariaPni": 0.01475445937
+      },
+      {
+        "data": "2026-04-09",
+        "totalCross": 59,
+        "captDiariaPni": 0.0104258703
+      },
+      {
+        "data": "2026-04-10",
+        "totalCross": 42,
+        "captDiariaPni": 0.006824829379
+      },
+      {
+        "data": "2026-04-11",
+        "totalCross": 100,
+        "captDiariaPni": 0.01513546239
+      },
+      {
+        "data": "2026-04-12",
+        "totalCross": 57,
+        "captDiariaPni": 0.01350071056
+      },
+      {
+        "data": "2026-04-13",
+        "totalCross": 55,
+        "captDiariaPni": 0.01120391118
+      },
+      {
+        "data": "2026-04-14",
+        "totalCross": 105,
+        "captDiariaPni": 0.01856763926
+      },
+      {
+        "data": "2026-04-15",
+        "totalCross": 56,
+        "captDiariaPni": 0.01351677528
+      },
+      {
+        "data": "2026-04-16",
+        "totalCross": 91,
+        "captDiariaPni": 0.02418283285
+      },
+      {
+        "data": "2026-04-17",
+        "totalCross": 128,
+        "captDiariaPni": 0.02242466713
+      },
+      {
+        "data": "2026-04-18",
+        "totalCross": 309,
+        "captDiariaPni": 0.0343257054
+      },
+      {
+        "data": "2026-04-19",
+        "totalCross": 244,
+        "captDiariaPni": 0.01492902594
+      },
+      {
+        "data": "2026-04-20",
+        "totalCross": 122,
+        "captDiariaPni": 0.01598323071
+      },
+      {
+        "data": "2026-04-21",
+        "totalCross": 122,
+        "captDiariaPni": 0.0236479938
+      },
+      {
+        "data": "2026-04-22",
+        "totalCross": 139,
+        "captDiariaPni": 0.02754111353
+      },
+      {
+        "data": "2026-04-23",
+        "totalCross": 91,
+        "captDiariaPni": 0.01743295019
+      },
+      {
+        "data": "2026-04-24",
+        "totalCross": 135,
+        "captDiariaPni": 0.02355198883
+      },
+      {
+        "data": "2026-04-25",
+        "totalCross": 176,
+        "captDiariaPni": 0.02558139535
+      },
+      {
+        "data": "2026-04-26",
+        "totalCross": 198,
+        "captDiariaPni": 0.03902246748
+      },
+      {
+        "data": "2026-04-27",
+        "totalCross": 127,
+        "captDiariaPni": 0.02725321888
+      },
+      {
+        "data": "2026-04-28",
+        "totalCross": 155,
+        "captDiariaPni": 0.0377220735
+      },
+      {
+        "data": "2026-04-29",
+        "totalCross": 127,
+        "captDiariaPni": 0.05051710422
+      },
+      {
+        "data": "2026-04-30",
+        "totalCross": 199,
+        "captDiariaPni": 0.04871481028
+      },
+      {
+        "data": "2026-05-01",
+        "totalCross": 270,
+        "captDiariaPni": 0.01944964702
+      },
+      {
+        "data": "2026-05-02",
+        "totalCross": 145,
+        "captDiariaPni": 0.02610731005
+      },
+      {
+        "data": "2026-05-03",
+        "totalCross": 180,
+        "captDiariaPni": 0.02536282936
+      },
+      {
+        "data": "2026-05-04",
+        "totalCross": 124,
+        "captDiariaPni": 0.03415977961
+      },
+      {
+        "data": "2026-05-05",
+        "totalCross": 116,
+        "captDiariaPni": 0.02601480153
+      },
+      {
+        "data": "2026-05-06",
+        "totalCross": 101,
+        "captDiariaPni": 0.02302781578
+      },
+      {
+        "data": "2026-05-07",
+        "totalCross": 123,
+        "captDiariaPni": 0.0328525641
+      },
+      {
+        "data": "2026-05-08",
+        "totalCross": 107,
+        "captDiariaPni": 0.03260207191
+      },
+      {
+        "data": "2026-05-09",
+        "totalCross": 126,
+        "captDiariaPni": 0.03004291845
+      },
+      {
+        "data": "2026-05-10",
+        "totalCross": 113,
+        "captDiariaPni": 0.01922749702
+      },
+      {
+        "data": "2026-05-11",
+        "totalCross": 133,
+        "captDiariaPni": 0.03810888252
+      },
+      {
+        "data": "2026-05-12",
+        "totalCross": 210,
+        "captDiariaPni": 0.04394224733
+      },
+      {
+        "data": "2026-05-13",
+        "totalCross": 223,
+        "captDiariaPni": 0.06036816459
+      },
+      {
+        "data": "2026-05-14",
+        "totalCross": 109,
+        "captDiariaPni": 0.02381993007
+      },
+      {
+        "data": "2026-05-15",
+        "totalCross": 129,
+        "captDiariaPni": 0.02199863574
+      },
+      {
+        "data": "2026-05-16",
+        "totalCross": 178,
+        "captDiariaPni": 0.04128014842
+      },
+      {
+        "data": "2026-05-17",
+        "totalCross": 187,
+        "captDiariaPni": 0.03639548462
+      },
+      {
+        "data": "2026-05-18",
+        "totalCross": 149,
+        "captDiariaPni": 0.03486195601
+      },
+      {
+        "data": "2026-05-19",
+        "totalCross": 154,
+        "captDiariaPni": 0.03688622754
+      },
+      {
+        "data": "2026-05-20",
+        "totalCross": 164,
+        "captDiariaPni": 0.03790154842
+      },
+      {
+        "data": "2026-05-21",
+        "totalCross": 154,
+        "captDiariaPni": 0.03285683806
+      },
+      {
+        "data": "2026-05-22",
+        "totalCross": 120,
+        "captDiariaPni": 0.01430615165
+      },
+      {
+        "data": "2026-05-23",
+        "totalCross": 222,
+        "captDiariaPni": 0.03695073236
+      },
+      {
+        "data": "2026-05-24",
+        "totalCross": 186,
+        "captDiariaPni": 0.02589807853
+      },
+      {
+        "data": "2026-05-25",
+        "totalCross": 101,
+        "captDiariaPni": 0.03220663265
+      },
+      {
+        "data": "2026-05-26",
+        "totalCross": 173,
+        "captDiariaPni": 0.04962707975
+      },
+      {
+        "data": "2026-05-27",
+        "totalCross": 188,
+        "captDiariaPni": 0.04874254602
+      },
+      {
+        "data": "2026-05-28",
+        "totalCross": 197,
+        "captDiariaPni": 0.04573949385
+      },
+      {
+        "data": "2026-05-29",
+        "totalCross": 187,
+        "captDiariaPni": 0.05235162374
+      },
+      {
+        "data": "2026-05-30",
+        "totalCross": 209,
+        "captDiariaPni": 0.04187537568
+      },
+      {
+        "data": "2026-05-31",
+        "totalCross": 198,
+        "captDiariaPni": 0.03555395942
+      },
+      {
+        "data": "2026-06-01",
+        "totalCross": 233,
+        "captDiariaPni": 0.07385103011
+      },
+      {
+        "data": "2026-06-02",
+        "totalCross": 254,
+        "captDiariaPni": 0.06956998083
+      },
+      {
+        "data": "2026-06-03",
+        "totalCross": 219,
+        "captDiariaPni": 0.06494661922
+      },
+      {
+        "data": "2026-06-04",
+        "totalCross": 318,
+        "captDiariaPni": 0.04889298893
+      },
+      {
+        "data": "2026-06-05",
+        "totalCross": 451,
+        "captDiariaPni": 0.0513667426
+      },
+      {
+        "data": "2026-06-06",
+        "totalCross": 316,
+        "captDiariaPni": 0.02692799318
+      },
+      {
+        "data": "2026-06-07",
+        "totalCross": 205,
+        "captDiariaPni": 0.03565217391
+      },
+      {
+        "data": "2026-06-08",
+        "totalCross": 150,
+        "captDiariaPni": 0.05671077505
+      },
+      {
+        "data": "2026-06-09",
+        "totalCross": 196,
+        "captDiariaPni": 0.06126914661
+      },
+      {
+        "data": "2026-06-10",
+        "totalCross": 91,
+        "captDiariaPni": 0.0487412962
+      },
+      {
+        "data": "2026-06-11",
+        "totalCross": 125,
+        "captDiariaPni": 0.04173622705
+      },
+      {
+        "data": "2026-06-12",
+        "totalCross": 228,
+        "captDiariaPni": 0.04802021904
+      },
+      {
+        "data": "2026-06-13",
+        "totalCross": 219,
+        "captDiariaPni": 0.02917665867
+      },
+      {
+        "data": "2026-06-14",
+        "totalCross": 239,
+        "captDiariaPni": 0.03364775447
+      },
+      {
+        "data": "2026-06-15",
+        "totalCross": 132,
+        "captDiariaPni": 0.04037932089
+      },
+      {
+        "data": "2026-06-16",
+        "totalCross": 140,
+        "captDiariaPni": 0.03612903226
+      },
+      {
+        "data": "2026-06-17",
+        "totalCross": 167,
+        "captDiariaPni": 0.0447241564
+      },
+      {
+        "data": "2026-06-18",
+        "totalCross": 120,
+        "captDiariaPni": 0.03003003003
+      },
+      {
+        "data": "2026-06-19",
+        "totalCross": 113,
+        "captDiariaPni": 0.06033101975
+      },
+      {
+        "data": "2026-06-20",
+        "totalCross": 163,
+        "captDiariaPni": 0.0323733863
+      },
+      {
+        "data": "2026-06-21",
+        "totalCross": 278,
+        "captDiariaPni": 0.03665128543
+      },
+      {
+        "data": "2026-06-22",
+        "totalCross": 95,
+        "captDiariaPni": 0.05334081976
+      },
+      {
+        "data": "2026-06-23",
+        "totalCross": 192,
+        "captDiariaPni": 0.0473723168
+      },
+      {
+        "data": "2026-06-24",
+        "totalCross": 193,
+        "captDiariaPni": 0.04767786561
+      },
+      {
+        "data": "2026-06-25",
+        "totalCross": 158,
+        "captDiariaPni": 0.03975842979
+      },
+      {
+        "data": "2026-06-26",
+        "totalCross": 130,
+        "captDiariaPni": 0.02485184477
+      },
+      {
+        "data": "2026-06-27",
+        "totalCross": 97,
+        "captDiariaPni": 0.03104993598
+      },
+      {
+        "data": "2026-06-28",
+        "totalCross": 220,
+        "captDiariaPni": 0.03772290809
+      },
+      {
+        "data": "2026-06-29",
+        "totalCross": 91,
+        "captDiariaPni": 0.02951670451
+      },
+      {
+        "data": "2026-06-30",
+        "totalCross": 60,
+        "captDiariaPni": 0.01889168766
+      },
+      {
+        "data": "2026-07-01",
+        "totalCross": 129,
+        "captDiariaPni": 0.0289497307
+      },
+      {
+        "data": "2026-07-02",
+        "totalCross": 436,
+        "captDiariaPni": 0.154009184
+      },
+      {
+        "data": "2026-07-03",
+        "totalCross": 439,
+        "captDiariaPni": 0.08161368284
+      },
+      {
+        "data": "2026-07-04",
+        "totalCross": 482,
+        "captDiariaPni": 0.06981460023
+      },
+      {
+        "data": "2026-07-05",
+        "totalCross": 395,
+        "captDiariaPni": 0.0527018012
+      },
+      {
+        "data": "2026-07-06",
+        "totalCross": 411,
+        "captDiariaPni": 0.1193033382
+      },
+      {
+        "data": "2026-07-07",
+        "totalCross": 466,
+        "captDiariaPni": 0.07331655129
+      },
+      {
+        "data": "2026-07-08",
+        "totalCross": 490,
+        "captDiariaPni": 0.06438050191
+      },
+      {
+        "data": "2026-07-09",
+        "totalCross": 525,
+        "captDiariaPni": 0.05120952009
+      },
+      {
+        "data": "2026-07-10",
+        "totalCross": 456,
+        "captDiariaPni": 0.05200729927
+      },
+      {
+        "data": "2026-07-11",
+        "totalCross": 517,
+        "captDiariaPni": 0.05852388499
+      },
+      {
+        "data": "2026-07-12",
+        "totalCross": 477,
+        "captDiariaPni": 0.04252094848
+      },
+      {
+        "data": "2026-07-13",
+        "totalCross": 598,
+        "captDiariaPni": 0.06962393759
+      },
+      {
+        "data": "2026-07-14",
+        "totalCross": 598,
+        "captDiariaPni": 0.05673624288
+      },
+      {
+        "data": "2026-07-15",
+        "totalCross": 561,
+        "captDiariaPni": 0.05614491593
+      },
+      {
+        "data": "2026-07-16",
+        "totalCross": 788,
+        "captDiariaPni": 0.07275413166
+      },
+      {
+        "data": "2026-07-17",
+        "totalCross": 601,
+        "captDiariaPni": 0.06133278906
+      },
+      {
+        "data": "2026-07-18",
+        "totalCross": 665,
+        "captDiariaPni": 0.06145457906
+      },
+      {
+        "data": "2026-07-19",
+        "totalCross": 646,
+        "captDiariaPni": 0.0549787234
+      },
+      {
+        "data": "2026-07-20",
+        "totalCross": 635,
+        "captDiariaPni": 0.06536284097
+      },
+      {
+        "data": "2026-07-21",
+        "totalCross": 702,
+        "captDiariaPni": 0.07270091135
+      },
+      {
+        "data": "2026-07-22",
+        "totalCross": 415,
+        "captDiariaPni": 0.09573241061
+      },
+      {
+        "data": "2026-07-23",
+        "totalCross": 419,
+        "captDiariaPni": 0.03413441955
+      },
+      {
+        "data": "2026-07-24",
+        "totalCross": 459,
+        "captDiariaPni": 0.06480304956
+      },
+      {
+        "data": "2026-07-25",
+        "totalCross": 490,
+        "captDiariaPni": 0.04092199766
+      },
+      {
+        "data": "2026-07-26",
+        "totalCross": 617,
+        "captDiariaPni": 0.05409433631
+      },
+      {
+        "data": "2026-07-27",
+        "totalCross": 541,
+        "captDiariaPni": 0.05411623487
+      },
+      {
+        "data": "2026-07-28",
+        "totalCross": 436,
+        "captDiariaPni": 0.04198363024
+      },
+      {
+        "data": "2026-07-29",
+        "totalCross": 308,
+        "captDiariaPni": 0.04637855745
+      },
+      {
+        "data": "2026-07-30",
+        "totalCross": 281,
+        "captDiariaPni": 0.04339098209
+      },
+      {
+        "data": "2026-07-31",
+        "totalCross": 292,
+        "captDiariaPni": 0.03980370774
+      },
+      {
+        "data": "2026-08-01",
+        "totalCross": 220,
+        "captDiariaPni": 0.03021148036
+      },
+      {
+        "data": "2026-08-02",
+        "totalCross": 245,
+        "captDiariaPni": 0.03779697624
+      },
+      {
+        "data": "2026-08-03",
+        "totalCross": 219,
+        "captDiariaPni": 0.0420023015
+      },
+      {
+        "data": "2026-08-04",
+        "totalCross": 209,
+        "captDiariaPni": 0.03968103285
+      },
+      {
+        "data": "2026-08-05",
+        "totalCross": 229,
+        "captDiariaPni": 0.04665851671
+      },
+      {
+        "data": "2026-08-06",
+        "totalCross": 224,
+        "captDiariaPni": 0.04631927213
+      },
+      {
+        "data": "2026-08-07",
+        "totalCross": 227,
+        "captDiariaPni": 0.03739087465
+      },
+      {
+        "data": "2026-08-08",
+        "totalCross": 201,
+        "captDiariaPni": 0.03853527607
+      },
+      {
+        "data": "2026-08-09",
+        "totalCross": 265,
+        "captDiariaPni": 0.03705775416
+      },
+      {
+        "data": "2026-08-10",
+        "totalCross": 265,
+        "captDiariaPni": 0.05888888889
+      },
+      {
+        "data": "2026-08-11",
+        "totalCross": 323,
+        "captDiariaPni": 0.0696270748
+      },
+      {
+        "data": "2026-08-12",
+        "totalCross": 304,
+        "captDiariaPni": 0.04791174153
+      },
+      {
+        "data": "2026-08-13",
+        "totalCross": 303,
+        "captDiariaPni": 0.06615720524
+      },
+      {
+        "data": "2026-08-14",
+        "totalCross": 324,
+        "captDiariaPni": 0.06180847005
+      },
+      {
+        "data": "2026-08-15",
+        "totalCross": 381,
+        "captDiariaPni": 0.05083388926
+      },
+      {
+        "data": "2026-08-16",
+        "totalCross": 412,
+        "captDiariaPni": 0.04128670207
+      },
+      {
+        "data": "2026-08-17",
+        "totalCross": 215,
+        "captDiariaPni": 0.04160216718
+      },
+      {
+        "data": "2026-08-18",
+        "totalCross": 240,
+        "captDiariaPni": 0.04253810705
+      }
+    ],
+    "mesAtual": "Agosto"
   }
 }
