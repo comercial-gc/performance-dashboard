@@ -208,30 +208,21 @@ def build_cross_aquafoz_mensal(dias):
     return {mes: _aggregate_mes(lista) for mes, lista in por_mes.items()}
 
 
-def build_cross_aquafoz_diario(dias, mes_atual_num):
-    """Filtra os dias do mês vigente (mes_atual_num: 1=Janeiro..12=Dezembro) e devolve
-    {'YYYY-MM-DD': {...}} com os campos crus de cada dia (inclui comboMf3)."""
+def build_cross_aquafoz_diaria(dias):
+    """Devolve {'YYYY-MM-DD': {...}} com os campos crus de TODOS os dias com dado (ano
+    inteiro, não só o mês vigente) -- inclui comboMf3.
+
+    REVISÃO 20/08/2026: antes esta função só devolvia o mês vigente (o front-end só mostrava
+    "o mês atual"). O usuário pediu um seletor de período (mês específico, ano inteiro,
+    personalizado) igual ao que existe no dashboard real dele e na aba Mix de Origem deste
+    painel -- pra isso o front-end precisa ter TODOS os dias disponíveis em mãos, não só o
+    mês vigente, e filtra pelo período escolhido na hora de renderizar (ver
+    getCrossAquafozRange() no index.html)."""
     result = {}
     for d in dias:
-        if d["data"].month != mes_atual_num:
-            continue
         entry = {k: d.get(k) for k in DIARIO_COLUNAS.values()}
         result[d["data"].strftime("%Y-%m-%d")] = entry
     return result
-
-
-def build_cross_aquafoz_anual(dias):
-    """Série do ano inteiro (todos os dias com dado, não só o mês vigente) só com Total cross
-    e Capt. Diária PNI -- alimenta o gráfico 'Total cross x Captação PNI' (combo, período
-    completo) que existe no dashboard real do usuário."""
-    return [
-        {
-            "data": d["data"].strftime("%Y-%m-%d"),
-            "totalCross": d.get("totalCross"),
-            "captDiariaPni": d.get("captDiariaPni"),
-        }
-        for d in dias
-    ]
 
 
 def _download_workbook(drive_service, spreadsheet_id):
@@ -273,18 +264,18 @@ def build_cross_aquafoz(drive_service, spreadsheet_id, mes_atual_nome):
     em data['CROSS_AQUAFOZ'].
 
     mes_atual_nome: nome do mês vigente em PT, Title Case (ex. 'Agosto') -- mesmo valor que já
-    está em cfg["meses_com_dados"][-1] (MESES_PT) -- só usado pra filtrar a visão Diária e pra
-    ecoar no resultado; a leitura em si é sempre da aba única 'Geral data'.
+    está em cfg["meses_com_dados"][-1] (MESES_PT) -- só ecoado no resultado (o front-end usa
+    como valor padrão do seletor de período); a leitura em si é sempre da aba única
+    'Geral data', ano inteiro.
 
-    Devolve {'mensal': {...}, 'diaria': {...}, 'anual': [...], 'mesAtual': mes_atual_nome}.
+    Devolve {'mensal': {...}, 'diaria': {...}, 'mesAtual': mes_atual_nome} -- 'diaria' traz
+    TODOS os dias com dado do ano (não só o mês vigente, ver build_cross_aquafoz_diaria).
     """
     wb = _download_workbook(drive_service, spreadsheet_id)
     dias = _ler_dias(_get_rows(wb, "Geral data"))
     mensal = build_cross_aquafoz_mensal(dias)
-    mes_atual_num = (MESES_PT.index(mes_atual_nome) + 1) if mes_atual_nome in MESES_PT else None
-    diaria = build_cross_aquafoz_diario(dias, mes_atual_num) if mes_atual_num else {}
-    anual = build_cross_aquafoz_anual(dias)
-    return {"mensal": mensal, "diaria": diaria, "anual": anual, "mesAtual": mes_atual_nome}
+    diaria = build_cross_aquafoz_diaria(dias)
+    return {"mensal": mensal, "diaria": diaria, "mesAtual": mes_atual_nome}
 
 
 # =========================================================================================
