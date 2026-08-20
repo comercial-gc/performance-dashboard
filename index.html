@@ -1159,15 +1159,23 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
 /* Legenda de gráficos (régua de clima, meta 25%) usa hex fixo em vez de var() -- deixa
    como está nos dois temas (valores próximos ao --red/--green, funcionam em ambos). */
 
-/* ── Contraste dos nomes/rótulos de parque no modo escuro (20/08/2026) ──────────────
+/* ── Contraste dos nomes/rótulos de parque no modo escuro (20/08/2026, revisado) ────
    PARK_COLORS/MIX_PARK_COLORS são cores escuras/saturadas (ex.: PNI #0D5955, M3F
    #CC0000) escolhidas pra funcionar sobre fundo BRANCO. Usadas como cor de TEXTO direto
-   (sem fundo próprio) elas quase desaparecem sobre o fundo escuro do painel -- pedido do
-   usuário: um contorno claro em volta do texto, igual ao que já era usado nos rótulos de
-   valor dos gráficos (Cross AquaFoz), pra "descolar" o nome do fundo em qualquer cor. Só
-   entra no modo escuro -- no claro o contraste já é bom, então não muda nada lá. */
+   (sem fundo próprio) elas quase desaparecem sobre o fundo escuro do painel. Só entra no
+   modo escuro -- no claro o contraste já é bom, então não muda nada lá.
+   BUG EVITADO (1ª versão): um text-shadow com 4 cópias DESLOCADAS (-1px -1px, 1px -1px,
+   etc.) cortava o topo da primeira letra de vários rótulos (AquaRio, Paineiras...) --
+   confirmado com/sem o shadow que a causa era exatamente esse deslocamento, não a
+   caixa/overflow do elemento. Troquei pra sombras SEM deslocamento (0 0 Npx, só raio de
+   borrão) -- mesmo efeito de brilho, sem empurrar nenhuma cópia da letra pra fora da
+   caixa.
+   BUG EVITADO (2ª versão): contorno branco sozinho não "descola" cores mais CLARAS
+   (ex.: laranja #e69138) -- pedido do usuário: um contorno preto fino por cima do brilho
+   branco, funciona pra cor clara e escura ao mesmo tempo. */
 html[data-theme="dark"] .pk-outline{
-  text-shadow: -1px -1px 1.5px #fff, 1px -1px 1.5px #fff, -1px 1px 1.5px #fff, 1px 1px 1.5px #fff, 0 0 3px rgba(255,255,255,.85);
+  text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+  -webkit-text-stroke: 0.5px rgba(0,0,0,.55);
 }
 /* Célula do parque nas tabelas "Visitação Parques" (parkBlockTd): já tinha um fundo
    tingido na cor do parque (12% de opacidade) + texto na mesma cor -- no escuro isso
@@ -1180,23 +1188,13 @@ html[data-theme="dark"] .pk-cell-glow{
 /* Badge pequeno dentro da célula do parque (ex.: "até Julho") -- mesmo fundo branco fixo,
    mesmo problema. */
 html[data-theme="dark"] .pk-badge{ background:#171d22 !important; }
-/* Halo dos rótulos de valor desenhados em cima das linhas/barras dos gráficos (Cross
-   AquaFoz, Share E-commerce Evolução Mensal): no claro o contorno branco "descola" o
-   número do fundo da linha; no escuro esse branco ficava um borrão claro por cima do
-   painel escuro. Troca pro tom do próprio card (mesmo escuro usado em .kpi-card/
-   .mix-card/section.panel), criando o mesmo efeito de "descolar" mas sem o clarão. */
-html[data-theme="dark"] .cx-label-halo{ stroke:#141a1f; }
-/* Texto de valor cor cinza-escuro fixa (usado no rótulo de "Investimento" da Evolução
-   Mensal) -- ilegível sobre fundo escuro, precisa de um tom claro só no modo escuro. */
-html[data-theme="dark"] .cx-lbl-invest{ fill:#c9d3d6; }
-/* Idem pro rótulo % (Capt. diária PNI) do gráfico combo do Cross AquaFoz -- verde-petróleo
-   escuro, também ilegível sobre fundo escuro. */
-html[data-theme="dark"] .cx-lbl-pct{ fill:#7fd9ab; }
 /* Logo em miniatura ao lado do nome do parque nos cards de Mix de Origem (pedido do
-   usuário, 20/08/2026) -- o contorno branco (drop-shadow) só entra no escuro, onde a
-   logo pode se misturar com o fundo escuro do card. */
-.mix-card-logo{ width:20px; height:20px; object-fit:contain; margin-right:2px; vertical-align:middle; }
-html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff); }
+   usuário, 20/08/2026). 1ª versão usava drop-shadow (borrão) pra destacar do fundo escuro
+   -- só que isso borrava a própria logo (perdia o desenho) e ela já era pequena demais
+   (20px) pra reconhecer. Aumentei o tamanho e troquei o destaque por um anel sólido fino
+   (box-shadow sem blur, não borra a imagem) -- só no escuro. */
+.mix-card-logo{ width:30px; height:30px; object-fit:contain; margin-right:3px; vertical-align:middle; border-radius:50%; }
+html[data-theme="dark"] .mix-card-logo{ box-shadow:0 0 0 1.5px rgba(255,255,255,.55); }
 </style>
 </head>
 <body>
@@ -1235,6 +1233,7 @@ html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-
     <button data-tab="clima">Clima</button>
     <button data-tab="share">Share E-commerce</button>
     <button data-tab="invest-mkt">Investimento Marketing</button>
+    <button data-tab="invest-midia">Investimento em Mídia</button>
     <button data-tab="mix-origem">Mix de Origem</button>
     <button data-tab="eventos">Eventos</button>
     <button data-tab="report">Report</button>
@@ -1481,10 +1480,13 @@ html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-
       <div class="share-meta-chart-wrap">
         <div class="combo-row" id="shareMetaComboRow"></div>
       </div>
+      <div class="share-meta-chart-wrap" style="margin-top:16px;">
+        <div class="combo-row" id="shareMetaComboRowSoul"></div>
+      </div>
       <div class="regua-legend">
         <span style="color:var(--green);font-weight:700;">▲ alta</span>
         <span style="color:var(--red);font-weight:700;">▼ queda</span>
-        <span>vs 2025 no mês&nbsp;&nbsp;|&nbsp;&nbsp;grande = Share, linhas = Visitação, E-commerce e meta (25%)</span>
+        <span>vs 2025 no mês&nbsp;&nbsp;|&nbsp;&nbsp;grande = Share, linhas = Visitação, E-commerce e meta (25%, não vale pra Soul Parques)</span>
       </div>
     </div>
   </section>
@@ -1499,33 +1501,6 @@ html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-
     </div>
   </section>
 
-  <section class="panel">
-    <div class="panel-head">
-      <h2>Investimento em mídia por mês</h2>
-      <span class="hint">Valor 2026, com 2025 e variação</span>
-    </div>
-    <div class="panel-body">
-      <div class="split-grid" style="grid-template-columns:1fr;">
-        <div class="regua-wrap" id="investReguaWrap">
-          <div class="invest-monthnum" id="investMonthNums"></div>
-          <div class="regua" id="investGrid"></div>
-        </div>
-        <div>
-          <div class="barchart-wrap" id="investChart"></div>
-          <div class="chart-legend">
-            <span><span class="sw" style="background:#4a5a52"></span>2026</span>
-            <span><span class="sw" style="background:#c9d1cc"></span>2025</span>
-            <span id="investChartAcumLabel">acumulado Jan a Jul</span>
-          </div>
-        </div>
-      </div>
-      <div class="regua-legend">
-        <span style="color:var(--green);font-weight:700;">▲ alta</span>
-        <span style="color:var(--red);font-weight:700;">▼ queda</span>
-        <span>vs 2025 no mês&nbsp;&nbsp;|&nbsp;&nbsp;sem borda = sem dado 2025</span>
-      </div>
-    </div>
-  </section>
 
 </section>
 
@@ -1591,6 +1566,39 @@ html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-
 
     <p class="imt-note">* Dados com base no mês competência. Números podem divergir da gestão orçamentária.</p>
   </div>
+</section>
+
+
+<section id="tab-invest-midia" style="display:none;">
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Investimento em mídia por mês</h2>
+      <span class="hint">Valor 2026, com 2025 e variação</span>
+    </div>
+    <div class="panel-body">
+      <div class="split-grid" style="grid-template-columns:1fr;">
+        <div class="regua-wrap" id="investReguaWrap">
+          <div class="invest-monthnum" id="investMonthNums"></div>
+          <div class="regua" id="investGrid"></div>
+        </div>
+        <div>
+          <div class="barchart-wrap" id="investChart"></div>
+          <div class="chart-legend">
+            <span><span class="sw" style="background:#4a5a52"></span>2026</span>
+            <span><span class="sw" style="background:#c9d1cc"></span>2025</span>
+            <span id="investChartAcumLabel">acumulado Jan a Jul</span>
+          </div>
+        </div>
+      </div>
+      <div class="regua-legend">
+        <span style="color:var(--green);font-weight:700;">▲ alta</span>
+        <span style="color:var(--red);font-weight:700;">▼ queda</span>
+        <span>vs 2025 no mês&nbsp;&nbsp;|&nbsp;&nbsp;sem borda = sem dado 2025</span>
+      </div>
+    </div>
+  </section>
+
 </section>
 
 
@@ -2346,6 +2354,26 @@ function fmtMoney(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v))
 function pctClass(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v)) return ''; return v>=0 ? 'up' : 'down'; }
 function pillClass(v){ if(v===null||v===undefined) return 'flat'; return v>=0 ? 'up' : 'down'; }
 
+// Rótulo de valor "com contorno" desenhado em cima de gráficos SVG (linhas/barras/donuts) --
+// usado em qualquer lugar que precise de um número legível em cima de uma cor qualquer, nos
+// dois temas. Empilha 2 cópias do mesmo texto na mesma posição: por baixo, um "selo" branco
+// (contorno E preenchimento brancos) que descola o número da linha/barra por trás; por cima,
+// o texto de verdade com um contorno PRETO fino, que dá a separação que faltava quando a cor
+// do texto já é clara (ex.: laranja, amarelo) e o branco sozinho não é suficiente -- pedido
+// do usuário, 20/08/2026, depois de notar que só o branco não funcionava pra essas cores.
+// Funciona igual no claro e no escuro (não depende de tema), então nunca mais "desliga" a
+// referência que já funcionava.
+function svgOutlineText(x, y, text, fill, fontSize, opts){
+  opts = opts || {};
+  const anchor = opts.anchor || 'middle';
+  const weight = opts.weight || '700';
+  const extra = opts.extra || '';
+  const xs = (typeof x === 'number') ? x.toFixed(1) : x;
+  const ys = (typeof y === 'number') ? y.toFixed(1) : y;
+  return `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#ffffff" paint-order="stroke" ${extra}>${text}</text>`
+       + `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#1a1a1a" stroke-width="0.6" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`;
+}
+
 function populateSelects(){
   const ms = document.getElementById('monthSelect');
   ms.innerHTML = MONTHS.map(m => `<option value="${m}">${MONTH_LABEL[m]}</option>`).join('')
@@ -2734,6 +2762,114 @@ function renderShareMetaChart(accShare, accVisit, accEcom){
     ${summaryCard}`;
 }
 
+// Mesmo padrão visual do gráfico/card do Grupo Cataratas acima, só que pra Soul Parques
+// (Três Pescadores + Vila Velha), pedido do usuário em 20/08/2026. Sem linha de meta 25%
+// (não vale pra esses parques) e com dados agregados no próprio JS via aggParksMonth,
+// já que o data.json não traz um "SHARE_META_SOUL_PARQUES" pronto do Python.
+function renderSoulMetaChart(accShare, accVisit, accEcom){
+  const container = document.getElementById('shareMetaComboRowSoul');
+  if(!container) return;
+  const soulColor = SOUL_AGG_COLOR;
+  const mesesMeta = SHARE.investimentoMidia.meses;
+  const mesKeys = Object.keys(mesesMeta);
+  const lastMes = mesKeys[mesKeys.length - 1];
+
+  function fmtPctVar(v25, v26){
+    if(v25===null||v25===undefined||v25===0||v26===null||v26===undefined) return {txt:'-',cls:''};
+    const pct = (v26-v25)/v25*100;
+    const sign = pct>=0 ? '+' : '';
+    return { txt: sign+fmtSmartNumber(smartRound(Math.abs(pct)))+'%', cls: pct>=0?'up':'down' };
+  }
+  function fmtPP(s25, s26){
+    if(s25===null||s25===undefined||s26===null||s26===undefined) return {txt:'-',cls:''};
+    const pp = (s26-s25)*100;
+    const sign = pp>=0 ? '+' : '';
+    return { txt: sign+fmtSmartNumber(smartRound(Math.abs(pp)))+' p.p.', cls: pp>=0?'up':'down' };
+  }
+
+  // Série mensal de Share (2026) pra desenhar as barras, na mesma ordem de SHARE_META_MESES.
+  const monthlyShare = SHARE_META_MESES.map(mes => aggParksMonth(mesesMeta, mes, SHARE_NO_META_PARKS).share2026);
+  const monthlyVisit = SHARE_META_MESES.map(mes => aggParksMonth(mesesMeta, mes, SHARE_NO_META_PARKS).visitacao2026);
+  const monthlyEcom = SHARE_META_MESES.map(mes => aggParksMonth(mesesMeta, mes, SHARE_NO_META_PARKS).ecommerce2026);
+  const meta = aggParksMonth(mesesMeta, lastMes, SHARE_NO_META_PARKS);
+
+  const FIRSTCOL = 92, COLW = 60, accGap = 15, padR = 6;
+  const n = SHARE_META_MESES.length;
+  const hasAcc = accShare !== null && accShare !== undefined;
+  const W = FIRSTCOL + n*COLW + (hasAcc ? accGap + COLW : 0) + padR;
+  const H = 176, padT = 26, padB = 18;
+  const plotH = H - padT - padB;
+  const barW = COLW * 0.62;
+  const minH = 30;
+  const xFor = i => FIRSTCOL + i*COLW;
+  const xAcc = xFor(n) + accGap;
+
+  const validShare = monthlyShare.filter(v => v!==null && v!==undefined);
+  const maxShare = Math.max(...validShare, hasAcc ? accShare : 0, 0.0001) * 1.15;
+
+  function drawBar(x, share, label, labelBold){
+    const h = minH + (share/maxShare)*(plotH-minH);
+    const y = padT + plotH - h;
+    const tip = `${label}: Share ${fmtPct(share)}`;
+    return `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3" ry="3" fill="${soulColor}"></rect>
+      <text x="${(x+barW/2).toFixed(1)}" y="${(padT+plotH-6).toFixed(1)}" font-size="9" font-weight="800" text-anchor="middle" fill="#ffffff">${fmtSmartNumber(smartRound(share*100))}%</text>
+      <text x="${(x+barW/2).toFixed(1)}" y="${H-5}" font-size="9.5" font-weight="${labelBold?'700':'400'}" text-anchor="middle" fill="#8a938d">${label}</text>`;
+  }
+
+  let bars = '';
+  SHARE_META_MESES.forEach((mes,i) => {
+    const share = monthlyShare[i];
+    if(share===null || share===undefined) return;
+    const x = xFor(i) + (COLW-barW)/2;
+    bars += drawBar(x, share, mes.slice(0,3)+'/26', false);
+  });
+  if(hasAcc){
+    const x = xAcc + (COLW-barW)/2;
+    bars += drawBar(x, accShare, 'Acum.', true);
+  }
+
+  const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">${bars}</svg>`;
+
+  const headerCells = SHARE_META_MESES.map(mes => `<th>${mes.slice(0,3)}/26</th>`).join('') + (hasAcc ? '<th class="hl-month">Acum.</th>' : '');
+  const visitCells = monthlyVisit.map(v => `<td>${v!==null&&v!==undefined?fmtInt(v):'-'}</td>`).join('') + (hasAcc ? `<td class="hl-month">${fmtInt(accVisit)}</td>` : '');
+  const ecomCells = monthlyEcom.map(v => `<td>${v!==null&&v!==undefined?fmtInt(v):'-'}</td>`).join('') + (hasAcc ? `<td class="hl-month">${fmtInt(accEcom)}</td>` : '');
+  const monthlyTable = `<table class="combo-monthly-table" style="width:${W}px">
+    <colgroup><col style="width:${FIRSTCOL+padR}px">${SHARE_META_MESES.map(()=>`<col style="width:${COLW}px">`).join('')}${hasAcc?`<col style="width:${COLW+accGap}px">`:''}</colgroup>
+    <thead><tr><th></th>${headerCells}</tr></thead>
+    <tbody>
+      <tr><td>Visitação total</td>${visitCells}</tr>
+      <tr><td>Ecommerce</td>${ecomCells}</tr>
+    </tbody>
+  </table>`;
+
+  const visitVar = fmtPctVar(meta.visitacao2025, meta.visitacao2026);
+  const ecomVar = fmtPctVar(meta.ecommerce2025, meta.ecommerce2026);
+  const investVar = fmtPctVar(meta.investimento2025, meta.investimento2026);
+  const shareVar = fmtPP(meta.share2025, meta.share2026);
+
+  const summaryCard = `<div class="combo-summary-card" style="--park-color:${soulColor}">
+    <div class="combo-summary-header"><b style="color:${soulColor}">Soul Parques</b></div>
+    <table class="combo-summary-table">
+      <thead><tr><th>${lastMes}</th><th>2025</th><th>2026</th><th>Variação</th></tr></thead>
+      <tbody>
+        <tr><td>Visitação total</td><td>${meta.visitacao2025!==null?fmtInt(meta.visitacao2025):'-'}</td><td>${meta.visitacao2026!==null?fmtInt(meta.visitacao2026):'-'}</td><td class="${visitVar.cls}">${visitVar.txt}</td></tr>
+        <tr><td>Ecommerce</td><td>${meta.ecommerce2025!==null?fmtInt(meta.ecommerce2025):'-'}</td><td>${meta.ecommerce2026!==null?fmtInt(meta.ecommerce2026):'-'}</td><td class="${ecomVar.cls}">${ecomVar.txt}</td></tr>
+        <tr><td>R$ em mídia</td><td>${meta.investimento2025!==null?fmtMoney(meta.investimento2025):'-'}</td><td>${meta.investimento2026!==null?fmtMoney(meta.investimento2026):'-'}</td><td class="${investVar.cls}">${investVar.txt}</td></tr>
+        <tr class="share-row"><td>Share</td><td>${meta.share2025!==null?fmtSmartNumber(smartRound(meta.share2025*100))+'%':'-'}</td><td>${meta.share2026!==null?fmtSmartNumber(smartRound(meta.share2026*100))+'%':'-'}</td><td class="${shareVar.cls}">${shareVar.txt}</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+
+  container.innerHTML = `<div class="combo-card">
+      <div class="ctitle" style="color:${soulColor}">Soul Parques</div>
+      <div class="combo-scroll">
+        ${svg}
+        ${monthlyTable}
+      </div>
+    </div>
+    ${summaryCard}`;
+}
+
 // BUG EVITADO: a coluna "Acum." usava a aba "Dash Share GC", que tem um recorte e uma
 // metodologia proprios (Ecommerce comum, nao "base TI") -- por isso nao batia com a soma
 // das 7 celulas mensais ao lado (que usam base TI). Agora "Acum." e' sempre a soma dos
@@ -2757,37 +2893,48 @@ function renderShareMonthRegua(){
   const grid = document.getElementById('shareMonthGrid');
   const metaRows = vp(SHARE_PARKS).map((park, parkIdx) => {
     const parkColor = PARK_COLORS[park] || '#888';
+    const hasMeta = !SHARE_NO_META_PARKS.includes(park);
     const cells = INVEST_MONTHS.map((mes, mesIdx) => {
       const d = meses[mes] ? meses[mes][park] : null;
       if(!d || d.share2026===null || d.share2026===undefined) return `<div class="invest-cell empty" style="background:${parkColor}14">-</div>`;
       const pctShare = (d.share2025!==null && d.share2025!==undefined && d.share2025!==0) ? (d.share2026-d.share2025) : null;
       const pctVisit = (d.visitacao2025!==null && d.visitacao2025!==undefined && d.visitacao2025!==0) ? (d.visitacao2026-d.visitacao2025)/d.visitacao2025 : null;
       const pctEco = (d.ecommerce2025!==null && d.ecommerce2025!==undefined && d.ecommerce2025!==0) ? (d.ecommerce2026-d.ecommerce2025)/d.ecommerce2025 : null;
-      const ppDelta = roundPctForMetaColor(d.share2026*100) - Math.round(SHARE_META_GOAL*100);
-      const metaDir = shareMeetsGoal(d.share2026) ? 'up' : 'down';
-      const dirClass = metaDir;
-      const metaArrow = ppDelta >= 0 ? '▲' : '▼';
-      const tip = mes+': Share '+fmtPct(d.share2026)+' | Visitação '+fmtInt(d.visitacao2026)+' | Ecommerce '+fmtInt(d.ecommerce2026)+' | meta 25% ('+(ppDelta>=0?'+':'')+ppDelta+'pp)';
+      let dirClass = '', metaLine = '', tipMeta = '';
+      if(hasMeta){
+        const ppDelta = roundPctForMetaColor(d.share2026*100) - Math.round(SHARE_META_GOAL*100);
+        const metaDir = shareMeetsGoal(d.share2026) ? 'up' : 'down';
+        dirClass = metaDir;
+        const metaArrow = ppDelta >= 0 ? '▲' : '▼';
+        tipMeta = ' | meta 25% ('+(ppDelta>=0?'+':'')+ppDelta+'pp)';
+        metaLine = `<div class="sub"><span><b>Meta 25%</b></span><span class="d ${metaDir}">${metaArrow} ${Math.abs(ppDelta)}pp</span></div>`;
+      }
+      const tip = mes+': Share '+fmtPct(d.share2026)+' | Visitação '+fmtInt(d.visitacao2026)+' | Ecommerce '+fmtInt(d.ecommerce2026)+tipMeta;
       return `<div class="invest-cell ${dirClass}" style="background:${parkColor}1f" data-tip="${tip}">
         <div class="big">${fmtPct(d.share2026)}</div>
         <div class="sub"><span><b>Visit</b> ${fmtShort(d.visitacao2026)}</span>${deltaTag(pctVisit)}</div>
         <div class="sub"><span><b>Ecom</b> ${fmtShort(d.ecommerce2026)}</span>${deltaTag(pctEco)}</div>
-        <div class="sub"><span><b>Meta 25%</b></span><span class="d ${metaDir}">${metaArrow} ${Math.abs(ppDelta)}pp</span></div>
+        ${metaLine}
       </div>`;
     }).join('');
     const acc = computeAccum(meses, park);
     let accCell;
     if(acc){
-      const accPpDelta = roundPctForMetaColor(acc.share2026*100) - Math.round(SHARE_META_GOAL*100);
-      const accMetaDir = shareMeetsGoal(acc.share2026) ? 'up' : 'down';
-      const accDir = accMetaDir;
-      const accMetaArrow = accPpDelta >= 0 ? '▲' : '▼';
-      const accTip = 'Acumulado no ano: Share '+fmtPct(acc.share2026)+' | Visitação '+fmtInt(acc.visitacao2026)+' | Ecommerce '+fmtInt(acc.ecommerce2026)+' | meta 25% ('+(accPpDelta>=0?'+':'')+accPpDelta+'pp)';
+      let accDir = '', accMetaLine = '', accTipMeta = '';
+      if(hasMeta){
+        const accPpDelta = roundPctForMetaColor(acc.share2026*100) - Math.round(SHARE_META_GOAL*100);
+        const accMetaDir = shareMeetsGoal(acc.share2026) ? 'up' : 'down';
+        accDir = accMetaDir;
+        const accMetaArrow = accPpDelta >= 0 ? '▲' : '▼';
+        accTipMeta = ' | meta 25% ('+(accPpDelta>=0?'+':'')+accPpDelta+'pp)';
+        accMetaLine = `<div class="sub"><span><b>Meta 25%</b></span><span class="d ${accMetaDir}">${accMetaArrow} ${Math.abs(accPpDelta)}pp</span></div>`;
+      }
+      const accTip = 'Acumulado no ano: Share '+fmtPct(acc.share2026)+' | Visitação '+fmtInt(acc.visitacao2026)+' | Ecommerce '+fmtInt(acc.ecommerce2026)+accTipMeta;
       accCell = `<div class="invest-cell ${accDir}" data-tip="${accTip}" style="background:${parkColor}1f;border-left-width:4px;margin-left:10px;">
         <div class="big">${fmtPct(acc.share2026)}</div>
         <div class="sub"><span><b>Visit</b> ${fmtShort(acc.visitacao2026)}</span></div>
         <div class="sub"><span><b>Ecom</b> ${fmtShort(acc.ecommerce2026)}</span></div>
-        <div class="sub"><span><b>Meta 25%</b></span><span class="d ${accMetaDir}">${accMetaArrow} ${Math.abs(accPpDelta)}pp</span></div>
+        ${accMetaLine}
       </div>`;
     } else {
       accCell = `<div class="invest-cell empty" style="background:${parkColor}14;margin-left:10px;">-</div>`;
@@ -2825,8 +2972,37 @@ function renderShareMonthRegua(){
   </div>`;
   metaRows.push(`<div class="invest-row"><b style="font-weight:800;color:${gcColor}">Grupo Cataratas</b><div class="invest-days">${gcCells}${gcAccCell}</div></div>`);
 
+  // Linha agregada "Soul Parques" (Três Pescadores + Vila Velha), logo abaixo do Grupo
+  // Cataratas -- sem comparação com a meta de 25%, que não vale pra esses dois parques.
+  const soulCells = INVEST_MONTHS.map(mes => {
+    const d = aggParksMonth(meses, mes, SHARE_NO_META_PARKS);
+    if(d.share2026===null || d.share2026===undefined) return `<div class="invest-cell empty" style="background:${SOUL_AGG_COLOR}14">-</div>`;
+    const pctVisit = (d.visitacao2025!==null && d.visitacao2025!==undefined && d.visitacao2025!==0) ? (d.visitacao2026-d.visitacao2025)/d.visitacao2025 : null;
+    const pctEco = (d.ecommerce2025!==null && d.ecommerce2025!==undefined && d.ecommerce2025!==0) ? (d.ecommerce2026-d.ecommerce2025)/d.ecommerce2025 : null;
+    const tip = `Soul Parques - ${mes}: Share ${fmtPct(d.share2026)} | Visitação ${fmtInt(d.visitacao2026)} | Ecommerce ${fmtInt(d.ecommerce2026)}`;
+    return `<div class="invest-cell" style="background:${SOUL_AGG_COLOR}14" data-tip="${tip}">
+      <div class="big">${fmtPct(d.share2026)}</div>
+      <div class="sub"><span><b>Visit</b> ${fmtShort(d.visitacao2026)}</span>${deltaTag(pctVisit)}</div>
+      <div class="sub"><span><b>Ecom</b> ${fmtShort(d.ecommerce2026)}</span>${deltaTag(pctEco)}</div>
+    </div>`;
+  }).join('');
+  const soulAcc = computeAccumMulti(meses, SHARE_NO_META_PARKS);
+  let soulAccCell;
+  if(soulAcc){
+    const soulAccTip = `Soul Parques - Acumulado: Share ${fmtPct(soulAcc.share2026)} | Visitação ${fmtInt(soulAcc.visitacao2026)} | Ecommerce ${fmtInt(soulAcc.ecommerce2026)}`;
+    soulAccCell = `<div class="invest-cell" data-tip="${soulAccTip}" style="background:${SOUL_AGG_COLOR}14;border-left-width:4px;margin-left:10px;">
+      <div class="big">${fmtPct(soulAcc.share2026)}</div>
+      <div class="sub"><span><b>Visit</b> ${fmtShort(soulAcc.visitacao2026)}</span></div>
+      <div class="sub"><span><b>Ecom</b> ${fmtShort(soulAcc.ecommerce2026)}</span></div>
+    </div>`;
+  } else {
+    soulAccCell = `<div class="invest-cell empty" style="background:${SOUL_AGG_COLOR}14;margin-left:10px;">-</div>`;
+  }
+  metaRows.push(`<div class="invest-row"><b style="font-weight:800;color:${SOUL_AGG_COLOR}">Soul Parques</b><div class="invest-days">${soulCells}${soulAccCell}</div></div>`);
+
   grid.innerHTML = metaRows.join('');
   renderShareMetaChart(gcShareAcum, gcVisitAcum, gcEcomAcum);
+  renderSoulMetaChart(soulAcc ? soulAcc.share2026 : null, soulAcc ? soulAcc.visitacao2026 : null, soulAcc ? soulAcc.ecommerce2026 : null);
 }
 
 // BUG EVITADO: esta lista ficava travada em Jan-Jul na mão -- por isso "Agosto" não
@@ -2836,7 +3012,48 @@ function renderShareMonthRegua(){
 // sempre até o OPEN_MONTH (mês vigente de verdade).
 let INVEST_MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
 const INVEST_PARKS = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz','3P','Vila Velha'];
-const SHARE_PARKS  = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz'];
+// Três Pescadores e Vila Velha (Soul Parques) entraram nesse bloco em 20/08/2026, a pedido
+// do usuário, no mesmo padrão de linha dos demais parques -- mas SEM a comparação com a
+// meta de 25% (ver "não aplica meta" em aggParksMonth/renderShareMonthRegua), porque a meta
+// de Share não vale para eles, conforme a legenda do bloco já explicava.
+const SHARE_PARKS  = ['AquaRio','BioParque','Paineiras','M3F','AquaFoz','3P','Vila Velha'];
+// Parques sem meta de Share de 25% (usado só neste bloco, pra não desenhar a seta/pp vs meta).
+const SHARE_NO_META_PARKS = ['3P','Vila Velha'];
+// Cor própria pro agregado "Soul Parques" (não é a cor de nenhum parque individual, igual
+// ao "Grupo Cataratas" que também tem uma cor fixa só dele).
+const SOUL_AGG_COLOR = '#6b3f6e';
+
+// Soma Visitação/Ecommerce (2025 e 2026) de uma lista de parques num único mês, pra
+// construir linhas/gráficos agregados (ex.: "Soul Parques") sem precisar de um campo próprio
+// vindo do data.json -- os dados por parque já existem em SHARE.investimentoMidia.meses.
+function aggParksMonth(meses, mes, parks){
+  let v25=0, v26=0, e25=0, e26=0, i25=0, i26=0, any25=false, any26=false;
+  parks.forEach(p => {
+    const d = meses[mes] ? meses[mes][p] : null;
+    if(!d) return;
+    if(d.visitacao2025!==null && d.visitacao2025!==undefined){ v25+=d.visitacao2025; e25+=(d.ecommerce2025||0); i25+=(d.investimento2025||0); any25=true; }
+    if(d.visitacao2026!==null && d.visitacao2026!==undefined){ v26+=d.visitacao2026; e26+=(d.ecommerce2026||0); i26+=(d.investimento2026||0); any26=true; }
+  });
+  return {
+    visitacao2025: any25?v25:null, visitacao2026: any26?v26:null,
+    ecommerce2025: any25?e25:null, ecommerce2026: any26?e26:null,
+    investimento2025: any25?i25:null, investimento2026: any26?i26:null,
+    share2025: (any25 && v25) ? e25/v25 : null,
+    share2026: (any26 && v26) ? e26/v26 : null,
+  };
+}
+
+// Igual a computeAccum(), mas somando vários parques (ex.: Soul Parques) em vez de um só.
+function computeAccumMulti(meses, parks){
+  let ecom = 0, vis = 0, temDado = false;
+  INVEST_MONTHS.forEach(mes => {
+    const d = aggParksMonth(meses, mes, parks);
+    if(d.ecommerce2026!==null && d.ecommerce2026!==undefined){ ecom += d.ecommerce2026; temDado = true; }
+    if(d.visitacao2026!==null && d.visitacao2026!==undefined){ vis += d.visitacao2026; temDado = true; }
+  });
+  if(!temDado || vis===0) return null;
+  return { ecommerce2026: ecom, visitacao2026: vis, share2026: ecom/vis };
+}
 
 function renderInvestRegua(){
   const meses = SHARE.investimentoMidia.meses;
@@ -3142,7 +3359,7 @@ function renderComboCharts(containerId, barField, barFmt){
       // ponto da linha (investimento) tem escala própria, independente da barra
       if(v !== null && v !== undefined){
         const yLine = padT + plotH - (v/maxInv)*plotH;
-        invLabels += `<text class="cx-label-halo cx-lbl-invest" x="${cx.toFixed(1)}" y="${(yLine-6).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#3a463f">${barFmt(v)}</text>`;
+        invLabels += svgOutlineText(cx, yLine-6, barFmt(v), '#3a463f', 8.5);
         topPoints.push([cx, yLine, i]);
       } else {
         topPoints.push(null);
@@ -4260,6 +4477,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn => {
     document.getElementById('tab-visitacao').style.display = tab==='visitacao' ? '' : 'none';
     document.getElementById('tab-share').style.display = tab==='share' ? '' : 'none';
     document.getElementById('tab-invest-mkt').style.display = tab==='invest-mkt' ? '' : 'none';
+    document.getElementById('tab-invest-midia').style.display = tab==='invest-midia' ? '' : 'none';
     document.getElementById('tab-mix-origem').style.display = tab==='mix-origem' ? '' : 'none';
     document.getElementById('tab-clima').style.display = tab==='clima' ? '' : 'none';
     if(tab==='clima'){ renderClimaTab(); if(!climaForecastLoaded){ climaForecastLoaded = true; loadClimaForecast(); } }
@@ -6097,7 +6315,7 @@ function renderMixOrigem() {
       [...leftItems, ...rightItems].forEach(it => {
         const isRight = it.p3x > it.p2x;
         leaderSvg += `<path d="M ${it.p1x} ${it.p1y} L ${it.p2x} ${it.p2y} L ${it.p3x} ${it.p3y}" fill="none" stroke="${it.col}" stroke-width="1.4" pointer-events="none"></path>`;
-        labelsSvg += `<text x="${it.p3x + (isRight?4:-4)}" y="${it.p3y}" text-anchor="${isRight?'start':'end'}" dominant-baseline="middle" font-size="17" font-weight="800" fill="${it.col}" pointer-events="none">${it.pctLabel}%</text>`;
+        labelsSvg += svgOutlineText(it.p3x + (isRight?4:-4), it.p3y, it.pctLabel+'%', it.col, 17, { anchor: isRight?'start':'end', weight:'800', extra:'dominant-baseline="middle" pointer-events="none"' });
       });
 
       return `<svg class="mix-donut-svg" viewBox="0 0 340 340">${circlesSvg}${leaderSvg}${labelsSvg}</svg>`;
@@ -6848,7 +7066,7 @@ function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
       const rect = caLabelRect(p[0], p[1]-7, text);
       if(caFitsLabel(occupied, rect)){
         occupied.push(rect);
-        labels += `<text class="cx-label-halo" x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" fill="${c.color}">${text}</text>`;
+        labels += svgOutlineText(p[0], p[1]-7, text, c.color, 8.5);
       }
     });
   });
@@ -6972,7 +7190,7 @@ function buildCrossAquafozComboChart(items, opts){
       const rect = caLabelRect(x+COLW/2, y-8, text);
       if(caFitsLabel(occupied, rect)){
         occupied.push(rect);
-        pctLabels += `<text class="cx-label-halo cx-lbl-pct" x="${(x+COLW/2).toFixed(1)}" y="${(y-8).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#1d5c60">${text}</text>`;
+        pctLabels += svgOutlineText(x+COLW/2, y-8, text, '#1d5c60', 8.5);
       }
     } else {
       points.push(null);
