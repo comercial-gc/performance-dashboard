@@ -1158,6 +1158,45 @@ html[data-theme="dark"] table tbody tr:hover td{ background-color:#1c232a; }
 html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
 /* Legenda de gráficos (régua de clima, meta 25%) usa hex fixo em vez de var() -- deixa
    como está nos dois temas (valores próximos ao --red/--green, funcionam em ambos). */
+
+/* ── Contraste dos nomes/rótulos de parque no modo escuro (20/08/2026) ──────────────
+   PARK_COLORS/MIX_PARK_COLORS são cores escuras/saturadas (ex.: PNI #0D5955, M3F
+   #CC0000) escolhidas pra funcionar sobre fundo BRANCO. Usadas como cor de TEXTO direto
+   (sem fundo próprio) elas quase desaparecem sobre o fundo escuro do painel -- pedido do
+   usuário: um contorno claro em volta do texto, igual ao que já era usado nos rótulos de
+   valor dos gráficos (Cross AquaFoz), pra "descolar" o nome do fundo em qualquer cor. Só
+   entra no modo escuro -- no claro o contraste já é bom, então não muda nada lá. */
+html[data-theme="dark"] .pk-outline{
+  text-shadow: -1px -1px 1.5px #fff, 1px -1px 1.5px #fff, -1px 1px 1.5px #fff, 1px 1px 1.5px #fff, 0 0 3px rgba(255,255,255,.85);
+}
+/* Célula do parque nas tabelas "Visitação Parques" (parkBlockTd): já tinha um fundo
+   tingido na cor do parque (12% de opacidade) + texto na mesma cor -- no escuro isso
+   ficava "tudo escuro em cima de escuro". Além do contorno branco no texto (.pk-outline
+   acima), acrescenta um contorno "neon" na cor do próprio parque em volta da célula
+   (var(--pc), definida inline em cada célula), pra ela se destacar da grade da tabela. */
+html[data-theme="dark"] .pk-cell-glow{
+  box-shadow: inset 0 0 0 1px var(--pc, transparent), 0 0 7px -1px var(--pc, transparent);
+}
+/* Badge pequeno dentro da célula do parque (ex.: "até Julho") -- mesmo fundo branco fixo,
+   mesmo problema. */
+html[data-theme="dark"] .pk-badge{ background:#171d22 !important; }
+/* Halo dos rótulos de valor desenhados em cima das linhas/barras dos gráficos (Cross
+   AquaFoz, Share E-commerce Evolução Mensal): no claro o contorno branco "descola" o
+   número do fundo da linha; no escuro esse branco ficava um borrão claro por cima do
+   painel escuro. Troca pro tom do próprio card (mesmo escuro usado em .kpi-card/
+   .mix-card/section.panel), criando o mesmo efeito de "descolar" mas sem o clarão. */
+html[data-theme="dark"] .cx-label-halo{ stroke:#141a1f; }
+/* Texto de valor cor cinza-escuro fixa (usado no rótulo de "Investimento" da Evolução
+   Mensal) -- ilegível sobre fundo escuro, precisa de um tom claro só no modo escuro. */
+html[data-theme="dark"] .cx-lbl-invest{ fill:#c9d3d6; }
+/* Idem pro rótulo % (Capt. diária PNI) do gráfico combo do Cross AquaFoz -- verde-petróleo
+   escuro, também ilegível sobre fundo escuro. */
+html[data-theme="dark"] .cx-lbl-pct{ fill:#7fd9ab; }
+/* Logo em miniatura ao lado do nome do parque nos cards de Mix de Origem (pedido do
+   usuário, 20/08/2026) -- o contorno branco (drop-shadow) só entra no escuro, onde a
+   logo pode se misturar com o fundo escuro do card. */
+.mix-card-logo{ width:20px; height:20px; object-fit:contain; margin-right:2px; vertical-align:middle; }
+html[data-theme="dark"] .mix-card-logo{ filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff); }
 </style>
 </head>
 <body>
@@ -2362,7 +2401,7 @@ function renderTable(month){
 function parkLabel(name){
   const color = PARK_COLORS[name];
   const displayName = name === '3P' ? 'Três Pescadores' : name;
-  return color ? `<span class="park-name" style="color:${color}">${displayName}</span>` : displayName;
+  return color ? `<span class="park-name pk-outline" style="color:${color}">${displayName}</span>` : displayName;
 }
 
 function rowHtml(name, s, isTotal){
@@ -2439,7 +2478,7 @@ function renderRegua(month){
           if(v===null||v===undefined) return `<div class="regua-sub-cell empty">-</div>`;
           return `<div class="regua-sub-cell" data-tip="${ATRATIVOS_LABEL[a]}, dia ${i+1}: ${fmtInt(v)}">${fmtInt(v)}</div>`;
         }).join('');
-        return `<div class="regua-sub-row"><span class="regua-sub-label" style="color:${color};font-weight:800;">${ATRATIVOS_LABEL[a]}</span><div class="regua-sub-days">${subCells}</div></div>`;
+        return `<div class="regua-sub-row"><span class="regua-sub-label pk-outline" style="color:${color};font-weight:800;">${ATRATIVOS_LABEL[a]}</span><div class="regua-sub-days">${subCells}</div></div>`;
       }).join('');
     }
     return rowHtml2;
@@ -2522,7 +2561,7 @@ function renderBarChart(container, items, fmt, metaLine, opts){
         <div class="bar-col" data-tip="${t25}"><div class="bar-val" style="bottom:${h25+3}px">${it.v2025!==null&&it.v2025!==undefined?fmt(it.v2025):''}</div><div class="bar-rect" style="height:${h25}px;background:${light}"></div></div>
         <div class="bar-col" data-tip="${t26}"><div class="bar-val" style="bottom:${h26+3}px">${it.v2026!==null&&it.v2026!==undefined?fmt(it.v2026):''}</div><div class="bar-rect" style="height:${h26}px;background:${it.color}"></div></div>
       </div>
-      <div class="bar-glabel" style="color:${it.color}">${it.label}</div>
+      <div class="bar-glabel pk-outline" style="color:${it.color}">${it.label}</div>
     </div>`;
   }).join('');
 
@@ -3103,7 +3142,7 @@ function renderComboCharts(containerId, barField, barFmt){
       // ponto da linha (investimento) tem escala própria, independente da barra
       if(v !== null && v !== undefined){
         const yLine = padT + plotH - (v/maxInv)*plotH;
-        invLabels += `<text x="${cx.toFixed(1)}" y="${(yLine-6).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#3a463f">${barFmt(v)}</text>`;
+        invLabels += `<text class="cx-label-halo cx-lbl-invest" x="${cx.toFixed(1)}" y="${(yLine-6).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#3a463f">${barFmt(v)}</text>`;
         topPoints.push([cx, yLine, i]);
       } else {
         topPoints.push(null);
@@ -3173,7 +3212,7 @@ function renderComboCharts(containerId, barField, barFmt){
 
     return `<div class="combo-row">
       <div class="combo-card">
-        <div class="ctitle" style="color:${color}">${park}</div>
+        <div class="ctitle pk-outline" style="color:${color}">${park}</div>
         <div class="combo-scroll">
           <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">
             ${bars}${line}${dots}${carts}${shareLabels}${invLabels}${monthLabels}
@@ -3439,7 +3478,7 @@ function buildParkDailyChart(park, realizadoArr, nDays, monthNumber, regionEmoji
   }).join('');
   const displayName = park === '3P' ? 'Três Pescadores' : park;
   return `<div class="clima-park-chart">
-    <div class="clima-park-chart-title" style="color:${baseColor}">${displayName}</div>
+    <div class="clima-park-chart-title pk-outline" style="color:${baseColor}">${displayName}</div>
     <div class="clima-park-bars">${cols}</div>
   </div>`;
 }
@@ -3565,7 +3604,7 @@ function captacaoCardsHtml(bucket, month){
     const captacao = (ponto && typeof ponto.captacao === 'number') ? ponto.captacao : null;
     const semMorador = (ponto && typeof ponto.semMorador === 'number') ? ponto.semMorador : null;
     return `<div class="capta-card" style="border-left-color:${color}">
-      <div class="lbl" style="color:${color}">${labels[p]}</div>
+      <div class="lbl pk-outline" style="color:${color}">${labels[p]}</div>
       <div class="big">${fmtPct(captacao)}</div>
       <div class="sub">*Sem morador: ${fmtPct(semMorador)}</div>
     </div>`;
@@ -3605,7 +3644,7 @@ function captacaoCV3PCardHtml(bucket, month){
   }
   const captacao = (d && d.cv) ? d.visitacao / d.cv : null;
   return `<div class="capta-card" style="border-left-color:${color}">
-    <div class="lbl" style="color:${color}">Captação CV (Três Pescadores)</div>
+    <div class="lbl pk-outline" style="color:${color}">Captação CV (Três Pescadores)</div>
     <div class="big">${fmtPct(captacao)}</div>
     <div class="sub">*Visitação 3P: ${d ? fmtInt(d.visitacao) : '-'} / CV: ${d ? fmtInt(d.cv) : '-'}</div>
   </div>`;
@@ -3618,8 +3657,8 @@ function pctArrow(v){
 function parkBlockTd(park, badge){
   const color = PARK_COLORS[park] || '#333';
   const displayName = park === '3P' ? 'Três Pescadores' : park;
-  const badgeHtml = badge ? ` <span style="font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px; background:#fff; border:1px solid ${color}; color:${color}; vertical-align:middle;">${badge}</span>` : '';
-  return `<td style="background:${color}1f; color:${color};">${displayName}${badgeHtml}</td>`;
+  const badgeHtml = badge ? ` <span class="pk-badge" style="font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px; background:#fff; border:1px solid ${color}; color:${color}; vertical-align:middle;">${badge}</span>` : '';
+  return `<td class="pk-outline pk-cell-glow" style="background:${color}1f; color:${color}; --pc:${color};">${displayName}${badgeHtml}</td>`;
 }
 
 function renderVizMensal(month){
@@ -3684,7 +3723,7 @@ function renderVizMensal(month){
       return `<div class="atrativo-card" style="border-left-color:${color}">
         <img class="atrativo-logo" src="${logo}" alt="${a}">
         <div class="atrativo-card-info">
-          <div class="lbl" style="color:${color}">${LABELS[a]}</div>
+          <div class="lbl pk-outline" style="color:${color}">${LABELS[a]}</div>
           <div class="big">${fmtInt(somaMes)}</div>
           <div class="sub"><span>Captação</span><span>${captacao!==null?fmtPct(captacao):'-'}</span></div>
         </div>
@@ -4032,7 +4071,7 @@ function renderAtrativos(month){
     return `<div class="atrativo-card" style="border-left-color:${color}">
       <img class="atrativo-logo" src="${logo}" alt="${a}">
       <div class="atrativo-card-info">
-        <div class="lbl" style="color:${color}">${LABELS[a]}</div>
+        <div class="lbl pk-outline" style="color:${color}">${LABELS[a]}</div>
         <div class="big">${fmtInt(d.realizado2026)}</div>
         <div class="sub"><span>% do AquaRio</span><span>${fmtPct(d.pctAq2026)}</span></div>
         <div class="sub"><span>2025</span><span>${d.realizado2025!==null&&d.realizado2025!==undefined?fmtInt(d.realizado2025)+' ('+fmtPct(d.pctAq2025)+')':'sem dado'}</span></div>
@@ -5237,10 +5276,10 @@ function buildChartCardHtml(parque, serieList, isPercent, compact){
   const legend = `<div class="hist-legend">${serieList.map(s => {
     const off = histHiddenSeries.has(s.key) ? 'off' : '';
     const marker = s.dashed ? `<span class="dash" style="background:${s.color}"></span>` : `<span class="dot" style="background:${s.color}"></span>`;
-    return `<span class="hist-legend-item ${off}" style="color:${s.color}" onclick="toggleHistSerie('${s.key}')">${marker}${s.label}</span>`;
+    return `<span class="hist-legend-item pk-outline ${off}" style="color:${s.color}" onclick="toggleHistSerie('${s.key}')">${marker}${s.label}</span>`;
   }).join('')}</div>`;
 
-  const titulo = compact ? `<div class="hist-park-title" style="color:${parque==='Consolidado'?'#0f3d2e':(PARK_COLORS[parque]||'#333')}">${parque}</div>` : '';
+  const titulo = compact ? `<div class="hist-park-title pk-outline" style="color:${parque==='Consolidado'?'#0f3d2e':(PARK_COLORS[parque]||'#333')}">${parque}</div>` : '';
 
   return `<div class="hist-chart-card">
     ${titulo}
@@ -5366,7 +5405,7 @@ function renderHistoricoReguaGrid(parques, anoPrincipal, anoVs, isPercent){
     const tableHtml = buildHistTableHtml(serieList, mesesParaTabela, modoTodosAnos, anoVs, isPercent)
       || '<div class="hist-empty">Sem dados.</div>';
     const color = p === 'Consolidado' ? '#0f3d2e' : (PARK_COLORS[p] || '#333');
-    return `<div class="hist-chart-card"><div class="hist-park-title" style="color:${color}">${p}</div>${tableHtml}</div>`;
+    return `<div class="hist-chart-card"><div class="hist-park-title pk-outline" style="color:${color}">${p}</div>${tableHtml}</div>`;
   }).join('');
   wrap.innerHTML = `<div class="hist-chart-grid">${cards}</div>`;
 }
@@ -6076,9 +6115,13 @@ function renderMixOrigem() {
       </div>`;
     }
 
+    const mixLogoSrc = PARK_LOGOS[parque] || '';
     return `<div class="mix-card" style="--park-color:${color}">
       <div class="mix-card-head">
-        <span class="name">${parque}</span>
+        <span style="display:flex; align-items:center; gap:6px;">
+          ${mixLogoSrc ? `<img class="mix-card-logo" src="${mixLogoSrc}" alt="${parque}">` : ''}
+          <span class="name">${parque}</span>
+        </span>
         ${badgeHtml}
       </div>
       <div class="mix-top-row${top5Html ? ' has-top5' : ''}">
@@ -6268,6 +6311,12 @@ function renderMixOrigem() {
     else root.removeAttribute('data-theme');
     syncAria();
     try{ localStorage.setItem(STORAGE_KEY, next); }catch(e){ /* modo privado etc. -- só não persiste */ }
+    // Reaproveita o mesmo re-render completo do botão "Ocultar Bio" (ver abaixo) -- a
+    // maioria do modo escuro é só CSS e não precisa disso, mas alguns trechos (ex.: as
+    // caixas de categoria do Cross AquaFoz) escolhem a cor de fundo em JS na hora do
+    // render, então precisam recalcular no MOMENTO da troca de tema, não só na próxima
+    // vez que algum filtro mudar. Pedido do usuário, 20/08/2026 (contraste no escuro).
+    if(typeof renderAllTabs === 'function') renderAllTabs();
   });
 })();
 
@@ -6352,8 +6401,13 @@ function renderCrossAquafozTab(){
 }
 
 function caKpiCard(label, value, color, highlight, delta){
+  // BUG EVITADO (20/08/2026): "background:#f2f8f7" era fixo claro, então os cartões em
+  // destaque (Total cross, Captação total AQF x PNI) ficavam com um retângulo branco
+  // solto sobre o resto do painel já escuro no modo escuro -- mesma causa do bug das
+  // caixas de categoria (grupo(), acima). Escolhe a versão certa na hora do render.
+  const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
   const top = color ? `border-top:3px solid ${color};` : '';
-  const bg = highlight ? 'background:#f2f8f7;' : '';
+  const bg = highlight ? `background:${isDarkNow ? '#132420' : '#f2f8f7'};` : '';
   const valStyle = highlight ? `color:${color||'#1d5c60'};font-size:22px;` : '';
   // "delta" (opcional) = {txt, cls} vindo de caVariacaoPct/caVariacaoPP -- só aparece quando
   // o usuário escolhe uma comparação no dropdown "Comparar" (ver getCrossAquafozVsRange).
@@ -6361,7 +6415,7 @@ function caKpiCard(label, value, color, highlight, delta){
   const deltaHtml = delta ? `<div class="deltas"><span class="pill ${delta.cls}">${delta.txt}</span></div>` : '';
   return `<div class="kpi-card" style="${top}${bg}">
     <div class="label">${label}</div>
-    <div class="value" style="${valStyle}">${value}</div>
+    <div class="value${highlight?' pk-outline':''}" style="${valStyle}">${value}</div>
     ${deltaHtml}
   </div>`;
 }
@@ -6621,16 +6675,24 @@ function renderCrossAquafozDiaria(){
       caKpiCard('Total cross', fmtInt(m1.total), '#1d5c60', true, dPct(m1.total, m2&&m2.total)),
       caKpiCard('Capt. diária PNI (período)', fmtPct(m1.captDiariaPniPeriodo), '#45818E', false, dPP(m1.captDiariaPniPeriodo, m2&&m2.captDiariaPniPeriodo)),
     ].join('');
-    const grupo = (titulo, cor, fundo, cardsHtml, cols) => `
-      <div style="border:1px solid ${cor}55; border-radius:10px; padding:10px; background:${fundo};">
-        <div style="font-size:10.5px; font-weight:800; color:${cor}; text-transform:uppercase; letter-spacing:.03em; margin-bottom:8px;">${titulo}</div>
+    // BUG EVITADO (20/08/2026): a caixa de cada categoria usava um fundo BEM claro fixo
+    // (ex.: #fdf6ee), certo no tema claro mas que ficava um retângulo claro solto no meio
+    // do painel inteiro escuro no modo escuro. Cada categoria agora tem uma versão escura
+    // do mesmo tom (fundoDark), escolhida na hora do render conforme o tema ativo -- e o
+    // título da categoria ganha o mesmo contorno branco (.pk-outline) usado no resto do
+    // painel, já que #1d5c60/#45818E (PNI/Aeroporto) também ficam pouco legíveis direto
+    // sobre fundo escuro.
+    const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+    const grupo = (titulo, cor, fundo, fundoDark, cardsHtml, cols) => `
+      <div style="border:1px solid ${cor}55; border-radius:10px; padding:10px; background:${isDarkNow ? fundoDark : fundo};">
+        <div class="pk-outline" style="font-size:10.5px; font-weight:800; color:${cor}; text-transform:uppercase; letter-spacing:.03em; margin-bottom:8px;">${titulo}</div>
         <div class="kpi-row" style="grid-template-columns:repeat(${cols},minmax(118px,1fr)); margin-bottom:0;">${cardsHtml}</div>
       </div>`;
     kpiCanaisEl.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:14px;">
-      ${grupo('Marco das 3 Fronteiras', '#e69138', '#fdf6ee', mf3Cards, 4)}
-      ${grupo('PNI', '#1d5c60', '#eef6f5', pniCards, 3)}
-      ${grupo('Aeroporto', '#45818E', '#eef6f7', aeroportoCard, 1)}
-      ${grupo('Resumo', '#0f3d2e', '#eef5f1', resumoCards, 2)}
+      ${grupo('Marco das 3 Fronteiras', '#e69138', '#fdf6ee', '#241c14', mf3Cards, 4)}
+      ${grupo('PNI', '#1d5c60', '#eef6f5', '#131f1e', pniCards, 3)}
+      ${grupo('Aeroporto', '#45818E', '#eef6f7', '#131e1f', aeroportoCard, 1)}
+      ${grupo('Resumo', '#0f3d2e', '#eef5f1', '#131e1a', resumoCards, 2)}
     </div>`;
   }
   if(footEl){
@@ -6786,7 +6848,7 @@ function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
       const rect = caLabelRect(p[0], p[1]-7, text);
       if(caFitsLabel(occupied, rect)){
         occupied.push(rect);
-        labels += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" fill="${c.color}">${text}</text>`;
+        labels += `<text class="cx-label-halo" x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" fill="${c.color}">${text}</text>`;
       }
     });
   });
@@ -6910,7 +6972,7 @@ function buildCrossAquafozComboChart(items, opts){
       const rect = caLabelRect(x+COLW/2, y-8, text);
       if(caFitsLabel(occupied, rect)){
         occupied.push(rect);
-        pctLabels += `<text x="${(x+COLW/2).toFixed(1)}" y="${(y-8).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#1d5c60">${text}</text>`;
+        pctLabels += `<text class="cx-label-halo cx-lbl-pct" x="${(x+COLW/2).toFixed(1)}" y="${(y-8).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#1d5c60">${text}</text>`;
       }
     } else {
       points.push(null);
