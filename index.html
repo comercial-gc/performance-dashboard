@@ -1809,6 +1809,10 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
         <div class="kpi-row" id="crossAquafozKpisCanais"></div>
       </div>
       <div class="mix-card" style="border-top-color:#45818E; margin-top:16px;">
+        <div class="mix-card-head"><span class="name">Venda diária por local</span></div>
+        <div id="crossAquafozLocalChart"></div>
+      </div>
+      <div class="mix-card" style="border-top-color:#45818E; margin-top:16px;">
         <div class="mix-card-head"><span class="name">Total cross x Captação PNI</span></div>
         <div id="crossAquafozChart"></div>
       </div>
@@ -6321,6 +6325,7 @@ function renderCrossAquafozDiaria(){
   const footEl = document.getElementById('crossAquafozVisitacaoFoot');
   const reguaWrapEl = document.getElementById('crossAquafozReguaWrap');
   const chartEl = document.getElementById('crossAquafozChart');
+  const localChartEl = document.getElementById('crossAquafozLocalChart');
   const range = getCrossAquafozRange();
   const periodoLabel = crossAquafozPeriodoLabel(range);
   if(titleEl) titleEl.textContent = periodoLabel ? `Cross AquaFoz | ${periodoLabel}` : 'Cross AquaFoz';
@@ -6331,6 +6336,7 @@ function renderCrossAquafozDiaria(){
     if(reguaWrapEl) reguaWrapEl.innerHTML = '<span class="hint">Selecione um período (De/Até) pra ver os dados.</span>';
     if(footEl) footEl.innerHTML = '';
     if(chartEl) chartEl.innerHTML = '<span class="hint">Selecione um período pra ver o gráfico.</span>';
+    if(localChartEl) localChartEl.innerHTML = '<span class="hint">Selecione um período pra ver o gráfico.</span>';
     return;
   }
 
@@ -6346,6 +6352,7 @@ function renderCrossAquafozDiaria(){
     if(reguaWrapEl) reguaWrapEl.innerHTML = '<span class="hint">Sem dados ainda para este período.</span>';
     if(footEl) footEl.innerHTML = '';
     if(chartEl) chartEl.innerHTML = '<span class="hint">Sem dados ainda para este período.</span>';
+    if(localChartEl) localChartEl.innerHTML = '<span class="hint">Sem dados ainda para este período.</span>';
     return;
   }
   const sum = (key) => diasComDado.reduce((a,d) => a + (diaria[d][key]||0), 0);
@@ -6387,6 +6394,7 @@ function renderCrossAquafozDiaria(){
   }
 
   if(reguaWrapEl) reguaWrapEl.innerHTML = renderCrossAquafozRegua(diaria, diasComDado);
+  if(localChartEl) localChartEl.innerHTML = buildCrossAquafozLocalChart(diaria, diasComDado, range.modo);
 
   // Gráfico: 'ano' usa 1 ponto por mês (CROSS_AQUAFOZ.mensal, já agregado) -- nunca mais de
   // ~12 barras. Qualquer outro período usa 1 ponto por dia (nunca mais que ~31, já que o
@@ -6415,6 +6423,67 @@ function renderCrossAquafozDiaria(){
       chartEl.innerHTML = buildCrossAquafozComboChart(items, { barFmt:fmtInt, barLabel:'Total cross', pctLabel:'Capt. diária PNI %' });
     }
   }
+}
+
+// Grupos MACRO usados no gráfico "Venda diária por local" -- MESMA quebra da régua/cabeçalho
+// (Marco das 3 Fronteiras / Aeroporto / PNI), só 3 cores em vez de 8. O usuário pediu pra
+// MELHORAR o gráfico de venda por local (não remover) depois de ver a barra empilhada de 8
+// canais ilegível numa 1ª tentativa -- 3 grupos empilhados é o que sobra dessa quebra que
+// ainda dá pra ler de verdade; o detalhe dos 8 canais individuais continua disponível no
+// tooltip de cada barra e, com o número exato, na régua e nos cartões de KPI acima.
+const CROSS_LOCAL_GROUPS = [
+  { key:'mf3', label:'Marco das 3 Fronteiras', color:'#e69138', fields:['bilheteriaMf3','tradeMf3','crossMf3','comboMf3'] },
+  { key:'aeroporto', label:'Aeroporto', color:'#8fb7bb', fields:['aeroporto'] },
+  { key:'pni', label:'PNI', color:'#1d5c60', fields:['crossPni','totemPni','comboPni'] },
+];
+
+// modo 'mes' (Ano inteiro selecionado): agrega os dias por mês antes de desenhar -- mesmo
+// raciocínio do gráfico combo (nunca mais que ~12 barras, senão vira parede ilegível de novo).
+// modo 'dia': 1 barra por dia do período escolhido (no máximo ~31).
+function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
+  let buckets;
+  if(modo === 'mes'){
+    const porMes = {};
+    diasComDado.forEach(d => {
+      const mesNome = CROSS_MESES_ORDER[Number(d.slice(5,7))-1];
+      if(!porMes[mesNome]) porMes[mesNome] = { mf3:0, aeroporto:0, pni:0 };
+      const e = diaria[d];
+      CROSS_LOCAL_GROUPS.forEach(g => { porMes[mesNome][g.key] += g.fields.reduce((a,f) => a+(e[f]||0), 0); });
+    });
+    buckets = CROSS_MESES_ORDER.filter(m => porMes[m]).map(m => ({ label: m.slice(0,3), full: m, values: porMes[m] }));
+  } else {
+    buckets = diasComDado.map(d => {
+      const e = diaria[d];
+      const values = {};
+      CROSS_LOCAL_GROUPS.forEach(g => { values[g.key] = g.fields.reduce((a,f) => a+(e[f]||0), 0); });
+      return { label: String(Number(d.slice(8,10))), full: `${d.slice(8,10)}/${d.slice(5,7)}`, values };
+    });
+  }
+  if(!buckets.length) return '<span class="hint">Sem dados.</span>';
+  const totals = buckets.map(b => CROSS_LOCAL_GROUPS.reduce((a,g) => a+(b.values[g.key]||0), 0));
+  const max = Math.max(...totals, 1);
+  const BAR_H = 100;
+  const cols = buckets.map((b,i) => {
+    const t = totals[i];
+    const segs = CROSS_LOCAL_GROUPS.map(g => {
+      const v = b.values[g.key] || 0;
+      if(!v) return '';
+      const h = Math.max(1, Math.round(v/max*BAR_H));
+      return `<div style="width:100%;height:${h}px;background:${g.color};"></div>`;
+    }).join('');
+    const detalhe = CROSS_LOCAL_GROUPS.map(g => `${g.label}: ${fmtInt(b.values[g.key]||0)}`).join(' | ');
+    const tip = `${b.full}: Total ${fmtInt(t)} | ${detalhe}`;
+    return `<div class="cdc-col" data-tip="${tip}">
+      <div class="cdc-val">${fmtInt(t)}</div>
+      <div class="cdc-bar-wrap" style="height:${BAR_H}px;"><div style="width:100%;display:flex;flex-direction:column-reverse;">${segs || '<div style=\"width:100%;height:2px;background:#e9e9e9;\"></div>'}</div></div>
+      <div class="cdc-daynum">${b.label}</div>
+    </div>`;
+  }).join('');
+  const legenda = CROSS_LOCAL_GROUPS.map(g =>
+    `<span style="display:inline-flex;align-items:center;gap:4px;margin-right:14px;"><span style="width:9px;height:9px;border-radius:2px;background:${g.color};display:inline-block;"></span>${g.label}</span>`
+  ).join('');
+  return `<div class="hint" style="margin-bottom:6px;">${legenda}</div>
+    <div class="clima-park-chart"><div class="clima-park-bars">${cols}</div></div>`;
 }
 
 // Régua diária de verdade -- 1 linha por dia (não mais uma soma só), igual ao print da
