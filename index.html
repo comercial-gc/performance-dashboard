@@ -1211,12 +1211,12 @@ html[data-theme="dark"] .pk-cell-glow{
    mesmo problema. */
 html[data-theme="dark"] .pk-badge{ background:#171d22 !important; }
 /* Logo em miniatura ao lado do nome do parque nos cards de Mix de Origem (pedido do
-   usuário, 20/08/2026). 1ª versão usava drop-shadow (borrão) pra destacar do fundo escuro
-   -- só que isso borrava a própria logo (perdia o desenho) e ela já era pequena demais
-   (20px) pra reconhecer. Aumentei o tamanho e troquei o destaque por um anel sólido fino
-   (box-shadow sem blur, não borra a imagem) -- só no escuro. */
-.mix-card-logo{ width:42px; height:42px; object-fit:contain; margin-right:3px; vertical-align:middle; border-radius:50%; }
-html[data-theme="dark"] .mix-card-logo{ box-shadow:0 0 0 1.5px rgba(255,255,255,.55); }
+   usuário, 20/08/2026). 1ª versão usava drop-shadow (borrão), borrava a própria logo. 2ª
+   versão usava só um anel fino. 3ª versão (mesmo padrão da placa circular do card-resumo,
+   ver .logo-chip acima): fundo branco atrás de toda logo no escuro, com padding pra abrir
+   espaço -- mesma "cara" nos dois lugares do painel. */
+.mix-card-logo{ width:42px; height:42px; object-fit:contain; margin-right:3px; vertical-align:middle; border-radius:50%; box-sizing:border-box; }
+html[data-theme="dark"] .mix-card-logo{ background:#ffffff; padding:5px; box-shadow:0 0 0 1px rgba(0,0,0,.08); }
 </style>
 </head>
 <body>
@@ -2377,14 +2377,14 @@ function pctClass(v){ if(v===null||v===undefined||typeof v!=='number'||isNaN(v))
 function pillClass(v){ if(v===null||v===undefined) return 'flat'; return v>=0 ? 'up' : 'down'; }
 
 // Rótulo de valor "com contorno" desenhado em cima de gráficos SVG (linhas/barras/donuts) --
-// usado em qualquer lugar que precise de um número legível em cima de uma cor qualquer, nos
-// dois temas. Empilha 2 cópias do mesmo texto na mesma posição: por baixo, um "selo" branco
-// (contorno E preenchimento brancos) que descola o número da linha/barra por trás; por cima,
-// o texto de verdade com um contorno PRETO fino, que dá a separação que faltava quando a cor
-// do texto já é clara (ex.: laranja, amarelo) e o branco sozinho não é suficiente -- pedido
-// do usuário, 20/08/2026, depois de notar que só o branco não funcionava pra essas cores.
-// Funciona igual no claro e no escuro (não depende de tema), então nunca mais "desliga" a
-// referência que já funcionava.
+// usado em qualquer lugar que precise de um número legível em cima de uma cor qualquer.
+// Empilha 2 cópias do mesmo texto na mesma posição (SVG não tem text-shadow).
+// CLARO: preenchimento na cor real da série + "selo" branco atrás + contorno preto fino --
+// já funciona bem sobre fundo claro, não muda.
+// ESCURO (20/08/2026, revisado pra ficar igual ao .pk-outline do resto do painel): letra
+// sempre BRANCA + "brilho" na cor da série atrás, em vez do preenchimento colorido -- pedido
+// do usuário pra padronizar com o texto das tabelas/cards (mesma linguagem visual nos dois
+// lugares). Recalculado a cada render (renderAllTabs já roda de novo no toggle de tema).
 function svgOutlineText(x, y, text, fill, fontSize, opts){
   opts = opts || {};
   const anchor = opts.anchor || 'middle';
@@ -2392,6 +2392,11 @@ function svgOutlineText(x, y, text, fill, fontSize, opts){
   const extra = opts.extra || '';
   const xs = (typeof x === 'number') ? x.toFixed(1) : x;
   const ys = (typeof y === 'number') ? y.toFixed(1) : y;
+  const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+  if(isDarkNow){
+    return `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="${fill}" stroke-width="3" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`
+         + `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#1a1a1a" stroke-width="0.6" stroke-linejoin="round" fill="#ffffff" paint-order="stroke" ${extra}>${text}</text>`;
+  }
   return `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#ffffff" paint-order="stroke" ${extra}>${text}</text>`
        + `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#1a1a1a" stroke-width="0.6" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`;
 }
@@ -2775,7 +2780,7 @@ function renderShareMetaChart(accShare, accVisit, accEcom){
   </div>`;
 
   container.innerHTML = `<div class="combo-card">
-      <div class="ctitle" style="color:${gcColor}">Grupo Cataratas</div>
+      <div class="ctitle pk-outline" style="color:${gcColor};--pc:${gcColor};">Grupo Cataratas</div>
       <div class="combo-scroll">
         ${svg}
         ${monthlyTable}
@@ -2883,7 +2888,7 @@ function renderSoulMetaChart(accShare, accVisit, accEcom){
   </div>`;
 
   container.innerHTML = `<div class="combo-card">
-      <div class="ctitle" style="color:${soulColor}">Soul Parques</div>
+      <div class="ctitle pk-outline" style="color:${soulColor};--pc:${soulColor};">Soul Parques</div>
       <div class="combo-scroll">
         ${svg}
         ${monthlyTable}
@@ -2992,7 +2997,7 @@ function renderShareMonthRegua(){
     <div class="sub"><span><b>Ecom</b> ${fmtShort(gcEcomAcum)}</span></div>
     <div class="sub"><span><b>Meta 25%</b></span><span class="d ${gcAccDir}">${gcAccArrow} ${Math.abs(gcPpAcum)}pp</span></div>
   </div>`;
-  metaRows.push(`<div class="invest-row"><b style="font-weight:800;color:${gcColor}">Grupo Cataratas</b><div class="invest-days">${gcCells}${gcAccCell}</div></div>`);
+  metaRows.push(`<div class="invest-row"><b class="pk-outline" style="font-weight:800;color:${gcColor};--pc:${gcColor};">Grupo Cataratas</b><div class="invest-days">${gcCells}${gcAccCell}</div></div>`);
 
   // Linha agregada "Soul Parques" (Três Pescadores + Vila Velha), logo abaixo do Grupo
   // Cataratas -- sem comparação com a meta de 25%, que não vale pra esses dois parques.
@@ -3020,7 +3025,7 @@ function renderShareMonthRegua(){
   } else {
     soulAccCell = `<div class="invest-cell empty" style="background:${SOUL_AGG_COLOR}14;margin-left:10px;">-</div>`;
   }
-  metaRows.push(`<div class="invest-row"><b style="font-weight:800;color:${SOUL_AGG_COLOR}">Soul Parques</b><div class="invest-days">${soulCells}${soulAccCell}</div></div>`);
+  metaRows.push(`<div class="invest-row"><b class="pk-outline" style="font-weight:800;color:${SOUL_AGG_COLOR};--pc:${SOUL_AGG_COLOR};">Soul Parques</b><div class="invest-days">${soulCells}${soulAccCell}</div></div>`);
 
   grid.innerHTML = metaRows.join('');
   renderShareMetaChart(gcShareAcum, gcVisitAcum, gcEcomAcum);
