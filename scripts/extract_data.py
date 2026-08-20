@@ -43,6 +43,12 @@ from googleapiclient.http import MediaIoBaseDownload
 # leitura/normalização de país-estado vive lá.
 from top5_origem_extension import build_mix_origem_top5
 
+# Extensão do relatório "Cross AquaFoz" (vendas cruzadas Marco das 3 Fronteiras/Aeroporto/
+# PNI) -- ver scripts/cross_aquafoz_extension.py. Mesmo padrão do top5_origem_extension:
+# módulo próprio, self-contained (baixa a planilha sozinho, não depende do cache/get_values
+# deste arquivo) pra evitar import circular.
+from cross_aquafoz_extension import build_cross_aquafoz
+
 # O runner do GitHub Actions as vezes tem uma conexao mais lenta/instavel com a API do
 # Google, e o timeout padrao do socket (ilimitado, mas o cliente HTTP interno usa um valor
 # curto) estourava no meio do download de planilhas maiores. Aumenta a margem e deixa o
@@ -2436,6 +2442,30 @@ def main():
         print(f"AVISO: falha ao ler Top 5 País/Estado ({e}) -- bloco Top 5 fica vazio neste ciclo.", file=sys.stderr)
         mix_origem_top5 = {}
 
+    print("Lendo Cross AquaFoz...", file=sys.stderr)
+    try:
+        cross_aquafoz_id = cfg.get("cross_aquafoz_id", "")
+        if cross_aquafoz_id:
+            mes_atual = cfg["meses_com_dados"][-1] if cfg["meses_com_dados"] else None
+            mes_atual_nome = MESES_PT[MONTH_NUMBER[mes_atual] - 1] if mes_atual else None
+            if mes_atual_nome:
+                cross_aquafoz = build_cross_aquafoz(service, cross_aquafoz_id, mes_atual_nome)
+            else:
+                cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
+        else:
+            print(
+                "AVISO: 'cross_aquafoz_id' ainda não configurado no config.json -- aba Cross AquaFoz fica vazia.",
+                file=sys.stderr,
+            )
+            cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
+    except Exception as e:
+        # Mesmo padrão defensivo das demais abas novas (Top 5 etc.): se der erro (planilha
+        # ainda não compartilhada com a service account, aba do mês vigente ainda não criada
+        # na planilha, layout mudou etc.), a aba Cross AquaFoz fica vazia neste ciclo em vez
+        # de derrubar o resto do pipeline.
+        print(f"AVISO: falha ao ler Cross AquaFoz ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
+        cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
+
     print("Lendo Eventos...", file=sys.stderr)
     eventos = build_eventos(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
@@ -2507,6 +2537,7 @@ def main():
         "MIX_ORIGEM_ACUMULADO": mix_origem_acumulado,
         "MIX_ORIGEM_DIARIO": mix_origem_diario,
         "MIX_ORIGEM_TOP5": mix_origem_top5,
+        "CROSS_AQUAFOZ": cross_aquafoz,
         "EVENTOS": eventos,
         "APOIO_REPORT": apoio_report,
         "HISTORICO": historico,
