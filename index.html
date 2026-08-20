@@ -161,6 +161,19 @@
   /* ── Impacto Visitação vs 2025 (DS x FDS) + Resumo Comparativo BR + Oportunidades ── */
   .resumo-br-table{ max-width:380px; }
   .resumo-br-table td:first-child{ text-align:left; }
+  /* Lista de feriados estaduais/municipais (RJ + Foz do Iguaçu/Aparecida-SP/Ponta Grossa),
+     20/08/2026 -- aproveita o espaço vazio à direita da tabela (ela é limitada a 380px,
+     ver regra acima) pra mostrar a DATA exata de cada um, mesmo estilo visual da lista de
+     Oportunidades (só que só com os itens estaduais/municipais -- os nacionais foram pro
+     bloco Oportunidades, ver .oportunidades-divider). */
+  .resumo-br-body{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:18px; }
+  .resumo-br-estaduais{ flex:1 1 220px; min-width:200px; }
+  .resumo-br-estaduais-title{ font-size:10.5px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin:0 2px 8px 2px; }
+  /* Divisor "Feriados nacionais" dentro da própria lista de Oportunidades -- fica sempre
+     visível (mesmo sem feriado nacional no período, com a mensagem de vazio) pra nunca
+     deixar aquele espaço em branco sem explicação, pedido do usuário 20/08/2026. */
+  .oportunidades-list li.oportunidades-divider{ border:none; background:none; padding:6px 2px 0 2px; margin-top:2px; border-top:1px dashed var(--line); font-size:10.5px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+  .oportunidades-list li.oportunidades-divider:first-child{ border-top:none; margin-top:0; padding-top:0; }
   /* Resumo Comparativo + Resumo Semanal (coluna esquerda) x Oportunidades (direita):
      as duas colunas precisam terminar niveladas, não importa qual conteúdo for mais alto
      naquele mês (testei os 12 meses -- em 7 deles o Oportunidades é MAIS CURTO que a
@@ -1329,13 +1342,17 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
       <h2 id="resumoBRTitle">Resumo Comparativo 25 x 26 (BR)</h2>
       <span class="hint">Feriados nacionais, estaduais (RJ) e municipais (Foz do Iguaçu, Aparecida-SP, Ponta Grossa) e finais de semana no mês selecionado</span>
     </div>
-    <div class="panel-body">
+    <div class="panel-body resumo-br-body">
       <table class="viz-table resumo-br-table" id="resumoBRTable">
         <thead>
           <tr><th class="grp" style="text-align:left;">Indicador</th><th class="grp">2025</th><th class="grp">2026</th></tr>
         </thead>
         <tbody></tbody>
       </table>
+      <div class="resumo-br-estaduais">
+        <div class="resumo-br-estaduais-title">Feriados estaduais/municipais</div>
+        <ul class="oportunidades-list" id="resumoBREstaduaisList"></ul>
+      </div>
     </div>
   </section>
 
@@ -1369,7 +1386,7 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
   <section class="panel">
     <div class="panel-head">
       <h2 id="oportunidadesTitle">Oportunidades - Agosto 2026</h2>
-      <span class="hint">Feriados nacionais e internacionais, feriados estaduais/municipais (RJ, Foz do Iguaçu, Aparecida-SP, Ponta Grossa) e datas turísticas relevantes</span>
+      <span class="hint">Feriados internacionais, feriados nacionais (BR) e datas turísticas relevantes. Feriados estaduais/municipais agora ficam no card "Resumo Comparativo", ao lado</span>
     </div>
     <div class="panel-body">
       <ul class="oportunidades-list" id="oportunidadesList"></ul>
@@ -1881,8 +1898,13 @@ const PARKS = ['AquaRio','BioParque','Paineiras','PNI','M3F','AquaFoz','Três Pe
 // dos arrays de parque (PARKS/SHARE_PARKS/INVEST_PARKS/etc.). Não altera os arrays originais
 // nem o dado carregado (data.json continua trazendo BioParque normalmente) -- só filtra o que
 // vira HTML na tela, pra poder ligar/desligar sem precisar recarregar os dados.
-let HIDE_BIOPARQUE = false;
-try{ HIDE_BIOPARQUE = localStorage.getItem('hideBioParque') === '1'; }catch(e){ /* modo privado etc. */ }
+// Padrão pedido pelo usuário, 20/08/2026: o botão já entra LIGADO (Bio oculto) no primeiro
+// acesso -- só volta a mostrar Bio se a pessoa clicar pra religar (escolha que fica salva).
+let HIDE_BIOPARQUE = true;
+try{
+  const salvo = localStorage.getItem('hideBioParque');
+  if(salvo !== null) HIDE_BIOPARQUE = salvo === '1';
+}catch(e){ /* modo privado etc. */ }
 function vp(arr){ return HIDE_BIOPARQUE ? arr.filter(p => p !== 'BioParque') : arr; }
 // A ÚNICA lista de parques que é HTML estático (não gerada via PARKS/SHARE_PARKS/etc. em
 // JS) -- o seletor "resumo executivo do parque" da aba Investimento Marketing. Aqui não dá
@@ -3837,13 +3859,20 @@ function renderVizImpacto2025(month){
 }
 
 // ── Resumo Comparativo 25x26 (BR) + Oportunidades ─────────────────────────────────
+// Sigla dos itens de oportunidadesDoMes() que são feriado ESTADUAL/MUNICIPAL (não
+// internacional, não nacional) -- usado tanto aqui (lista de data ao lado da tabela) quanto
+// em renderOportunidades (pra excluir esses da lista de lá, já que agora só ficam aqui).
+const ESTADUAL_MUNICIPAL_SIGLAS = ['RJ','FOZ','APA','PG'];
+
 function renderResumoComparativoBR(month){
   const table = document.getElementById('resumoBRTable');
+  const estaduaisList = document.getElementById('resumoBREstaduaisList');
   if(!table) return;
   const tbody = table.querySelector('tbody');
   const ranges = computeComparisonRanges(month);
   if(!ranges){
     tbody.innerHTML = '<tr><td colspan="3">Sem dados para este período.</td></tr>';
+    if(estaduaisList) estaduaisList.innerHTML = '';
     return;
   }
   const r = resumoComparativoBR(ranges);
@@ -3856,6 +3885,17 @@ function renderResumoComparativoBR(month){
     <tr><td>Feriado Municipal (Aparecida-SP)</td><td>${r.feriadoAparecida[2025]}</td><td>${r.feriadoAparecida[2026]}</td></tr>
     <tr><td>Feriado Municipal (Ponta Grossa)</td><td>${r.feriadoPontaGrossa[2025]}</td><td>${r.feriadoPontaGrossa[2026]}</td></tr>
   `;
+
+  // Lista com a DATA exata de cada feriado estadual/municipal do período (2026, mesmo
+  // critério já usado no bloco Oportunidades) -- aproveita o espaço vazio à direita da
+  // tabela, pedido do usuário 20/08/2026. Mesmo estilo visual da lista de Oportunidades.
+  if(estaduaisList){
+    const { itens } = oportunidadesDoMes(ranges);
+    const estaduais = itens.filter(it => ESTADUAL_MUNICIPAL_SIGLAS.includes(it.sigla));
+    estaduaisList.innerHTML = estaduais.length
+      ? estaduais.map(oportunidadeItemHtml).join('')
+      : '<li class="oportunidades-empty">Nenhum feriado estadual/municipal neste período.</li>';
+  }
 }
 
 // ── Resumo Semanal 25x26 (BR) ──────────────────────────────────────────────────────
@@ -3926,6 +3966,17 @@ function fmtISOToBR(iso){
   return `${d}/${m}/${y}`;
 }
 
+// Extraído (20/08/2026) pra poder desenhar o mesmo "cartãozinho" de feriado tanto na lista
+// de Oportunidades (internacionais/nacionais) quanto na nova lista de estaduais/municipais
+// ao lado da tabela Resumo Comparativo -- ver ESTADUAL_MUNICIPAL_SIGLAS acima.
+function oportunidadeItemHtml(it){
+  const tag = it.prolongado ? '<span class="opo-tag">feriado prolongado</span>' : '';
+  return `<li class="${it.prolongado?'prolongado':''}">
+    <span class="opo-flag">${it.sigla}</span>
+    <span class="opo-txt"><b>${it.dia}/${it.mes}</b> (${it.weekday}) - ${it.nome}, ${it.pais}${tag}</span>
+  </li>`;
+}
+
 function renderOportunidades(month){
   const list = document.getElementById('oportunidadesList');
   const titleEl = document.getElementById('oportunidadesTitle');
@@ -3946,20 +3997,27 @@ function renderOportunidades(month){
   let { itens, eventosDoMes } = oportunidadesDoMes(ranges);
   if(HIDE_BIOPARQUE) eventosDoMes = eventosDoMes.filter(e => e.parque !== 'BioParque');
 
-  const itensHtml = itens.map(it => {
-    const tag = it.prolongado ? '<span class="opo-tag">feriado prolongado</span>' : '';
-    return `<li class="${it.prolongado?'prolongado':''}">
-      <span class="opo-flag">${it.sigla}</span>
-      <span class="opo-txt"><b>${it.dia}/${it.mes}</b> (${it.weekday}) - ${it.nome}, ${it.pais}${tag}</span>
-    </li>`;
-  }).join('');
+  // Internacionais primeiro (comportamento de sempre), DEPOIS um divisor fixo "Feriados
+  // nacionais" com os feriados do Brasil (sigla BRA) -- pedido do usuário, 20/08/2026. O
+  // divisor aparece sempre, mesmo sem feriado nacional no período (com uma mensagem de
+  // vazio), pra nunca deixar aquele espaço em branco sem explicação. Estaduais/municipais
+  // saíram de aqui -- agora moram na lista ao lado da tabela Resumo Comparativo (ver
+  // renderResumoComparativoBR/ESTADUAL_MUNICIPAL_SIGLAS).
+  const internacionais = itens.filter(it => it.sigla !== 'BRA' && !ESTADUAL_MUNICIPAL_SIGLAS.includes(it.sigla));
+  const nacionais = itens.filter(it => it.sigla === 'BRA');
+
+  const itensHtml = internacionais.map(oportunidadeItemHtml).join('');
+  const nacionaisHtml = nacionais.length
+    ? nacionais.map(oportunidadeItemHtml).join('')
+    : '<li class="oportunidades-empty">Nenhum feriado nacional neste período.</li>';
+  const nacionaisBlock = `<li class="oportunidades-divider">Feriados nacionais</li>${nacionaisHtml}`;
 
   const eventosHtml = eventosDoMes.map(e => {
     const d = e.data.slice(8,10), m = e.data.slice(5,7);
     return `<li><span class="opo-flag">EVT</span><span class="opo-txt"><b>${d}/${m}</b> - ${e.evento}${e.parque?' ('+e.parque+')':''}</span></li>`;
   }).join('');
 
-  list.innerHTML = (itensHtml + eventosHtml) || '<li class="oportunidades-empty">Nenhum feriado ou data turística relevante neste período.</li>';
+  list.innerHTML = itensHtml + nacionaisBlock + eventosHtml;
 }
 
 function renderAtrativos(month){
