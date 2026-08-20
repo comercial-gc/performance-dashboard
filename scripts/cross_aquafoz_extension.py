@@ -11,55 +11,72 @@ AquaFoz"), o relatório que hoje ele monta manualmente (a partir da planilha "Ve
 para AquaFoz 2026") pra enviar pra Camila -- duas visões:
 
   - Diária: divisão por canal de venda (Marco das 3 Fronteiras: Bilheteria/Trade balcão/
-    Cross; Aeroporto; PNI: Cross/Totem/Combo), Total cross, Share de visitação AQF/PNI,
-    Visitação AquaFoz/PNI, Captação AQF x PNI -- tudo do MÊS VIGENTE, dia a dia.
+    Cross/Combo; Aeroporto; PNI: Cross/Totem/Combo), Total cross, Share de visitação AQF/
+    PNI, Visitação AquaFoz/PNI, Captação AQF x PNI -- tudo do MÊS VIGENTE, dia a dia.
   - Mensal: série mês a mês (Jan-Dez) com Vendas total, Vendas Totem PNI, Vendas Combo PNI,
-    Visitação AQF, Share visitação AQF, Visitação PNI, Captação PNI, Captação AQF x PNI.
+    Visitação AQF, Share AQF, Visitação PNI, Share PNI, Captação AQF x PNI.
 
 FONTE: planilha Google Sheets "Vendas Cross para AquaFoz 2026"
 (id em cfg["cross_aquafoz_id"], ver COMO INTEGRAR no fim do arquivo).
 
-  - Aba "Venda mes a mes": UMA linha por métrica, UMA coluna por mês (Jan..Dez, só até o mês
-    mais recente com dado) -- fonte da visão Mensal. Achado pelo RÓTULO de cada linha
-    (coluna A) e pelo NOME do mês no cabeçalho, não por número de linha/coluna fixo, pra não
-    quebrar se alguém inserir uma linha/coluna em cima (mesmo padrão defensivo do resto do
-    extract_data.py -- ver build_mix_origem_diario etc.).
+REVISÃO DE 20/08/2026 -- ANÁLISE PROFUNDA (troca de fonte, ver abaixo o porquê)
+--------------------------------------------------------------------------------------------
+A primeira versão deste módulo lia a aba "Venda mes a mes" (pra Mensal) e a aba com o NOME
+DO MÊS VIGENTE, ex. "Agosto" (pra Diária). Essas duas abas são preenchidas/coladas à mão e
+tinham um problema real: nenhuma das duas tinha uma coluna separada pra "Combo MF3" (combo
+vendido no próprio Marco das 3 Fronteiras) -- ela aparecia misturada ou simplesmente ausente,
+enquanto o dashboard real do usuário (Looker Studio "Vendas Cross AQF", print enviado por ele
+em 20/08) mostra "Combo MF3" como categoria própria, com valores reais desde Janeiro/2026.
 
-  - Aba com o NOME DO MÊS VIGENTE (ex.: "Agosto", "Julho") -- uma linha por DIA do mês,
-    colunas: Bilheteria MF3, Trade MF3, Aeroporto, Cross MF3, Cross PNI, Totem PNI, Combo
-    PNI, Total cross, Visitação PNI, Capt. Diária PNI, Visitação AQF, Capt Total AQF x PNI
-    -- fonte da visão Diária.
+Comparando os prints do dashboard real com a planilha, a aba "Geral data" (239 linhas, uma
+por DIA, do ano inteiro, colunas: Mês | Data | Bilheteria MF3 | Trade MF3 | Aeroporto |
+Cross MF3 | Cross PNI | Totem PNI | Combo PNI | Combo MF3 | Total cross | Visitação PNI |
+Capt. Diária PNI | Visitação AQF | Capt Total AQF x PNI) bate EXATAMENTE, dia a dia, com os
+números que aparecem no gráfico "Venda diária por local" do dashboard real (confirmado, ex.:
+08/01 Combo MF3 = 65, 12/01 Combo MF3 = 23 -- os mesmos dois valores que aparecem no print).
+Ou seja: "Geral data" é a fonte viva que alimenta o dashboard de verdade -- por isso este
+módulo foi reescrito pra usar SÓ ela, tanto pra Diária quanto pra Mensal, e não depende mais
+de nenhuma aba com nome de mês (nem precisa mais que alguém crie a aba do mês seguinte à mão
+-- "Geral data" já vem com o ano inteiro).
 
-    IMPORTANTE -- conferido manualmente em Agosto/2026: essa aba tem também um "painel
-    resumo" solto nas colunas à direita (a partir da coluna P) com números DIGITADOS À MÃO
-    (ex.: "01/08 a 18/08" seguido do total daquele intervalo) -- não é fórmula viva, fica
-    desatualizado a cada dia que passa sem alguém atualizar na mão. Esse módulo IGNORA esse
-    painel de propósito e sempre recalcula os totais a partir das colunas diárias (A-O, que
-    são alimentadas dia a dia e são a fonte confiável) -- o front-end (index.html) que soma
-    o período que o usuário selecionar, do mesmo jeito que as outras abas do painel já
-    fazem (ver getMixPrimaryRange/getMixTop5 como referência de padrão).
+IMPORTANTE -- achado da análise, pra registro: comparando "Geral data" com as abas manuais
+"Venda mes a mes" / "Anual Data" (que tinham valores levemente diferentes, ex. Agosto: Total
+4.821 nessas abas manuais vs 4.806 somando "Geral data" no mesmo instante, com Totem PNI
+1.586 vs 1.486, Combo 2.745 vs 2.649+194 Combo MF3 separado), essas duas abas manuais
+DIVERGEM da "Geral data" -- principalmente nos meses mais antigos (Janeiro a Junho, onde a
+diferença chega a ser de 2x no total, ex. Janeiro: 116 nas abas manuais vs 239 em "Geral
+data"). Isso indica que "Venda mes a mes"/"Anual Data" foram preenchidas manualmente num
+processo antigo, sem refletir a Combo MF3 nem os ajustes que "Geral data" já tem -- não são
+fórmula viva. Recomendação: se o usuário quiser bater os dois relatórios, o ideal é ele
+revisar/migrar aquelas duas abas manuais também a partir de "Geral data" (fonte única). Este
+painel já usa só "Geral data" a partir de agora.
 
-  - Nomes de aba por mês: Title Case em português (ex. "Agosto", não "AGOSTO" nem
-    "agosto") -- mas o CABEÇALHO da aba "Venda mes a mes" vem com capitalização
-    inconsistente (“Janeiro”, mas depois “fevereiro”, “março” minúsculo etc.) -- por isso
-    _canonical_mes() normaliza tudo (case + acento) antes de comparar.
-
-  - Esquema da aba diária pode mudar mês a mês (conferido: Jan-Junho usava só "Vendas
-    Bilhetria"/"Vendas Comercial", sem a quebra por Bilheteria MF3/Trade MF3/Aeroporto/Cross
-    MF3/Cross PNI/Totem PNI/Combo PNI que passou a existir a partir de Julho/Agosto) -- por
-    isso as colunas são lidas pelo NOME do cabeçalho (DIARIO_COLUNAS), não por posição fixa;
-    uma coluna que não existir naquele mês simplesmente não entra no resultado daquele dia
-    (fica de fora do dict, front-end trata como ausente/0 conforme o caso).
+  - Esquema de "Geral data" é FIXO desde Janeiro/2026 (15 colunas incluindo Combo MF3 -- ao
+    contrário das antigas abas por mês, cujo esquema mudava mês a mês) -- por isso as colunas
+    ainda são lidas pelo NOME do cabeçalho (DIARIO_COLUNAS), não por posição fixa, como
+    proteção extra caso alguém insira/reordene uma coluna no futuro.
+  - A coluna "Mês" (texto, ex. "Jan", "Fev", "Agosto" -- abreviação inconsistente) NÃO é usada
+    pra decidir o mês de cada linha -- usa-se o mês da própria coluna "Data" (célula de data
+    real, não texto, ao contrário de outras planilhas do painel onde a data vem como texto em
+    formato ambíguo -- aqui já vem como datetime nativo do Google Sheets/Excel).
+  - Um dia só entra nas somas (Mensal e Diária) se "Visitação PNI" daquele dia não estiver
+    vazio -- dias futuros (do mês vigente ou de meses seguintes) vêm com tudo em branco na
+    planilha (a própria "Total cross" da planilha soma como 0, "Capt. Diária PNI" vem como
+    erro "#DIV/0!") e não devem contar como "dia com dado".
 """
 
 import datetime
 import unicodedata
 
+MESES_PT = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
+]
+
 
 def _norm(s):
-    """Normaliza rótulo de célula (cabeçalho de coluna, nome de mês, rótulo de linha) pra
-    comparação: remove acento, baixa a caixa, colapsa espaço. Não usado para os VALORES
-    numéricos -- ver _to_num."""
+    """Normaliza rótulo de célula (cabeçalho de coluna) pra comparação: remove acento, baixa
+    a caixa, colapsa espaço. Não usado para os VALORES numéricos -- ver _to_num."""
     if s is None:
         return ""
     s = str(s).strip()
@@ -68,10 +85,9 @@ def _norm(s):
 
 
 def _to_num(v):
-    """Converte valor de célula pra número, tratando 'NA'/'N/A'/'#DIV/0!'/vazio como None
-    (em vez de virar 0 escondido ou propagar erro) -- diferença importante pro front-end
-    saber quando o dado simplesmente não existe ainda (ex.: Combo PNI não existia nos
-    primeiros meses do ano; dias futuros do mês vigente ainda sem visitação lançada)."""
+    """Converte valor de célula pra número, tratando 'NA'/'N/A'/'#DIV/0!'/vazio como None (em
+    vez de virar 0 escondido ou propagar erro) -- diferença importante pro front-end saber
+    quando o dado simplesmente não existe ainda (ex.: dia futuro sem visitação lançada)."""
     if v is None:
         return None
     if isinstance(v, (int, float)):
@@ -88,30 +104,7 @@ def _to_num(v):
             return None
 
 
-MES_ALIASES = {
-    "janeiro": "Janeiro", "fevereiro": "Fevereiro", "marco": "Março", "abril": "Abril",
-    "maio": "Maio", "junho": "Junho", "julho": "Julho", "agosto": "Agosto",
-    "setembro": "Setembro", "outubro": "Outubro", "novembro": "Novembro", "dezembro": "Dezembro",
-}
-
-
-def _canonical_mes(label):
-    return MES_ALIASES.get(_norm(label))
-
-
-# Rótulo da linha (coluna A) na aba "Venda mes a mes" -> chave no dict de saída.
-MENSAL_METRICAS = {
-    "vendas todos canais": "vendasTotal",
-    "vendas totem pni": "vendasTotemPni",
-    "vendas combo pni": "vendasComboPni",
-    "visitacao aqf": "visitacaoAqf",
-    "share visitacao aqf": "shareVisitacaoAqf",
-    "visitacao pni": "visitacaoPni",
-    "captacao pni": "captacaoPni",
-    "captacao aqf x pni": "captacaoAqfPni",
-}
-
-# Nome da coluna (cabeçalho, linha 1) na aba do mês vigente -> chave no dict de saída.
+# Nome da coluna (cabeçalho, linha 1) na aba "Geral data" -> chave no dict de saída por dia.
 DIARIO_COLUNAS = {
     "bilheteria mf3": "bilheteriaMf3",
     "trade mf3": "tradeMf3",
@@ -120,6 +113,7 @@ DIARIO_COLUNAS = {
     "cross pni": "crossPni",
     "totem pni": "totemPni",
     "combo pni": "comboPni",
+    "combo mf3": "comboMf3",
     "total cross": "totalCross",
     "visitacao pni": "visitacaoPni",
     "capt. diaria pni": "captDiariaPni",
@@ -127,50 +121,23 @@ DIARIO_COLUNAS = {
     "capt total aqf x pni": "captTotalAqfPni",
 }
 
-
-def build_cross_aquafoz_mensal(rows):
-    """Lê a aba 'Venda mes a mes' (lista de listas, uma por linha da planilha) e devolve
-    {mes: {vendasTotal, vendasTotemPni, vendasComboPni, visitacaoAqf, shareVisitacaoAqf,
-    visitacaoPni, captacaoPni, captacaoAqfPni}} -- só com os meses que aparecerem no
-    cabeçalho (tipicamente Jan até o mês vigente)."""
-    header_row = None
-    for row in rows:
-        if row and _norm(row[0]) == "metrica":
-            header_row = row
-            break
-    if header_row is None:
-        raise ValueError("linha de cabeçalho ('Métrica') não encontrada na aba 'Venda mes a mes'")
-
-    col_mes = {}
-    for i, v in enumerate(header_row):
-        mes = _canonical_mes(v)
-        if mes:
-            col_mes[i] = mes
-
-    result = {mes: {} for mes in col_mes.values()}
-    for row in rows:
-        if not row:
-            continue
-        key = MENSAL_METRICAS.get(_norm(row[0]))
-        if not key:
-            continue
-        for i, mes in col_mes.items():
-            result[mes][key] = _to_num(row[i]) if i < len(row) else None
-    return result
+# Campos somados (não os de percentual/razão, que são recalculados a partir das somas -- ver
+# _aggregate_mes) ao agregar os dias de um mês.
+_CAMPOS_SOMA = [
+    "bilheteriaMf3", "tradeMf3", "aeroporto", "crossMf3", "crossPni",
+    "totemPni", "comboPni", "comboMf3", "totalCross", "visitacaoPni", "visitacaoAqf",
+]
 
 
-def build_cross_aquafoz_diario(rows):
-    """Lê a aba do mês vigente (ex. 'Agosto') -- uma linha por dia, colunas A-O. O painel
-    resumo solto em P+ (ver docstring do módulo) é ignorado de propósito. Devolve
-    {'YYYY-MM-DD': {bilheteriaMf3, tradeMf3, aeroporto, crossMf3, crossPni, totemPni,
-    comboPni, totalCross, visitacaoPni, captDiariaPni, visitacaoAqf, captTotalAqfPni}} --
-    só as chaves cuja coluna existir de fato naquele mês (esquema já variou mês a mês, ver
-    docstring do módulo)."""
+def _ler_dias(rows):
+    """Lê a aba 'Geral data' (lista de listas, uma por linha da planilha) e devolve uma lista
+    de dicts, um por dia com dado real (Visitação PNI não vazio), ordenada por data, com uma
+    chave 'data' (datetime.date) + as chaves de DIARIO_COLUNAS."""
     if not rows:
-        return {}
+        return []
     header_row = rows[0]
-    col_map = {}
     col_data = None
+    col_map = {}
     for i, v in enumerate(header_row):
         nv = _norm(v)
         if nv == "data":
@@ -179,9 +146,9 @@ def build_cross_aquafoz_diario(rows):
         if key:
             col_map[i] = key
     if col_data is None or not col_map:
-        raise ValueError("colunas esperadas (Data + métricas) não encontradas na aba do mês vigente")
+        raise ValueError("colunas esperadas (Data + métricas) não encontradas na aba 'Geral data'")
 
-    result = {}
+    dias = []
     for row in rows[1:]:
         if not row or col_data >= len(row):
             continue
@@ -191,12 +158,80 @@ def build_cross_aquafoz_diario(rows):
         elif isinstance(dt_raw, datetime.date):
             dt = dt_raw
         else:
-            continue  # célula vazia/texto -- fora do range de dias reais do mês
-        entry = {}
+            continue  # célula vazia/texto -- fora do range de dias reais
+        entry = {"data": dt}
         for i, key in col_map.items():
             entry[key] = _to_num(row[i]) if i < len(row) else None
-        result[dt.strftime("%Y-%m-%d")] = entry
+        if entry.get("visitacaoPni") is None:
+            continue  # dia sem dado lançado ainda (mês vigente em andamento ou mês futuro)
+        dias.append(entry)
+    dias.sort(key=lambda e: e["data"])
+    return dias
+
+
+def _aggregate_mes(dias_do_mes):
+    """Soma os dias de um mês e recalcula os percentuais/razões A PARTIR DAS SOMAS do mês
+    (não a média dos percentuais diários) -- mesma fórmula usada dia a dia na própria
+    planilha, confirmada célula a célula:
+      shareVisitacaoAqf ('Share AQF' no dashboard real) = vendasTotal / visitacaoAqf
+      captacaoPni        ('Share PNI' no dashboard real) = vendasTotal / visitacaoPni
+      captacaoAqfPni     ('Captação AQF x PNI')          = visitacaoAqf / visitacaoPni
+    """
+    soma = {k: 0.0 for k in _CAMPOS_SOMA}
+    for d in dias_do_mes:
+        for k in _CAMPOS_SOMA:
+            soma[k] += d.get(k) or 0
+
+    vendas_total = soma["totalCross"]
+    visitacao_aqf = soma["visitacaoAqf"]
+    visitacao_pni = soma["visitacaoPni"]
+    return {
+        "vendasTotal": vendas_total,
+        "vendasTotemPni": soma["totemPni"],
+        "vendasComboPni": soma["comboPni"],
+        "vendasComboMf3": soma["comboMf3"],
+        "visitacaoAqf": visitacao_aqf,
+        "shareVisitacaoAqf": (vendas_total / visitacao_aqf) if visitacao_aqf else None,
+        "visitacaoPni": visitacao_pni,
+        "captacaoPni": (vendas_total / visitacao_pni) if visitacao_pni else None,
+        "captacaoAqfPni": (visitacao_aqf / visitacao_pni) if visitacao_pni else None,
+    }
+
+
+def build_cross_aquafoz_mensal(dias):
+    """Agrupa os dias (lista de dicts de _ler_dias) por mês (mês da própria data, não da
+    coluna-texto 'Mês') e devolve {mes: {...}} -- ver _aggregate_mes pros campos."""
+    por_mes = {}
+    for d in dias:
+        mes = MESES_PT[d["data"].month - 1]
+        por_mes.setdefault(mes, []).append(d)
+    return {mes: _aggregate_mes(lista) for mes, lista in por_mes.items()}
+
+
+def build_cross_aquafoz_diario(dias, mes_atual_num):
+    """Filtra os dias do mês vigente (mes_atual_num: 1=Janeiro..12=Dezembro) e devolve
+    {'YYYY-MM-DD': {...}} com os campos crus de cada dia (inclui comboMf3)."""
+    result = {}
+    for d in dias:
+        if d["data"].month != mes_atual_num:
+            continue
+        entry = {k: d.get(k) for k in DIARIO_COLUNAS.values()}
+        result[d["data"].strftime("%Y-%m-%d")] = entry
     return result
+
+
+def build_cross_aquafoz_anual(dias):
+    """Série do ano inteiro (todos os dias com dado, não só o mês vigente) só com Total cross
+    e Capt. Diária PNI -- alimenta o gráfico 'Total cross x Captação PNI' (combo, período
+    completo) que existe no dashboard real do usuário."""
+    return [
+        {
+            "data": d["data"].strftime("%Y-%m-%d"),
+            "totalCross": d.get("totalCross"),
+            "captDiariaPni": d.get("captDiariaPni"),
+        }
+        for d in dias
+    ]
 
 
 def _download_workbook(drive_service, spreadsheet_id):
@@ -234,53 +269,38 @@ def _get_rows(wb, sheet_name):
 
 
 def build_cross_aquafoz(drive_service, spreadsheet_id, mes_atual_nome):
-    """Função principal -- chamar de dentro de main() do extract_data.py e salvar o
-    resultado em data['CROSS_AQUAFOZ'].
+    """Função principal -- chamar de dentro de main() do extract_data.py e salvar o resultado
+    em data['CROSS_AQUAFOZ'].
 
-    mes_atual_nome: nome do mês vigente em PT, Title Case (ex. 'Agosto') -- mesmo valor que
-    já está em cfg["meses_com_dados"][-1] (MESES_PT), é o nome exato da aba a ler pra visão
-    Diária. Se essa aba ainda não existir na planilha (mês ainda não criado manualmente lá,
-    ou nome digitado diferente), a visão Diária sai vazia mas a Mensal continua normal.
+    mes_atual_nome: nome do mês vigente em PT, Title Case (ex. 'Agosto') -- mesmo valor que já
+    está em cfg["meses_com_dados"][-1] (MESES_PT) -- só usado pra filtrar a visão Diária e pra
+    ecoar no resultado; a leitura em si é sempre da aba única 'Geral data'.
 
-    Devolve {'mensal': {...}, 'diaria': {...}, 'mesAtual': mes_atual_nome}.
+    Devolve {'mensal': {...}, 'diaria': {...}, 'anual': [...], 'mesAtual': mes_atual_nome}.
     """
     wb = _download_workbook(drive_service, spreadsheet_id)
-    mensal = build_cross_aquafoz_mensal(_get_rows(wb, "Venda mes a mes"))
-    diaria = {}
-    if mes_atual_nome in wb.sheetnames:
-        diaria = build_cross_aquafoz_diario(_get_rows(wb, mes_atual_nome))
-    return {"mensal": mensal, "diaria": diaria, "mesAtual": mes_atual_nome}
+    dias = _ler_dias(_get_rows(wb, "Geral data"))
+    mensal = build_cross_aquafoz_mensal(dias)
+    mes_atual_num = (MESES_PT.index(mes_atual_nome) + 1) if mes_atual_nome in MESES_PT else None
+    diaria = build_cross_aquafoz_diario(dias, mes_atual_num) if mes_atual_num else {}
+    anual = build_cross_aquafoz_anual(dias)
+    return {"mensal": mensal, "diaria": diaria, "anual": anual, "mesAtual": mes_atual_nome}
 
 
 # =========================================================================================
 # COMO INTEGRAR no extract_data.py real
 # =========================================================================================
-# 1. Colocar este arquivo em scripts/cross_aquafoz_extension.py (mesma pasta do
-#    extract_data.py de verdade) e adicionar, junto dos outros imports no topo do arquivo:
+# Nenhuma mudança de integração é necessária além da que já foi feita antes -- a assinatura
+# de build_cross_aquafoz() não mudou (mesmos 3 argumentos, mesmo lugar de chamada em main()).
+# Só troque o arquivo scripts/cross_aquafoz_extension.py por este (mesmo nome, mesmo lugar).
+#
+# Resumo de como já está plugado (pra referência, caso precise recriar do zero):
+# 1. scripts/cross_aquafoz_extension.py (este arquivo) + import no topo do extract_data.py:
 #      from cross_aquafoz_extension import build_cross_aquafoz
-#
-# 2. Adicionar ao config.json a chave (mesmo nível de visitacao_parques_id etc.):
-#      "cross_aquafoz_id": "10y-MjciXhxYU7yBoUgymLmphuELd3SbyR6HbRejCGOo"
-#
-# 3. Em main(), em qualquer ponto depois que cfg["meses_com_dados"] já estiver calculado:
-#      print("Lendo Cross AquaFoz...", file=sys.stderr)
-#      try:
-#          cross_aquafoz_id = cfg.get("cross_aquafoz_id", "")
-#          if cross_aquafoz_id:
-#              mes_atual = cfg["meses_com_dados"][-1] if cfg["meses_com_dados"] else None
-#              mes_atual_nome = MESES_PT[MONTH_NUMBER[mes_atual] - 1] if mes_atual else None
-#              cross_aquafoz = build_cross_aquafoz(service, cross_aquafoz_id, mes_atual_nome) \
-#                  if mes_atual_nome else {"mensal": {}, "diaria": {}, "mesAtual": None}
-#          else:
-#              print("AVISO: 'cross_aquafoz_id' ainda não configurado no config.json -- aba Cross AquaFoz fica vazia.", file=sys.stderr)
-#              cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
-#      except Exception as e:
-#          print(f"AVISO: falha ao ler Cross AquaFoz ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
-#          cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
-#
-#    e adicionar ao dict `output` final: "CROSS_AQUAFOZ": cross_aquafoz,
-#
-# 4. A planilha "Vendas Cross para AquaFoz 2026" precisa estar compartilhada com a service
-#    account do pipeline (o mesmo e-mail que já tem acesso às outras planilhas do
-#    config.json) -- senão a leitura cai no except acima e a aba do painel fica vazia.
+# 2. config.json (mesma pasta) já tem: "cross_aquafoz_id": "10y-MjciXhxYU7yBoUgymLmphuELd3SbyR6HbRejCGOo"
+# 3. main() já chama build_cross_aquafoz(service, cross_aquafoz_id, mes_atual_nome) e salva em
+#    output["CROSS_AQUAFOZ"].
+# 4. A planilha "Vendas Cross para AquaFoz 2026" já está compartilhada com a service account
+#    do pipeline (senão a leitura cai no except e a aba fica vazia -- ver aviso no log da
+#    Action).
 # =========================================================================================
