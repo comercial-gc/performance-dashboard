@@ -1013,7 +1013,14 @@
    funções de render) ficam do jeito que estão nos dois temas, só o
    "chrome" do painel (fundo, texto, bordas, cards) muda.
    ══════════════════════════════════════════════════════════════════ */
-.theme-toggle-wrap{ margin-left:auto; display:flex; align-items:center; align-self:flex-start; }
+.theme-toggle-wrap{ margin-left:auto; display:flex; align-items:center; align-self:flex-start; gap:10px; }
+/* Botão "Ocultar Bio" -- mesmo alinhamento/altura do theme-toggle, ao lado dele. */
+.bio-toggle{
+  position:relative; height:28px; padding:0 12px; border-radius:16px; font-size:11.5px;
+  font-weight:700; white-space:nowrap; border:1px solid var(--line); background:var(--panel);
+  color:var(--muted); cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease;
+}
+.bio-toggle.active{ background:#c6591122; border-color:#C65911; color:#C65911; }
 .theme-toggle{
   position:relative; width:54px; height:28px; border-radius:16px;
   border:1px solid var(--line); background:var(--panel); cursor:pointer; padding:0;
@@ -1150,12 +1157,15 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
       <h1>Dashboard Performance</h1>
       <div class="subtitle">Visitação, Clima, Marketing, E-commerce e Operações dos Parques <span class="subtitle-dot">•</span> dados <b class="subtitle-year">2026</b></div>
     </div>
-    <div class="theme-toggle-wrap" data-tip="Alternar modo claro/escuro">
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Alternar modo claro/escuro" aria-pressed="false">
-        <span class="tt-icon tt-sun">☀️</span>
-        <span class="tt-icon tt-moon">🌙</span>
-        <span class="tt-knob"></span>
-      </button>
+    <div class="theme-toggle-wrap">
+      <button type="button" class="bio-toggle" id="bioToggle" data-tip="Mostrar/ocultar BioParque em todas as abas" aria-label="Ocultar BioParque em todas as abas" aria-pressed="false">Ocultar Bio</button>
+      <div data-tip="Alternar modo claro/escuro">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Alternar modo claro/escuro" aria-pressed="false">
+          <span class="tt-icon tt-sun">☀️</span>
+          <span class="tt-icon tt-moon">🌙</span>
+          <span class="tt-knob"></span>
+        </button>
+      </div>
     </div>
   </div>
   <div class="logo-banner" id="logoBanner">
@@ -1483,7 +1493,7 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
     <div class="imt-select-wrap">
       <label>Ver resumo executivo do parque:</label>
       <select id="imtParkSelect" onchange="renderParkSummary(); renderImtMonthDetail();">
-        <option value="">-- Selecione um parque --</option><option value="AquaRio">AquaRio</option><option value="BioParque">BioParque</option><option value="Paineiras">Paineiras</option><option value="AquaFoz">AquaFoz</option><option value="M3F">M3F</option><option value="Vila Velha">Vila Velha</option><option value="Três Pescadores">Três Pescadores</option>
+        <option value="">-- Selecione um parque --</option><option value="AquaRio">AquaRio</option><option value="BioParque" id="imtParkSelectBioOpt">BioParque</option><option value="Paineiras">Paineiras</option><option value="AquaFoz">AquaFoz</option><option value="M3F">M3F</option><option value="Vila Velha">Vila Velha</option><option value="Três Pescadores">Três Pescadores</option>
       </select>
     </div>
 
@@ -1801,6 +1811,18 @@ html[data-theme="dark"] [style*="color:#0f3d2e"]{ color:#7fd9ab !important; }
           <label for="crossAquafozDataFim">Até</label>
           <input type="date" id="crossAquafozDataFim" onchange="renderCrossAquafozDiaria()">
         </div>
+        <div class="mix-filter-field">
+          <label for="crossAquafozVsSelect">Comparar</label>
+          <select id="crossAquafozVsSelect" onchange="setCrossAquafozVs(this.value)">
+            <option value="">Nenhuma</option>
+            <option value="mes">Vs mês selecionado</option>
+            <option value="ano_anterior">Vs mesmo período do ano anterior</option>
+          </select>
+        </div>
+        <div class="mix-filter-field" id="crossAquafozVsMesWrap" style="display:none;">
+          <label for="crossAquafozVsMesSelect">Mês</label>
+          <select id="crossAquafozVsMesSelect" onchange="renderCrossAquafozDiaria()"></select>
+        </div>
       </div>
 
       <div class="mix-card" style="border-top-color:#45818E;">
@@ -1850,6 +1872,34 @@ const MONTHS = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','A
 let MONTH_LABEL = {JANEIRO:'Janeiro', FEVEREIRO:'Fevereiro', 'MARÇO':'Março', ABRIL:'Abril', MAIO:'Maio', JUNHO:'Junho', JULHO:'Julho', AGOSTO:'Agosto', SETEMBRO:'Setembro', OUTUBRO:'Outubro', NOVEMBRO:'Novembro', DEZEMBRO:'Dezembro'};
 let CLOSED_MONTHS = [];
 const PARKS = ['AquaRio','BioParque','Paineiras','PNI','M3F','AquaFoz','Três Pescadores','Vila Velha'];
+
+// Botão "Ocultar Bio" (20/08/2026) -- pedido do usuário: um clique some com BioParque (linha,
+// cartão, barra/linha de gráfico, opção de dropdown) em TODAS as abas, e o layout reflui
+// sozinho (cada grid/flex já se ajusta ao número de itens, não precisa de redimensionamento
+// manual). Estado salvo em localStorage, mesmo padrão já usado pro tema claro/escuro.
+// vp() = "visible parks" -- filtro único aplicado em cada ponto de RENDERIZAÇÃO que itera um
+// dos arrays de parque (PARKS/SHARE_PARKS/INVEST_PARKS/etc.). Não altera os arrays originais
+// nem o dado carregado (data.json continua trazendo BioParque normalmente) -- só filtra o que
+// vira HTML na tela, pra poder ligar/desligar sem precisar recarregar os dados.
+let HIDE_BIOPARQUE = false;
+try{ HIDE_BIOPARQUE = localStorage.getItem('hideBioParque') === '1'; }catch(e){ /* modo privado etc. */ }
+function vp(arr){ return HIDE_BIOPARQUE ? arr.filter(p => p !== 'BioParque') : arr; }
+// A ÚNICA lista de parques que é HTML estático (não gerada via PARKS/SHARE_PARKS/etc. em
+// JS) -- o seletor "resumo executivo do parque" da aba Investimento Marketing. Aqui não dá
+// pra usar vp() direto (não é um array), então escondemos/mostramos a option na mão e, se
+// BioParque estava selecionado, voltamos o select pro estado vazio.
+function syncBioUiState(){
+  const opt = document.getElementById('imtParkSelectBioOpt');
+  if(!opt) return;
+  opt.hidden = HIDE_BIOPARQUE;
+  opt.disabled = HIDE_BIOPARQUE;
+  const sel = document.getElementById('imtParkSelect');
+  if(sel && HIDE_BIOPARQUE && sel.value === 'BioParque'){
+    sel.value = '';
+    if(typeof renderParkSummary === 'function') renderParkSummary();
+    if(typeof renderImtMonthDetail === 'function') renderImtMonthDetail();
+  }
+}
 const PARK_COLORS = {
   AquaRio:'#305496', BioParque:'#C65911', Paineiras:'#548235', PNI:'#0D5955',
   M3F:'#CC0000', AquaFoz:'#45818E', 'Três Pescadores':'#741B47', '3P':'#741B47', 'Vila Velha':'#BF9000'
@@ -2275,7 +2325,7 @@ function renderTable(month){
   const tbody = document.querySelector('#monthTable tbody');
   if(!data){ tbody.innerHTML = ''; return; }
   const rows = [];
-  PARKS.forEach(p => {
+  vp(PARKS).forEach(p => {
     const s = data.summary[p];
     if(!s) return;
     rows.push(rowHtml(p, s, false));
@@ -2322,7 +2372,7 @@ function renderRegua(month){
   document.getElementById('reguaDayNums').innerHTML =
     Array.from({length:n}, (_,i) => `<span>${data.dayLabels ? data.dayLabels[i] : 'Dia '+(i+1)}</span>`).join('');
   const grid = document.getElementById('reguaGrid');
-  grid.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
+  grid.innerHTML = vp(PARKS).filter(park => data.daily[park]).map(park => {
     const block = data.daily[park];
     const r2026 = block ? (block['Realizado 2026']||[]) : [];
     const r2025 = block ? (block['Realizado 2025']||[]) : [];
@@ -2385,7 +2435,7 @@ function renderMonthChart(month){
   if(!data){ document.getElementById('monthChart').innerHTML = ''; return; }
   const titleEl = document.getElementById('monthChartTitle');
   if(titleEl) titleEl.textContent = 'Realizado de ' + MONTH_LABEL[month] + ', 2026 vs 2025';
-  const items = PARKS.map(p => {
+  const items = vp(PARKS).map(p => {
     const s = data.summary[p];
     if(!s) return null;
     return { label: p, color: PARK_COLORS[p], v2026: s.realizado, v2025: s.y2025 };
@@ -2396,7 +2446,7 @@ function renderMonthChart(month){
 function renderAccumChart(month){
   const data = VISITACAO[month];
   if(!data){ document.getElementById('accumChart').innerHTML = ''; return; }
-  const items = PARKS.map(p => {
+  const items = vp(PARKS).map(p => {
     const s = data.summary[p];
     if(!s) return null;
     return { label: p, color: PARK_COLORS[p], v2026: s.acumRealizado, v2025: s.acum2025 };
@@ -2521,7 +2571,7 @@ function renderShareMetaChart(accShare, accVisit, accEcom){
   // parque no gráfico de Evolução mensal, só que somando os 5 em vez de 1 parque.
   function aggMes(mesLabel){
     let v25=0,v26=0,e25=0,e26=0,i25=0,i26=0, any25=false, any26=false;
-    SHARE_META_PARKS.forEach(p => {
+    vp(SHARE_META_PARKS).forEach(p => {
       const d = mesesMeta[mesLabel] ? mesesMeta[mesLabel][p] : null;
       if(!d) return;
       if(d.visitacao2025!==null && d.visitacao2025!==undefined){ v25+=d.visitacao2025; e25+=(d.ecommerce2025||0); i25+=(d.investimento2025||0); any25=true; }
@@ -2644,7 +2694,7 @@ function renderShareMonthRegua(){
   document.getElementById('shareMonthNums').innerHTML =
     INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m===MES_CAP[OPEN_MONTH] ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
   const grid = document.getElementById('shareMonthGrid');
-  const metaRows = SHARE_PARKS.map((park, parkIdx) => {
+  const metaRows = vp(SHARE_PARKS).map((park, parkIdx) => {
     const parkColor = PARK_COLORS[park] || '#888';
     const cells = INVEST_MONTHS.map((mes, mesIdx) => {
       const d = meses[mes] ? meses[mes][park] : null;
@@ -2732,7 +2782,7 @@ function renderInvestRegua(){
   document.getElementById('investMonthNums').innerHTML =
     INVEST_MONTHS.map(m => `<span>${m.slice(0,3)}${m===MES_CAP[OPEN_MONTH] ? ' *' : ''}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
   const grid = document.getElementById('investGrid');
-  grid.innerHTML = INVEST_PARKS.map(park => {
+  grid.innerHTML = vp(INVEST_PARKS).map(park => {
     const parkColor = PARK_COLORS[park] || '#888';
     const cells = INVEST_MONTHS.map(mes => {
       const d = meses[mes] ? meses[mes][park] : null;
@@ -2776,7 +2826,7 @@ function renderInvestRegua(){
 
 function renderInvestAccumChart(){
   const meses = SHARE.investimentoMidia.meses;
-  const items = INVEST_PARKS.map(park => {
+  const items = vp(INVEST_PARKS).map(park => {
     let sum26=0, sum25=0, has25=false, has26=false;
     INVEST_MONTHS.forEach(mes => {
       const d = meses[mes] ? meses[mes][park] : null;
@@ -2809,7 +2859,7 @@ function renderPlanoMidiaGrid(){
     PLANO_MIDIA_MESES.map(m => `<span>${m.slice(0,3)}</span>`).join('') + '<span style="margin-left:10px;"><b>Acum.</b></span>';
 
   const grid = document.getElementById('pmGrid');
-  grid.innerHTML = PLANO_MIDIA_PARKS.map(park => {
+  grid.innerHTML = vp(PLANO_MIDIA_PARKS).map(park => {
     const parkColor = PARK_COLORS[park] || '#888';
     const cells = PLANO_MIDIA_MESES.map(mes => {
       const d = resumo[mes] ? resumo[mes][park] : null;
@@ -2871,7 +2921,7 @@ function populatePlanoMidiaSelects(){
   mesSel.innerHTML = '<option value="">Todos os meses</option>' +
     PLANO_MIDIA_MESES.map(m => `<option value="${m}">${m}</option>`).join('');
   parqueSel.innerHTML = '<option value="">Todos os parques</option>' +
-    PLANO_MIDIA_PARKS.map(p => `<option value="${p}">${p==='3P' ? 'Três Pescadores' : p}</option>`).join('');
+    vp(PLANO_MIDIA_PARKS).map(p => `<option value="${p}">${p==='3P' ? 'Três Pescadores' : p}</option>`).join('');
   if(tipoSel) tipoSel.innerHTML = '<option value="">Todos</option>' +
     planoMidiaValoresUnicos('tipo').map(v => `<option value="${v}">${v}</option>`).join('');
   if(statusSel) statusSel.innerHTML = '<option value="">Todos</option>' +
@@ -2976,7 +3026,7 @@ function renderComboCharts(containerId, barField, barFmt){
     return { txt: sign + fmtSmartNumber(smartRound(Math.abs(pp))) + ' p.p.', cls: pp >= 0 ? 'up' : 'down' };
   }
 
-  grid.innerHTML = Object.keys(data.parques).map(park => {
+  grid.innerHTML = vp(Object.keys(data.parques)).map(park => {
     const d = data.parques[park];
     const color = PARK_COLORS[park];
     const allInv = d[barField];
@@ -3394,7 +3444,7 @@ function renderClimaTab(){
     const chart = buildClimaBarChart(emojiArr, mm);
     // Gráficos de visitação por parque (não por região) alinhados ABAIXO do bloco de
     // clima -- complementa o que já existe, não substitui (pedido do usuário, 11/08/2026).
-    const parkCharts = r.parks.map(p => {
+    const parkCharts = vp(r.parks).map(p => {
       const pd = data.daily[p];
       const realizadoArr = pd ? (pd['Realizado 2026']||[]) : [];
       return buildParkDailyChart(p, realizadoArr, n, mm, emojiArr);
@@ -3579,7 +3629,7 @@ function renderVizMensal(month){
     return;
   }
 
-  tbody.innerHTML = PARKS.filter(park => data.daily[park]).map(park => {
+  tbody.innerHTML = vp(PARKS).filter(park => data.daily[park]).map(park => {
     const s = data.summary[park] || {};
     const dailyObz = (data.daily[park] && data.daily[park]['OBZ 2026']) || [];
     const obzMesCompleto = dailyObz.reduce((sum,v) => sum + (typeof v === 'number' ? v : 0), 0);
@@ -3640,7 +3690,7 @@ function renderVizAcumulado(month){
   // Cataratas), mas no ACUMULADO ele continua listado com o valor congelado até Julho
   // (flag "historicoAteJulho" vinda do backend) -- por isso o filtro aqui é diferente do
   // usado em renderVizMensal/renderRegua (que só olham data.daily[park]).
-  tbody.innerHTML = PARKS.filter(park => data.daily[park] || (data.summary[park] || {}).historicoAteJulho).map(park => {
+  tbody.innerHTML = vp(PARKS).filter(park => data.daily[park] || (data.summary[park] || {}).historicoAteJulho).map(park => {
     const s = data.summary[park] || {};
     const clsObz = (typeof s.acumPctObz==='number') ? (s.acumPctObz>=0?'up':'down') : '';
     const cls2025 = (typeof s.acumPct2025==='number') ? (s.acumPct2025>=0?'up':'down') : '';
@@ -3893,7 +3943,8 @@ function renderOportunidades(month){
   } else {
     titleEl.textContent = `Oportunidades - ${fmtISOToBR(ranges.r26start)} a ${fmtISOToBR(ranges.r26end)}`;
   }
-  const { itens, eventosDoMes } = oportunidadesDoMes(ranges);
+  let { itens, eventosDoMes } = oportunidadesDoMes(ranges);
+  if(HIDE_BIOPARQUE) eventosDoMes = eventosDoMes.filter(e => e.parque !== 'BioParque');
 
   const itensHtml = itens.map(it => {
     const tag = it.prolongado ? '<span class="opo-tag">feriado prolongado</span>' : '';
@@ -4049,7 +4100,7 @@ function buildCustomRangeData(fromStr, toStr){
     const pct2025 = (y2025!==null && y2025>0) ? (realizado-y2025)/y2025 : null;
     summary[label] = { realizado, obz, pctObz, y2025, pct2025, acumRealizado:realizado, acumObzParcial:obz, acumPctObz:pctObz, acum2025:y2025, acumPct2025:pct2025 };
   }
-  grupo('Total Grupo Cataratas', GRUPO_CATARATAS_PARKS);
+  grupo('Total Grupo Cataratas', vp(GRUPO_CATARATAS_PARKS));
   grupo('Total Soul Parques', SOUL_PARQUES_PARKS);
 
   const daily = {};
@@ -4298,7 +4349,7 @@ const IMT_PARQUES_ORDEM = ['AquaRio','BioParque','Paineiras','AquaFoz','M3F','Vi
 function renderInvestMktResumo(){
   const grid = document.getElementById('imtGrid');
   if(!grid) return;
-  grid.innerHTML = IMT_PARQUES_ORDEM.filter(p => INVEST_MKT_RESUMO[p]).map(parque => {
+  grid.innerHTML = vp(IMT_PARQUES_ORDEM).filter(p => INVEST_MKT_RESUMO[p]).map(parque => {
     const dados = INVEST_MKT_RESUMO[parque] || {};
     const color = MIX_PARK_COLORS[parque] || '#333';
     const rows = IMT_MESES_ORDEM.map(mes => {
@@ -4570,7 +4621,7 @@ function populateEventosSelects(){
   mesSel.innerHTML = '<option value="">Todos os meses</option>' +
     mesKeys.map(m => `<option value="${m.key}">${m.label}</option>`).join('');
 
-  const parques = [...new Set(EVENTOS.map(e => e.parque).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'pt-BR'));
+  const parques = vp([...new Set(EVENTOS.map(e => e.parque).filter(Boolean))]).sort((a,b) => a.localeCompare(b, 'pt-BR'));
   parqueSel.innerHTML = '<option value="">Todos os parques</option>' +
     parques.map(p => `<option value="${p}">${p}</option>`).join('');
 }
@@ -4581,7 +4632,7 @@ function renderEventosTab(){
   const mesFiltro = document.getElementById('eventosMesSelect') ? document.getElementById('eventosMesSelect').value : '';
   const parqueFiltro = document.getElementById('eventosParqueSelect') ? document.getElementById('eventosParqueSelect').value : '';
 
-  let lista = EVENTOS;
+  let lista = HIDE_BIOPARQUE ? EVENTOS.filter(e => e.parque !== 'BioParque') : EVENTOS;
   if(mesFiltro) lista = lista.filter(e => e.data.slice(0,7) === mesFiltro);
   if(parqueFiltro) lista = lista.filter(e => e.parque === parqueFiltro);
 
@@ -4658,7 +4709,7 @@ function populateReportDataSelect(){
     for(let d = 1; d <= data.nDays; d++){
       const iso = `2026-${String(data.monthNumber).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       opts.push(iso);
-      const temDado = PARKS.some(p => {
+      const temDado = vp(PARKS).some(p => {
         const arr = data.daily[p] && data.daily[p]['Realizado 2026'];
         return arr && typeof arr[d-1] === 'number' && arr[d-1] > 0;
       });
@@ -4927,7 +4978,7 @@ function getHistParqueData(parque){
 // "Todos os Parques" é uma visão (grid de mini-gráficos/mini-tabelas, um por parque), não uma
 // chave de dado -- por isso entra na frente da lista, sem existir dentro de HISTORICO.parques.
 function histParquesDisponiveis(){
-  const reais = Object.keys(HISTORICO.parques || {});
+  const reais = vp(Object.keys(HISTORICO.parques || {}));
   return reais.length ? ['Todos os Parques', ...reais] : [];
 }
 
@@ -5581,7 +5632,7 @@ function setMixPeriodoSelect(val){
 function populateMixOrigemFiltros(){
   const parqueSel = document.getElementById('mixParqueSelect');
   if(parqueSel){
-    const parques = Object.keys(MIX_ORIGEM).sort((a,b) => a.localeCompare(b,'pt-BR'));
+    const parques = vp(Object.keys(MIX_ORIGEM)).sort((a,b) => a.localeCompare(b,'pt-BR'));
     parqueSel.innerHTML = '<option value="">Todos os Parques</option>' +
       parques.map(p => `<option value="${p}">${p}</option>`).join('');
     parqueSel.value = mixParqueState;
@@ -5779,7 +5830,7 @@ function renderMixOrigem() {
   // ajudava.
 
   const fonte = getMixFonte();
-  const parquesOrdem = Object.keys(MIX_ORIGEM).length ? Object.keys(MIX_ORIGEM) : Object.keys(fonte);
+  const parquesOrdem = vp(Object.keys(MIX_ORIGEM).length ? Object.keys(MIX_ORIGEM) : Object.keys(fonte));
   const parquesFiltrados = (mixParqueState ? parquesOrdem.filter(p => p === mixParqueState) : parquesOrdem)
     .filter(p => fonte[p]);
 
@@ -6162,6 +6213,27 @@ function renderMixOrigem() {
   });
 })();
 
+/* Botão "Ocultar Bio" (20/08/2026) -- some com BioParque em TODAS as abas (linha, cartão,
+   gráfico, dropdown) com 1 clique, e volta a mostrar com outro. Reaproveita o mesmo padrão de
+   localStorage do tema, e re-renderiza tudo (renderAllTabs) pra não deixar nenhuma aba com
+   Bio "preso" de uma renderização anterior. */
+(function(){
+  const btn = document.getElementById('bioToggle');
+  if(!btn) return;
+  function syncBtn(){
+    btn.classList.toggle('active', HIDE_BIOPARQUE);
+    btn.setAttribute('aria-pressed', HIDE_BIOPARQUE ? 'true' : 'false');
+    btn.textContent = HIDE_BIOPARQUE ? 'Bio oculto' : 'Ocultar Bio';
+  }
+  syncBtn();
+  btn.addEventListener('click', function(){
+    HIDE_BIOPARQUE = !HIDE_BIOPARQUE;
+    try{ localStorage.setItem('hideBioParque', HIDE_BIOPARQUE ? '1' : '0'); }catch(e){ /* modo privado etc. */ }
+    syncBtn();
+    renderAllTabs();
+  });
+})();
+
 // ── Cross AquaFoz (20/08/2026, revisado 20/08/2026 -- 2ª revisão) ──────────────────────
 // Relatório de vendas cruzadas (Marco das 3 Fronteiras + Aeroporto + PNI) que o supervisor
 // de Foz hoje monta na mão a partir da planilha "Vendas Cross para AquaFoz 2026" pra mandar
@@ -6190,6 +6262,7 @@ function renderMixOrigem() {
 let CROSS_AQUAFOZ = { mensal:{}, diaria:{}, mesAtual:null };
 let crossAquafozView = 'diaria';
 let crossAquafozPeriodoState = 'mes_atual'; // 'mes_atual' | 'ano' | 'mes:Janeiro'..'mes:Dezembro' | 'custom'
+let crossAquafozVsState = ''; // '' (nenhuma) | 'mes' (Vs mês selecionado) | 'ano_anterior' (Vs mesmo período do ano anterior)
 const CROSS_MESES_ORDER = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const CROSS_MESES_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -6220,14 +6293,36 @@ function renderCrossAquafozTab(){
   renderCrossAquafozMensal();
 }
 
-function caKpiCard(label, value, color, highlight){
+function caKpiCard(label, value, color, highlight, delta){
   const top = color ? `border-top:3px solid ${color};` : '';
   const bg = highlight ? 'background:#f2f8f7;' : '';
   const valStyle = highlight ? `color:${color||'#1d5c60'};font-size:22px;` : '';
+  // "delta" (opcional) = {txt, cls} vindo de caVariacaoPct/caVariacaoPP -- só aparece quando
+  // o usuário escolhe uma comparação no dropdown "Comparar" (ver getCrossAquafozVsRange).
+  // Reaproveita a mesma pill/classe up/down já usada nos KPIs da aba Visitação.
+  const deltaHtml = delta ? `<div class="deltas"><span class="pill ${delta.cls}">${delta.txt}</span></div>` : '';
   return `<div class="kpi-card" style="${top}${bg}">
     <div class="label">${label}</div>
     <div class="value" style="${valStyle}">${value}</div>
+    ${deltaHtml}
   </div>`;
+}
+
+// Variação % (pra métricas de CONTAGEM -- vendas, visitação) e em pontos percentuais (pra
+// métricas que já são % -- share, captação), mesmo padrão de fmtPctVar/fmtPP já usado em
+// renderComboCharts (Share E-commerce). v1 = valor do período PRINCIPAL, v2 = valor do
+// período de COMPARAÇÃO ("Vs").
+function caVariacaoPct(v1, v2){
+  if(v1===null||v1===undefined||v2===null||v2===undefined||v2===0) return null;
+  const pct = (v1-v2)/v2*100;
+  const sign = pct>=0 ? '+' : '';
+  return { txt: `${sign}${fmtSmartNumber(smartRound(pct))}% vs comparação`, cls: pct>=0?'up':'down' };
+}
+function caVariacaoPP(v1, v2){
+  if(v1===null||v1===undefined||v2===null||v2===undefined) return null;
+  const pp = (v1-v2)*100;
+  const sign = pp>=0 ? '+' : '';
+  return { txt: `${sign}${fmtSmartNumber(smartRound(pp))} p.p. vs comparação`, cls: pp>=0?'up':'down' };
 }
 
 // Monta as opções do dropdown "Outro período" a partir dos meses que realmente têm dado em
@@ -6250,6 +6345,18 @@ function populateCrossAquafozFiltros(){
     if(!ini.value) ini.value = diasKeys[0];
     if(!fim.value) fim.value = diasKeys[diasKeys.length-1];
   }
+  const vsMesSel = document.getElementById('crossAquafozVsMesSelect');
+  if(vsMesSel){
+    const mesesComDado = new Set(diasKeys.map(d => Number(d.slice(5,7))));
+    vsMesSel.innerHTML = CROSS_MESES_ORDER.map((mes,i) => mesesComDado.has(i+1) ? `<option value="${mes}">${mes}</option>` : '').join('');
+  }
+}
+
+function setCrossAquafozVs(val){
+  crossAquafozVsState = val;
+  const wrap = document.getElementById('crossAquafozVsMesWrap');
+  if(wrap) wrap.style.display = (val === 'mes') ? 'flex' : 'none';
+  renderCrossAquafozDiaria();
 }
 
 function setCrossAquafozPeriodo(val){
@@ -6313,6 +6420,47 @@ function crossAquafozPeriodoLabel(range){
   return '';
 }
 
+// Traduz o dropdown "Comparar" (crossAquafozVsState) num intervalo [ini,fim] de COMPARAÇÃO,
+// a partir do PRIMEIRO e ÚLTIMO DIA COM DADO REAL do período principal (não do calendário --
+// é assim que o mês vigente, que é sempre parcial, funciona certo).
+//
+// 'mes' (Vs mês selecionado): usa os mesmos números de DIA DO MÊS do período principal
+// aplicados ao mês escolhido no 2º dropdown -- exatamente o pedido do usuário: "hoje é dia
+// 20/08, selecionei Vs Mês de Julho, ele me traria Vs até o dia 20/07". Se o mês de
+// comparação for mais curto (ex.: Fevereiro) o dia final é limitado ao último dia real
+// daquele mês.
+//
+// 'ano_anterior' (Vs mesmo período do ano anterior): mesmo mês/dia, ano-1. Pro AquaFoz isso
+// hoje não tem dado (a operação de cross começou em Novembro/2025 -- ver aviso no rodapé),
+// mas o código já fica pronto: quando existir dado de 2025 na aba "Geral data", a comparação
+// passa a funcionar sem precisar tocar em nada aqui.
+function getCrossAquafozVsRange(diaPrimeiroReal, diaUltimoReal){
+  if(!crossAquafozVsState || !diaPrimeiroReal || !diaUltimoReal) return null;
+  const ano = Number(diaPrimeiroReal.slice(0,4));
+  if(crossAquafozVsState === 'ano_anterior'){
+    const anoComp = ano - 1;
+    return { ini: `${anoComp}-${diaPrimeiroReal.slice(5,10)}`, fim: `${anoComp}-${diaUltimoReal.slice(5,10)}`, tipo:'ano_anterior' };
+  }
+  if(crossAquafozVsState === 'mes'){
+    const vsMesSel = document.getElementById('crossAquafozVsMesSelect');
+    const mesNome = vsMesSel ? vsMesSel.value : '';
+    const idx = CROSS_MESES_ORDER.indexOf(mesNome);
+    if(idx < 0) return null;
+    const mm = String(idx+1).padStart(2,'0');
+    const ultimoDiaMesComp = new Date(ano, idx+1, 0).getDate();
+    const diaIniNum = Math.min(Number(diaPrimeiroReal.slice(8,10)), ultimoDiaMesComp);
+    const diaFimNum = Math.min(Number(diaUltimoReal.slice(8,10)), ultimoDiaMesComp);
+    return { ini: `${ano}-${mm}-${String(diaIniNum).padStart(2,'0')}`, fim: `${ano}-${mm}-${String(diaFimNum).padStart(2,'0')}`, tipo:'mes', mesNome };
+  }
+  return null;
+}
+
+// Chave de "match" entre um dia do período principal e o dia correspondente no período de
+// comparação -- por DIA DO MÊS ('mes') ou por MM-DD exato (mesma data, ano-1 -- 'ano_anterior').
+function caVsMatchKey(dataStr, tipo){
+  return tipo === 'ano_anterior' ? dataStr.slice(5,10) : Number(dataStr.slice(8,10));
+}
+
 // Soma as colunas diárias (aba "Geral data") no período escolhido, nos 8 canais -- Marco das
 // 3 Fronteiras (Bilheteria/Trade balcão/Cross/Combo), Aeroporto, PNI (Cross/Totem/Combo) --
 // monta os cartões de KPI, a régua dia a dia e o gráfico combo, sempre recalculado a partir
@@ -6355,45 +6503,93 @@ function renderCrossAquafozDiaria(){
     if(localChartEl) localChartEl.innerHTML = '<span class="hint">Sem dados ainda para este período.</span>';
     return;
   }
-  const sum = (key) => diasComDado.reduce((a,d) => a + (diaria[d][key]||0), 0);
-  const bilheteria = sum('bilheteriaMf3'), trade = sum('tradeMf3'), crossMf3 = sum('crossMf3'),
-        comboMf3 = sum('comboMf3'), aeroporto = sum('aeroporto'), crossPni = sum('crossPni'),
-        totem = sum('totemPni'), combo = sum('comboPni');
-  const total = bilheteria+trade+crossMf3+comboMf3+aeroporto+crossPni+totem+combo;
-  const visitacaoAqf = sum('visitacaoAqf'), visitacaoPni = sum('visitacaoPni');
-  const captAqfPni = visitacaoPni>0 ? visitacaoAqf/visitacaoPni : null;
-  const captDiariaPniPeriodo = visitacaoPni>0 ? total/visitacaoPni : null; // mesma fórmula da coluna "Capt. Diária PNI" da planilha, só que somada no período
+  const sum = (key, dias) => (dias||diasComDado).reduce((a,d) => a + (diaria[d][key]||0), 0);
+  // Calcula o mesmo conjunto de métricas pra qualquer lista de dias -- usado pro período
+  // PRINCIPAL e, se houver "Comparar" selecionado, de novo pro período de COMPARAÇÃO (m2).
+  const calcMetrics = (dias) => {
+    const bilheteria = sum('bilheteriaMf3',dias), trade = sum('tradeMf3',dias), crossMf3 = sum('crossMf3',dias),
+          comboMf3 = sum('comboMf3',dias), aeroporto = sum('aeroporto',dias), crossPni = sum('crossPni',dias),
+          totem = sum('totemPni',dias), combo = sum('comboPni',dias);
+    const total = bilheteria+trade+crossMf3+comboMf3+aeroporto+crossPni+totem+combo;
+    const visitacaoAqf = sum('visitacaoAqf',dias), visitacaoPni = sum('visitacaoPni',dias);
+    return {
+      bilheteria, trade, crossMf3, comboMf3, aeroporto, crossPni, totem, combo, total, visitacaoAqf, visitacaoPni,
+      captAqfPni: visitacaoPni>0 ? visitacaoAqf/visitacaoPni : null,
+      captDiariaPniPeriodo: visitacaoPni>0 ? total/visitacaoPni : null, // mesma fórmula da coluna "Capt. Diária PNI" da planilha, só que somada no período
+    };
+  };
+  const m1 = calcMetrics(diasComDado);
   const periodoTxt = `${diasComDado[0].slice(8,10)}/${diasComDado[0].slice(5,7)} a ${diasComDado[diasComDado.length-1].slice(8,10)}/${diasComDado[diasComDado.length-1].slice(5,7)}`;
   const C = CROSS_CHANNEL_COLORS;
 
+  // "Comparar" (Vs), opcional -- recalcula as MESMAS métricas pro período de comparação (m2)
+  // e usa a diferença pra montar a pill de variação em cada card e o delta de cada linha da
+  // régua (ver getCrossAquafozVsRange/caVariacaoPct/caVariacaoPP).
+  const vsRange = getCrossAquafozVsRange(diasComDado[0], diasComDado[diasComDado.length-1]);
+  let m2 = null, diasComDadoVs = [];
+  if(vsRange){
+    diasComDadoVs = Object.keys(diaria).filter(dv =>
+      dv >= vsRange.ini && dv <= vsRange.fim && diaria[dv] && diaria[dv].visitacaoAqf!==null && diaria[dv].visitacaoAqf!==undefined
+    ).sort();
+    if(diasComDadoVs.length) m2 = calcMetrics(diasComDadoVs);
+  }
+  const dPct = (v1,v2) => m2 ? caVariacaoPct(v1, v2!==undefined?v2:null) : null;
+  const dPP  = (v1,v2) => m2 ? caVariacaoPP(v1, v2!==undefined?v2:null) : null;
+
   if(kpiGeralEl){
     kpiGeralEl.innerHTML = [
-      caKpiCard('Visitação PNI', fmtInt(visitacaoPni)),
-      caKpiCard('Visitação AQF', fmtInt(visitacaoAqf)),
-      caKpiCard('Captação total AQF x PNI', fmtPct(captAqfPni), '#45818E', true),
+      caKpiCard('Visitação PNI', fmtInt(m1.visitacaoPni), null, false, dPct(m1.visitacaoPni, m2&&m2.visitacaoPni)),
+      caKpiCard('Visitação AQF', fmtInt(m1.visitacaoAqf), null, false, dPct(m1.visitacaoAqf, m2&&m2.visitacaoAqf)),
+      caKpiCard('Captação total AQF x PNI', fmtPct(m1.captAqfPni), '#45818E', true, dPP(m1.captAqfPni, m2&&m2.captAqfPni)),
     ].join('');
   }
   if(kpiCanaisEl){
-    kpiCanaisEl.innerHTML = [
-      caKpiCard(C.bilheteriaMf3.label, fmtInt(bilheteria), C.bilheteriaMf3.color),
-      caKpiCard(C.tradeMf3.label, fmtInt(trade), C.tradeMf3.color),
-      caKpiCard(C.crossMf3.label, fmtInt(crossMf3), C.crossMf3.color),
-      caKpiCard(C.comboMf3.label, fmtInt(comboMf3), C.comboMf3.color),
-      caKpiCard('Total cross', fmtInt(total), '#1d5c60', true),
-      caKpiCard('Capt. diária PNI (período)', fmtPct(captDiariaPniPeriodo), '#45818E'),
-      caKpiCard(C.totemPni.label, fmtInt(totem), C.totemPni.color),
-      caKpiCard(C.comboPni.label, fmtInt(combo), C.comboPni.color),
-      caKpiCard(C.crossPni.label, fmtInt(crossPni), C.crossPni.color),
-      caKpiCard(C.aeroporto.label, fmtInt(aeroporto), C.aeroporto.color),
+    // Cartões separados por categoria (Marco das 3 Fronteiras / PNI / Aeroporto / Resumo),
+    // igual à posição do dashboard real do usuário -- mantendo o estilo de cartão branco já
+    // usado no resto do painel (só agrupados numa caixa com um rótulo de categoria).
+    const mf3Cards = [
+      caKpiCard(C.bilheteriaMf3.label, fmtInt(m1.bilheteria), C.bilheteriaMf3.color, false, dPct(m1.bilheteria, m2&&m2.bilheteria)),
+      caKpiCard(C.tradeMf3.label, fmtInt(m1.trade), C.tradeMf3.color, false, dPct(m1.trade, m2&&m2.trade)),
+      caKpiCard(C.crossMf3.label, fmtInt(m1.crossMf3), C.crossMf3.color, false, dPct(m1.crossMf3, m2&&m2.crossMf3)),
+      caKpiCard(C.comboMf3.label, fmtInt(m1.comboMf3), C.comboMf3.color, false, dPct(m1.comboMf3, m2&&m2.comboMf3)),
     ].join('');
+    const pniCards = [
+      caKpiCard(C.totemPni.label, fmtInt(m1.totem), C.totemPni.color, false, dPct(m1.totem, m2&&m2.totem)),
+      caKpiCard(C.comboPni.label, fmtInt(m1.combo), C.comboPni.color, false, dPct(m1.combo, m2&&m2.combo)),
+      caKpiCard(C.crossPni.label, fmtInt(m1.crossPni), C.crossPni.color, false, dPct(m1.crossPni, m2&&m2.crossPni)),
+    ].join('');
+    const aeroportoCard = caKpiCard(C.aeroporto.label, fmtInt(m1.aeroporto), C.aeroporto.color, false, dPct(m1.aeroporto, m2&&m2.aeroporto));
+    const resumoCards = [
+      caKpiCard('Total cross', fmtInt(m1.total), '#1d5c60', true, dPct(m1.total, m2&&m2.total)),
+      caKpiCard('Capt. diária PNI (período)', fmtPct(m1.captDiariaPniPeriodo), '#45818E', false, dPP(m1.captDiariaPniPeriodo, m2&&m2.captDiariaPniPeriodo)),
+    ].join('');
+    const grupo = (titulo, cor, fundo, cardsHtml, cols) => `
+      <div style="border:1px solid ${cor}55; border-radius:10px; padding:10px; background:${fundo};">
+        <div style="font-size:10.5px; font-weight:800; color:${cor}; text-transform:uppercase; letter-spacing:.03em; margin-bottom:8px;">${titulo}</div>
+        <div class="kpi-row" style="grid-template-columns:repeat(${cols},minmax(118px,1fr)); margin-bottom:0;">${cardsHtml}</div>
+      </div>`;
+    kpiCanaisEl.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:14px;">
+      ${grupo('Marco das 3 Fronteiras', '#e69138', '#fdf6ee', mf3Cards, 4)}
+      ${grupo('PNI', '#1d5c60', '#eef6f5', pniCards, 3)}
+      ${grupo('Aeroporto', '#45818E', '#eef6f7', aeroportoCard, 1)}
+      ${grupo('Resumo', '#0f3d2e', '#eef5f1', resumoCards, 2)}
+    </div>`;
   }
   if(footEl){
-    footEl.innerHTML = `*Visitação AquaFoz (${periodoTxt}): <b>${fmtInt(visitacaoAqf)}</b> &nbsp;|&nbsp; `+
-      `*Visitação PNI (${periodoTxt}): <b>${fmtInt(visitacaoPni)}</b> &nbsp;|&nbsp; `+
-      `Captação AQF x PNI: <b>${fmtPct(captAqfPni)}</b>`;
+    const semCompHint = (vsRange && !m2) ? ` &nbsp;|&nbsp; <span style="color:#9ca3af;">Sem dado no período de comparação selecionado</span>` : '';
+    footEl.innerHTML = `*Visitação AquaFoz (${periodoTxt}): <b>${fmtInt(m1.visitacaoAqf)}</b> &nbsp;|&nbsp; `+
+      `*Visitação PNI (${periodoTxt}): <b>${fmtInt(m1.visitacaoPni)}</b> &nbsp;|&nbsp; `+
+      `Captação AQF x PNI: <b>${fmtPct(m1.captAqfPni)}</b>` + semCompHint;
   }
 
-  if(reguaWrapEl) reguaWrapEl.innerHTML = renderCrossAquafozRegua(diaria, diasComDado);
+  // Régua: com "Comparar" selecionado, monta um dicionário do período de comparação (por dia
+  // do mês, ou por MM-DD exato em "ano anterior") pra cada linha poder mostrar a variação.
+  let vsPorChave = null;
+  if(vsRange && diasComDadoVs.length){
+    vsPorChave = {};
+    diasComDadoVs.forEach(dv => { vsPorChave[caVsMatchKey(dv, vsRange.tipo)] = diaria[dv]; });
+  }
+  if(reguaWrapEl) reguaWrapEl.innerHTML = renderCrossAquafozRegua(diaria, diasComDado, vsPorChave, vsRange ? vsRange.tipo : null);
   if(localChartEl) localChartEl.innerHTML = buildCrossAquafozLocalChart(diaria, diasComDado, range.modo);
 
   // Gráfico: 'ano' usa 1 ponto por mês (CROSS_AQUAFOZ.mensal, já agregado) -- nunca mais de
@@ -6425,90 +6621,170 @@ function renderCrossAquafozDiaria(){
   }
 }
 
-// Grupos MACRO usados no gráfico "Venda diária por local" -- MESMA quebra da régua/cabeçalho
-// (Marco das 3 Fronteiras / Aeroporto / PNI), só 3 cores em vez de 8. O usuário pediu pra
-// MELHORAR o gráfico de venda por local (não remover) depois de ver a barra empilhada de 8
-// canais ilegível numa 1ª tentativa -- 3 grupos empilhados é o que sobra dessa quebra que
-// ainda dá pra ler de verdade; o detalhe dos 8 canais individuais continua disponível no
-// tooltip de cada barra e, com o número exato, na régua e nos cartões de KPI acima.
-const CROSS_LOCAL_GROUPS = [
-  { key:'mf3', label:'Marco das 3 Fronteiras', color:'#e69138', fields:['bilheteriaMf3','tradeMf3','crossMf3','comboMf3'] },
-  { key:'aeroporto', label:'Aeroporto', color:'#8fb7bb', fields:['aeroporto'] },
-  { key:'pni', label:'PNI', color:'#1d5c60', fields:['crossPni','totemPni','comboPni'] },
-];
+// Anti-sobreposição de rótulos genérico, usado nos 2 gráficos de linha desta aba (linhas por
+// canal e o combo Total cross x Captação PNI) -- estima a caixa do texto (largura por
+// caractere ~5.6px, altura ~11px) e só deixa desenhar se não colidir com um rótulo já
+// desenhado antes. Sem isso, com muitos canais/pontos visíveis os números se empilham uns
+// em cima dos outros e ficam ilegíveis -- pedido explícito do usuário.
+function caLabelRect(cx, cyTop, text){
+  const w = text.length*5.6 + 6, h = 11;
+  return [cx-w/2, cyTop-h, cx+w/2, cyTop];
+}
+function caFitsLabel(occupied, rect){
+  return !occupied.some(o => !(rect[2]<o[0]-2 || rect[0]>o[2]+2 || rect[3]<o[1]-2 || rect[1]>o[3]+2));
+}
 
-// modo 'mes' (Ano inteiro selecionado): agrega os dias por mês antes de desenhar -- mesmo
-// raciocínio do gráfico combo (nunca mais que ~12 barras, senão vira parede ilegível de novo).
-// modo 'dia': 1 barra por dia do período escolhido (no máximo ~31).
+// Gráfico "Venda diária por local" -- linhas (uma por canal, 8 cores) com legenda CLICÁVEL:
+// clicar num item da legenda esconde/mostra aquela linha e o eixo Y reajusta pra usar o
+// espaço melhor (mesmo comportamento do exemplo que o usuário mandou). Substituiu a barra
+// empilhada de 8 cores (ilegível, canal pequeno desaparecia atrás do grande) e depois a
+// versão de 3 grupos macro (o usuário pediu pra MELHORAR mantendo os 8 canais, não esconder
+// informação agrupando). Cada linha tem uma área bem clara por baixo (mesmo estilo visual do
+// exemplo enviado) e rótulo de valor em cada ponto, com anti-sobreposição (ver caFitsLabel).
+let crossAquafozChannelVisible = null;
+let _caLastLocalArgs = null; // guarda {diaria, diasComDado, modo} pra redesenhar só o gráfico ao clicar na legenda, sem recalcular KPIs/régua de novo
+
+function toggleCrossAquafozChannel(key){
+  if(!crossAquafozChannelVisible) return;
+  crossAquafozChannelVisible[key] = !crossAquafozChannelVisible[key];
+  if(_caLastLocalArgs){
+    const el = document.getElementById('crossAquafozLocalChart');
+    if(el) el.innerHTML = buildCrossAquafozLocalChart(_caLastLocalArgs.diaria, _caLastLocalArgs.diasComDado, _caLastLocalArgs.modo);
+  }
+}
+
 function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
+  _caLastLocalArgs = { diaria, diasComDado, modo };
+  if(!crossAquafozChannelVisible){
+    crossAquafozChannelVisible = {};
+    Object.keys(CROSS_CHANNEL_COLORS).forEach(k => crossAquafozChannelVisible[k] = true);
+  }
+  // modo 'mes' (Ano inteiro selecionado): agrega os dias por mês antes de desenhar (nunca
+  // mais que ~12 pontos). modo 'dia': 1 ponto por dia do período escolhido (no máximo ~31).
   let buckets;
   if(modo === 'mes'){
     const porMes = {};
     diasComDado.forEach(d => {
       const mesNome = CROSS_MESES_ORDER[Number(d.slice(5,7))-1];
-      if(!porMes[mesNome]) porMes[mesNome] = { mf3:0, aeroporto:0, pni:0 };
+      if(!porMes[mesNome]) porMes[mesNome] = {};
       const e = diaria[d];
-      CROSS_LOCAL_GROUPS.forEach(g => { porMes[mesNome][g.key] += g.fields.reduce((a,f) => a+(e[f]||0), 0); });
+      Object.keys(CROSS_CHANNEL_COLORS).forEach(k => { porMes[mesNome][k] = (porMes[mesNome][k]||0) + (e[k]||0); });
     });
     buckets = CROSS_MESES_ORDER.filter(m => porMes[m]).map(m => ({ label: m.slice(0,3), full: m, values: porMes[m] }));
   } else {
     buckets = diasComDado.map(d => {
       const e = diaria[d];
       const values = {};
-      CROSS_LOCAL_GROUPS.forEach(g => { values[g.key] = g.fields.reduce((a,f) => a+(e[f]||0), 0); });
+      Object.keys(CROSS_CHANNEL_COLORS).forEach(k => { values[k] = e[k]||0; });
       return { label: String(Number(d.slice(8,10))), full: `${d.slice(8,10)}/${d.slice(5,7)}`, values };
     });
   }
   if(!buckets.length) return '<span class="hint">Sem dados.</span>';
-  const totals = buckets.map(b => CROSS_LOCAL_GROUPS.reduce((a,g) => a+(b.values[g.key]||0), 0));
-  const max = Math.max(...totals, 1);
-  const BAR_H = 100;
-  const cols = buckets.map((b,i) => {
-    const t = totals[i];
-    const segs = CROSS_LOCAL_GROUPS.map(g => {
-      const v = b.values[g.key] || 0;
-      if(!v) return '';
-      const h = Math.max(1, Math.round(v/max*BAR_H));
-      return `<div style="width:100%;height:${h}px;background:${g.color};"></div>`;
-    }).join('');
-    const detalhe = CROSS_LOCAL_GROUPS.map(g => `${g.label}: ${fmtInt(b.values[g.key]||0)}`).join(' | ');
-    const tip = `${b.full}: Total ${fmtInt(t)} | ${detalhe}`;
-    return `<div class="cdc-col" data-tip="${tip}">
-      <div class="cdc-val">${fmtInt(t)}</div>
-      <div class="cdc-bar-wrap" style="height:${BAR_H}px;"><div style="width:100%;display:flex;flex-direction:column-reverse;">${segs || '<div style=\"width:100%;height:2px;background:#e9e9e9;\"></div>'}</div></div>
-      <div class="cdc-daynum">${b.label}</div>
-    </div>`;
+
+  const legendHtml = Object.entries(CROSS_CHANNEL_COLORS).map(([key,c]) => {
+    const on = crossAquafozChannelVisible[key];
+    return `<span onclick="toggleCrossAquafozChannel('${key}')" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:700;user-select:none;padding:4px 8px;border-radius:14px;opacity:${on?1:0.35};">
+      <span style="width:9px;height:9px;border-radius:50%;background:${c.color};display:inline-block;"></span>${c.label}</span>`;
   }).join('');
-  const legenda = CROSS_LOCAL_GROUPS.map(g =>
-    `<span style="display:inline-flex;align-items:center;gap:4px;margin-right:14px;"><span style="width:9px;height:9px;border-radius:2px;background:${g.color};display:inline-block;"></span>${g.label}</span>`
-  ).join('');
-  return `<div class="hint" style="margin-bottom:6px;">${legenda}</div>
-    <div class="clima-park-chart"><div class="clima-park-bars">${cols}</div></div>`;
+
+  const activeKeys = Object.keys(CROSS_CHANNEL_COLORS).filter(k => crossAquafozChannelVisible[k]);
+  if(!activeKeys.length){
+    return `<div style="margin-bottom:8px;">${legendHtml}</div><span class="hint">Nenhum canal selecionado, clique num item da legenda pra mostrar.</span>`;
+  }
+
+  const n = buckets.length;
+  const padL = 42, padR = 14, padT = 18, padB = 22;
+  const colw = n<=12 ? 62 : (n<=20 ? 42 : 28);
+  const plotW = Math.max(460, (n-1)*colw);
+  const W = padL+plotW+padR, H = 232, plotH = H-padT-padB;
+  const slot = n>1 ? plotW/(n-1) : 0;
+  let maxVal = 0;
+  activeKeys.forEach(k => buckets.forEach(b => { maxVal = Math.max(maxVal, b.values[k]||0); }));
+  maxVal = maxVal*1.22 || 1;
+
+  let yGrid = '';
+  [0,0.25,0.5,0.75,1].forEach(t => {
+    const y = padT+plotH-(t*plotH);
+    yGrid += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${padL+plotW}" y2="${y.toFixed(1)}" stroke="#f0f1f2" stroke-width="1"></line>`+
+      `<text x="${(padL-6).toFixed(1)}" y="${(y+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#9ca3af">${fmtInt(maxVal*t)}</text>`;
+  });
+  const xTicks = buckets.map((b,i) => `<text x="${(padL+i*slot).toFixed(1)}" y="${H-6}" font-size="9" text-anchor="middle" fill="#9ca3af">${b.label}</text>`).join('');
+
+  const occupied = [];
+  let paths = '', labels = '';
+  activeKeys.forEach(key => {
+    const c = CROSS_CHANNEL_COLORS[key];
+    const pts = buckets.map((b,i) => {
+      const x = padL+i*slot, v = b.values[key]||0;
+      return [x, padT+plotH-(v/maxVal*plotH), v];
+    });
+    const lineD = pts.map((p,i) => `${i===0?'M':'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+    const areaD = lineD + ` L${pts[pts.length-1][0].toFixed(1)},${(padT+plotH).toFixed(1)} L${pts[0][0].toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
+    paths += `<path d="${areaD}" fill="${c.color}" opacity="0.07"></path>`;
+    paths += `<path d="${lineD}" fill="none" stroke="${c.color}" stroke-width="2"></path>`;
+    pts.forEach(p => { paths += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" fill="${c.color}"></circle>`; });
+    pts.forEach(p => {
+      const text = fmtInt(p[2]);
+      const rect = caLabelRect(p[0], p[1]-7, text);
+      if(caFitsLabel(occupied, rect)){
+        occupied.push(rect);
+        labels += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" fill="${c.color}">${text}</text>`;
+      }
+    });
+  });
+
+  let hoverCols = '';
+  buckets.forEach((b,i) => {
+    const x = padL+i*slot - slot/2;
+    const detalhe = activeKeys.map(k => `${CROSS_CHANNEL_COLORS[k].label}: ${fmtInt(b.values[k]||0)}`).join(' | ');
+    hoverCols += `<rect data-tip="${b.full}: ${detalhe}" x="${x.toFixed(1)}" y="${padT}" width="${(slot||plotW).toFixed(1)}" height="${plotH}" fill="transparent"></rect>`;
+  });
+
+  return `<div style="margin-bottom:8px;">${legendHtml}</div>
+    <div style="overflow-x:auto;"><svg width="${W}" height="${H}" style="min-width:${W}px;display:block;">
+      ${yGrid}${xTicks}${hoverCols}<g pointer-events="none">${paths}${labels}</g>
+    </svg></div>`;
 }
 
 // Régua diária de verdade -- 1 linha por dia (não mais uma soma só), igual ao print da
 // planilha do usuário, com rolagem vertical (o período pode ter várias semanas). Combo MF3
 // entra como coluna própria (o relatório manual dele não tinha essa quebra -- ver docstring
 // do módulo Python -- mas o dado existe e é real, então mantemos como coluna extra aqui).
-function renderCrossAquafozRegua(diaria, diasComDado){
+// Célula da régua com variação embutida -- mostra o valor principal e, quando há um dia
+// correspondente no período de comparação (vsPorChave, montado em renderCrossAquafozDiaria),
+// a variação em % (métricas de contagem -- vendas, visitação) ou em pontos percentuais
+// (métricas que já são % -- captação/share), num formato compacto (sem "vs comparação", que
+// já fica claro pelo dropdown "Comparar" acima da tabela).
+function caReguaCell(val, compVal, isPct, bold){
+  const mainTxt = isPct ? fmtPct(val) : fmtInt(val);
+  const mainHtml = bold ? `<b>${mainTxt}</b>` : mainTxt;
+  if(compVal===null || compVal===undefined || val===null || val===undefined) return `<td>${mainHtml}</td>`;
+  const d = isPct ? caVariacaoPP(val, compVal) : caVariacaoPct(val, compVal);
+  if(!d) return `<td>${mainHtml}</td>`;
+  const txtCompacto = d.txt.replace(' vs comparação', '');
+  return `<td>${mainHtml}<div style="font-size:9px; font-weight:700; margin-top:1px;" class="${d.cls}">${txtCompacto}</div></td>`;
+}
+
+function renderCrossAquafozRegua(diaria, diasComDado, vsPorChave, vsTipo){
   const linhas = diasComDado.map(d => {
     const e = diaria[d];
     const dataFmt = `${d.slice(8,10)}/${d.slice(5,7)}/${d.slice(0,4)}`;
+    const c = vsPorChave ? vsPorChave[caVsMatchKey(d, vsTipo)] : null;
     return `<tr>
       <td>${dataFmt}</td>
-      <td>${fmtInt(e.bilheteriaMf3)}</td>
-      <td>${fmtInt(e.tradeMf3)}</td>
-      <td>${fmtInt(e.crossMf3)}</td>
-      <td>${fmtInt(e.comboMf3)}</td>
-      <td>${fmtInt(e.aeroporto)}</td>
-      <td>${fmtInt(e.crossPni)}</td>
-      <td>${fmtInt(e.totemPni)}</td>
-      <td>${fmtInt(e.comboPni)}</td>
-      <td><b>${fmtInt(e.totalCross)}</b></td>
-      <td>${fmtInt(e.visitacaoPni)}</td>
-      <td>${fmtPct(e.captDiariaPni)}</td>
-      <td>${fmtInt(e.visitacaoAqf)}</td>
-      <td>${fmtPct(e.captTotalAqfPni)}</td>
+      ${caReguaCell(e.bilheteriaMf3, c&&c.bilheteriaMf3, false, false)}
+      ${caReguaCell(e.tradeMf3, c&&c.tradeMf3, false, false)}
+      ${caReguaCell(e.crossMf3, c&&c.crossMf3, false, false)}
+      ${caReguaCell(e.comboMf3, c&&c.comboMf3, false, false)}
+      ${caReguaCell(e.aeroporto, c&&c.aeroporto, false, false)}
+      ${caReguaCell(e.crossPni, c&&c.crossPni, false, false)}
+      ${caReguaCell(e.totemPni, c&&c.totemPni, false, false)}
+      ${caReguaCell(e.comboPni, c&&c.comboPni, false, false)}
+      ${caReguaCell(e.totalCross, c&&c.totalCross, false, true)}
+      ${caReguaCell(e.visitacaoPni, c&&c.visitacaoPni, false, false)}
+      ${caReguaCell(e.captDiariaPni, c&&c.captDiariaPni, true, false)}
+      ${caReguaCell(e.visitacaoAqf, c&&c.visitacaoAqf, false, false)}
+      ${caReguaCell(e.captTotalAqfPni, c&&c.captTotalAqfPni, true, false)}
     </tr>`;
   }).join('');
   return `<div class="mix-table-scroll" style="max-height:440px; overflow-y:auto;">
@@ -6554,6 +6830,7 @@ function buildCrossAquafozComboChart(items, opts){
 
   let bars = '', barLabels = '', pctLabels = '', ticks = '';
   const points = [];
+  const occupied = []; // anti-sobreposição dos rótulos % da linha (ver caLabelRect/caFitsLabel)
   items.forEach((it, i) => {
     const x = padL + i*COLW;
     const bx = x + (COLW-barW)/2;
@@ -6571,7 +6848,12 @@ function buildCrossAquafozComboChart(items, opts){
     if(it.pct!==null && it.pct!==undefined){
       const y = padT + plotH - (it.pct/maxPct)*plotH;
       points.push([x+COLW/2, y]);
-      pctLabels += `<text x="${(x+COLW/2).toFixed(1)}" y="${(y-8).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#1d5c60">${fmtPct(it.pct)}</text>`;
+      const text = fmtPct(it.pct);
+      const rect = caLabelRect(x+COLW/2, y-8, text);
+      if(caFitsLabel(occupied, rect)){
+        occupied.push(rect);
+        pctLabels += `<text x="${(x+COLW/2).toFixed(1)}" y="${(y-8).toFixed(1)}" font-size="8.5" font-weight="700" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" fill="#1d5c60">${text}</text>`;
+      }
     } else {
       points.push(null);
     }
@@ -6659,8 +6941,17 @@ async function carregarDados(){
   computeMonthState();
   populateSelects();
   initCustomRangeControls();
+  renderAllTabs();
+}
+
+// Re-renderiza TODAS as abas do zero -- usado no carregamento inicial e sempre que o botão
+// "Ocultar Bio" muda de estado (única forma de garantir que BioParque suma/volte em TODOS os
+// lugares -- cartão, régua, gráfico, dropdown -- de uma vez, sem ter que caçar cada aba na mão).
+function renderAllTabs(){
+  syncBioUiState();
   renderLogoBanner();
   refreshVisitacao();
+  renderClimaTab();
   renderInvestRegua();
   renderInvestMktResumo();
   renderInvestAccumChart();
