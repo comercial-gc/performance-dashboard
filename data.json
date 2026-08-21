@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-21T19:31:26.403274Z",
+  "geradoEm": "2026-08-21T19:47:45.712097Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -51154,76 +51154,172 @@
         ],
         "mensal": {
           "Janeiro": {
-            "AquaRio": 140500,
-            "YUP Star": 23327.0,
-            "Museu do Amanhã": 165812.0,
-            "BioParque": 51776.0
+            "2025": {
+              "AquaRio": 127821,
+              "YUP Star": 35993.0,
+              "Museu do Amanhã": 102291.0,
+              "BioParque": 58763.0
+            },
+            "2026": {
+              "AquaRio": 140500,
+              "YUP Star": 23327.0,
+              "Museu do Amanhã": 165812.0,
+              "BioParque": 51776.0
+            }
           },
           "Fevereiro": {
-            "AquaRio": 80525,
-            "YUP Star": 13360.0,
-            "Museu do Amanhã": 111889.0,
-            "BioParque": 23852.0
+            "2025": {
+              "AquaRio": 75172,
+              "YUP Star": 17785.0,
+              "Museu do Amanhã": 55750.0,
+              "BioParque": 22790.0
+            },
+            "2026": {
+              "AquaRio": 80525,
+              "YUP Star": 13360.0,
+              "Museu do Amanhã": 111889.0,
+              "BioParque": 23852.0
+            }
           },
           "Março": {
-            "AquaRio": 86768,
-            "YUP Star": 30114.0,
-            "Museu do Amanhã": 127817.0,
-            "BioParque": 38488.0
+            "2025": {
+              "AquaRio": 67628,
+              "YUP Star": 21718.0,
+              "Museu do Amanhã": 60838.0,
+              "BioParque": 37867.0
+            },
+            "2026": {
+              "AquaRio": 86768,
+              "YUP Star": 30114.0,
+              "Museu do Amanhã": 127817.0,
+              "BioParque": 38488.0
+            }
           },
           "Abril": {
-            "AquaRio": 76670,
-            "YUP Star": 30503.0,
-            "Museu do Amanhã": 106457.0,
-            "BioParque": 52211.0
+            "2025": {
+              "AquaRio": 76590,
+              "YUP Star": 16654.0,
+              "Museu do Amanhã": 68046.0,
+              "BioParque": 32180.0
+            },
+            "2026": {
+              "AquaRio": 76670,
+              "YUP Star": 30503.0,
+              "Museu do Amanhã": 106457.0,
+              "BioParque": 52211.0
+            }
           },
           "Maio": {
-            "AquaRio": 81111,
-            "YUP Star": 24579.0,
-            "Museu do Amanhã": 116272.0,
-            "BioParque": 42742.0
+            "2025": {
+              "AquaRio": 67690,
+              "YUP Star": 17607.0,
+              "Museu do Amanhã": 107550.0,
+              "BioParque": 59813.0
+            },
+            "2026": {
+              "AquaRio": 81111,
+              "YUP Star": 24579.0,
+              "Museu do Amanhã": 116272.0,
+              "BioParque": 42742.0
+            }
           },
           "Junho": {
-            "AquaRio": 76521,
-            "YUP Star": 16120.0,
-            "Museu do Amanhã": 70667.0,
-            "BioParque": 36899.0
+            "2025": {
+              "AquaRio": 71095,
+              "YUP Star": 18986.0,
+              "Museu do Amanhã": 116887.0,
+              "BioParque": 57733.0
+            },
+            "2026": {
+              "AquaRio": 76521,
+              "YUP Star": 16120.0,
+              "Museu do Amanhã": 70667.0,
+              "BioParque": 36899.0
+            }
           },
           "Julho": {
-            "AquaRio": 122051,
-            "YUP Star": 30113.0,
-            "Museu do Amanhã": 64680,
-            "BioParque": 102319.0
+            "2025": {
+              "AquaRio": 136230,
+              "YUP Star": 44251.0,
+              "Museu do Amanhã": 126243.0,
+              "BioParque": 52256.0
+            },
+            "2026": {
+              "AquaRio": 122051,
+              "YUP Star": 30113.0,
+              "Museu do Amanhã": 64680,
+              "BioParque": 102319.0
+            }
           },
           "Agosto": {
-            "AquaRio": 50993,
-            "YUP Star": null,
-            "Museu do Amanhã": null,
-            "BioParque": null
+            "2025": {
+              "AquaRio": 53961,
+              "YUP Star": 20653.0,
+              "Museu do Amanhã": 62122.0,
+              "BioParque": 42775.0
+            },
+            "2026": {
+              "AquaRio": 50993,
+              "YUP Star": null,
+              "Museu do Amanhã": null,
+              "BioParque": null
+            }
           },
           "Setembro": {
-            "AquaRio": null,
-            "YUP Star": null,
-            "Museu do Amanhã": null,
-            "BioParque": null
+            "2025": {
+              "AquaRio": null,
+              "YUP Star": 18835.0,
+              "Museu do Amanhã": 94701.0,
+              "BioParque": 36461.0
+            },
+            "2026": {
+              "AquaRio": null,
+              "YUP Star": null,
+              "Museu do Amanhã": null,
+              "BioParque": null
+            }
           },
           "Outubro": {
-            "AquaRio": null,
-            "YUP Star": null,
-            "Museu do Amanhã": null,
-            "BioParque": null
+            "2025": {
+              "AquaRio": null,
+              "YUP Star": 19543.0,
+              "Museu do Amanhã": 53018.0,
+              "BioParque": 57059.0
+            },
+            "2026": {
+              "AquaRio": null,
+              "YUP Star": null,
+              "Museu do Amanhã": null,
+              "BioParque": null
+            }
           },
           "Novembro": {
-            "AquaRio": null,
-            "YUP Star": null,
-            "Museu do Amanhã": null,
-            "BioParque": null
+            "2025": {
+              "AquaRio": null,
+              "YUP Star": 15438.0,
+              "Museu do Amanhã": 108957.0,
+              "BioParque": 38947.0
+            },
+            "2026": {
+              "AquaRio": null,
+              "YUP Star": null,
+              "Museu do Amanhã": null,
+              "BioParque": null
+            }
           },
           "Dezembro": {
-            "AquaRio": null,
-            "YUP Star": null,
-            "Museu do Amanhã": null,
-            "BioParque": null
+            "2025": {
+              "AquaRio": null,
+              "YUP Star": 15526.0,
+              "Museu do Amanhã": 101078.0,
+              "BioParque": 24003.0
+            },
+            "2026": {
+              "AquaRio": null,
+              "YUP Star": null,
+              "Museu do Amanhã": null,
+              "BioParque": null
+            }
           }
         }
       },
@@ -51240,64 +51336,148 @@
         ],
         "mensal": {
           "Janeiro": {
-            "Paineiras": 180282,
-            "Trem do Corcovado": 154309.0,
-            "Bondinho Pão de Açúcar": 223819.0
+            "2025": {
+              "Paineiras": 184208,
+              "Trem do Corcovado": 151903.0,
+              "Bondinho Pão de Açúcar": 233249.0
+            },
+            "2026": {
+              "Paineiras": 180282,
+              "Trem do Corcovado": 154309.0,
+              "Bondinho Pão de Açúcar": 223819.0
+            }
           },
           "Fevereiro": {
-            "Paineiras": 146223,
-            "Trem do Corcovado": 139753.0,
-            "Bondinho Pão de Açúcar": 192561.0
+            "2025": {
+              "Paineiras": 142448,
+              "Trem do Corcovado": 133610.0,
+              "Bondinho Pão de Açúcar": 190907.0
+            },
+            "2026": {
+              "Paineiras": 146223,
+              "Trem do Corcovado": 139753.0,
+              "Bondinho Pão de Açúcar": 192561.0
+            }
           },
           "Março": {
-            "Paineiras": 148916,
-            "Trem do Corcovado": 148853.0,
-            "Bondinho Pão de Açúcar": 201389.0
+            "2025": {
+              "Paineiras": 143770,
+              "Trem do Corcovado": 135966.0,
+              "Bondinho Pão de Açúcar": 201830.0
+            },
+            "2026": {
+              "Paineiras": 148916,
+              "Trem do Corcovado": 148853.0,
+              "Bondinho Pão de Açúcar": 201389.0
+            }
           },
           "Abril": {
-            "Paineiras": 134840,
-            "Trem do Corcovado": 122830.0,
-            "Bondinho Pão de Açúcar": 187104.0
+            "2025": {
+              "Paineiras": 111898,
+              "Trem do Corcovado": 110405.0,
+              "Bondinho Pão de Açúcar": 158139.0
+            },
+            "2026": {
+              "Paineiras": 134840,
+              "Trem do Corcovado": 122830.0,
+              "Bondinho Pão de Açúcar": 187104.0
+            }
           },
           "Maio": {
-            "Paineiras": 110550,
-            "Trem do Corcovado": 98219.0,
-            "Bondinho Pão de Açúcar": 151298.0
+            "2025": {
+              "Paineiras": 101430,
+              "Trem do Corcovado": 107744.0,
+              "Bondinho Pão de Açúcar": 153096.0
+            },
+            "2026": {
+              "Paineiras": 110550,
+              "Trem do Corcovado": 98219.0,
+              "Bondinho Pão de Açúcar": 151298.0
+            }
           },
           "Junho": {
-            "Paineiras": 95514,
-            "Trem do Corcovado": 84210.0,
-            "Bondinho Pão de Açúcar": 131517.0
+            "2025": {
+              "Paineiras": 90225,
+              "Trem do Corcovado": 96903.0,
+              "Bondinho Pão de Açúcar": 139928.0
+            },
+            "2026": {
+              "Paineiras": 95514,
+              "Trem do Corcovado": 84210.0,
+              "Bondinho Pão de Açúcar": 131517.0
+            }
           },
           "Julho": {
-            "Paineiras": 135096,
-            "Trem do Corcovado": 130385.0,
-            "Bondinho Pão de Açúcar": 197662.0
+            "2025": {
+              "Paineiras": 121532,
+              "Trem do Corcovado": 126550.0,
+              "Bondinho Pão de Açúcar": 192732.0
+            },
+            "2026": {
+              "Paineiras": 135096,
+              "Trem do Corcovado": 130385.0,
+              "Bondinho Pão de Açúcar": 197662.0
+            }
           },
           "Agosto": {
-            "Paineiras": 73331,
-            "Trem do Corcovado": null,
-            "Bondinho Pão de Açúcar": null
+            "2025": {
+              "Paineiras": 71644,
+              "Trem do Corcovado": 118702.0,
+              "Bondinho Pão de Açúcar": 176948.0
+            },
+            "2026": {
+              "Paineiras": 73331,
+              "Trem do Corcovado": null,
+              "Bondinho Pão de Açúcar": null
+            }
           },
           "Setembro": {
-            "Paineiras": null,
-            "Trem do Corcovado": null,
-            "Bondinho Pão de Açúcar": null
+            "2025": {
+              "Paineiras": null,
+              "Trem do Corcovado": 109007.0,
+              "Bondinho Pão de Açúcar": 156918.0
+            },
+            "2026": {
+              "Paineiras": null,
+              "Trem do Corcovado": null,
+              "Bondinho Pão de Açúcar": null
+            }
           },
           "Outubro": {
-            "Paineiras": null,
-            "Trem do Corcovado": null,
-            "Bondinho Pão de Açúcar": null
+            "2025": {
+              "Paineiras": null,
+              "Trem do Corcovado": 114057.0,
+              "Bondinho Pão de Açúcar": 161949.0
+            },
+            "2026": {
+              "Paineiras": null,
+              "Trem do Corcovado": null,
+              "Bondinho Pão de Açúcar": null
+            }
           },
           "Novembro": {
-            "Paineiras": null,
-            "Trem do Corcovado": null,
-            "Bondinho Pão de Açúcar": null
+            "2025": {
+              "Paineiras": null,
+              "Trem do Corcovado": 119627.0,
+              "Bondinho Pão de Açúcar": 169977.0
+            },
+            "2026": {
+              "Paineiras": null,
+              "Trem do Corcovado": null,
+              "Bondinho Pão de Açúcar": null
+            }
           },
           "Dezembro": {
-            "Paineiras": null,
-            "Trem do Corcovado": null,
-            "Bondinho Pão de Açúcar": null
+            "2025": {
+              "Paineiras": null,
+              "Trem do Corcovado": 123051.0,
+              "Bondinho Pão de Açúcar": 168682.0
+            },
+            "2026": {
+              "Paineiras": null,
+              "Trem do Corcovado": null,
+              "Bondinho Pão de Açúcar": null
+            }
           }
         }
       },
@@ -51315,76 +51495,172 @@
         ],
         "mensal": {
           "Janeiro": {
-            "Três Pescadores": 14835,
-            "Trem do Devoto": 32323.0,
-            "Santuário Nacional Aparecida": 866107.0,
-            "Cidade do Romeiro": 181162.0
+            "2025": {
+              "Três Pescadores": 16062,
+              "Trem do Devoto": 40274.0,
+              "Santuário Nacional Aparecida": 744773.0,
+              "Cidade do Romeiro": 183982.0
+            },
+            "2026": {
+              "Três Pescadores": 14835,
+              "Trem do Devoto": 32323.0,
+              "Santuário Nacional Aparecida": 866107.0,
+              "Cidade do Romeiro": 181162.0
+            }
           },
           "Fevereiro": {
-            "Três Pescadores": 7715,
-            "Trem do Devoto": 16722.0,
-            "Santuário Nacional Aparecida": 584315.0,
-            "Cidade do Romeiro": 102057.0
+            "2025": {
+              "Três Pescadores": 7133,
+              "Trem do Devoto": 16900.0,
+              "Santuário Nacional Aparecida": 514134.0,
+              "Cidade do Romeiro": 91988.0
+            },
+            "2026": {
+              "Três Pescadores": 7715,
+              "Trem do Devoto": 16722.0,
+              "Santuário Nacional Aparecida": 584315.0,
+              "Cidade do Romeiro": 102057.0
+            }
           },
           "Março": {
-            "Três Pescadores": 8354,
-            "Trem do Devoto": 15996.0,
-            "Santuário Nacional Aparecida": 614127.0,
-            "Cidade do Romeiro": 110501.0
+            "2025": {
+              "Três Pescadores": 11451,
+              "Trem do Devoto": 27967.0,
+              "Santuário Nacional Aparecida": 667669.0,
+              "Cidade do Romeiro": 140847.0
+            },
+            "2026": {
+              "Três Pescadores": 8354,
+              "Trem do Devoto": 15996.0,
+              "Santuário Nacional Aparecida": 614127.0,
+              "Cidade do Romeiro": 110501.0
+            }
           },
           "Abril": {
-            "Três Pescadores": 10668,
-            "Trem do Devoto": 19867.0,
-            "Santuário Nacional Aparecida": 748649.0,
-            "Cidade do Romeiro": 113730.0
+            "2025": {
+              "Três Pescadores": 11261,
+              "Trem do Devoto": 23834.0,
+              "Santuário Nacional Aparecida": 681338.0,
+              "Cidade do Romeiro": 128379.0
+            },
+            "2026": {
+              "Três Pescadores": 10668,
+              "Trem do Devoto": 19867.0,
+              "Santuário Nacional Aparecida": 748649.0,
+              "Cidade do Romeiro": 113730.0
+            }
           },
           "Maio": {
-            "Três Pescadores": 13148,
-            "Trem do Devoto": 23563.0,
-            "Santuário Nacional Aparecida": 854430.0,
-            "Cidade do Romeiro": 138983.0
+            "2025": {
+              "Três Pescadores": 13507,
+              "Trem do Devoto": 24276.0,
+              "Santuário Nacional Aparecida": 806910.0,
+              "Cidade do Romeiro": 159563.0
+            },
+            "2026": {
+              "Três Pescadores": 13148,
+              "Trem do Devoto": 23563.0,
+              "Santuário Nacional Aparecida": 854430.0,
+              "Cidade do Romeiro": 138983.0
+            }
           },
           "Junho": {
-            "Três Pescadores": 10603,
-            "Trem do Devoto": 20686.0,
-            "Santuário Nacional Aparecida": 730640.0,
-            "Cidade do Romeiro": 118918.0
+            "2025": {
+              "Três Pescadores": 12445,
+              "Trem do Devoto": 22105.0,
+              "Santuário Nacional Aparecida": 758248.0,
+              "Cidade do Romeiro": 146974.0
+            },
+            "2026": {
+              "Três Pescadores": 10603,
+              "Trem do Devoto": 20686.0,
+              "Santuário Nacional Aparecida": 730640.0,
+              "Cidade do Romeiro": 118918.0
+            }
           },
           "Julho": {
-            "Três Pescadores": 22163,
-            "Trem do Devoto": 43506.0,
-            "Santuário Nacional Aparecida": 1061751.0,
-            "Cidade do Romeiro": 216129.0
+            "2025": {
+              "Três Pescadores": 21708,
+              "Trem do Devoto": 44631.0,
+              "Santuário Nacional Aparecida": 954227.0,
+              "Cidade do Romeiro": 227876.0
+            },
+            "2026": {
+              "Três Pescadores": 22163,
+              "Trem do Devoto": 43506.0,
+              "Santuário Nacional Aparecida": 1061751.0,
+              "Cidade do Romeiro": 216129.0
+            }
           },
           "Agosto": {
-            "Três Pescadores": 8667,
-            "Trem do Devoto": null,
-            "Santuário Nacional Aparecida": null,
-            "Cidade do Romeiro": null
+            "2025": {
+              "Três Pescadores": 8933,
+              "Trem do Devoto": 26148.0,
+              "Santuário Nacional Aparecida": 949641.0,
+              "Cidade do Romeiro": 191619.0
+            },
+            "2026": {
+              "Três Pescadores": 8667,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": null,
+              "Cidade do Romeiro": null
+            }
           },
           "Setembro": {
-            "Três Pescadores": null,
-            "Trem do Devoto": null,
-            "Santuário Nacional Aparecida": null,
-            "Cidade do Romeiro": null
+            "2025": {
+              "Três Pescadores": null,
+              "Trem do Devoto": 24672.0,
+              "Santuário Nacional Aparecida": 929097.0,
+              "Cidade do Romeiro": 183152.0
+            },
+            "2026": {
+              "Três Pescadores": null,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": null,
+              "Cidade do Romeiro": null
+            }
           },
           "Outubro": {
-            "Três Pescadores": null,
-            "Trem do Devoto": null,
-            "Santuário Nacional Aparecida": null,
-            "Cidade do Romeiro": null
+            "2025": {
+              "Três Pescadores": null,
+              "Trem do Devoto": 26734.0,
+              "Santuário Nacional Aparecida": 1037940.0,
+              "Cidade do Romeiro": 174237.0
+            },
+            "2026": {
+              "Três Pescadores": null,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": null,
+              "Cidade do Romeiro": null
+            }
           },
           "Novembro": {
-            "Três Pescadores": null,
-            "Trem do Devoto": null,
-            "Santuário Nacional Aparecida": null,
-            "Cidade do Romeiro": null
+            "2025": {
+              "Três Pescadores": null,
+              "Trem do Devoto": 30411.0,
+              "Santuário Nacional Aparecida": 1287036.0,
+              "Cidade do Romeiro": 209337.0
+            },
+            "2026": {
+              "Três Pescadores": null,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": null,
+              "Cidade do Romeiro": null
+            }
           },
           "Dezembro": {
-            "Três Pescadores": null,
-            "Trem do Devoto": null,
-            "Santuário Nacional Aparecida": null,
-            "Cidade do Romeiro": null
+            "2025": {
+              "Três Pescadores": null,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": 1158987.0,
+              "Cidade do Romeiro": 190197.0
+            },
+            "2026": {
+              "Três Pescadores": null,
+              "Trem do Devoto": null,
+              "Santuário Nacional Aparecida": null,
+              "Cidade do Romeiro": null
+            }
           }
         }
       },
@@ -51403,88 +51679,196 @@
         ],
         "mensal": {
           "Janeiro": {
-            "Vila Velha": 7836,
-            "Trem de Curitiba": 31341.0,
-            "Buraco do Padre": 9861.0,
-            "Het Dorp": 2139.0,
-            "Museu Oscar Niemeyer": 30444.0
+            "2025": {
+              "Vila Velha": 6128,
+              "Trem de Curitiba": 32269.0,
+              "Buraco do Padre": 8390.0,
+              "Het Dorp": 3623.0,
+              "Museu Oscar Niemeyer": 36622.0
+            },
+            "2026": {
+              "Vila Velha": 7836,
+              "Trem de Curitiba": 31341.0,
+              "Buraco do Padre": 9861.0,
+              "Het Dorp": 2139.0,
+              "Museu Oscar Niemeyer": 30444.0
+            }
           },
           "Fevereiro": {
-            "Vila Velha": 4812,
-            "Trem de Curitiba": 16936.0,
-            "Buraco do Padre": 6261.0,
-            "Het Dorp": 2780.0,
-            "Museu Oscar Niemeyer": 21436.0
+            "2025": {
+              "Vila Velha": 2483,
+              "Trem de Curitiba": 15662.0,
+              "Buraco do Padre": 3833.0,
+              "Het Dorp": 1582.0,
+              "Museu Oscar Niemeyer": 18360.0
+            },
+            "2026": {
+              "Vila Velha": 4812,
+              "Trem de Curitiba": 16936.0,
+              "Buraco do Padre": 6261.0,
+              "Het Dorp": 2780.0,
+              "Museu Oscar Niemeyer": 21436.0
+            }
           },
           "Março": {
-            "Vila Velha": 3971,
-            "Trem de Curitiba": 16004.0,
-            "Buraco do Padre": 4614.0,
-            "Het Dorp": 2610.0,
-            "Museu Oscar Niemeyer": 17559.0
+            "2025": {
+              "Vila Velha": 5828,
+              "Trem de Curitiba": 20830.0,
+              "Buraco do Padre": 8177.0,
+              "Het Dorp": 3460.0,
+              "Museu Oscar Niemeyer": 31135.0
+            },
+            "2026": {
+              "Vila Velha": 3971,
+              "Trem de Curitiba": 16004.0,
+              "Buraco do Padre": 4614.0,
+              "Het Dorp": 2610.0,
+              "Museu Oscar Niemeyer": 17559.0
+            }
           },
           "Abril": {
-            "Vila Velha": 7668,
-            "Trem de Curitiba": 19782.0,
-            "Buraco do Padre": 7202,
-            "Het Dorp": 3130.0,
-            "Museu Oscar Niemeyer": 26248.0
+            "2025": {
+              "Vila Velha": 7238,
+              "Trem de Curitiba": 20135.0,
+              "Buraco do Padre": 5844.0,
+              "Het Dorp": 5692.0,
+              "Museu Oscar Niemeyer": 27393.0
+            },
+            "2026": {
+              "Vila Velha": 7668,
+              "Trem de Curitiba": 19782.0,
+              "Buraco do Padre": 7202,
+              "Het Dorp": 3130.0,
+              "Museu Oscar Niemeyer": 26248.0
+            }
           },
           "Maio": {
-            "Vila Velha": 4187,
-            "Trem de Curitiba": 19006.0,
-            "Buraco do Padre": 3963,
-            "Het Dorp": 2509.0,
-            "Museu Oscar Niemeyer": 24295.0
+            "2025": {
+              "Vila Velha": 5592,
+              "Trem de Curitiba": 20122.0,
+              "Buraco do Padre": 5102.0,
+              "Het Dorp": 4336.0,
+              "Museu Oscar Niemeyer": 27141.0
+            },
+            "2026": {
+              "Vila Velha": 4187,
+              "Trem de Curitiba": 19006.0,
+              "Buraco do Padre": 3963,
+              "Het Dorp": 2509.0,
+              "Museu Oscar Niemeyer": 24295.0
+            }
           },
           "Junho": {
-            "Vila Velha": 5166,
-            "Trem de Curitiba": 20032.0,
-            "Buraco do Padre": 3733.0,
-            "Het Dorp": 2643.0,
-            "Museu Oscar Niemeyer": 29548.0
+            "2025": {
+              "Vila Velha": 4438,
+              "Trem de Curitiba": 17774.0,
+              "Buraco do Padre": 3265.0,
+              "Het Dorp": 3480.0,
+              "Museu Oscar Niemeyer": 26454.0
+            },
+            "2026": {
+              "Vila Velha": 5166,
+              "Trem de Curitiba": 20032.0,
+              "Buraco do Padre": 3733.0,
+              "Het Dorp": 2643.0,
+              "Museu Oscar Niemeyer": 29548.0
+            }
           },
           "Julho": {
-            "Vila Velha": 8940,
-            "Trem de Curitiba": 28621.0,
-            "Buraco do Padre": 5738.0,
-            "Het Dorp": 4226.0,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": 7912,
+              "Trem de Curitiba": 29576.0,
+              "Buraco do Padre": 5297.0,
+              "Het Dorp": 5128.0,
+              "Museu Oscar Niemeyer": 51321.0
+            },
+            "2026": {
+              "Vila Velha": 8940,
+              "Trem de Curitiba": 28621.0,
+              "Buraco do Padre": 5738.0,
+              "Het Dorp": 4226.0,
+              "Museu Oscar Niemeyer": null
+            }
           },
           "Agosto": {
-            "Vila Velha": 2497,
-            "Trem de Curitiba": null,
-            "Buraco do Padre": null,
-            "Het Dorp": null,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": 2888,
+              "Trem de Curitiba": 19752.0,
+              "Buraco do Padre": 4454.0,
+              "Het Dorp": 4306.0,
+              "Museu Oscar Niemeyer": 29372.0
+            },
+            "2026": {
+              "Vila Velha": 2497,
+              "Trem de Curitiba": null,
+              "Buraco do Padre": null,
+              "Het Dorp": null,
+              "Museu Oscar Niemeyer": null
+            }
           },
           "Setembro": {
-            "Vila Velha": null,
-            "Trem de Curitiba": null,
-            "Buraco do Padre": null,
-            "Het Dorp": null,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": null,
+              "Trem de Curitiba": 18955.0,
+              "Buraco do Padre": 4355.0,
+              "Het Dorp": 2967.0,
+              "Museu Oscar Niemeyer": 26683.0
+            },
+            "2026": {
+              "Vila Velha": null,
+              "Trem de Curitiba": null,
+              "Buraco do Padre": null,
+              "Het Dorp": null,
+              "Museu Oscar Niemeyer": null
+            }
           },
           "Outubro": {
-            "Vila Velha": null,
-            "Trem de Curitiba": null,
-            "Buraco do Padre": null,
-            "Het Dorp": null,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": null,
+              "Trem de Curitiba": 22041.0,
+              "Buraco do Padre": 4400.0,
+              "Het Dorp": 2251.0,
+              "Museu Oscar Niemeyer": 30246.0
+            },
+            "2026": {
+              "Vila Velha": null,
+              "Trem de Curitiba": null,
+              "Buraco do Padre": null,
+              "Het Dorp": null,
+              "Museu Oscar Niemeyer": null
+            }
           },
           "Novembro": {
-            "Vila Velha": null,
-            "Trem de Curitiba": null,
-            "Buraco do Padre": null,
-            "Het Dorp": null,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": null,
+              "Trem de Curitiba": 27998.0,
+              "Buraco do Padre": 6381.0,
+              "Het Dorp": 4015.0,
+              "Museu Oscar Niemeyer": 31828.0
+            },
+            "2026": {
+              "Vila Velha": null,
+              "Trem de Curitiba": null,
+              "Buraco do Padre": null,
+              "Het Dorp": null,
+              "Museu Oscar Niemeyer": null
+            }
           },
           "Dezembro": {
-            "Vila Velha": null,
-            "Trem de Curitiba": null,
-            "Buraco do Padre": null,
-            "Het Dorp": null,
-            "Museu Oscar Niemeyer": null
+            "2025": {
+              "Vila Velha": null,
+              "Trem de Curitiba": 31948.0,
+              "Buraco do Padre": 7440.0,
+              "Het Dorp": 2977.0,
+              "Museu Oscar Niemeyer": 27972.0
+            },
+            "2026": {
+              "Vila Velha": null,
+              "Trem de Curitiba": null,
+              "Buraco do Padre": null,
+              "Het Dorp": null,
+              "Museu Oscar Niemeyer": null
+            }
           }
         }
       },
@@ -51505,112 +51889,244 @@
         ],
         "mensal": {
           "Janeiro": {
-            "AquaFoz": 81985,
-            "M3F": 71564,
-            "PNI": 252808,
-            "Parque das Aves": 102799,
-            "Turismo Itaipu": 64306,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 61517,
+              "PNI": 234376,
+              "Parque das Aves": 93712,
+              "Turismo Itaipu": 59964,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 81985,
+              "M3F": 71564,
+              "PNI": 252808,
+              "Parque das Aves": 102799,
+              "Turismo Itaipu": 64306,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Fevereiro": {
-            "AquaFoz": 39581,
-            "M3F": 37590,
-            "PNI": 169008,
-            "Parque das Aves": 67032,
-            "Turismo Itaipu": 34116,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 22323,
+              "PNI": 135458,
+              "Parque das Aves": 50046,
+              "Turismo Itaipu": 22816,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 39581,
+              "M3F": 37590,
+              "PNI": 169008,
+              "Parque das Aves": 67032,
+              "Turismo Itaipu": 34116,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Março": {
-            "AquaFoz": 31733,
-            "M3F": 37789,
-            "PNI": 168062,
-            "Parque das Aves": 64748,
-            "Turismo Itaipu": 32297,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 35872,
+              "PNI": 174661,
+              "Parque das Aves": 66036,
+              "Turismo Itaipu": 34129,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 31733,
+              "M3F": 37789,
+              "PNI": 168062,
+              "Parque das Aves": 64748,
+              "Turismo Itaipu": 32297,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Abril": {
-            "AquaFoz": 37819,
-            "M3F": 49005,
-            "PNI": 181129,
-            "Parque das Aves": 74964,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 40206,
+              "PNI": 160695,
+              "Parque das Aves": 71306,
+              "Turismo Itaipu": 40064,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 37819,
+              "M3F": 49005,
+              "PNI": 181129,
+              "Parque das Aves": 74964,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Maio": {
-            "AquaFoz": 34286,
-            "M3F": 46075,
-            "PNI": 155917,
-            "Parque das Aves": 66981,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 36473,
+              "PNI": 136888,
+              "Parque das Aves": 60709,
+              "Turismo Itaipu": 37276,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 34286,
+              "M3F": 46075,
+              "PNI": 155917,
+              "Parque das Aves": 66981,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Junho": {
-            "AquaFoz": 35278,
-            "M3F": 42019,
-            "PNI": 136679,
-            "Parque das Aves": 61271,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 32548,
+              "PNI": 112182,
+              "Parque das Aves": 53279,
+              "Turismo Itaipu": 32208,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 35278,
+              "M3F": 42019,
+              "PNI": 136679,
+              "Parque das Aves": 61271,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Julho": {
-            "AquaFoz": 71401,
-            "M3F": 80309,
-            "PNI": 263150,
-            "Parque das Aves": 125114,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 61416,
+              "PNI": 220566,
+              "Parque das Aves": 112933,
+              "Turismo Itaipu": 59900,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 71401,
+              "M3F": 80309,
+              "PNI": 263150,
+              "Parque das Aves": 125114,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Agosto": {
-            "AquaFoz": 24487,
-            "M3F": 29300,
-            "PNI": 113616,
-            "Parque das Aves": null,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": 23762,
+              "PNI": 102646,
+              "Parque das Aves": 70497,
+              "Turismo Itaipu": 38429,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": 24487,
+              "M3F": 29300,
+              "PNI": 113616,
+              "Parque das Aves": null,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Setembro": {
-            "AquaFoz": null,
-            "M3F": null,
-            "PNI": null,
-            "Parque das Aves": null,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": 73664,
+              "Turismo Itaipu": 43254,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": null,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Outubro": {
-            "AquaFoz": null,
-            "M3F": null,
-            "PNI": null,
-            "Parque das Aves": null,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": 85461,
+              "Turismo Itaipu": 53192,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": null,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Novembro": {
-            "AquaFoz": null,
-            "M3F": null,
-            "PNI": null,
-            "Parque das Aves": null,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": 77799,
+              "Turismo Itaipu": 49636,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": null,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           },
           "Dezembro": {
-            "AquaFoz": null,
-            "M3F": null,
-            "PNI": null,
-            "Parque das Aves": null,
-            "Turismo Itaipu": null,
-            "Wonder Park Foz": null,
-            "Dreams Park Show": null
+            "2025": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": 80403,
+              "Turismo Itaipu": 48489,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            },
+            "2026": {
+              "AquaFoz": null,
+              "M3F": null,
+              "PNI": null,
+              "Parque das Aves": null,
+              "Turismo Itaipu": null,
+              "Wonder Park Foz": null,
+              "Dreams Park Show": null
+            }
           }
         }
       }
@@ -55101,89 +55617,19 @@
       },
       "Consolidado": {
         "anos": {
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
-          ],
-          "2020": [
-            319895.0,
-            178103.0,
-            77834.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            26514.0,
-            84167.0,
-            84969.0,
-            90379.0,
-            79635.0
-          ],
-          "2015": [
-            189451.0,
-            115349.0,
-            111054.0,
-            108663.0,
-            102143.0,
-            84400.0,
-            137042.0,
-            104524.0,
-            93861.0,
-            103315.0,
-            84938.0,
-            122376.0
-          ],
-          "2018": [
-            321385.0,
-            168024.0,
-            166856.0,
-            130740.00000000001,
-            108655.0,
-            97102.0,
-            190341.99999999994,
-            133243.0,
-            151118.0,
-            149282.0,
-            162033.0,
-            182819.0
-          ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
-          ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
           ],
           "2016": [
             176296.0,
@@ -55199,47 +55645,19 @@
             173665.0,
             241981.0
           ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
-          ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+          "2015": [
+            189451.0,
+            115349.0,
+            111054.0,
+            108663.0,
+            102143.0,
+            84400.0,
+            137042.0,
+            104524.0,
+            93861.0,
+            103315.0,
+            84938.0,
+            122376.0
           ],
           "2014": [
             173675.0,
@@ -55255,20 +55673,6 @@
             105700.0,
             132312.0
           ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
-          ],
           "2013": [
             null,
             null,
@@ -55282,6 +55686,76 @@
             null,
             null,
             null
+          ],
+          "2020": [
+            319895.0,
+            178103.0,
+            77834.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            26514.0,
+            84167.0,
+            84969.0,
+            90379.0,
+            79635.0
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
+          ],
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
+          ],
+          "2018": [
+            321385.0,
+            168024.0,
+            166856.0,
+            130740.00000000001,
+            108655.0,
+            97102.0,
+            190341.99999999994,
+            133243.0,
+            151118.0,
+            149282.0,
+            162033.0,
+            182819.0
           ],
           "2026": [
             780085.0,
@@ -55297,6 +55771,34 @@
             null,
             null
           ],
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
+          ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
           "2025": [
             666687.0,
             398191.0,
@@ -55310,61 +55812,75 @@
             491692.0,
             500148.0,
             520889.0
+          ],
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2017": [
-            1300881,
-            1170345
-          ],
-          "2020": [
-            575832,
-            365664
-          ],
-          "2015": [
-            711060,
-            646056
-          ],
-          "2018": [
-            992762,
-            968837
-          ],
-          "2022": [
-            1195615,
-            1502267
-          ],
-          "2023": [
-            1486747,
-            1503931
+          "2021": [
+            726490,
+            1392943
           ],
           "2016": [
             635485,
             584255
           ],
-          "2019": [
-            1015073,
-            1044424
-          ],
-          "2021": [
-            726490,
-            1392943
+          "2015": [
+            711060,
+            646056
           ],
           "2014": [
             717316,
             673740
           ],
-          "2024": [
-            2410556,
-            2803391
+          "2020": [
+            575832,
+            365664
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2017": [
+            1300881,
+            1170345
+          ],
+          "2018": [
+            992762,
+            968837
           ],
           "2026": [
             3213884,
             717481
           ],
+          "2019": [
+            1015073,
+            1044424
+          ],
+          "2024": [
+            2410556,
+            2803391
+          ],
           "2025": [
             2704477,
             2940308
+          ],
+          "2022": [
+            1195615,
+            1502267
           ]
         }
       }
