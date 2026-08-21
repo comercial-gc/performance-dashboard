@@ -6463,6 +6463,25 @@ function renderMixOrigem() {
     }
 
     const mixLogoSrc = PARK_LOGOS[parque] || '';
+    // 21/08/2026 (3ª rodada): a tabela só entra no wrapper flex ".mix-top-row" (com
+    // ".mix-table-scroll{ flex:1 1 auto; min-width:0 }") quando o Top 5 realmente está
+    // presente -- é esse contexto flex + min-width:0 que deixa a tabela encolher sem
+    // limite (mesmo com MIX_TOP5_FEATURE_ENABLED=false, esse wrapper sempre era montado
+    // em volta da tabela, então o efeito colateral valia mesmo com o recurso desligado).
+    // Sem Top 5 (o caso de hoje, sempre), volta pro posicionamento de ANTES do Top 5 ter
+    // sido tentado (19/08): tabela só dentro de ".mix-table-scroll" solta, sem o pai flex
+    // -- mesma proteção de rolagem horizontal (overflow-x:auto), mas sem forçar
+    // encolhimento abaixo do conteúdo mínimo da tabela.
+    const tableBlock = `<table class="mix-table">
+            <thead><tr>${theadCols}</tr></thead>
+            <tbody>${bodyRows}${totalTr}</tbody>
+          </table>`;
+    const tableAreaHtml = top5Html
+      ? `<div class="mix-top-row has-top5">
+        <div class="mix-table-scroll">${tableBlock}</div>
+        ${top5Html}
+      </div>`
+      : `<div class="mix-table-scroll">${tableBlock}</div>`;
     return `<div class="mix-card" style="--park-color:${color}">
       <div class="mix-card-head">
         <span style="display:flex; align-items:center; gap:6px;">
@@ -6471,15 +6490,7 @@ function renderMixOrigem() {
         </span>
         ${badgeHtml}
       </div>
-      <div class="mix-top-row${top5Html ? ' has-top5' : ''}">
-        <div class="mix-table-scroll">
-          <table class="mix-table">
-            <thead><tr>${theadCols}</tr></thead>
-            <tbody>${bodyRows}${totalTr}</tbody>
-          </table>
-        </div>
-        ${top5Html}
-      </div>
+      ${tableAreaHtml}
       <div class="mix-evo-title">${showVs ? `EVOLUÇÃO (${primaryLabel.toUpperCase()} VS ${vsLabel.toUpperCase()})` : `EVOLUÇÃO (${primaryLabel.toUpperCase()})`}</div>
       ${evoRows}
       ${donutsHtml}
