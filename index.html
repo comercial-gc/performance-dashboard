@@ -2392,17 +2392,17 @@ function svgOutlineText(x, y, text, fill, fontSize, opts){
   const extra = opts.extra || '';
   const xs = (typeof x === 'number') ? x.toFixed(1) : x;
   const ys = (typeof y === 'number') ? y.toFixed(1) : y;
-  // Contorno proporcional ao tamanho da letra (21/08/2026, pedido do usuário: números
-  // pequenos -- ex.: R$ do gráfico de Investimento em Mídia, fonte 8.5 -- ficavam
-  // "embaçados" no zoom padrão do navegador e ainda pior depois de recortados pra PPT).
-  // ANTES o contorno (halo branco + fio preto) tinha espessura FIXA (3 / 0.6px)
-  // independente do fontSize -- numa letra grande (17px, ex.: rosca do Mix de Origem)
-  // isso é proporcional e fica nítido, mas numa letra pequena (8.5px) o mesmo halo de
-  // 3px é quase 1/3 da altura da letra e engole os traços finos, borrando o número.
-  // Agora a espessura escala com o fontSize (calibrado pra dar exatamente 3 / 0.6 num
-  // fontSize de 17, preservando 100% o visual de quem já usava fonte grande).
-  const haloW = Math.max(1, fontSize * 0.176);
-  const hairlineW = Math.max(0.35, fontSize * 0.035);
+  // Halo/contorno com espessura FIXA (voltou a ser assim em 21/08/2026). Cheguei a
+  // deixar essa espessura proporcional ao fontSize (pra letra pequena ter um halo mais
+  // fino), mas isso quebrou o motivo do halo existir: quando o número cai por cima da
+  // própria barra colorida (ex.: "R$ 102.022" bem no topo da barra mais alta), um halo
+  // fino não separa mais o texto do fundo colorido e o número "apaga" -- ele só parecia
+  // ok quando estava sobre fundo branco. O halo grosso e fixo garante contraste em
+  // QUALQUER fundo por baixo (branco, barra colorida, linha pontilhada); quem estava
+  // "borrado" era o tamanho da letra em si (corrigido no fontSize de cada chamada), não
+  // a espessura do contorno.
+  const haloW = 3;
+  const hairlineW = 0.6;
   const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
   if(isDarkNow){
     return `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="${fill}" stroke-width="${haloW.toFixed(2)}" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`
