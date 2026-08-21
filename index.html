@@ -1304,11 +1304,16 @@ html[data-theme="dark"] .mix-card-logo{ background:#ffffff; padding:5px; box-sha
    resolve isso nos dois temas, sem precisar de regra separada pro escuro. */
 .imm-logo{ width:44px; height:44px; object-fit:contain; border-radius:8px; flex:0 0 auto; background:#ffffff; border:1px solid var(--line); padding:4px; box-sizing:border-box; }
 .imm-nosso-row td{ background:#f7faf8; }
+/* Referência (ex. Cristo Redentor, 21/08/2026) -- não é nosso parque nem concorrente, só
+   base de cálculo de Captação; tom neutro pra diferenciar visualmente dos dois outros tipos
+   de linha sem competir com o verde de .imm-nosso-row. */
+.imm-ref-row td{ background:#f6f3ec; }
 .imm-capt-row td{ font-size:11px; font-weight:600; color:var(--muted); padding-top:2px; padding-bottom:8px; font-style:italic; }
 .imm-capt-label{ padding-left:54px !important; }
 html[data-theme="dark"] .imm-regua-card{ background:var(--panel); }
 html[data-theme="dark"] .imm-table th{ background:#171d22; }
 html[data-theme="dark"] .imm-nosso-row td{ background:#141a1f; }
+html[data-theme="dark"] .imm-ref-row td{ background:#1d1a14; }
 html[data-theme="dark"] .imm-chip{ background:var(--panel); }
 html[data-theme="dark"] .imm-chip.active{ background:#16324f; }
 </style>
@@ -7567,23 +7572,29 @@ async function carregarDados(){
 //
 // Números dos NOSSOS parques (AquaRio, Paineiras, Três Pescadores, Vila Velha, AquaFoz, M3F,
 // PNI) já vêm da fonte oficial (VISITACAO) dentro do próprio JSON -- ver docstring do módulo
-// Python. BioParque (concorrente da régua AquaRio) segue a mesma regra do botão "Ocultar
-// Bio" do resto do painel + o valor mensal já vem None a partir de Agosto/2026 (trancado no
-// Python, independente do botão -- ver _aplica_regra_bioparque).
+// Python.
 //
-// "Capt. [Concorrente]" = soma dos nossos parques da régua ÷ concorrente, no mês -- mesma
-// fórmula confirmada com o usuário nas planilhas de Aparecida/Curitiba (ali já vinha
-// calculada; aqui é recalculada no front a partir dos números crus, pra qualquer régua/
-// combinação de concorrentes ativos, sem depender de uma célula fixa da planilha).
-
-function immSomaNossoParques(entry, nossoParques){
-  let soma = null;
-  nossoParques.forEach(p => {
-    const v = entry[p];
-    if(v !== null && v !== undefined){ soma = (soma||0) + v; }
-  });
-  return soma;
-}
+// REVISÃO 21/08/2026 -- BioParque: o usuário decidiu que BioParque agora é "parceiro/
+// concorrente" e por isso deve aparecer SEMPRE nesta aba, mesmo com o botão global "Ocultar
+// Bio" ativo (diferente de todas as outras abas do painel, onde o botão continua escondendo
+// BioParque normalmente) -- ver immConcorrentesVisiveis(), que não filtra por HIDE_BIOPARQUE.
+// O corte de dado a partir de Agosto/2026 continua vindo trancado do Python, independente
+// do botão (ver _aplica_regra_bioparque em intel_mercado_extension.py).
+//
+// REVISÃO 21/08/2026 -- Variação x Captação: a 1ª versão calculava "Capt. [Concorrente]" =
+// soma dos nossos parques ÷ concorrente pra QUALQUER concorrente, o que o usuário apontou não
+// fazer sentido pra maioria dos pares. Duas métricas separadas agora:
+//   - "Variação (26 x 25)": crescimento/queda ano a ano (2026 vs 2025) de CADA entidade (nosso
+//     parque, concorrente ou referência) que tiver os dois anos -- não depende de qual(is)
+//     concorrente(s) estão ativos no toggle, nem precisa de par nenhum. Ver immVariacaoCells/
+//     immTemVariacao.
+//   - "Captação de [referência]": nosso ÷ referência, só pros pares curados pelo usuário (ver
+//     regua.captacao, vindo de REGUAS em intel_mercado_extension.py -- ex. Paineiras/Trem do
+//     Corcovado ÷ Cristo Redentor, Vila Velha/Buraco do Padre ÷ Trem de Curitiba, AquaFoz/M3F
+//     ÷ PNI). Duplicada por ano ativo, igual ao padrão das linhas de valor. Ver
+//     immCaptacaoRowsHtml. "Cristo Redentor" (regua.referencias) é uma referência, não um
+//     concorrente -- aparece como linha própria (immBuildReferenciaRows), sem toggle de
+//     mostrar/esconder e sem linha de Captação sobre ela mesma.
 
 // Anos ativos, na ordem certa pra exibir (2025 antes de 2026) -- ignora qualquer ano que o
 // usuário tenha desativado.
@@ -7621,13 +7632,14 @@ function immMesesAExibir(regua, anos){
   return CROSS_MESES_ORDER.slice(0, last + 1);
 }
 
-// BioParque nunca aparece na lista de concorrentes toggle-áveis da régua AquaRio quando o
-// botão global "Ocultar Bio" está ativo -- mesma regra do resto do painel. O Set de
-// concorrentes ativos (immCompetidorState) é criado na 1ª vez que a régua é renderizada,
-// e preservado entre re-renders (ex.: ao trocar o filtro de região) -- só é resetado se o
-// usuário reocultar/reexibir Bio (ver renderIntelMercado).
+// REVISÃO 21/08/2026: BioParque agora aparece SEMPRE na régua AquaRio nesta aba, mesmo com o
+// botão global "Ocultar Bio" ativo -- pedido explícito do usuário, SÓ pra esta aba (nas outras
+// abas do painel o botão continua escondendo BioParque normalmente). Por isso a lista de
+// concorrentes toggle-áveis aqui não filtra mais por HIDE_BIOPARQUE. O Set de concorrentes
+// ativos (immCompetidorState) é criado na 1ª vez que a régua é renderizada e preservado entre
+// re-renders (ex.: ao trocar o filtro de região).
 function immConcorrentesVisiveis(regua){
-  const base = regua.concorrentes.filter(c => c !== 'BioParque' || !HIDE_BIOPARQUE);
+  const base = regua.concorrentes;
   if(!immCompetidorState[regua.id]){
     immCompetidorState[regua.id] = new Set(base);
   }
@@ -7676,6 +7688,55 @@ function immBuildToggles(regua){
   return `<div class="imm-toggles"><span class="imm-toggles-label">Concorrentes:</span>${chips}</div>`;
 }
 
+// Variação ano a ano (2026 vs 2025) de UMA entidade, mês a mês -- independe de quais anos
+// estão marcados no toggle (compara sempre os dois números crus). "-" quando falta um dos
+// dois anos ou a base de 2025 é 0/ausente (não dá pra calcular variação sem base).
+function immVariacaoPct(regua, mes, entidade){
+  const porAno = regua.mensal[mes] || {};
+  const v25 = (porAno['2025']||{})[entidade];
+  const v26 = (porAno['2026']||{})[entidade];
+  if(v25===null||v25===undefined||v25===0||v26===null||v26===undefined) return null;
+  return (v26 - v25) / v25;
+}
+
+function immTemVariacao(regua, meses, entidade){
+  return meses.some(m => immVariacaoPct(regua, m, entidade) !== null);
+}
+
+function immVariacaoCells(regua, meses, entidade){
+  return meses.map(m => {
+    const pct = immVariacaoPct(regua, m, entidade);
+    return `<td>${pct===null ? '<span class="d">-</span>' : deltaTag(pct)}</td>`;
+  }).join('');
+}
+
+function immVariacaoRowHtml(regua, meses, entidade){
+  if(!immTemVariacao(regua, meses, entidade)) return '';
+  return `<tr class="imm-capt-row"><td class="imm-entidade-col imm-capt-label">Variação (26 x 25)</td>${immVariacaoCells(regua, meses, entidade)}</tr>`;
+}
+
+// Captação (nosso ÷ referência) -- só pros pares curados em regua.captacao (ver REGUAS em
+// intel_mercado_extension.py). Duplicada por ano ativo, igual ao padrão das linhas de valor.
+function immCaptacaoRowsHtml(regua, meses, anos, entidade, multiAno){
+  const pares = (regua.captacao||[]).filter(c => c.entidade === entidade);
+  let out = '';
+  pares.forEach(par => {
+    anos.forEach(ano => {
+      const cells = meses.map(m => {
+        const entry = (regua.mensal[m]||{})[ano] || {};
+        const num = entry[par.entidade];
+        const den = entry[par.referencia];
+        if(num===null||num===undefined||den===null||den===undefined||den===0) return `<td class="imm-capt-cell">-</td>`;
+        return `<td class="imm-capt-cell">${fmtPct(num/den)}</td>`;
+      }).join('');
+      const rotulo = `Captação de ${par.referencia}`;
+      const label = multiAno ? `${rotulo} · ${ano}` : rotulo;
+      out += `<tr class="imm-capt-row"><td class="imm-entidade-col imm-capt-label">${label}</td>${cells}</tr>`;
+    });
+  });
+  return out;
+}
+
 function immBuildTable(regua){
   const anos = immAnosOrdenados();
   if(!anos.length){
@@ -7698,6 +7759,20 @@ function immBuildTable(regua){
       const label = multiAno ? `${parque} · ${ano}` : parque;
       rows += `<tr class="imm-nosso-row"><td class="imm-entidade-col">${immEntidadeCell(parque, true, label)}</td>${cells}</tr>`;
     });
+    rows += immVariacaoRowHtml(regua, meses, parque);
+    rows += immCaptacaoRowsHtml(regua, meses, anos, parque, multiAno);
+  });
+
+  // Referências (ex. Cristo Redentor): entidade auxiliar, não é nosso parque nem concorrente
+  // -- só serve de base pra Captação e pra sua própria Variação. Sempre visível (sem toggle),
+  // segue o mesmo padrão de linha por ano ativo que nossoParques/concorrentes.
+  (regua.referencias||[]).forEach(referencia => {
+    anos.forEach(ano => {
+      const cells = meses.map(m => `<td>${fmtInt(((regua.mensal[m]||{})[ano]||{})[referencia])}</td>`).join('');
+      const label = multiAno ? `${referencia} · ${ano}` : referencia;
+      rows += `<tr class="imm-ref-row"><td class="imm-entidade-col">${immEntidadeCell(referencia, false, label)}</td>${cells}</tr>`;
+    });
+    rows += immVariacaoRowHtml(regua, meses, referencia);
   });
 
   ativos.forEach(concorrente => {
@@ -7705,18 +7780,9 @@ function immBuildTable(regua){
       const cells = meses.map(m => `<td>${fmtInt(((regua.mensal[m]||{})[ano]||{})[concorrente])}</td>`).join('');
       const label = multiAno ? `${concorrente} · ${ano}` : concorrente;
       rows += `<tr><td class="imm-entidade-col">${immEntidadeCell(concorrente, false, label)}</td>${cells}</tr>`;
-
-      const captCells = meses.map(m => {
-        const entry = (regua.mensal[m]||{})[ano] || {};
-        const nosso = immSomaNossoParques(entry, regua.nossoParques);
-        const conc = entry[concorrente];
-        if(nosso===null || conc===null || conc===undefined || conc===0) return `<td class="imm-capt-cell">-</td>`;
-        return `<td class="imm-capt-cell">${fmtPct(nosso/conc)}</td>`;
-      }).join('');
-      const rotuloBase = regua.nossoParques.length > 1 ? `Capt. (soma) ${concorrente}` : `Capt. ${concorrente}`;
-      const labelCapt = multiAno ? `${rotuloBase} · ${ano}` : rotuloBase;
-      rows += `<tr class="imm-capt-row"><td class="imm-entidade-col imm-capt-label">${labelCapt}</td>${captCells}</tr>`;
     });
+    rows += immVariacaoRowHtml(regua, meses, concorrente);
+    rows += immCaptacaoRowsHtml(regua, meses, anos, concorrente, multiAno);
   });
 
   return `<div class="imm-table-wrap"><table class="imm-table">
@@ -7733,17 +7799,15 @@ function immRegionToggleHtml(){
   }).join('');
 }
 
-let immBioAnterior = null; // detecta mudança do botão "Ocultar Bio" pra resetar o toggle da régua AquaRio
+// Nota: nenhum reset de immCompetidorState em função do botão "Ocultar Bio" -- desde a
+// revisão 21/08/2026, BioParque não é mais afetado por esse botão nesta aba (ver
+// immConcorrentesVisiveis), então o Set de concorrentes ativos por régua nunca precisa ser
+// reconstruído por causa dele.
 function renderIntelMercado(){
   const toggleEl = document.getElementById('immRegionToggle');
   const anoToggleEl = document.getElementById('immAnoToggle');
   const wrap = document.getElementById('immReguasWrap');
   if(!toggleEl || !wrap) return;
-
-  if(immBioAnterior !== null && immBioAnterior !== HIDE_BIOPARQUE){
-    delete immCompetidorState['aquario']; // reconstrói o Set (com/sem Bio) na próxima immConcorrentesVisiveis()
-  }
-  immBioAnterior = HIDE_BIOPARQUE;
 
   toggleEl.innerHTML = immRegionToggleHtml();
   if(anoToggleEl) anoToggleEl.innerHTML = immAnoToggleHtml();
