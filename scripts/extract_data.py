@@ -48,6 +48,7 @@ from top5_origem_extension import build_mix_origem_top5
 # módulo próprio, self-contained (baixa a planilha sozinho, não depende do cache/get_values
 # deste arquivo) pra evitar import circular.
 from cross_aquafoz_extension import build_cross_aquafoz
+from intel_mercado_extension import build_intel_mercado
 
 # O runner do GitHub Actions as vezes tem uma conexao mais lenta/instavel com a API do
 # Google, e o timeout padrao do socket (ilimitado, mas o cliente HTTP interno usa um valor
@@ -2496,6 +2497,25 @@ def main():
         print(f"AVISO: falha ao ler Cross AquaFoz ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
         cross_aquafoz = {"mensal": {}, "diaria": {}, "mesAtual": None}
 
+    print("Lendo Inteligência de Mercado...", file=sys.stderr)
+    try:
+        intel_mercado_ids = cfg.get("intel_mercado_ids", {})
+        if intel_mercado_ids.get("rio") and intel_mercado_ids.get("aparecida") and intel_mercado_ids.get("curitiba") and intel_mercado_ids.get("foz"):
+            intel_mercado = build_intel_mercado(service, intel_mercado_ids, visitacao, _bioparque_ainda_conta)
+        else:
+            print(
+                "AVISO: 'intel_mercado_ids' ainda não configurado (completo) no config.json -- aba Inteligência de Mercado fica vazia.",
+                file=sys.stderr,
+            )
+            intel_mercado = {"reguas": []}
+    except Exception as e:
+        # Mesmo padrão defensivo das demais abas novas: se der erro (planilha ainda não
+        # compartilhada com a service account, layout de algum bloco mudou etc.), a aba
+        # Inteligência de Mercado fica vazia neste ciclo em vez de derrubar o resto do
+        # pipeline.
+        print(f"AVISO: falha ao ler Inteligência de Mercado ({e}) -- aba fica vazia neste ciclo.", file=sys.stderr)
+        intel_mercado = {"reguas": []}
+
     print("Lendo Eventos...", file=sys.stderr)
     eventos = build_eventos(
         service, cfg["visitacao_parques_id"], cfg["sheet_names"]["eventos"]
@@ -2568,6 +2588,7 @@ def main():
         "MIX_ORIGEM_DIARIO": mix_origem_diario,
         "MIX_ORIGEM_TOP5": mix_origem_top5,
         "CROSS_AQUAFOZ": cross_aquafoz,
+        "INTEL_MERCADO": intel_mercado,
         "EVENTOS": eventos,
         "APOIO_REPORT": apoio_report,
         "HISTORICO": historico,
