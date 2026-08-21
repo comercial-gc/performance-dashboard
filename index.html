@@ -355,21 +355,30 @@
   .regua{ display:grid; row-gap:6px; }
   .regua-row{ display:grid; grid-template-columns:104px 1fr; align-items:center; column-gap:10px; }
   .regua-label{ font-size:12.5px; font-weight:700; white-space:nowrap; }
-  .regua-days{ display:grid; grid-auto-flow:column; grid-auto-columns:96px; gap:6px; }
-  .regua-cell{ position:relative; height:64px; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:5px 8px; display:flex; flex-direction:column; justify-content:center; gap:2px; background:#fff; }
+  .regua-days{ display:grid; grid-auto-flow:column; grid-auto-columns:104px; gap:6px; }
+  /* 21/08/2026: overflow:hidden é rede de segurança -- o texto "vs 25 X▲Y%"/"OBZ X▼Y%"
+     (ver .sub abaixo) é o que realmente "vazava" pra fora do card em telas estreitas
+     (não cabia mesmo sem contar o padding). O ajuste principal é dar espaço de verdade
+     pro texto (coluna mais larga aqui, 96->104px, + breakpoints de tablet/mobile mais
+     largos e fonte um pouco menor no .sub, vide mídia queries abaixo); isso cobre os
+     casos normais. overflow:hidden só entra em ação numa oscilação % rara e extrema
+     (3-4 dígitos, tipo "+3.575%") que nenhuma largura razoável de célula comportaria --
+     nesse caso o texto é cortado (higiênico) em vez de vazar visualmente pra célula
+     vizinha (que era o problema relatado). */
+  .regua-cell{ position:relative; height:64px; border:1px solid var(--line); border-left:3px solid var(--line); border-radius:6px; padding:5px 6px; display:flex; flex-direction:column; justify-content:center; gap:2px; background:#fff; overflow:hidden; }
   .regua-cell .clima-wrap{ position:absolute; top:3px; right:5px; font-size:11px; line-height:1; }
   .regua-cell.up{ border-left-color:var(--green); }
   .regua-cell.down{ border-left-color:var(--red); }
   .regua-cell .big{ font-size:15.5px; font-weight:800; line-height:1.05; color:#2c3a33; }
-  .regua-cell .sub{ font-size:9px; color:var(--muted); display:flex; justify-content:space-between; gap:4px; white-space:nowrap; }
+  .regua-cell .sub{ font-size:9px; color:var(--muted); display:flex; justify-content:space-between; gap:3px; white-space:nowrap; }
   .regua-cell .sub b{ color:var(--muted); font-weight:800; }
   .regua-cell .sub .d.up{ color:var(--green); font-weight:700; }
   .regua-cell .sub .d.down{ color:var(--red); font-weight:700; }
   .regua-cell.empty{ background:#f8f9f8; color:#c7ccc9; border-left-color:var(--line); align-items:center; justify-content:center; }
-  .regua-daynum{ display:grid; grid-auto-flow:column; grid-auto-columns:96px; gap:6px; margin:0 0 6px 114px; }
+  .regua-daynum{ display:grid; grid-auto-flow:column; grid-auto-columns:104px; gap:6px; margin:0 0 6px 114px; }
   .regua-sub-row{ display:grid; grid-template-columns:104px 1fr; align-items:center; column-gap:10px; }
   .regua-sub-label{ font-size:10px; font-weight:600; color:var(--muted); padding-left:16px; }
-  .regua-sub-days{ display:grid; grid-auto-flow:column; grid-auto-columns:96px; gap:6px; }
+  .regua-sub-days{ display:grid; grid-auto-flow:column; grid-auto-columns:104px; gap:6px; }
   .regua-sub-cell{ height:32px; border:1px solid var(--line); border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--ink); background:#fafbfa; }
   .regua-sub-cell.empty{ color:#c7ccc9; }
   .regua-daynum span{ font-size:11px; font-weight:700; color:var(--muted); text-align:left; padding-left:2px; }
@@ -945,8 +954,11 @@
 
   /* Réguas com colunas de largura fixa: já têm overflow-x:auto no wrapper;
      aqui só reduzimos um pouco a largura de cada dia/mês (redução maior
-     no Mobile). */
-  .regua-days, .regua-daynum, .regua-sub-days{ grid-auto-columns:88px; }
+     no Mobile). 21/08/2026: .regua-days não pode encolher tanto quanto antes (era
+     88px) -- ver comentário junto de ".regua-cell" mais acima sobre o texto "vs
+     25"/"OBZ" vazando pra fora do card; 96px é o mínimo que sobra espaço de verdade
+     pro texto nessa largura de tela. */
+  .regua-days, .regua-daynum, .regua-sub-days{ grid-auto-columns:96px; }
   .invest-days, .invest-monthnum{ grid-auto-columns:100px; }
 }
 
@@ -993,8 +1005,18 @@
   .weather-body-grid{ grid-template-columns:1fr; }
   .weather-day{ flex:0 0 68px; }
 
-  /* Réguas: reduz mais um pouco a largura de cada célula */
-  .regua-days, .regua-daynum, .regua-sub-days{ grid-auto-columns:78px; }
+  /* Réguas: reduz mais um pouco a largura de cada célula.
+     21/08/2026: era 78px, mas nessa largura o texto de "vs 25"/"OBZ" (ex.: "vs 25
+     2.716▲47%") não cabe de jeito nenhum -- o texto é maior que o espaço disponível
+     mesmo sem contar o padding do card, então ele "vaza" pra fora da célula (o usuário
+     reparou isso no celular). Subindo pra 96px + fonte um pouco menor no ".regua-cell
+     .sub" (ver regra abaixo) resolve pra quase todo caso -- a régua já rola
+     horizontalmente em qualquer largura, então mostrar 1-2 dias a menos por vez no
+     celular não é problema, mas o número ficar legível é. Oscilações % extremas (3-4
+     dígitos) continuam cortadas pelo overflow:hidden do ".regua-cell" -- nenhuma
+     largura razoável comportaria esse caso raro sem estourar o card de novo. */
+  .regua-days, .regua-daynum, .regua-sub-days{ grid-auto-columns:96px; }
+  .regua-cell .sub{ font-size:8px; }
   .invest-days, .invest-monthnum{ grid-auto-columns:92px; }
 
   /* Clima: a barra de volume (70%) + mini-régua (30%) lado a lado fica
