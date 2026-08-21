@@ -68,5 +68,11 @@
     "eventos": "Eventos",
     "apoio_report": "APOIO REPORT"
   },
-  "cross_aquafoz_id": "10y-MjciXhxYU7yBoUgymLmphuELd3SbyR6HbRejCGOo"
+  "cross_aquafoz_id": "10y-MjciXhxYU7yBoUgymLmphuELd3SbyR6HbRejCGOo",
+  "intel_mercado_ids": {
+    "rio": "1aaEQrLUwbRZakkKJSdjLc-S9Wpa3U--WJCDTb1B-k_w",
+    "aparecida": "13FG91m9kZiZTlYqWospg5HeSf2v8Mf3C9KBSwN9nMYI",
+    "curitiba": "1rbYIehrdmg4wJRmM9q_a8PEKM1fBLVMZ3JyRBeCzcFg",
+    "foz": "1dbfeeQV5bL9utmuJaXp3bQTbFcExjswxkcaw5eDOQHg"
+  }
 }
