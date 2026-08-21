@@ -41,13 +41,34 @@ pra cada um dos nossos parques -- evita ter duas fontes de verdade pro mesmo dad
 extensão só devolve os números dos CONCORRENTES; build_intel_mercado() junta os dois na hora
 de montar a saída final.
 
-REGRA BIOPARQUE: BioParque aparece como concorrente na régua AquaRio, mas segue a MESMA regra
-já usada no resto do painel (ver BIOPARQUE_SAIDA_ANO_MES / _bioparque_ainda_conta no
-extract_data.py) -- a partir de Agosto/2026 o valor mensal vem sempre None aqui, INDEPENDENTE
-do botão "Ocultar Bio" (que é um filtro só do front-end, aplicado em cima disso). Ou seja,
-mesmo que o usuário reative o botão (voltar a mostrar Bio), esta aba nunca mostra Bio além de
-Julho/2026 -- pedido explícito do usuário: "mesmo com botão só considerar até Julho quando
-inativo".
+REGRA BIOPARQUE: BioParque aparece como concorrente na régua AquaRio. O valor mensal vem
+sempre None a partir de Agosto/2026 (ver BIOPARQUE_SAIDA_ANO_MES / _bioparque_ainda_conta no
+extract_data.py) -- isso é sobre DISPONIBILIDADE DE DADO (a fonte para de trazer BioParque
+depois desse mês), não sobre preferência de exibição, e vale pros dois anos igual (embora só
+2026 tenha meses após Julho pra cortar -- 2025 é histórico fechado, não afeta).
+REVISÃO 21/08/2026: o usuário decidiu que BioParque agora é "parceiro/concorrente" e por isso
+deve aparecer SEMPRE nesta aba (Inteligência de Mercado), mesmo com o botão global "Ocultar
+Bio" ativo -- diferente de todas as outras abas do painel, onde o botão continua escondendo
+BioParque normalmente. Essa exceção é tratada só no front-end (ver immConcorrentesVisiveis em
+index.html, que para de checar HIDE_BIOPARQUE especificamente nesta aba); este módulo Python
+não sabe nada sobre o botão, só entrega o dado (cortado em Julho/2026 como sempre).
+
+VARIAÇÃO E CAPTAÇÃO (revisão 21/08/2026, pedido do usuário depois de ver a 1ª versão): a 1ª
+entrega calculava "Capt. [concorrente]" = nosso ÷ concorrente pra QUALQUER concorrente, o que
+não faz sentido de verdade pra maioria dos pares (ex. AquaRio÷YUP Star não representa nada
+que o usuário meça). O usuário corrigiu: a métrica que importa de verdade pra TODOS os
+parques/concorrentes é a VARIAÇÃO ano a ano (2026 vs 2025, "crescimento/queda em relação ao
+ano passado") -- calculada no front-end a partir dos números crus dos dois anos, pra toda
+entidade que tiver os dois. CAPTAÇÃO (nosso ÷ referência) só existe pra pares específicos que
+o usuário citou (ver CAPTACAO_REFS mais abaixo) -- não é mais genérico por concorrente. Os
+pares Vila Velha/Buraco do Padre ÷ Trem de Curitiba e AquaFoz/M3F ÷ PNI usam entidades que já
+são lidas normalmente nas suas réguas; o par Paineiras/Trem do Corcovado ÷ Cristo Redentor
+precisou de uma extração nova (ver _ler_cristo_redentor) porque "Cristo Redentor" (visitação
+total do Corcovado, Paineiras + Trem do Corcovado juntos) não existia nos dados desta aba
+ainda -- vem de um bloco secundário da mesma aba "2025x2026" do Rio ("Corcovado 2025"/
+"Corcovado 2026", linhas ~25-37), que o módulo tinha decidido ignorar na 1ª versão. Os pares
+curados de captação e as entidades de referência de cada régua estão em REGUAS (chaves
+"captacao" e "referencias") -- não existe uma constante separada CAPTACAO_REFS.
 
 ESTRUTURA DAS PLANILHAS RIO / APARECIDA / CURITIBA (aba "2025x2026", idêntica nas 3): blocos
 de 3 linhas por entidade (1a linha = nome na coluna B + ano 2025 na coluna C + valores 2025
@@ -198,6 +219,38 @@ def _ler_blocos_ano_a_ano(rows, rotulo_para_entidade):
     return out
 
 
+def _ler_cristo_redentor(rows):
+    """Lê os blocos secundários 'Corcovado 2025'/'Corcovado 2026' (mesma aba '2025x2026' do
+    Rio, mais abaixo do bloco principal, linhas ~25-37) pra pegar a visitação TOTAL do Cristo
+    Redentor -- referência de captação pedida pelo usuário (21/08/2026): Paineiras e Trem do
+    Corcovado "captam" fatia desse total (ver CAPTACAO_REFS). Cada bloco tem: linha de
+    cabeçalho ('Corcovado 2025'/'Corcovado 2026' na coluna B), depois 'Cristo Redentor' (o
+    valor que queremos), 'Paineiras' e 'Trem' (redundantes com o bloco principal -- ignorados
+    aqui) e duas linhas 'Share Visitação' (ignoradas -- recalculado no front-end). Devolve
+    {"2025": [12 valores], "2026": [12 valores]} -- 0 é tratado como None (mês sem dado
+    lançado ainda), igual ao resto do módulo."""
+    out = {}
+    for i, row in enumerate(rows):
+        if not row or len(row) < 2 or not isinstance(row[1], str):
+            continue
+        rotulo_norm = _norm(row[1])
+        if rotulo_norm not in ("corcovado 2025", "corcovado 2026"):
+            continue
+        ano = "2025" if "2025" in rotulo_norm else "2026"
+        if i + 1 >= len(rows):
+            continue
+        proxima = rows[i + 1]
+        if not proxima or len(proxima) < 2 or not isinstance(proxima[1], str):
+            continue
+        if _norm(proxima[1]) != "cristo redentor":
+            continue
+        out[ano] = [
+            (None if (v is None or v == 0) else v)
+            for v in (_to_num(proxima[3 + m]) if 3 + m < len(proxima) else None for m in range(12))
+        ]
+    return out
+
+
 RIO_ROTULOS = {
     "trem": "Trem do Corcovado",
     "bondinho": "Bondinho Pão de Açúcar",
@@ -302,31 +355,60 @@ def _aplica_regra_bioparque(valores_mensais, bioparque_ainda_conta_fn):
 
 # Réguas fixas -- ver docstring do módulo pra explicação de cada uma, em especial a exceção
 # do Rio (AquaRio e Paineiras viram 2 réguas, não 1, mesmo sendo a mesma região).
+# Captação (revisão 21/08/2026): pares curados pelo usuário -- "entidade" ÷ "referencia".
+# NÃO é genérico por concorrente (ver docstring do módulo) -- só existe pra estes 6 pares:
+#   Paineiras / Trem do Corcovado  ÷ Cristo Redentor  (total do Corcovado -- os dois "captam"
+#     fatia desse total; Bondinho Pão de Açúcar NÃO captа, é atração separada)
+#   Vila Velha / Buraco do Padre   ÷ Trem de Curitiba (Het Dorp e MON NÃO captam)
+#   AquaFoz / M3F                  ÷ PNI              (Parque das Aves, Turismo Itaipu, Wonder
+#     Park Foz, Dreams Park Show NÃO captam)
+# AquaRio, YUP Star, Museu do Amanhã, BioParque, Três Pescadores e seus concorrentes: nenhuma
+# captação (só a variação ano a ano, calculada no front-end pra QUALQUER entidade com os dois
+# anos -- ver renderIntelMercado/immBuildTable em index.html).
 REGUAS = [
     {
         "id": "aquario", "regiao": "Rio de Janeiro", "nome": "AquaRio",
         "nossoParques": ["AquaRio"],
         "concorrentes": ["YUP Star", "Museu do Amanhã", "BioParque"],
+        "referencias": [],
+        "captacao": [],
     },
     {
         "id": "paineiras", "regiao": "Rio de Janeiro", "nome": "Paineiras",
         "nossoParques": ["Paineiras"],
         "concorrentes": ["Trem do Corcovado", "Bondinho Pão de Açúcar"],
+        "referencias": ["Cristo Redentor"],
+        "captacao": [
+            {"entidade": "Paineiras", "referencia": "Cristo Redentor"},
+            {"entidade": "Trem do Corcovado", "referencia": "Cristo Redentor"},
+        ],
     },
     {
         "id": "aparecida", "regiao": "Aparecida", "nome": "Três Pescadores",
         "nossoParques": ["Três Pescadores"],
         "concorrentes": ["Trem do Devoto", "Santuário Nacional Aparecida", "Cidade do Romeiro"],
+        "referencias": [],
+        "captacao": [],
     },
     {
         "id": "curitiba", "regiao": "Curitiba", "nome": "Vila Velha",
         "nossoParques": ["Vila Velha"],
         "concorrentes": ["Trem de Curitiba", "Buraco do Padre", "Het Dorp", "Museu Oscar Niemeyer"],
+        "referencias": [],
+        "captacao": [
+            {"entidade": "Vila Velha", "referencia": "Trem de Curitiba"},
+            {"entidade": "Buraco do Padre", "referencia": "Trem de Curitiba"},
+        ],
     },
     {
         "id": "foz", "regiao": "Foz do Iguaçu", "nome": "Foz do Iguaçu",
         "nossoParques": ["AquaFoz", "M3F", "PNI"],
         "concorrentes": ["Parque das Aves", "Turismo Itaipu", "Wonder Park Foz", "Dreams Park Show"],
+        "referencias": [],
+        "captacao": [
+            {"entidade": "AquaFoz", "referencia": "PNI"},
+            {"entidade": "M3F", "referencia": "PNI"},
+        ],
     },
 ]
 
@@ -343,23 +425,29 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
     planilhas novas).
     bioparque_ainda_conta_fn: a função _bioparque_ainda_conta já existente em extract_data.py.
 
-    Devolve {'reguas': [...]} -- cada régua com id/regiao/nome/nossoParques/concorrentes e
-    'mensal': {mes: {"2025": {entidade: valor ou None}, "2026": {entidade: valor ou None}}}
+    Devolve {'reguas': [...]} -- cada régua com id/regiao/nome/nossoParques/concorrentes/
+    referencias/captacao e 'mensal': {mes: {"2025": {entidade: valor ou None}, "2026": {...}}}
     (mês em Title Case, ex. 'Janeiro') juntando nosso(s) parque(s) (fonte oficial, os dois
-    anos -- ver "realizado"/"y2025" em VISITACAO) e concorrentes (das 4 planilhas novas, os
-    dois anos -- ver _ler_blocos_ano_a_ano/_ler_blocos_foz). Pedido do usuário (21/08/2026):
+    anos -- ver "realizado"/"y2025" em VISITACAO), concorrentes (das 4 planilhas novas, os
+    dois anos -- ver _ler_blocos_ano_a_ano/_ler_blocos_foz) e referências de captação (ex.
+    "Cristo Redentor" -- ver _ler_cristo_redentor), todas dentro do mesmo dict de entidades
+    por ano/mês. "referencias" e "captacao" (esta última com os pares curados {entidade,
+    referencia}) vão soltos em cada régua pra o front-end saber o que exibir como referência e
+    quais pares calcular Captação -- ver docstring do módulo. Pedido do usuário (21/08/2026):
     poder comparar 2025 x 2026 na régua, ativando/desativando cada ano no front-end, "igual
     fizemos com os parques" (mesmo padrão de toggle dos concorrentes). Não há 2024 confiável
-    em nenhuma das 4 planilhas -- só 2025/2026 são oferecidos. O Share/Captação (nosso ÷
-    concorrente) é calculado no front-end a partir destes números crus, não aqui.
+    em nenhuma das 4 planilhas -- só 2025/2026 são oferecidos. Variação (ano a ano) e Captação
+    (nosso/referência) são calculadas no front-end a partir destes números crus, não aqui.
     """
     wb_rio = _download_workbook(drive_service, ids["rio"])
     wb_aparecida = _download_workbook(drive_service, ids["aparecida"])
     wb_curitiba = _download_workbook(drive_service, ids["curitiba"])
     wb_foz = _download_workbook(drive_service, ids["foz"])
 
+    rio_rows = _get_rows(wb_rio, "2025x2026")
+
     concorrentes = {}
-    concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_rio, "2025x2026"), RIO_ROTULOS))
+    concorrentes.update(_ler_blocos_ano_a_ano(rio_rows, RIO_ROTULOS))
     if "BioParque" in concorrentes:
         # A regra de corte (só conta até Julho/2026) é sobre o ANO 2026 -- 2025 é histórico
         # fechado, não tem "saída" nenhuma, fica intocado.
@@ -367,6 +455,14 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
     concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_aparecida, "2025x2026"), APARECIDA_ROTULOS))
     concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_curitiba, "2025x2026"), CURITIBA_ROTULOS))
     concorrentes.update(_ler_blocos_foz(_get_rows(wb_foz, "2024x2025X2026"), FOZ_ROTULOS))
+
+    # Referências de captação (entidades que não são "nosso parque" nem "concorrente" da
+    # régua, mas servem de base pro cálculo de Captação -- ver docstring do módulo). Por ora
+    # só existe uma: Cristo Redentor (bloco secundário da planilha do Rio).
+    referencias_dados = {}
+    cristo = _ler_cristo_redentor(rio_rows)
+    if cristo:
+        referencias_dados["Cristo Redentor"] = cristo
 
     reguas_out = []
     for regua in REGUAS:
@@ -386,10 +482,15 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
                 valores = concorrentes.get(concorrente) or {}
                 entry_2025[concorrente] = (valores.get("2025") or [None] * 12)[m]
                 entry_2026[concorrente] = (valores.get("2026") or [None] * 12)[m]
+            for referencia in regua["referencias"]:
+                valores = referencias_dados.get(referencia) or {}
+                entry_2025[referencia] = (valores.get("2025") or [None] * 12)[m]
+                entry_2026[referencia] = (valores.get("2026") or [None] * 12)[m]
             mensal[mes] = {"2025": entry_2025, "2026": entry_2026}
         reguas_out.append({
             "id": regua["id"], "regiao": regua["regiao"], "nome": regua["nome"],
             "nossoParques": regua["nossoParques"], "concorrentes": regua["concorrentes"],
+            "referencias": regua["referencias"], "captacao": regua["captacao"],
             "mensal": mensal,
         })
 
