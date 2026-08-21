@@ -555,7 +555,19 @@
   .mix-title-bar{ width:4px; align-self:stretch; background:var(--ink); border-radius:2px; }
   .mix-title{ font-size:22px; font-weight:800; color:var(--ink); line-height:1.2; }
   .mix-subtitle{ font-size:12.5px; font-style:italic; color:var(--muted); margin-top:2px; }
-  .mix-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; margin-bottom:20px; }
+  /* 21/08/2026: teto de 620px por card (era "1fr" puro, esticando cada card até a metade
+     exata da tela). Isso não dava problema em resolução normal, mas quando a analista
+     encolhe/dá zoom-out no navegador pra recortar pro PPT, o card ficava ENORME e a
+     .mix-table (table-layout:auto, width:100%) espalhava as colunas com vãos em branco
+     entre elas -- e o cabeçalho (nome + badge "Total") também abria um vão gigante no
+     meio, porque os dois só têm largura de conteúdo, sem nada que preencha o espaço
+     sobrando. Isso ficou exposto depois que o teto antigo da tabela foi removido em
+     19/08 (ver comentário logo abaixo, feito pro Top 5 -- correto pra aquele contexto,
+     mas sem um teto no CARD em si, sobrou pro card crescer sem limite). Com teto no
+     grid, o espaço extra (zoom out) fica sobrando DEPOIS dos cards, não DENTRO deles.
+     minmax(0, 620px) deixa encolher normalmente em telas estreitas (breakpoints do
+     tablet/mobile abaixo continuam sobrescrevendo pra 1 coluna). */
+  .mix-grid{ display:grid; grid-template-columns:repeat(2, minmax(0, 620px)); gap:20px; margin-bottom:20px; }
   /* min-width:0 é necessário porque .mix-card é item de um CSS grid (.mix-grid)
      -- sem isso, o item de grid nunca encolhe abaixo do conteúdo mínimo da
      tabela lá dentro (mesmo ela tendo overflow-x:auto própria), e o card
@@ -2392,17 +2404,13 @@ function svgOutlineText(x, y, text, fill, fontSize, opts){
   const extra = opts.extra || '';
   const xs = (typeof x === 'number') ? x.toFixed(1) : x;
   const ys = (typeof y === 'number') ? y.toFixed(1) : y;
-  // Halo/contorno com espessura FIXA (voltou a ser assim em 21/08/2026). Cheguei a
-  // deixar essa espessura proporcional ao fontSize (pra letra pequena ter um halo mais
-  // fino), mas isso quebrou o motivo do halo existir: quando o número cai por cima da
-  // própria barra colorida (ex.: "R$ 102.022" bem no topo da barra mais alta), um halo
-  // fino não separa mais o texto do fundo colorido e o número "apaga" -- ele só parecia
-  // ok quando estava sobre fundo branco. O halo grosso e fixo garante contraste em
-  // QUALQUER fundo por baixo (branco, barra colorida, linha pontilhada); quem estava
-  // "borrado" era o tamanho da letra em si (corrigido no fontSize de cada chamada), não
-  // a espessura do contorno.
-  const haloW = 3;
-  const hairlineW = 0.6;
+  // Halo/contorno com espessura FIXA por padrão (3 / 0.6) -- dá pra passar opts.halo /
+  // opts.hairline pra afinar num caso específico (ver invLabels em renderComboCharts,
+  // 21/08/2026: ali o rótulo agora NUNCA cai em cima da própria barra -- ver o ajuste de
+  // posição feito lá -- então não precisa mais de um halo grosso pra brigar com fundo
+  // colorido, e um halo fino evita a letra "fundir" numa fonte pequena e em negrito).
+  const haloW = (opts.halo !== undefined) ? opts.halo : 3;
+  const hairlineW = (opts.hairline !== undefined) ? opts.hairline : 0.6;
   const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
   if(isDarkNow){
     return `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="${fill}" stroke-width="${haloW.toFixed(2)}" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`
@@ -3447,10 +3455,19 @@ function renderComboCharts(containerId, barField, barFmt){
       bars += `<rect class="combo-bar" data-tip="${tip}" x="${x.toFixed(1)}" y="${yBar.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3" ry="3" fill="${color}"></rect>`;
       // share % sempre em branco, dentro da barra
       shareLabels += `<text x="${cx.toFixed(1)}" y="${(padT+plotH-6).toFixed(1)}" font-size="9" font-weight="800" text-anchor="middle" fill="#ffffff">${fmtSmartNumber(smartRound(shareV*100))}%</text>`;
-      // ponto da linha (investimento) tem escala própria, independente da barra
+      // ponto da linha (investimento) tem escala própria, independente da barra -- share
+      // e investimento não têm relação matemática, então o ponto da linha ocasionalmente
+      // cai bem em cima do topo da própria barra (ex.: mês com share alto E investimento
+      // baixo). Voltei pro contorno fino de sempre (nada de "plaquinha" -- ficava parecendo
+      // uma falha cortando a barra, visualmente feio, relatado pelo usuário em 21/08/2026)
+      // e resolvi o problema na raiz: se o rótulo for cair sobre a barra, empurro ele pra
+      // cima o suficiente pra sempre sobrar num fundo branco -- onde o contorno fino já
+      // funciona bem, sem precisar de contraste pesado nem fundir as letras.
       if(v !== null && v !== undefined){
         const yLine = padT + plotH - (v/maxInv)*plotH;
-        invLabels += svgChipText(cx, yLine-6, barFmt(v), '#3a463f', 10, {weight:'700'});
+        let labelY = yLine - 7;
+        if(labelY + 3 > yBar - 4){ labelY = yBar - 8; }
+        invLabels += svgOutlineText(cx, labelY, barFmt(v), '#3a463f', 9.5, {weight:'800', halo:1.3, hairline:0.4});
         topPoints.push([cx, yLine, i]);
       } else {
         topPoints.push(null);
@@ -7177,7 +7194,12 @@ function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
       const rect = caLabelRect(p[0], p[1]-7, text);
       if(caFitsLabel(occupied, rect)){
         occupied.push(rect);
-        labels += svgOutlineText(p[0], p[1]-7, text, c.color, 8.5);
+        // Contorno fino (não o padrão de 3px) -- no claro essa área não tem mais o
+        // preenchimento sob a linha (ver isDarkNow acima), então o rótulo quase sempre
+        // cai em fundo branco/grade clara; um contorno grosso só teria função de
+        // "brigar" com fundo colorido, que não existe mais aqui, e fundia os números
+        // pequenos num borrão preto (relatado pelo usuário, 21/08/2026).
+        labels += svgOutlineText(p[0], p[1]-7, text, c.color, 8.5, {halo:1.2, hairline:0.4});
       }
     });
   });
