@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-21T19:47:45.712097Z",
+  "geradoEm": "2026-08-21T20:01:12.078652Z",
   "VISITACAO": {
     "JANEIRO": {
       "monthNumber": 1,
@@ -51152,6 +51152,8 @@
           "Museu do Amanhã",
           "BioParque"
         ],
+        "referencias": [],
+        "captacao": [],
         "mensal": {
           "Janeiro": {
             "2025": {
@@ -51334,149 +51336,186 @@
           "Trem do Corcovado",
           "Bondinho Pão de Açúcar"
         ],
+        "referencias": [
+          "Cristo Redentor"
+        ],
+        "captacao": [
+          {
+            "entidade": "Paineiras",
+            "referencia": "Cristo Redentor"
+          },
+          {
+            "entidade": "Trem do Corcovado",
+            "referencia": "Cristo Redentor"
+          }
+        ],
         "mensal": {
           "Janeiro": {
             "2025": {
               "Paineiras": 184208,
               "Trem do Corcovado": 151903.0,
-              "Bondinho Pão de Açúcar": 233249.0
+              "Bondinho Pão de Açúcar": 233249.0,
+              "Cristo Redentor": 335677.0
             },
             "2026": {
               "Paineiras": 180282,
               "Trem do Corcovado": 154309.0,
-              "Bondinho Pão de Açúcar": 223819.0
+              "Bondinho Pão de Açúcar": 223819.0,
+              "Cristo Redentor": 334591
             }
           },
           "Fevereiro": {
             "2025": {
               "Paineiras": 142448,
               "Trem do Corcovado": 133610.0,
-              "Bondinho Pão de Açúcar": 190907.0
+              "Bondinho Pão de Açúcar": 190907.0,
+              "Cristo Redentor": 276058.0
             },
             "2026": {
               "Paineiras": 146223,
               "Trem do Corcovado": 139753.0,
-              "Bondinho Pão de Açúcar": 192561.0
+              "Bondinho Pão de Açúcar": 192561.0,
+              "Cristo Redentor": 286173
             }
           },
           "Março": {
             "2025": {
               "Paineiras": 143770,
               "Trem do Corcovado": 135966.0,
-              "Bondinho Pão de Açúcar": 201830.0
+              "Bondinho Pão de Açúcar": 201830.0,
+              "Cristo Redentor": 279736.0
             },
             "2026": {
               "Paineiras": 148916,
               "Trem do Corcovado": 148853.0,
-              "Bondinho Pão de Açúcar": 201389.0
+              "Bondinho Pão de Açúcar": 201389.0,
+              "Cristo Redentor": 297769
             }
           },
           "Abril": {
             "2025": {
               "Paineiras": 111898,
               "Trem do Corcovado": 110405.0,
-              "Bondinho Pão de Açúcar": 158139.0
+              "Bondinho Pão de Açúcar": 158139.0,
+              "Cristo Redentor": 222303.0
             },
             "2026": {
               "Paineiras": 134840,
               "Trem do Corcovado": 122830.0,
-              "Bondinho Pão de Açúcar": 187104.0
+              "Bondinho Pão de Açúcar": 187104.0,
+              "Cristo Redentor": 258051
             }
           },
           "Maio": {
             "2025": {
               "Paineiras": 101430,
               "Trem do Corcovado": 107744.0,
-              "Bondinho Pão de Açúcar": 153096.0
+              "Bondinho Pão de Açúcar": 153096.0,
+              "Cristo Redentor": 209174.0
             },
             "2026": {
               "Paineiras": 110550,
               "Trem do Corcovado": 98219.0,
-              "Bondinho Pão de Açúcar": 151298.0
+              "Bondinho Pão de Açúcar": 151298.0,
+              "Cristo Redentor": 208779
             }
           },
           "Junho": {
             "2025": {
               "Paineiras": 90225,
               "Trem do Corcovado": 96903.0,
-              "Bondinho Pão de Açúcar": 139928.0
+              "Bondinho Pão de Açúcar": 139928.0,
+              "Cristo Redentor": 187128.0
             },
             "2026": {
               "Paineiras": 95514,
               "Trem do Corcovado": 84210.0,
-              "Bondinho Pão de Açúcar": 131517.0
+              "Bondinho Pão de Açúcar": 131517.0,
+              "Cristo Redentor": 179724
             }
           },
           "Julho": {
             "2025": {
               "Paineiras": 121532,
               "Trem do Corcovado": 126550.0,
-              "Bondinho Pão de Açúcar": 192732.0
+              "Bondinho Pão de Açúcar": 192732.0,
+              "Cristo Redentor": 248082.0
             },
             "2026": {
               "Paineiras": 135096,
               "Trem do Corcovado": 130385.0,
-              "Bondinho Pão de Açúcar": 197662.0
+              "Bondinho Pão de Açúcar": 197662.0,
+              "Cristo Redentor": 265481
             }
           },
           "Agosto": {
             "2025": {
               "Paineiras": 71644,
               "Trem do Corcovado": 118702.0,
-              "Bondinho Pão de Açúcar": 176948.0
+              "Bondinho Pão de Açúcar": 176948.0,
+              "Cristo Redentor": 226090.0
             },
             "2026": {
               "Paineiras": 73331,
               "Trem do Corcovado": null,
-              "Bondinho Pão de Açúcar": null
+              "Bondinho Pão de Açúcar": null,
+              "Cristo Redentor": null
             }
           },
           "Setembro": {
             "2025": {
               "Paineiras": null,
               "Trem do Corcovado": 109007.0,
-              "Bondinho Pão de Açúcar": 156918.0
+              "Bondinho Pão de Açúcar": 156918.0,
+              "Cristo Redentor": 214725.0
             },
             "2026": {
               "Paineiras": null,
               "Trem do Corcovado": null,
-              "Bondinho Pão de Açúcar": null
+              "Bondinho Pão de Açúcar": null,
+              "Cristo Redentor": null
             }
           },
           "Outubro": {
             "2025": {
               "Paineiras": null,
               "Trem do Corcovado": 114057.0,
-              "Bondinho Pão de Açúcar": 161949.0
+              "Bondinho Pão de Açúcar": 161949.0,
+              "Cristo Redentor": 221919.0
             },
             "2026": {
               "Paineiras": null,
               "Trem do Corcovado": null,
-              "Bondinho Pão de Açúcar": null
+              "Bondinho Pão de Açúcar": null,
+              "Cristo Redentor": null
             }
           },
           "Novembro": {
             "2025": {
               "Paineiras": null,
               "Trem do Corcovado": 119627.0,
-              "Bondinho Pão de Açúcar": 169977.0
+              "Bondinho Pão de Açúcar": 169977.0,
+              "Cristo Redentor": 230971.0
             },
             "2026": {
               "Paineiras": null,
               "Trem do Corcovado": null,
-              "Bondinho Pão de Açúcar": null
+              "Bondinho Pão de Açúcar": null,
+              "Cristo Redentor": null
             }
           },
           "Dezembro": {
             "2025": {
               "Paineiras": null,
               "Trem do Corcovado": 123051.0,
-              "Bondinho Pão de Açúcar": 168682.0
+              "Bondinho Pão de Açúcar": 168682.0,
+              "Cristo Redentor": 239964.0
             },
             "2026": {
               "Paineiras": null,
               "Trem do Corcovado": null,
-              "Bondinho Pão de Açúcar": null
+              "Bondinho Pão de Açúcar": null,
+              "Cristo Redentor": null
             }
           }
         }
@@ -51493,6 +51532,8 @@
           "Santuário Nacional Aparecida",
           "Cidade do Romeiro"
         ],
+        "referencias": [],
+        "captacao": [],
         "mensal": {
           "Janeiro": {
             "2025": {
@@ -51676,6 +51717,17 @@
           "Buraco do Padre",
           "Het Dorp",
           "Museu Oscar Niemeyer"
+        ],
+        "referencias": [],
+        "captacao": [
+          {
+            "entidade": "Vila Velha",
+            "referencia": "Trem de Curitiba"
+          },
+          {
+            "entidade": "Buraco do Padre",
+            "referencia": "Trem de Curitiba"
+          }
         ],
         "mensal": {
           "Janeiro": {
@@ -51886,6 +51938,17 @@
           "Turismo Itaipu",
           "Wonder Park Foz",
           "Dreams Park Show"
+        ],
+        "referencias": [],
+        "captacao": [
+          {
+            "entidade": "AquaFoz",
+            "referencia": "PNI"
+          },
+          {
+            "entidade": "M3F",
+            "referencia": "PNI"
+          }
         ],
         "mensal": {
           "Janeiro": {
@@ -55617,33 +55680,75 @@
       },
       "Consolidado": {
         "anos": {
-          "2021": [
-            121830.0,
-            84328.0,
-            56702.0,
-            72905.0,
-            183669.0,
-            207056.0,
-            322988.0,
-            224305.0,
-            221249.0,
-            218738.0,
-            206960.0,
-            198703.0
+          "2019": [
+            294310.0,
+            178020.0,
+            171863.0,
+            112280.0,
+            118809.0,
+            139791.0,
+            217834.0,
+            144198.0,
+            139938.0,
+            186699.0,
+            155954.00000000003,
+            199801.0
           ],
-          "2016": [
-            176296.0,
-            138970.99999999997,
-            107782.00000000001,
-            84697.0,
-            72022.0,
-            55716.99999999999,
-            97202.99999999999,
-            120259.99999999999,
-            84306.0,
-            90256.0,
-            173665.0,
-            241981.0
+          "2026": [
+            780085.0,
+            496780.0,
+            511736.0,
+            531692.0,
+            470681.0,
+            422910.0,
+            717481.0,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "2024": [
+            594567.0,
+            366755.0,
+            390569.0,
+            348707.0,
+            342747.0,
+            367211.0,
+            616182.0,
+            394041.0,
+            417403.0,
+            459284.0,
+            470520.0,
+            445961.0
+          ],
+          "2017": [
+            389929.0,
+            200085.0,
+            188215.0,
+            199791.0,
+            156131.0,
+            166730.0,
+            268901.0,
+            162003.0,
+            212354.0,
+            173907.0,
+            163417.0,
+            189763.0
+          ],
+          "2023": [
+            366579.0,
+            213847.0,
+            240253.0,
+            235350.0,
+            207329.0,
+            223389.0,
+            372933.0,
+            208415.0,
+            241059.0,
+            243418.0,
+            249211.0,
+            188895.0
           ],
           "2015": [
             189451.0,
@@ -55659,19 +55764,33 @@
             84938.0,
             122376.0
           ],
-          "2014": [
-            173675.0,
-            104836.0,
-            118591.0,
-            98418.0,
-            75256.0,
-            146540.0,
-            139443.0,
-            97484.0,
-            91737.0,
-            107064.0,
-            105700.0,
-            132312.0
+          "2022": [
+            292287.0,
+            163205.0,
+            179929.0,
+            191200.0,
+            197552.0,
+            171442.0,
+            396224.0,
+            189206.0,
+            234477.0,
+            266973.0,
+            202561.0,
+            212826.0
+          ],
+          "2012": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "2013": [
             null,
@@ -55701,48 +55820,6 @@
             90379.0,
             79635.0
           ],
-          "2023": [
-            366579.0,
-            213847.0,
-            240253.0,
-            235350.0,
-            207329.0,
-            223389.0,
-            372933.0,
-            208415.0,
-            241059.0,
-            243418.0,
-            249211.0,
-            188895.0
-          ],
-          "2012": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2017": [
-            389929.0,
-            200085.0,
-            188215.0,
-            199791.0,
-            156131.0,
-            166730.0,
-            268901.0,
-            162003.0,
-            212354.0,
-            173907.0,
-            163417.0,
-            189763.0
-          ],
           "2018": [
             321385.0,
             168024.0,
@@ -55756,48 +55833,6 @@
             149282.0,
             162033.0,
             182819.0
-          ],
-          "2026": [
-            780085.0,
-            496780.0,
-            511736.0,
-            531692.0,
-            470681.0,
-            422910.0,
-            717481.0,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "2019": [
-            294310.0,
-            178020.0,
-            171863.0,
-            112280.0,
-            118809.0,
-            139791.0,
-            217834.0,
-            144198.0,
-            139938.0,
-            186699.0,
-            155954.00000000003,
-            199801.0
-          ],
-          "2024": [
-            594567.0,
-            366755.0,
-            390569.0,
-            348707.0,
-            342747.0,
-            367211.0,
-            616182.0,
-            394041.0,
-            417403.0,
-            459284.0,
-            470520.0,
-            445961.0
           ],
           "2025": [
             666687.0,
@@ -55813,74 +55848,102 @@
             500148.0,
             520889.0
           ],
-          "2022": [
-            292287.0,
-            163205.0,
-            179929.0,
-            191200.0,
-            197552.0,
-            171442.0,
-            396224.0,
-            189206.0,
-            234477.0,
-            266973.0,
-            202561.0,
-            212826.0
+          "2014": [
+            173675.0,
+            104836.0,
+            118591.0,
+            98418.0,
+            75256.0,
+            146540.0,
+            139443.0,
+            97484.0,
+            91737.0,
+            107064.0,
+            105700.0,
+            132312.0
+          ],
+          "2016": [
+            176296.0,
+            138970.99999999997,
+            107782.00000000001,
+            84697.0,
+            72022.0,
+            55716.99999999999,
+            97202.99999999999,
+            120259.99999999999,
+            84306.0,
+            90256.0,
+            173665.0,
+            241981.0
+          ],
+          "2021": [
+            121830.0,
+            84328.0,
+            56702.0,
+            72905.0,
+            183669.0,
+            207056.0,
+            322988.0,
+            224305.0,
+            221249.0,
+            218738.0,
+            206960.0,
+            198703.0
           ]
         },
         "anosShare": {},
         "anosSemestral": {
-          "2021": [
-            726490,
-            1392943
-          ],
-          "2016": [
-            635485,
-            584255
-          ],
-          "2015": [
-            711060,
-            646056
-          ],
-          "2014": [
-            717316,
-            673740
-          ],
-          "2020": [
-            575832,
-            365664
-          ],
-          "2023": [
-            1486747,
-            1503931
-          ],
-          "2017": [
-            1300881,
-            1170345
-          ],
-          "2018": [
-            992762,
-            968837
+          "2019": [
+            1015073,
+            1044424
           ],
           "2026": [
             3213884,
             717481
           ],
-          "2019": [
-            1015073,
-            1044424
-          ],
           "2024": [
             2410556,
             2803391
+          ],
+          "2017": [
+            1300881,
+            1170345
+          ],
+          "2023": [
+            1486747,
+            1503931
+          ],
+          "2015": [
+            711060,
+            646056
+          ],
+          "2022": [
+            1195615,
+            1502267
+          ],
+          "2020": [
+            575832,
+            365664
+          ],
+          "2018": [
+            992762,
+            968837
           ],
           "2025": [
             2704477,
             2940308
           ],
-          "2022": [
-            1195615,
-            1502267
+          "2014": [
+            717316,
+            673740
+          ],
+          "2016": [
+            635485,
+            584255
+          ],
+          "2021": [
+            726490,
+            1392943
           ]
         }
       }
