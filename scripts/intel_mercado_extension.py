@@ -60,15 +60,18 @@ que o usuário meça). O usuário corrigiu: a métrica que importa de verdade pr
 parques/concorrentes é a VARIAÇÃO ano a ano (2026 vs 2025, "crescimento/queda em relação ao
 ano passado") -- calculada no front-end a partir dos números crus dos dois anos, pra toda
 entidade que tiver os dois. CAPTAÇÃO (nosso ÷ referência) só existe pra pares específicos que
-o usuário citou (ver CAPTACAO_REFS mais abaixo) -- não é mais genérico por concorrente. Os
-pares Vila Velha/Buraco do Padre ÷ Trem de Curitiba e AquaFoz/M3F ÷ PNI usam entidades que já
-são lidas normalmente nas suas réguas; o par Paineiras/Trem do Corcovado ÷ Cristo Redentor
-precisou de uma extração nova (ver _ler_cristo_redentor) porque "Cristo Redentor" (visitação
-total do Corcovado, Paineiras + Trem do Corcovado juntos) não existia nos dados desta aba
-ainda -- vem de um bloco secundário da mesma aba "2025x2026" do Rio ("Corcovado 2025"/
-"Corcovado 2026", linhas ~25-37), que o módulo tinha decidido ignorar na 1ª versão. Os pares
-curados de captação e as entidades de referência de cada régua estão em REGUAS (chaves
-"captacao" e "referencias") -- não existe uma constante separada CAPTACAO_REFS.
+o usuário citou (ver REGUAS mais abaixo) -- não é mais genérico por concorrente. Os pares
+Três Pescadores ÷ Santuário Nacional Aparecida, Vila Velha/Buraco do Padre ÷ Trem de Curitiba
+e AquaFoz/M3F ÷ PNI usam entidades que já são lidas normalmente nas suas réguas; o par
+Paineiras/Trem do Corcovado ÷ Cristo Redentor precisou de uma extração nova (ver
+_ler_cristo_redentor) porque "Cristo Redentor" (visitação total do Corcovado, Paineiras +
+Trem do Corcovado juntos) não existia nos dados desta aba ainda -- vem de um bloco secundário
+da mesma aba "2025x2026" do Rio ("Corcovado 2025"/"Corcovado 2026", linhas ~25-37), que o
+módulo tinha decidido ignorar na 1ª versão. Os pares curados de captação e as entidades de
+referência de cada régua estão em REGUAS (chaves "captacao" e "referencias") -- não existe
+uma constante separada CAPTACAO_REFS. O par de Aparecida (Três Pescadores ÷ Santuário) foi
+adicionado numa revisão posterior (21/08/2026), depois que o usuário reparou que tinha ficado
+de fora da lista original.
 
 ESTRUTURA DAS PLANILHAS RIO / APARECIDA / CURITIBA (aba "2025x2026", idêntica nas 3): blocos
 de 3 linhas por entidade (1a linha = nome na coluna B + ano 2025 na coluna C + valores 2025
@@ -355,16 +358,21 @@ def _aplica_regra_bioparque(valores_mensais, bioparque_ainda_conta_fn):
 
 # Réguas fixas -- ver docstring do módulo pra explicação de cada uma, em especial a exceção
 # do Rio (AquaRio e Paineiras viram 2 réguas, não 1, mesmo sendo a mesma região).
-# Captação (revisão 21/08/2026): pares curados pelo usuário -- "entidade" ÷ "referencia".
-# NÃO é genérico por concorrente (ver docstring do módulo) -- só existe pra estes 6 pares:
+# Captação (revisão 21/08/2026, ajustada em 21/08/2026 pra incluir o par de Aparecida que
+# tinha ficado de fora da 1ª lista): pares curados pelo usuário -- "entidade" ÷ "referencia".
+# NÃO é genérico por concorrente (ver docstring do módulo) -- só existe pra estes 7 pares:
 #   Paineiras / Trem do Corcovado  ÷ Cristo Redentor  (total do Corcovado -- os dois "captam"
 #     fatia desse total; Bondinho Pão de Açúcar NÃO captа, é atração separada)
+#   Três Pescadores                ÷ Santuário Nacional Aparecida (Trem do Devoto e Cidade do
+#     Romeiro NÃO captam)
 #   Vila Velha / Buraco do Padre   ÷ Trem de Curitiba (Het Dorp e MON NÃO captam)
 #   AquaFoz / M3F                  ÷ PNI              (Parque das Aves, Turismo Itaipu, Wonder
 #     Park Foz, Dreams Park Show NÃO captam)
-# AquaRio, YUP Star, Museu do Amanhã, BioParque, Três Pescadores e seus concorrentes: nenhuma
-# captação (só a variação ano a ano, calculada no front-end pra QUALQUER entidade com os dois
-# anos -- ver renderIntelMercado/immBuildTable em index.html).
+# AquaRio, YUP Star, Museu do Amanhã e BioParque: nenhuma captação (só a variação ano a ano,
+# calculada no front-end pra QUALQUER entidade com os dois anos -- ver
+# renderIntelMercado/immBuildTable em index.html). "Santuário Nacional Aparecida" já é lido
+# normalmente como concorrente da régua (ver APARECIDA_ROTULOS) -- não precisou de nenhuma
+# extração nova, diferente do caso do Cristo Redentor.
 REGUAS = [
     {
         "id": "aquario", "regiao": "Rio de Janeiro", "nome": "AquaRio",
@@ -388,7 +396,9 @@ REGUAS = [
         "nossoParques": ["Três Pescadores"],
         "concorrentes": ["Trem do Devoto", "Santuário Nacional Aparecida", "Cidade do Romeiro"],
         "referencias": [],
-        "captacao": [],
+        "captacao": [
+            {"entidade": "Três Pescadores", "referencia": "Santuário Nacional Aparecida"},
+        ],
     },
     {
         "id": "curitiba", "regiao": "Curitiba", "nome": "Vila Velha",
