@@ -565,9 +565,18 @@
      19/08 (ver comentário logo abaixo, feito pro Top 5 -- correto pra aquele contexto,
      mas sem um teto no CARD em si, sobrou pro card crescer sem limite). Com teto no
      grid, o espaço extra (zoom out) fica sobrando DEPOIS dos cards, não DENTRO deles.
-     minmax(0, 620px) deixa encolher normalmente em telas estreitas (breakpoints do
-     tablet/mobile abaixo continuam sobrescrevendo pra 1 coluna). */
-  .mix-grid{ display:grid; grid-template-columns:repeat(2, minmax(0, 620px)); gap:20px; margin-bottom:20px; }
+
+     21/08/2026 (2ª rodada, mesmo dia): o teto de 620px sozinho não bastava -- com 2
+     colunas ligadas desde 1024px (limite antigo de "Tablet"), quando a janela era só
+     "média" (não estreita a ponto de cair pra 1 coluna, nem larga o bastante pros 2
+     cards baterem no teto de 620px) cada card virava metade da tela, bem menor que a
+     referência de 1 card sozinho -- não era bug de CSS (nada quebrava/rolava), mas o
+     usuário confirmou que quer os cards sempre grandes (como 1 coluna) e só aceita 2
+     por linha em telas BEM largas. Por isso o padrão agora é 1 coluna sempre, e o
+     grid-template-columns de 2 colunas só liga a partir de 1500px, na regra
+     @media (min-width:1500px) logo abaixo -- bem mais alto que o corte antigo de
+     1023px. */
+  .mix-grid{ display:grid; grid-template-columns:1fr; gap:20px; margin-bottom:20px; }
   /* min-width:0 é necessário porque .mix-card é item de um CSS grid (.mix-grid)
      -- sem isso, o item de grid nunca encolhe abaixo do conteúdo mínimo da
      tabela lá dentro (mesmo ela tendo overflow-x:auto própria), e o card
@@ -635,8 +644,16 @@
   .mix-legend{ display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-top:8px; padding-top:14px; border-top:1px solid var(--line); font-size:12px; }
   .mix-legend span{ display:inline-flex; align-items:center; gap:6px; color:var(--ink); font-weight:600; }
   .mix-legend .sq{ width:11px; height:11px; border-radius:3px; display:inline-block; }
+  /* 21/08/2026 (2ª rodada, mesmo dia): 2 cards de Mix de Origem lado a lado só a partir
+     de telas BEM largas -- ver o comentário completo junto de ".mix-grid{
+     grid-template-columns:1fr; }" lá em cima. Essa regra abaixo é a ÚNICA exceção (fica
+     de fora do fluxo normal do <style>, com sua própria condição de largura) e só liga
+     em telas amplas. 1500px cobre com folga o teto de 620px por card (2×620px + 20px de
+     gap = 1260px de conteúdo -- somando o padding do layout dá numa janela de ~1364px+;
+     1500px garante uma margem confortável acima disso, então nenhum card fica pequeno
+     antes de valer a pena dividir a linha). */
+  @media (min-width:1500px){ .mix-grid{ grid-template-columns:repeat(2, minmax(0, 620px)); } }
 
-  /* ── Aba Clima ── */
   .clima-strip-block{ margin-bottom:18px; }
   .clima-strip-title{ font-size:13px; font-weight:800; color:var(--ink); margin-bottom:8px; }
   .clima-strip{ display:flex; gap:4px; overflow-x:auto; padding-bottom:4px; }
@@ -906,8 +923,10 @@
   .imt-ps-header{ flex-wrap:wrap; }
   .imt-select-wrap{ flex-wrap:wrap; }
 
-  /* Mix de Origem: cada card já é largo por natureza (tabela + 2 donuts) --
-     1 coluna a partir do tablet, não só no mobile. */
+  /* Mix de Origem: 1fr já é o padrão em qualquer largura desde 21/08/2026 (2ª rodada) --
+     2 colunas só ligam a partir de 1500px (ver @media min-width:1500px perto do resto
+     do CSS da aba). Essa linha ficou redundante (não muda nada aqui no Tablet, que é
+     bem mais estreito que 1500px) mas mantida por clareza/robustez. */
   .mix-grid{ grid-template-columns:1fr; }
 
   /* Top 5 Países/Estados: a partir do tablet não sobra vão nenhum ao lado
