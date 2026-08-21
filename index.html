@@ -2412,6 +2412,59 @@ function svgOutlineText(x, y, text, fill, fontSize, opts){
        + `<text x="${xs}" y="${ys}" font-size="${fontSize}" font-weight="${weight}" text-anchor="${anchor}" stroke="#1a1a1a" stroke-width="${hairlineW.toFixed(2)}" stroke-linejoin="round" fill="${fill}" paint-order="stroke" ${extra}>${text}</text>`;
 }
 
+// Rótulo com "plaquinha" (retângulo de fundo) em vez de contorno -- criado em 21/08/2026
+// pro caso específico do R$ investido em renderComboCharts, que o usuário reportou 3x
+// como ilegível mesmo depois de ajustar tamanho/contorno em svgOutlineText.
+// O PROBLEMA REAL (só ficou claro comparando o print que ele mandou, colado do próprio
+// dash): um contorno de 2-3px em volta de CADA LETRA de um número compacto e em negrito
+// ("R$ 111.754") faz o contorno de uma letra encostar no da vizinha, e as letras se
+// fundem num borrão -- não importa se o contorno é fino (perde contraste em fundo
+// colorido) ou grosso (funde as letras): os dois extremos ficam ruins numa fonte pequena
+// e apertada. Uma plaquinha branca (ou escura, no dark mode) por baixo do texto resolve
+// os dois problemas de uma vez: separa do fundo (qualquer cor por baixo) sem precisar de
+// contorno nenhum na letra, que fica fina e nítida.
+// Mede a largura real (em px) que um texto vai ocupar nesse fontSize/weight, usando um
+// <svg> escondido só pra medição (getBBox) -- evita "chutar" a largura por contagem de
+// caractere (chute impreciso o bastante pra plaquinha ficar maior que a coluna do mês e
+// cobrir o rótulo vizinho, ou menor que o texto e cortar ele pelas bordas).
+let _measureSvgEl = null;
+function measureSvgTextWidth(text, fontSize, weight){
+  if(!_measureSvgEl){
+    _measureSvgEl = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    _measureSvgEl.style.position = 'absolute';
+    _measureSvgEl.style.visibility = 'hidden';
+    _measureSvgEl.style.width = '0';
+    _measureSvgEl.style.height = '0';
+    _measureSvgEl.style.overflow = 'hidden';
+    document.body.appendChild(_measureSvgEl);
+  }
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('font-size', fontSize);
+  t.setAttribute('font-weight', weight);
+  t.setAttribute('font-family', "'Segoe UI', Arial, sans-serif");
+  t.textContent = text;
+  _measureSvgEl.appendChild(t);
+  const w = t.getBBox().width;
+  _measureSvgEl.removeChild(t);
+  return w;
+}
+
+function svgChipText(cx, y, text, textColor, fontSize, opts){
+  opts = opts || {};
+  const weight = opts.weight || '700';
+  const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+  const textW = measureSvgTextWidth(text, fontSize, weight);
+  const rectW = textW + 7;
+  const rectH = fontSize + 5;
+  const rectX = cx - rectW/2;
+  const rectY = y - fontSize*0.9 - 2.5;
+  const chipFill = isDarkNow ? '#1c242b' : '#ffffff';
+  const chipStroke = isDarkNow ? '#333d47' : '#e3e6e8';
+  const txtFill = isDarkNow ? '#ffffff' : textColor;
+  return `<rect x="${rectX.toFixed(1)}" y="${rectY.toFixed(1)}" width="${rectW.toFixed(1)}" height="${rectH.toFixed(1)}" rx="3" fill="${chipFill}" stroke="${chipStroke}" stroke-width="1"></rect>`
+       + `<text x="${cx.toFixed(1)}" y="${y.toFixed(1)}" font-size="${fontSize}" font-weight="${weight}" text-anchor="middle" fill="${txtFill}">${text}</text>`;
+}
+
 function populateSelects(){
   const ms = document.getElementById('monthSelect');
   ms.innerHTML = MONTHS.map(m => `<option value="${m}">${MONTH_LABEL[m]}</option>`).join('')
@@ -3397,7 +3450,7 @@ function renderComboCharts(containerId, barField, barFmt){
       // ponto da linha (investimento) tem escala própria, independente da barra
       if(v !== null && v !== undefined){
         const yLine = padT + plotH - (v/maxInv)*plotH;
-        invLabels += svgOutlineText(cx, yLine-6, barFmt(v), '#3a463f', 9.5, {weight:'800'});
+        invLabels += svgChipText(cx, yLine-6, barFmt(v), '#3a463f', 10, {weight:'700'});
         topPoints.push([cx, yLine, i]);
       } else {
         topPoints.push(null);
@@ -7080,13 +7133,29 @@ function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
   activeKeys.forEach(k => buckets.forEach(b => { maxVal = Math.max(maxVal, b.values[k]||0); }));
   maxVal = maxVal*1.22 || 1;
 
+  // Rótulo do eixo Y precisa de mais distância do início do gráfico -- o 1º ponto de
+  // cada linha fica bem em cima do eixo (x=padL) e o rótulo dele (ex.: "130") é centrado
+  // nesse x, então a metade esquerda do número invadia o espaço do rótulo do eixo (ex.:
+  // "142") e os dois se misturavam num "142130" ilegível (relatado pelo usuário,
+  // 21/08/2026). "-6" não dava distância suficiente; "-16" abre espaço de sobra mesmo
+  // pro maior rótulo do eixo (4 dígitos) sem sair da área do SVG.
+  const yLabelX = padL - 16;
   let yGrid = '';
   [0,0.25,0.5,0.75,1].forEach(t => {
     const y = padT+plotH-(t*plotH);
     yGrid += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${padL+plotW}" y2="${y.toFixed(1)}" stroke="#f0f1f2" stroke-width="1"></line>`+
-      `<text x="${(padL-6).toFixed(1)}" y="${(y+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#9ca3af">${fmtInt(maxVal*t)}</text>`;
+      `<text x="${yLabelX.toFixed(1)}" y="${(y+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#9ca3af">${fmtInt(maxVal*t)}</text>`;
   });
   const xTicks = buckets.map((b,i) => `<text x="${(padL+i*slot).toFixed(1)}" y="${H-6}" font-size="9" text-anchor="middle" fill="#9ca3af">${b.label}</text>`).join('');
+
+  // Área clara sob cada linha (mesmo estilo do exemplo que o usuário mandou originalmente):
+  // com várias linhas ativas, cada área semitransparente da sua própria cor SOMA com as
+  // outras -- no fundo ESCURO isso funde num tom só (o usuário confirmou que ficou "perfeito"
+  // no dark mode), mas no fundo BRANCO cada cor mantém o próprio matiz visível, e a soma de
+  // 6-7 áreas coloridas empilhadas vira uma mancha "sujando" o gráfico (relatado 21/08/2026:
+  // "no bright mode fica estranho, difícil de visualizar"). Por isso a área só é desenhada
+  // no escuro; no claro fica só linha + pontos + rótulo, mais limpo.
+  const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
 
   const occupied = [];
   let paths = '', labels = '';
@@ -7097,8 +7166,10 @@ function buildCrossAquafozLocalChart(diaria, diasComDado, modo){
       return [x, padT+plotH-(v/maxVal*plotH), v];
     });
     const lineD = pts.map((p,i) => `${i===0?'M':'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
-    const areaD = lineD + ` L${pts[pts.length-1][0].toFixed(1)},${(padT+plotH).toFixed(1)} L${pts[0][0].toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
-    paths += `<path d="${areaD}" fill="${c.color}" opacity="0.07"></path>`;
+    if(isDarkNow){
+      const areaD = lineD + ` L${pts[pts.length-1][0].toFixed(1)},${(padT+plotH).toFixed(1)} L${pts[0][0].toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
+      paths += `<path d="${areaD}" fill="${c.color}" opacity="0.07"></path>`;
+    }
     paths += `<path d="${lineD}" fill="none" stroke="${c.color}" stroke-width="2"></path>`;
     pts.forEach(p => { paths += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" fill="${c.color}"></circle>`; });
     pts.forEach(p => {
