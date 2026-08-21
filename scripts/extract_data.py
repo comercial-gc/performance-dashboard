@@ -460,32 +460,62 @@ def parse_atrativos_accum(rows):
     return accum
 
 
-def detect_meses_com_dados(service, spreadsheet_id, meses_todos):
+def _hoje_brasilia():
+    """Data de hoje no fuso de Brasília (UTC-3, sem horário de verão desde 2019).
+    O runner do GitHub Actions roda em UTC -- sem esse ajuste, a trava por data de
+    detect_meses_com_dados (abaixo) poderia "abrir" um mês novo até 3h mais cedo do que
+    no relógio real de Brasília, perto da virada do dia."""
+    return (datetime.datetime.utcnow() - datetime.timedelta(hours=3)).date()
+
+
+def detect_meses_com_dados(service, spreadsheet_id, meses_todos, hoje=None):
     """Descobre sozinho até qual mês a planilha 'Visitação Parques 2026.xlsx' já tem aba
     criada E com pelo menos um dia de "Realizado 2026" preenchido -- substitui a lista
     manual "meses_com_dados" do config.json, que antes precisava ser atualizada à mão
     todo mês assim que o resultado real do mês começava a entrar (o motivo de Agosto ter
     ficado só com Meta: a lista nunca foi atualizada).
-    Para no primeiro mês em que: (a) a aba ainda não existe na planilha, ou (b) a aba já
+    Para no primeiro mês em que: (a) o mês ainda não chegou no calendário real (trava por
+    data, ver bug evitado abaixo), (b) a aba ainda não existe na planilha, ou (c) a aba já
     existe mas ainda está vazia (só o molde, sem nenhum "Realizado 2026" preenchido) --
     os meses seguintes na sequência também são tratados como sem dado, mesmo que por
     algum motivo tenham aba criada fora de ordem.
-    BUG EVITADO: os meses futuros (ainda não iniciados) não ficam com a célula vazia --
-    a planilha preenche "Realizado 2026" com 0 (não com célula em branco) até o mês
-    realmente começar, igual já vimos nas abas DIÁRIO. Um teste de "existe valor não-nulo"
-    conta esse 0 como "tem dado" e deixava passar o ano inteiro (Setembro a Dezembro
-    incluídos, todos com 0). Por isso o teste exige um valor REALMENTE positivo (>0) em
-    algum dia/parque, não só "diferente de None".
+
+    BUG EVITADO (21/08/2026, relatado pelo usuário): quando alguém do time cria a aba do
+    mês seguinte com antecedência -- duplicando a aba do mês anterior pra já ir
+    replicando fórmulas e datas, e só depois entra pra ajustar número por número -- uma
+    fórmula copiada pode, por acidente (referência deslocada, soma cumulativa etc.),
+    resultar num valor > 0 num dia/parque antes mesmo do mês ter começado. Isso passava o
+    teste "> 0" abaixo sem nenhum resultado real ter sido lançado (ex.: aba SETEMBRO
+    criada em 21/08 já "logando" como mês vigente no painel, com Setembro inteiro ainda
+    zerado em outras abas/planilhas). Por isso, além do teste de valor, agora existe uma
+    TRAVA POR DATA: nenhum mês é considerado "com dados" antes do seu 2º dia no
+    calendário real (o dia 1 precisa passar inteiro antes de alguém lançar o resultado
+    dele -- por isso trava no dia 2, não no dia 1, igual pedido pelo usuário). Um mês
+    totalmente no futuro nunca passa essa trava, independente do que estiver escrito na
+    aba dele.
+
+    BUG EVITADO (anterior): os meses futuros (ainda não iniciados) não ficam com a célula
+    vazia -- a planilha preenche "Realizado 2026" com 0 (não com célula em branco) até o
+    mês realmente começar, igual já vimos nas abas DIÁRIO. Um teste de "existe valor
+    não-nulo" conta esse 0 como "tem dado" e deixava passar o ano inteiro (Setembro a
+    Dezembro incluídos, todos com 0). Por isso o teste exige um valor REALMENTE positivo
+    (>0) em algum dia/parque, não só "diferente de None".
     """
+    if hoje is None:
+        hoje = _hoje_brasilia()
     resultado = []
     for mes in meses_todos:
+        month_number = MONTH_NUMBER[mes]
+        if (2026, month_number) > (hoje.year, hoje.month):
+            break  # mês ainda nem chegou no calendário -- para aqui, não importa a aba
+        if (2026, month_number) == (hoje.year, hoje.month) and hoje.day < 2:
+            break  # é o mês vigente, mas o dia 1 dele ainda não terminou
         try:
             rows = get_values(service, spreadsheet_id, mes)
         except Exception:
             break  # aba desse mês ainda não existe -- para aqui
         if not rows:
             break
-        month_number = MONTH_NUMBER[mes]
         n_days = calendar.monthrange(2026, month_number)[1]
         daily = parse_month_daily(rows, n_days)
         tem_dado = any(
