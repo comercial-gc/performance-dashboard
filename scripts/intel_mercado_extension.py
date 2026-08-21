@@ -160,11 +160,16 @@ def _get_rows(wb, sheet_name):
 
 def _ler_blocos_ano_a_ano(rows, rotulo_para_entidade):
     """Lê os blocos de 3 linhas das planilhas Rio/Aparecida/Curitiba (ver docstring do
-    módulo). Devolve {entidade: [12 valores mensais, Jan..Dez, None se vazio]}, só para os
-    rótulos presentes em rotulo_para_entidade (outros blocos -- nossos parques, histórico,
-    Share já calculado -- são ignorados de propósito). Para de procurar assim que encontrar
-    uma linha em branco depois do primeiro bloco reconhecido (fim da tabela principal, antes
-    de qualquer bloco secundário de histórico/Share)."""
+    módulo). Devolve {entidade: {"2025": [12 valores mensais], "2026": [12 valores mensais]}}
+    (Jan..Dez, None se vazio), só para os rótulos presentes em rotulo_para_entidade (outros
+    blocos -- nossos parques, histórico, Share já calculado -- são ignorados de propósito).
+    A 1ª linha do bloco já traz os valores de 2025 nas mesmas colunas (D..O) que a 2ª linha
+    traz os de 2026 -- pedido do usuário (21/08/2026, "ativar/desativar os anos que tivermos
+    dados") de poder comparar 2025 x 2026 na régua, não só ver 2026. Não há 2024 confiável
+    nestas 3 planilhas (a aba só tem 2025x2026) -- por isso o seletor de ano no front-end
+    oferece só esses dois. Para de procurar assim que encontrar uma linha em branco depois do
+    primeiro bloco reconhecido (fim da tabela principal, antes de qualquer bloco secundário de
+    histórico/Share)."""
     out = {}
     i = 0
     n = len(rows)
@@ -181,8 +186,9 @@ def _ler_blocos_ano_a_ano(rows, rotulo_para_entidade):
             entidade = rotulo_para_entidade.get(_norm(rotulo))
             row2026 = rows[i + 1]
             if entidade and row2026 and len(row2026) > 2 and row2026[2] == 2026.0:
-                valores = [_to_num(row2026[3 + m]) if 3 + m < len(row2026) else None for m in range(12)]
-                out[entidade] = valores
+                valores_2025 = [_to_num(row[3 + m]) if 3 + m < len(row) else None for m in range(12)]
+                valores_2026 = [_to_num(row2026[3 + m]) if 3 + m < len(row2026) else None for m in range(12)]
+                out[entidade] = {"2025": valores_2025, "2026": valores_2026}
                 achou_alguma = True
             i += 3
             continue
@@ -230,11 +236,15 @@ FOZ_ROTULOS = {
 
 def _ler_blocos_foz(rows, rotulo_para_entidade):
     """Lê os blocos da aba Foz: acha a linha de cabeçalho de cada bloco (coluna A = nome da
-    entidade) e, dentro do bloco (até o próximo cabeçalho), a linha 'TOTAL 2026' com os 12
-    valores mensais já somados nas colunas C..N. Devolve {entidade: [12 valores mensais]} --
-    bloco totalmente vazio/zerado (concorrente sem nenhum dado na planilha, ex. Wonder Park
-    Foz/Dreams Park Show até a data desta implementação) devolve [None]*12, não [0]*12, pra
-    não sugerir "visitação zero" no front-end."""
+    entidade) e, dentro do bloco (até o próximo cabeçalho), as linhas 'TOTAL 2025' e
+    'TOTAL 2026' (já somadas nas colunas C..N). Devolve {entidade: {"2025": [12 valores],
+    "2026": [12 valores]}} -- se uma das duas linhas TOTAL não existir nesse bloco, a chave
+    correspondente vem como [None]*12 (não trava o resto). Bloco totalmente vazio/zerado
+    (concorrente sem nenhum dado na planilha, ex. Wonder Park Foz/Dreams Park Show até a data
+    desta implementação) também devolve [None]*12 pra aquele ano, não [0]*12, pra não sugerir
+    "visitação zero" no front-end. Não há linha 'TOTAL 2024' nesta planilha (2024 só tem
+    dado parcial em algumas categorias, insuficiente pra virar comparativo) -- por isso o
+    seletor de ano no front-end oferece só 2025/2026, igual às outras 3 regiões."""
     out = {}
     n = len(rows)
     # Cabeçalho de bloco = coluna A com o nome da entidade E coluna B vazia (as linhas de
@@ -250,23 +260,31 @@ def _ler_blocos_foz(rows, rotulo_para_entidade):
         if not entidade:
             continue
         fim = idx_cabecalhos[pos + 1] if pos + 1 < len(idx_cabecalhos) else n
-        total_row = None
+        total_rows = {}
         for j in range(i, min(fim, n)):
             r = rows[j]
-            if r and len(r) > 1 and isinstance(r[1], str) and _norm(r[1]) == "total 2026":
-                total_row = r
-                break
-        if not total_row:
+            if r and len(r) > 1 and isinstance(r[1], str):
+                chave = _norm(r[1])
+                if chave == "total 2025":
+                    total_rows["2025"] = r
+                elif chave == "total 2026":
+                    total_rows["2026"] = r
+        if not total_rows:
             continue
-        # 0 aqui sempre significa "mês sem dado ainda" (soma de categorias todas vazias), não
-        # "visitação zero" -- um parque/atrativo em operação nunca fecha o mês com 0 visitantes
-        # -- por isso cada 0 é convertido pra None individualmente (não só quando o bloco
-        # inteiro está zerado, ver Turismo Itaipu: Jan-Mar com dado real, Abr em diante 0).
-        valores = [
-            (None if (v is None or v == 0) else v)
-            for v in (_to_num(total_row[2 + m]) if 2 + m < len(total_row) else None for m in range(12))
-        ]
-        out[entidade] = valores
+        entry = {}
+        for ano, total_row in total_rows.items():
+            # 0 aqui sempre significa "mês sem dado ainda" (soma de categorias todas vazias),
+            # não "visitação zero" -- um parque/atrativo em operação nunca fecha o mês com 0
+            # visitantes -- por isso cada 0 é convertido pra None individualmente (não só
+            # quando o bloco inteiro está zerado, ver Turismo Itaipu: Jan-Mar com dado real,
+            # Abr em diante 0).
+            entry[ano] = [
+                (None if (v is None or v == 0) else v)
+                for v in (_to_num(total_row[2 + m]) if 2 + m < len(total_row) else None for m in range(12))
+            ]
+        entry.setdefault("2025", [None] * 12)
+        entry.setdefault("2026", [None] * 12)
+        out[entidade] = entry
     return out
 
 
@@ -326,9 +344,14 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
     bioparque_ainda_conta_fn: a função _bioparque_ainda_conta já existente em extract_data.py.
 
     Devolve {'reguas': [...]} -- cada régua com id/regiao/nome/nossoParques/concorrentes e
-    'mensal': {mes: {entidade: valor ou None}} (mês em Title Case, ex. 'Janeiro') juntando
-    nosso(s) parque(s) (fonte oficial) e concorrentes (das 4 planilhas novas). O Share/Captação
-    (nosso ÷ concorrente) é calculado no front-end a partir destes números crus, não aqui.
+    'mensal': {mes: {"2025": {entidade: valor ou None}, "2026": {entidade: valor ou None}}}
+    (mês em Title Case, ex. 'Janeiro') juntando nosso(s) parque(s) (fonte oficial, os dois
+    anos -- ver "realizado"/"y2025" em VISITACAO) e concorrentes (das 4 planilhas novas, os
+    dois anos -- ver _ler_blocos_ano_a_ano/_ler_blocos_foz). Pedido do usuário (21/08/2026):
+    poder comparar 2025 x 2026 na régua, ativando/desativando cada ano no front-end, "igual
+    fizemos com os parques" (mesmo padrão de toggle dos concorrentes). Não há 2024 confiável
+    em nenhuma das 4 planilhas -- só 2025/2026 são oferecidos. O Share/Captação (nosso ÷
+    concorrente) é calculado no front-end a partir destes números crus, não aqui.
     """
     wb_rio = _download_workbook(drive_service, ids["rio"])
     wb_aparecida = _download_workbook(drive_service, ids["aparecida"])
@@ -338,7 +361,9 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
     concorrentes = {}
     concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_rio, "2025x2026"), RIO_ROTULOS))
     if "BioParque" in concorrentes:
-        concorrentes["BioParque"] = _aplica_regra_bioparque(concorrentes["BioParque"], bioparque_ainda_conta_fn)
+        # A regra de corte (só conta até Julho/2026) é sobre o ANO 2026 -- 2025 é histórico
+        # fechado, não tem "saída" nenhuma, fica intocado.
+        concorrentes["BioParque"]["2026"] = _aplica_regra_bioparque(concorrentes["BioParque"]["2026"], bioparque_ainda_conta_fn)
     concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_aparecida, "2025x2026"), APARECIDA_ROTULOS))
     concorrentes.update(_ler_blocos_ano_a_ano(_get_rows(wb_curitiba, "2025x2026"), CURITIBA_ROTULOS))
     concorrentes.update(_ler_blocos_foz(_get_rows(wb_foz, "2024x2025X2026"), FOZ_ROTULOS))
@@ -348,16 +373,20 @@ def build_intel_mercado(drive_service, ids, visitacao_por_mes, bioparque_ainda_c
         mensal = {}
         for m, mes in enumerate(MESES_PT):
             mes_dado = visitacao_por_mes.get(mes.upper())
-            entry = {}
+            entry_2025, entry_2026 = {}, {}
             for parque in regua["nossoParques"]:
-                v = None
-                if mes_dado:
-                    v = (mes_dado.get("summary", {}).get(parque, {}) or {}).get("realizado")
-                entry[parque] = v
+                s = (mes_dado.get("summary", {}).get(parque, {}) or {}) if mes_dado else {}
+                entry_2026[parque] = s.get("realizado")
+                # "y2025 or None": alguns parques (ex. AquaFoz) têm y2025 = 0 na fonte oficial
+                # quando não existe base de comparação em 2025 (mesmo padrão que já faz o
+                # pct2025 virar "-%" em vez de uma % em outras abas) -- 0 nunca é visitação
+                # real de mês fechado, então tratamos como "sem dado" aqui também.
+                entry_2025[parque] = s.get("y2025") or None
             for concorrente in regua["concorrentes"]:
-                valores = concorrentes.get(concorrente)
-                entry[concorrente] = valores[m] if valores else None
-            mensal[mes] = entry
+                valores = concorrentes.get(concorrente) or {}
+                entry_2025[concorrente] = (valores.get("2025") or [None] * 12)[m]
+                entry_2026[concorrente] = (valores.get("2026") or [None] * 12)[m]
+            mensal[mes] = {"2025": entry_2025, "2026": entry_2026}
         reguas_out.append({
             "id": regua["id"], "regiao": regua["regiao"], "nome": regua["nome"],
             "nossoParques": regua["nossoParques"], "concorrentes": regua["concorrentes"],
